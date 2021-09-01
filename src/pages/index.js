@@ -152,7 +152,7 @@ export default function Home() {
       </section>
       <Testimonials />
       <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
-        <ConstraintBased />
+        {/* <ConstraintBased />
         <BuildAnything />
         <Performance />
         <MobileFirst />
@@ -162,7 +162,7 @@ export default function Home() {
         <Customization />
         <ModernFeatures />
         <EditorTools />
-        <ReadyMadeComponents />
+        <ReadyMadeComponents /> */}
       </div>
       <Footer />
     </div>

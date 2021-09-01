@@ -174,7 +174,7 @@ function TopLevelNav() {
       >
         Documentation
       </TopLevelLink>
-      <TopLevelLink
+      {/* <TopLevelLink
         href="https://tailwindui.com/components?utm_source=tailwindcss&utm_medium=navigation"
         color="violet"
         className="mb-4"
@@ -265,7 +265,7 @@ function TopLevelNav() {
         }
       >
         Screencasts
-      </TopLevelLink>
+      </TopLevelLink> */}
     </>
   )
 }
