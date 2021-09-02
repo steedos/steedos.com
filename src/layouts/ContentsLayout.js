@@ -212,13 +212,13 @@ export function ContentsLayout({ children, meta, classes, tableOfContents }) {
             )}
           </div>
         )}
-        <div className="mt-12 border-t border-gray-200 pt-6 text-right">
+        {/* <div className="mt-12 border-t border-gray-200 pt-6 text-right">
           <Link
             href={`https://github.com/tailwindlabs/tailwindcss.com/edit/master/src/pages${router.pathname}.mdx`}
           >
             <a className="mt-10 text-sm hover:text-gray-900">Edit this page on GitHub</a>
           </Link>
-        </div>
+        </div> */}
       </div>
       <div className="hidden xl:text-sm xl:block flex-none w-64 pl-8 mr-8">
         <div className="flex flex-col justify-between overflow-y-auto sticky max-h-(screen-18) pt-10 pb-6 top-18">

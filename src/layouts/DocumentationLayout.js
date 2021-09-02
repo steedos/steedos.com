@@ -14,12 +14,12 @@ export function DocumentationLayout(props) {
         {props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}
       </Title>
       <Head>
-        <meta key="twitter:card" name="twitter:card" content="summary" />
+        {/* <meta key="twitter:card" name="twitter:card" content="summary" />
         <meta
           key="twitter:image"
           name="twitter:image"
           content={`https://tailwindcss.com${twitterSquare}`}
-        />
+        /> */}
       </Head>
       <SidebarLayout nav={documentationNav} {...props} />
     </>

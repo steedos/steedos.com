@@ -69,8 +69,9 @@ export default function Home() {
             赋能企业，打造数字驱动型组织
           </h1>
           <p className="max-w-screen-lg text-lg sm:text-2xl sm:leading-10 font-medium mb-10 sm:mb-11">
-            华炎魔方基于<InlineCode>商业智能</InlineCode>和<InlineCode>模型驱动</InlineCode>，
-            即使是不懂编程的业务人员，也能轻松便捷地创建<InlineCode>智能化、移动化</InlineCode>的企业应用。
+            华炎魔方将<InlineCode>低代码技术</InlineCode>与企业业务场景结合，
+            助力企业在<InlineCode>最短时间</InlineCode>内开发<InlineCode>数字化</InlineCode>解决方案， 帮助企业快速落地现有业务战略， 以及<InlineCode>催生未来创新</InlineCode>。
+
           </p>
           <div className="flex flex-wrap space-y-4 sm:space-y-0 sm:space-x-4 text-center">
             <NextLink href="/docs">

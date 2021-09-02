@@ -350,7 +350,7 @@ export function Header({ navIsOpen, onNavToggle }) {
         </Dialog>
       </Transition.Root>
 
-      <header className="lg:z-50 relative bg-white inset-0 shadow">
+      <header className="sticky lg:z-50 relative bg-white inset-0 shadow">
        
         <nav aria-label="Top" className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="">
@@ -374,7 +374,7 @@ export function Header({ navIsOpen, onNavToggle }) {
 
               {/* Flyout menus */}
               <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
-                <div className="h-full flex space-x-8">
+                <div className="h-full flex space-x-4">
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
                       {({ open }) => (
@@ -385,7 +385,7 @@ export function Header({ navIsOpen, onNavToggle }) {
                                 open
                                   ? 'border-indigo-600 text-indigo-600'
                                   : 'border-transparent text-gray-700 hover:text-gray-800',
-                                'relative z-10 flex items-center transition-colors ease-out duration-200 text-base font-medium border-b -mb-px pt-px'
+                                'px-2 relative z-10 flex items-center transition-colors ease-out duration-200 text-base font-medium border-b -mb-px pt-px'
                               )}
                             >
                               <span>{category.name}</span>
@@ -469,7 +469,7 @@ export function Header({ navIsOpen, onNavToggle }) {
                     <a
                       key={page.name}
                       href={page.href}
-                      className="flex items-center text-base font-medium text-gray-700 hover:text-gray-800"
+                      className="px-2 flex items-center text-base font-medium text-gray-700 hover:text-gray-800"
                     >
                       {page.name}
                     </a>

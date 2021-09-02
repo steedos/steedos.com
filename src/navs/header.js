@@ -110,6 +110,7 @@ export const headerNav = {
     },
   ],
   pages: [
+    { name: '定价', href: '/pricing/cloud' },
     { name: '文档', href: '/docs' },
     // { name: 'Themes', href: '#' },
   ],

@@ -150,7 +150,7 @@ function TopLevelNav() {
 
   return (
     <>
-      <TopLevelLink
+      {/* <TopLevelLink
         href="/docs"
         isActive={current === '' || current === 'docs'}
         color="pink"
@@ -173,7 +173,7 @@ function TopLevelNav() {
         }
       >
         Documentation
-      </TopLevelLink>
+      </TopLevelLink> */}
       {/* <TopLevelLink
         href="https://tailwindui.com/components?utm_source=tailwindcss&utm_medium=navigation"
         color="violet"
