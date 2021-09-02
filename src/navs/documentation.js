@@ -9,8 +9,8 @@ export const documentationNav = {
   'Getting started': [
     pages['installation'],
     {
-      title: 'Release Notes',
-      href: 'https://github.com/tailwindlabs/tailwindcss/releases',
+      title: 'Github',
+      href: 'https://github.com/steedos/steedos-platform/',
     },
   ],
 }

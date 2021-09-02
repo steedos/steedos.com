@@ -15,7 +15,7 @@ import { Hero } from '@/components/home/Hero'
 import { BigText, InlineCode, Link, Paragraph, Widont } from '@/components/home/common'
 import { useEffect, useState } from 'react'
 import { Logo } from '@/components/Logo'
-import { Footer } from '@/components/home/Footer'
+import { Footer } from '@/components/Footer'
 import NextLink from 'next/link'
 import Head from 'next/head'
 
