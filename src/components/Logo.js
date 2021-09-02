@@ -1,6 +1,6 @@
 export function Logo(props) {
   return (
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="50px" viewBox="0 0 907 283" enable-background="new 0 0 907 283" class='my-4'>  
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="50px" viewBox="0 0 907 283" enableBackground="new 0 0 907 283">  
 <image id="image0" width="907" height="283" x="0" y="0"
     href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA4sAAAEbCAYAAABz6hEJAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAA
