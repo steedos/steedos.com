@@ -18,12 +18,13 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const fallbackLayouts = {
   'src/pages/docs/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
   'src/pages/components/**/*': ['@/layouts/ComponentsLayout', 'ComponentsLayout'],
+  'src/pages/platform/**/*': ['@/layouts/PlatformLayout', 'PlatformLayout'],
   'src/pages/pricing/**/*': ['@/layouts/PricingLayout', 'PricingLayout'],
   'src/pages/course/**/*': ['@/layouts/CourseLayout', 'CourseLayout'],
 }
 
 const fallbackDefaultExports = {
-  'src/pages/{docs,components,pricing}/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
+  'src/pages/{docs,components,pricing,platform}/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
   'src/pages/course/**/*': ['@/layouts/VideoLayout', 'VideoLayout'],
 }
 

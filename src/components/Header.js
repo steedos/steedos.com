@@ -350,7 +350,7 @@ export function Header({ navIsOpen, onNavToggle }) {
         </Dialog>
       </Transition.Root>
 
-      <header className="sticky lg:z-50 relative bg-white inset-0 shadow">
+      <header className="sticky lg:z-50 relative bg-white inset-0 border-b">
        
         <nav aria-label="Top" className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="">
