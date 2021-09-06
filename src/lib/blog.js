@@ -191,7 +191,7 @@ export async function getBlogSidebarLayoutNav(blogSlug, menuId){
     menu.items.forEach((item) => {
         value.push({
             title: item.name,
-            href: `/${blogSlug}/post/${item.link_post__expand.slug || item.link_post__expand._id}`,
+            href: `/${blogSlug}/post/${item.link_post__expand._id}`, //item.link_post__expand.slug
         })
     });
     const nav = {[key]: value};
