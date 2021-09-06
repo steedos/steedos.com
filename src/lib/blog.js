@@ -217,7 +217,7 @@ export async function getBlog(blogSlug){
             slug,
             name,
             sidebar,
-            posts: _related_site_posts_blog(filters:["slug","=","index"]){
+            posts: _related_site_posts_blog(top:20){
                 _id,
                 name,
                 slug,
