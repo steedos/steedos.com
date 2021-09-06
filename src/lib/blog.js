@@ -30,6 +30,13 @@ async function fetchGraphql(query) {
     return json
 }
 
+/**
+ * 获取Post
+ * TODO 支持根据blogSlug + postSlug 查询
+ * @param {*} blogSlug
+ * @param {*} postSlug : post._id || post.slug(暂不支持)
+ * @returns 
+ */
 export async function getPost(blogSlug, postSlug){
     const query = `
         {
@@ -169,6 +176,14 @@ export async function getMenuItems(menuId){
     return menuItems;
 }
 
+/**
+ * 获取Blog左侧导航数据
+ * TODO 支持各种类型的menu item type
+ * TODO 支持文章slug
+ * @param {*} blogSlug 
+ * @param {*} menuId 
+ * @returns 
+ */
 export async function getBlogSidebarLayoutNav(blogSlug, menuId){
     const menu = await getMenu(menuId);
     const key = menu.name
