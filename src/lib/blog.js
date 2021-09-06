@@ -43,6 +43,7 @@ export async function getPost(blogSlug, postSlug){
             site_posts(filters: [["_id","=","${postSlug}"], "or", [["blog","=","${blogSlug}"], ["slug","=","${postSlug}"]]]){
                 _id,
                 name,
+                image,
                 slug,
                 tags,
                 status,
@@ -66,7 +67,6 @@ export async function getPost(blogSlug, postSlug){
             } 
         }
     `
-    console.log(`query`, query)
     const result = await fetchGraphql(query);
 
     let post = null;
@@ -79,31 +79,31 @@ export async function getPost(blogSlug, postSlug){
 }
 
 
-export async function getBlog(blogSlug){
-    const query = `
-        {
-            site_blogs(filters: [["_id","=","${blogSlug}"], "or", ["slug","=","${blogSlug}"]]){
-                authors,
-                commentable,
-                name,
-                owner,
-                sidebar,
-                site,
-                slug,
-                url
-            }
-        }
-    `
-    const result = await fetchGraphql(query);
+// export async function getBlog(blogSlug){
+//     const query = `
+//         {
+//             site_blogs(filters: [["_id","=","${blogSlug}"], "or", ["slug","=","${blogSlug}"]]){
+//                 authors,
+//                 commentable,
+//                 name,
+//                 owner,
+//                 sidebar,
+//                 site,
+//                 slug,
+//                 url
+//             }
+//         }
+//     `
+//     const result = await fetchGraphql(query);
 
-    let blog = null;
+//     let blog = null;
 
-    if(result.data && result.data.site_blogs && result.data.site_blogs.length > 0){
-        blog = result.data.site_blogs[0];
-    }
+//     if(result.data && result.data.site_blogs && result.data.site_blogs.length > 0){
+//         blog = result.data.site_blogs[0];
+//     }
 
-    return blog;
-}
+//     return blog;
+// }
 
 export async function getMenu(menuId) {
     const query = `
@@ -176,6 +176,10 @@ export async function getMenuItems(menuId){
     return menuItems;
 }
 
+export function getPostUrl(blogSlug, post){
+    return `/blog/${blogSlug}/post/${post._id}`
+}
+
 /**
  * 获取Blog左侧导航数据
  * TODO 支持各种类型的menu item type
@@ -191,10 +195,63 @@ export async function getBlogSidebarLayoutNav(blogSlug, menuId){
     menu.items.forEach((item) => {
         value.push({
             title: item.name,
-            href: `/${blogSlug}/post/${item.link_post__expand._id}`, //item.link_post__expand.slug
+            href: getPostUrl(blogSlug,item.link_post__expand ), //item.link_post__expand.slug
         })
     });
     const nav = {[key]: value};
     console.log(`nav`, nav)
     return nav;
+}
+
+
+/**
+ * 
+ * @param {*} blogSlug 
+ * @returns 
+ */
+export async function getBlog(blogSlug){
+    const query = `
+    {
+        site_blogs(filters:["slug","=","${blogSlug}"]){
+            _id,
+            slug,
+            name,
+            sidebar,
+            posts: _related_site_posts_blog(filters:["slug","=","index"]){
+                _id,
+                name,
+                slug,
+                tags,
+                image,
+                status,
+                published,
+                published_at,
+                featured,
+                body_html,
+                blog,
+                blog__expand{
+                    _id,
+                    authors,
+                    commentable,
+                    name,
+                    owner,
+                    sidebar,
+                    site,
+                    slug,
+                    url
+                }
+                site
+            }
+        } 
+    }
+    `
+    const result = await fetchGraphql(query);
+
+    let blog = null;
+
+    if(result.data && result.data.site_blogs && result.data.site_blogs.length > 0){
+        blog = result.data.site_blogs[0];
+    }
+
+    return blog;
 }
