@@ -50,13 +50,18 @@ export default function App({ Component, pageProps, router }) {
     }
   }, [navIsOpen])
 
-  const Layout = Component.layoutProps?.Layout || Fragment
-  const layoutProps = Component.layoutProps?.Layout
-    ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen }
-    : {}
-  const meta = Component.layoutProps?.meta || {}
-  const description =
-    meta.metaDescription || meta.description || 'Documentation for the Tailwind CSS framework.'
+  let Layout = Component.layoutProps?.Layout || Fragment
+  let layoutProps = Component.layoutProps?.Layout ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen } : {}
+  let meta = Component.layoutProps?.meta || {}
+  let description = meta.metaDescription || meta.description || 'Documentation for the Tailwind CSS framework.'
+
+  if(Component.getLayoutProps){
+    const pageLayoutProps = Component.getLayoutProps(Component, pageProps);
+    Layout = pageLayoutProps?.Layout || Fragment
+    layoutProps = pageLayoutProps?.Layout ? { layoutProps: pageLayoutProps, navIsOpen, setNavIsOpen } : {}
+    meta = pageLayoutProps?.meta || {}
+    description = meta.metaDescription || meta.description || 'Documentation for the Tailwind CSS framework.'
+  }
 
   if (router.pathname.startsWith('/examples/')) {
     return <Component {...pageProps} />

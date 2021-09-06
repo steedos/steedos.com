@@ -8,3 +8,5 @@
 
 @import 'tailwindcss/components';
 @import 'utilities.css';
+
+@import 'rich-markdown-editor';

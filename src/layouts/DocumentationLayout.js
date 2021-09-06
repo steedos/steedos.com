@@ -8,6 +8,10 @@ import { documentationNav } from '@/navs/documentation'
 export function DocumentationLayout(props) {
   const router = useRouter()
 
+  console.log(`documentationNav`, documentationNav)
+
+  console.log(`props.layoutProps.nav`, props.layoutProps.nav)
+
   return (
     <>
       <Title suffix={router.pathname === '/' ? undefined : 'Tailwind CSS'}>
@@ -21,7 +25,7 @@ export function DocumentationLayout(props) {
           content={`https://tailwindcss.com${twitterSquare}`}
         /> */}
       </Head>
-      <SidebarLayout nav={documentationNav} {...props} />
+      <SidebarLayout nav={props.layoutProps.nav} {...props} />
     </>
   )
 }
