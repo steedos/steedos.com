@@ -1,34 +1,4 @@
-const ROOT_URL = process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL
-const API_KEY = process.env.STEEDOS_SERVER_API_KEY
-
-const GRAPHQL_API='/graphql'
-
-async function fetchGraphql(query) {
-    const headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-    }
-    if (API_KEY) {
-        headers[
-            'Authorization'
-        ] = `Bearer apikey,${API_KEY}`
-    }else{
-        throw new Error('Please configure the environment variable STEEDOS_SERVER_API_KEY');
-    }
-
-    const res = await fetch(`${ROOT_URL}${GRAPHQL_API}`, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({query: query})
-      })
-
-    const json = await res.json()
-    if (json.errors) {
-        console.error(json.errors)
-        throw new Error('Failed to fetch API')
-    }
-    return json
-}
+import { fetchGraphql } from '@/lib/base'
 
 /**
  * 获取Post

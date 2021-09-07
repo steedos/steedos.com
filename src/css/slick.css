@@ -1,0 +1,8 @@
+.slick-dots{
+    bottom: 10px !important;
+  }
+
+.bg-sky-900 {
+    --tw-bg-opacity: 1;
+    background-color: rgba(12,74,110,var(--tw-bg-opacity));
+}

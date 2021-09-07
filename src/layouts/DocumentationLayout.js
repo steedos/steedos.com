@@ -1,16 +1,12 @@
 import { SidebarLayout } from '@/layouts/SidebarLayout'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import twitterSquare from '@/img/twitter-square.jpg'
+// import twitterSquare from '@/img/twitter-square.jpg'
 import { Title } from '@/components/Title'
-import { documentationNav } from '@/navs/documentation'
+// import { documentationNav } from '@/navs/documentation'
 
 export function DocumentationLayout(props) {
   const router = useRouter()
-
-  console.log(`documentationNav`, documentationNav)
-
-  console.log(`props.layoutProps.nav`, props.layoutProps.nav)
 
   return (
     <>
