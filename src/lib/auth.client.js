@@ -1,4 +1,4 @@
-import { fetchAPI, ROOT_URL } from '@/lib/auth.client';
+import { fetchAPI, ROOT_URL } from '@/lib/base.client';
 
 export async function authValidate(){
     const data = await fetchAPI(`/api/v4/users/validate`, {method: 'POST', body: JSON.stringify({})})

@@ -1,3 +1,4 @@
+import { goLogin } from '@/lib/auth.client'
 export function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -27,6 +28,10 @@ export async function fetchAPI(api, options = {}) {
     options.headers = Object.assign({}, headers, options.headers);
 
     const res = await fetch(`${ROOT_URL}${api}`, options)
+    
+    if(res.status === 401){
+        return goLogin()
+    }
 
     const json = await res.json()
     if (json.errors) {

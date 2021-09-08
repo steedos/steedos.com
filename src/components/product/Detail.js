@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import tinytime from 'tinytime'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import Editor from "rich-markdown-editor";
 import { Dialog, Disclosure, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
 import {
@@ -23,8 +24,10 @@ import { Gallery, Item } from 'react-photoswipe-gallery'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getDefaultPrice } from '@/lib/product.client';
+import { getPrice } from '@/lib/product.client';
 import { getMedia } from '@/lib/product.client'
+import { find, each } from 'lodash'
+import BuyButton from '@/components/product/BuyButton'
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
@@ -32,37 +35,22 @@ function classNames(...classes) {
 const postDateTemplate = tinytime('{YYYY}-{Mo}-{DD}')
 
 export default function ProductDetail({ product, children, posts }) {
-  const router = useRouter()
-  let highlights = [];
-//   if (meta.highlights) {
-//     highlights = meta.highlights.split('\n')
-//   }
-//   const product = {
-//     name: meta.label,
-//     version: meta.version, //{ name: '1.0', date: 'June 5, 2021', datetime: '2021-06-05' },
-//     date: postDateTemplate.render(new Date(meta.version_date)),
-//     datetime: meta.version_date,
-//     price: '¥' + meta.price_monthly,
-//     description: meta.description,
-//     highlights: highlights,
-//     image: meta.image,
-//     reviews: meta.reviews ? meta.reviews : [],
-//     rating: meta.rating,
-//     carousel: meta.carousel,
-//     homepage: meta.homepage
-//   }
-
-  console.log(`product.reviews`, product.reviews)
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1
-  };
+  const [productVariant, setProductVariant] = useState(product.product_variants[0]);
+  const onVariantRadiosChange = (values)=>{
+    setProductVariant(find(product.product_variants, (item)=>{
+      let isEq = true;
+      each(values, (v, k)=>{
+        if(isEq){
+          if(item[k] === v){
+            isEq = true
+          }else{
+            isEq = false
+          }
+        }
+      })
+      return isEq;
+    }))
+  }
   return (
     <>
       <main className="max-w-7xl mx-auto sm:pt-16 sm:px-6 lg:px-8">
@@ -76,7 +64,7 @@ export default function ProductDetail({ product, children, posts }) {
                 <Tab.List className="grid grid-cols-4 gap-6">
                   {getMedia(product).map((image) => (
                     <Tab
-                      key={image.name}
+                      key={image._id}
                       className="relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50"
                     >
                       {({ selected }) => (
@@ -126,8 +114,9 @@ export default function ProductDetail({ product, children, posts }) {
 
               <div className="mt-3">
                 <h2 className="sr-only">Product information</h2>
-                {/* <p className="text-3xl text-gray-900"><PriceMonthly price={getDefaultPrice(product)}></PriceMonthly></p> */}
-                <p className="text-3xl text-gray-900">¥{getDefaultPrice(product).toFixed(2)}</p>
+                <p className="text-3xl text-gray-900">
+                  <PriceMonthly price={getPrice(productVariant)}></PriceMonthly>
+                </p>
               </div>
 
               {/* Reviews */}
@@ -150,13 +139,8 @@ export default function ProductDetail({ product, children, posts }) {
                 />
               </div>
 
-              <VariantRadios product={product}></VariantRadios>
-                <button
-                type="submit"
-                className="mt-8 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Add to cart
-              </button>
+              <VariantRadios product={product} onChange={onVariantRadiosChange}></VariantRadios>
+              <BuyButton productVariant={productVariant}></BuyButton>
 
               {/* <section aria-labelledby="details-heading" className="mt-12">
                 <h2 id="details-heading" className="sr-only">
@@ -230,10 +214,10 @@ export default function ProductDetail({ product, children, posts }) {
                 {product.reviews.map((review, reviewIdx) => (
                   <div key={review._id} className="flex text-sm text-gray-500 space-x-4">
                     <div className="flex-none py-10">
-                      <img src={`${process.env.NEXT_PUBLIC_SAAS_SERVICE_ROOT_URL}/avatar/${review.owner}`} alt="" className="w-10 h-10 bg-gray-100 rounded-full" />
+                      <img src={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/avatar/${review.owner}`} alt="" className="w-10 h-10 bg-gray-100 rounded-full" />
                     </div>
                     <div className='py-10'>
-                      <h3 className="font-medium text-gray-900">{review.author}</h3>
+                      <h3 className="font-medium text-gray-900">{review.owner__expand.name}</h3>
                       <p>
                         <time dateTime={review.created}>{postDateTemplate.render(new Date(review.created))}</time>
                       </p>
@@ -243,10 +227,8 @@ export default function ProductDetail({ product, children, posts }) {
                         <ReviewStars rating={review.rating} />
                       </div>
 
-                      <div
-                        className="mt-4 prose prose-sm max-w-none text-gray-500"
-                        dangerouslySetInnerHTML={{ __html: review.content }}
-                      />
+                      <div className="mt-4 prose prose-sm max-w-none text-gray-500">{review.name}</div>
+                      
                     </div>
                   </div>
                 ))}

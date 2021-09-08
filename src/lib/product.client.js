@@ -1,5 +1,19 @@
 import { getFileSrc } from '@/lib/base.client';
-import { groupBy, keys } from 'lodash';
+import { groupBy, keys, each } from 'lodash';
+
+export function formatPrice(price){
+    if(!price){
+        return `¥0.00`
+    }else{
+        return `¥${price.toFixed(2)}`
+    }
+}
+
+export function getPrice(productVariant){
+    if(productVariant){
+        return productVariant.price
+    }
+}
 
 export function getDefaultPrice(product){
     if(product && product.product_variants && product.product_variants.length > 0){
@@ -11,25 +25,20 @@ export function getMedia(product){
     const media = [];
     if(product && product.media){
         product.media.forEach(function(item){
-            media.push({name: item.name, extention: item.extention, src: getFileSrc(item.versions[0])})
+            media.push({_id: item._id, name: item.name, extention: item.extention, src: getFileSrc(item.versions[0])})
         })
     }
-    console.log(`media`, product, media)
     return media;
 }
 
 export function getProductVariants(product){
     const variants = [];
-    const {option1, option2, option3, product_variants } = product;
-    if(option1){
-        variants.push({name: option1, options: keys(groupBy(product_variants, 'option1'))})
-    }
-    if(option2){
-        variants.push({name: option2, options: keys(groupBy(product_variants, 'option2'))})
-    }
-    if(option3){
-        variants.push({name: option3, options: keys(groupBy(product_variants, 'option3'))})
-    }
-    console.log(`variants`, variants)
+    const { product_variants } = product;
+    each(['option1','option2','option3'], (key)=>{
+        const optionItem = product[key];
+        if(optionItem){
+            variants.push({key: key, name: optionItem, options: keys(groupBy(product_variants, key))})
+        }
+    })
     return variants;
 }

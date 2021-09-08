@@ -5,11 +5,13 @@ import clsx from 'clsx'
 import Router from 'next/router'
 import { Logo } from '@/components/Logo'
 import { Fragment, useState } from 'react'
-import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { MenuIcon, SearchIcon, ChevronDownIcon, XIcon } from '@heroicons/react/outline'
+import { Dialog, Popover, Tab, Transition, Menu } from '@headlessui/react'
+import { MenuIcon, SearchIcon, ChevronDownIcon, XIcon, LogoutIcon } from '@heroicons/react/outline'
 import { StarIcon } from '@heroicons/react/solid'
 import { headerNav } from '@/navs/header';
+import useSWR from 'swr'
 
+import { authValidate, goLogin, goLogout } from '@/lib/auth.client';
 
 const navigation = headerNav;
 
@@ -186,6 +188,16 @@ function BannerMarkRight(props) {
 export function Header({ navIsOpen, onNavToggle }) {
 
   const [open, setOpen] = useState(false)
+  const [userInfo, setUserInfo] = useState({})
+
+  useSWR('AuthValidate', async ()=>{
+    const userInfo = await authValidate();
+    if(!userInfo.error){
+      setUserInfo(userInfo)
+    }else{
+      setUserInfo({})
+    }
+  })
   return (
     <>
       <div className="py-2 bg-gradient-to-r from-indigo-600 to-light-blue-500 overflow-hidden">
@@ -320,10 +332,9 @@ export function Header({ navIsOpen, onNavToggle }) {
                   </div>
                 ))}
               </div>
-
-              <div className="border-t border-gray-200 py-6 px-4 space-y-6">
+              {!userInfo.name && <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                 <div className="flow-root">
-                  <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
+                  <a href="#" className="-m-2 p-2 block font-medium text-gray-900" onClick={goLogin}>
                     登录
                   </a>
                 </div>
@@ -332,7 +343,8 @@ export function Header({ navIsOpen, onNavToggle }) {
                     创建账户
                   </a>
                 </div>
-              </div>
+              </div>}
+              
 
               {/* <div className="border-t border-gray-200 py-6 px-4">
                 <a href="#" className="-m-2 p-2 flex items-center">
@@ -476,18 +488,17 @@ export function Header({ navIsOpen, onNavToggle }) {
                   ))}
                 </div>
               </Popover.Group>
-
+              
               <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                {!userInfo.name && <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800" onClick={goLogin}>
                     登录
                   </a>
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     创建账户
                   </a>
-                </div>
-
+                </div>}
                 {/* <div className="hidden lg:ml-8 lg:flex">
                   <a href="#" className="text-gray-700 hover:text-gray-800 flex items-center">
                     <img
@@ -519,6 +530,44 @@ export function Header({ navIsOpen, onNavToggle }) {
                     <span className="sr-only">items in cart, view bag</span>
                   </a>
                 </div> */}
+                {userInfo.name && <Menu as="div" className="relative inline-block text-left">
+        <div>
+          <Menu.Button className="inline-flex justify-center text-gray-700 hover:text-gray-800 w-full px-4 py-2 text-sm font-medium rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            {userInfo.name}
+            <ChevronDownIcon
+              className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
+              aria-hidden="true"
+            />
+          </Menu.Button>
+        </div>
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="px-1 py-1">
+              <Menu.Item>
+                <button
+                    onClick={goLogout}
+                    className={`text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                  >
+                    <LogoutIcon
+                        className="w-5 h-5 mr-2 text-violet-400"
+                        aria-hidden="true"
+                      />
+                    注销
+                  </button>
+              </Menu.Item>
+            </div>
+          </Menu.Items>
+        </Transition>
+      </Menu>
+            }
               </div>
             </div>
           </div>

@@ -1,47 +1,44 @@
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import { getProductVariants } from '@/lib/product.client'
-const plans = [
-    {
-        name: 'Startup',
-        ram: '12GB',
-        cpus: '6 CPUs',
-        disk: '160 GB SSD disk',
-    },
-    {
-        name: 'Business',
-        ram: '16GB',
-        cpus: '8 CPUs',
-        disk: '512 GB SSD disk',
-    },
-    {
-        name: 'Enterprise',
-        ram: '32GB',
-        cpus: '12 CPUs',
-        disk: '1024 GB SSD disk',
-    },
-]
-export default function VariantRadios({ product }) {
+import { isFunction, map, each } from 'lodash'
+
+export default function VariantRadios({ product, onChange }) {
     const variants = getProductVariants(product);
-    const [selected, setSelected] = useState(plans[0])
+    let initValues = {};
+    each(variants, (item)=>{
+        initValues[item.key] = item.options[0]
+    })
+    const [values, setValues] = useState(initValues);
     return (
         <>
             {variants.map((variant)=>(
-                <VariantRadio key={variant.name} productVariant={variant}></VariantRadio>
+                <VariantRadio key={variant.key} productVariant={variant} onChange={(value)=>{
+                    const newValues = Object.assign({}, values, {[variant.key]: value})
+                    setValues(newValues)
+                    if(onChange && isFunction(onChange)){
+                        onChange(newValues)
+                    }
+                }}></VariantRadio>
             ))}
         </>
     )
 }
 
-function VariantRadio({ productVariant }) {
-    const [selected, setSelected] = useState(plans[0])
+function VariantRadio({ productVariant, onChange }) {
+    const [selected, setSelected] = useState(productVariant.options[0])
     return (
         <div className="mt-8">
                 <div className="flex items-center justify-between">
                   <h2 className="text-sm font-medium text-gray-900">{productVariant.name}</h2>
                 </div>
 
-                <RadioGroup value={selected} onChange={setSelected} className="mt-2">
+                <RadioGroup value={selected} onChange={(value)=>{
+                    setSelected(value);
+                    if(onChange && isFunction(onChange)){
+                        onChange(value)
+                    }
+                }} className="mt-2">
                     <RadioGroup.Label className="sr-only">{productVariant.name}</RadioGroup.Label>
                     <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
                         {productVariant.options.map((option) => (
@@ -65,20 +62,5 @@ function VariantRadio({ productVariant }) {
                 </RadioGroup>
 
         </div>
-    )
-}
-
-function CheckIcon(props) {
-    return (
-        <svg viewBox="0 0 24 24" fill="none" {...props}>
-            <circle cx={12} cy={12} r={12} fill="#fff" opacity="0.2" />
-            <path
-                d="M7 13l3 3 7-7"
-                stroke="#fff"
-                strokeWidth={1.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-        </svg>
     )
 }

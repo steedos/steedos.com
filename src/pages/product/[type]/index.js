@@ -83,7 +83,7 @@ export default class Home extends React.Component {
                             <div className="flex items-center space-x-3">
                               <h3 className="text-gray-900 text-sm font-medium truncate"></h3>
                             </div>
-                            <PriceMonthly price={getDefaultPrice(product)}></PriceMonthly>
+                            <p className="mt-1 "><PriceMonthly price={getDefaultPrice(product)}></PriceMonthly></p>
                           </div>
                         </div>
                         <div className="">

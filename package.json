@@ -64,6 +64,7 @@
     "slick-carousel": "^1.8.1",
     "stringify-object": "^3.3.0",
     "styled-components": "^5.3.1",
+    "swr": "^1.0.0",
     "tailwindcss": "^0.0.0-insiders.4a070ac",
     "tinytime": "^0.2.6",
     "unist-util-visit": "^2.0.3"
