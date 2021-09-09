@@ -80,10 +80,15 @@ export async function getServerSideProps({
   }
 }
 
-export default function Post({ post, nav, mdxSource }) {
+export default function Post({ post, nav, mdxSource, tableOfContents }) {
   
   return (
-    <MDXRemote {...mdxSource} components={components}/>
+    <ContentsLayout tableOfContents={tableOfContents} meta={{
+      title: post.name,
+      description: post.description
+    }}>
+      <MDXRemote {...mdxSource} components={components}/>
+    </ContentsLayout>
   )
 }
 
@@ -94,7 +99,6 @@ Post.getLayoutProps = (page, pageProps) => {
       description: pageProps.post.description,
     },
     nav: pageProps.nav,
-    Layout: ContentsLayout,
-    tableOfContents: pageProps.tableOfContents
+    Layout: DocumentationLayout,
   }
 }
