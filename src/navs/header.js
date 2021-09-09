@@ -107,7 +107,7 @@ export const headerNav = {
   pages: [
     { name: '定价', href: '/pricing/platform' },
     { name: '文档', href: '/blog/docs' },
-    { name: '应用市场', href: '/product/appexchange' },
+    { name: '应用市场', href: '/collections/apps' },
     // { name: 'Themes', href: '#' },
   ],
 }

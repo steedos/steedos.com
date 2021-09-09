@@ -40,7 +40,6 @@ export default class Home extends React.Component {
   }
   render(){
     const { products } = this.props;
-    console.log(`products`, products)
     return (
       <>
           <Head>
@@ -69,8 +68,8 @@ export default class Home extends React.Component {
               <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {products.map((product) => {
                   return (
-                  <a key={`/product/${product.product_type__expand.code}/${product._id}`} href={`/product/${product.product_type__expand.code}/${product._id}`}>
-                    <li key={`/product/${product.product_type__expand.code}/${product._id}`} className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
+                  <a key={`/products/${product.slug}`} href={`/products/${product.slug}`}>
+                    <li key={`/products/${product.slug}`} className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
                       {/* <div className="relative bg-gray-100 pt-[50%] overflow-hidden" style={{paddingTop:'50%'}}>
                         <div className="absolute inset-0 w-full h-full rounded-t-lg overflow-hidden">
                           <img src={meta.image} alt="" className="absolute inset-0 w-full h-full"/>
@@ -83,7 +82,7 @@ export default class Home extends React.Component {
                             <div className="flex items-center space-x-3">
                               <h3 className="text-gray-900 text-sm font-medium truncate"></h3>
                             </div>
-                            <p className="mt-1 "><PriceMonthly price={getDefaultPrice(product)}></PriceMonthly></p>
+                            <PriceMonthly price={getDefaultPrice(product)}></PriceMonthly>
                           </div>
                         </div>
                         <div className="">

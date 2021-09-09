@@ -169,7 +169,6 @@ export async function getBlogSidebarLayoutNav(blogSlug, menuId){
         })
     });
     const nav = {[key]: value};
-    console.log(`nav`, nav)
     return nav;
 }
 

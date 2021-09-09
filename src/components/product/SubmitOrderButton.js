@@ -2,7 +2,6 @@ import { useRouter } from 'next/router'
 import { submitOrder } from '@/lib/order'
 import { each } from 'lodash';
 export default function SubmitOrderButton({ variants }) {
-    console.log(`variants`, variants)
     const router = useRouter()
     const onClick= async ()=>{
         let orderInfo = {variants: []};
