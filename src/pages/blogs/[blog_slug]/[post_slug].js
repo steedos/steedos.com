@@ -13,8 +13,9 @@ import { DocumentationLayout } from '@/layouts/DocumentationLayout'
 import tinytime from 'tinytime'
 import Editor from "rich-markdown-editor";
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 import { PageHeader } from '@/components/PageHeader'
-import { getPost, getBlogSidebarLayoutNav } from '@/lib/blog';
+import { getPost, getBlog, getBlogSidebarLayoutNav } from '@/lib/blog';
 
 export async function getServerSideProps({
   params,
@@ -23,11 +24,15 @@ export async function getServerSideProps({
   preview,
 }) {
   const { blog_slug, post_slug } = params;
+  const blog = await getBlog(blog_slug);
+  if (!blog) {
+    throw new Error(`Blog with slug '${params.blog_slug}' not found`)
+  }
   const post = await getPost(blog_slug, post_slug);
   if (!post) {
     throw new Error(`Post with slug '${params.post_slug}' not found`)
   }
-  const nav = post.blog__expand && post.blog__expand.sidebar? await getBlogSidebarLayoutNav(blog_slug, post.blog__expand.sidebar):null
+  const nav = blog.sidebar? await getBlogSidebarLayoutNav(blog_slug, blog.sidebar):null
   return {
     props: {
       post: post,
@@ -39,8 +44,8 @@ export async function getServerSideProps({
 const formatDate = tinytime('{MM} {DD}, {YYYY}').render
 
 
-function TableOfContents({ headings, currentSection }) {
-  if (!headings) return null
+function TableOfContents({ tableOfContents, currentSection }) {
+  if (!tableOfContents) return null
 
   return (
     <>
@@ -48,7 +53,7 @@ function TableOfContents({ headings, currentSection }) {
         本页内容
       </h5>
       <ul className="overflow-x-hidden text-gray-500 font-medium">
-        {headings.map((section) => {
+        {tableOfContents.map((section) => {
           let sectionIsActive = currentSection === section.id ||
             section.children.findIndex(({ id }) => id === currentSection) > -1
 
@@ -101,39 +106,40 @@ function TableOfContents({ headings, currentSection }) {
 export default function Post({ post, nav }) {
   
   const editor = useRef(null);
+  const router = useRouter()
 
-  let [headings, setHeadings] = useState([])
   let [tableOfContents, setTableOfContents] = useState([])
-  let [tableOfContentsLoaded, setTableOfContentsLoaded] = useState(false)
   let [currentSection, setCurrentSection] = useState(tableOfContents[0]?.id)
 
-  // calculate the minimum heading level and adjust all the headings to make
-  // that the top-most. This prevents the contents from being weirdly indented
-  // if all of the headings in the document are level 3, for example.
-  const minHeading = tableOfContents.reduce(
-    (memo, heading) => (heading.level < memo ? heading.level : memo),
-    Infinity
-  );
 
   useEffect(() => {
-    if (editor.current && !tableOfContentsLoaded) {
-      setTableOfContents(editor.current.getHeadings())
-      setTableOfContentsLoaded(true);
-    }
-  });
-
-  useEffect(() => {
-    if (tableOfContents.length === 0) return
+    if (!editor.current)
+      return;
+      
+    const headings = editor.current.getHeadings()
     
-    tableOfContents.forEach(heading => {
+    if (headings.length === 0) {
+      setTableOfContents([]);
+      return
+    }
+    
+    // calculate the minimum heading level and adjust all the headings to make
+    // that the top-most. This prevents the contents from being weirdly indented
+    // if all of the headings in the document are level 3, for example.
+    const minHeading = headings.reduce(
+      (memo, heading) => (heading.level < memo ? heading.level : memo),
+      Infinity
+    );
+
+    headings.forEach(heading => {
       heading.top = document.getElementById(heading.id).getBoundingClientRect().top + document.documentElement.scrollTop
     })
-    let calcHeadings = []
+    let toc = []
     let currentHeading = null
-    tableOfContents.forEach(heading => {
+    headings.forEach(heading => {
       if (heading.level == minHeading) {
         if (currentHeading)
-          calcHeadings.push(currentHeading);
+          toc.push(currentHeading);
         currentHeading = heading;
         currentHeading.children = []
       }
@@ -142,15 +148,16 @@ export default function Post({ post, nav }) {
       }
     });
     if (currentHeading)
-      calcHeadings.push(currentHeading);
-    setHeadings(calcHeadings)
+      toc.push(currentHeading);
+    setTableOfContents(toc)
+    console.log(toc)
 
-    if (calcHeadings.length === 0) return
+    if (toc.length === 0) return
 
     function onScroll() {
       let y = window.pageYOffset
       let windowHeight = window.innerHeight
-      let sortedHeadings = tableOfContents.concat([]).sort((a, b) => a.top - b.top)
+      let sortedHeadings = headings.concat([]).sort((a, b) => a.top - b.top)
       if (y <= 0) {
         setCurrentSection(sortedHeadings[0].id)
         return
@@ -175,7 +182,7 @@ export default function Post({ post, nav }) {
     onScroll()
     return () => window.removeEventListener('scroll', onScroll, true)
 
-  }, [tableOfContents])
+  }, [post])
 
   return (
     <div id={post._id} className="w-full flex">
@@ -195,13 +202,13 @@ export default function Post({ post, nav }) {
         />
       </div>
 
-      {headings && headings.length > 0 && (
+      {tableOfContents && tableOfContents.length > 0 && (
         <div className="hidden xl:text-sm xl:block flex-none w-64 pl-8 mr-8">
           <div className="flex flex-col justify-between overflow-y-auto sticky max-h-(screen-18) pt-10 pb-6 top-18">
             
             {tableOfContents && tableOfContents.length > 0 && (
               <div className="mb-8">
-                <TableOfContents headings={headings} currentSection={currentSection} />
+                <TableOfContents tableOfContents={tableOfContents} currentSection={currentSection} />
               </div>
             )}
           </div>
