@@ -29,9 +29,9 @@ export async function fetchAPI(api, options = {}) {
 
     const res = await fetch(`${ROOT_URL}${api}`, options)
     
-    if(res.status === 401){
-        return goLogin()
-    }
+    // if(res.status === 401){
+    //     return goLogin()
+    // }
 
     const json = await res.json()
     if (json.errors) {
