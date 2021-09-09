@@ -58,7 +58,7 @@ export default function App({ Component, pageProps, router }) {
   if(Component.getLayoutProps){
     const pageLayoutProps = Component.getLayoutProps(Component, pageProps);
     Layout = pageLayoutProps?.Layout || Fragment
-    layoutProps = pageLayoutProps?.Layout ? { layoutProps: pageLayoutProps, navIsOpen, setNavIsOpen } : {}
+    layoutProps = pageLayoutProps?.Layout ? { layoutProps: pageLayoutProps, ...pageLayoutProps, navIsOpen, setNavIsOpen } : {}
     meta = pageLayoutProps?.meta || {}
     description = meta.metaDescription || meta.description || 'Documentation for the Steedos framework.'
   }

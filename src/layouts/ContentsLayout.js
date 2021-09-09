@@ -168,7 +168,7 @@ export function ContentsLayout({ children, meta, classes, tableOfContents }) {
   ]
 
   const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(toc)
-  let { prev, next } = usePrevNext()
+  let { prev, next } = {}; //usePrevNext()
 
   return (
     <div id={meta.containerId} className="w-full flex">
