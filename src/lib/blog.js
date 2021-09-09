@@ -147,7 +147,7 @@ export async function getMenuItems(menuId){
 }
 
 export function getPostUrl(blogSlug, post){
-    return `/blog/${blogSlug}/post/${post._id}`
+    return `/blogs/${blogSlug}/${post._id}`
 }
 
 /**
@@ -160,6 +160,8 @@ export function getPostUrl(blogSlug, post){
  */
 export async function getBlogSidebarLayoutNav(blogSlug, menuId){
     const menu = await getMenu(menuId);
+    if (!menu)
+        return null
     const key = menu.name
     const value = [];
     menu.items.forEach((item) => {
