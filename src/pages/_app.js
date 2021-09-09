@@ -53,14 +53,14 @@ export default function App({ Component, pageProps, router }) {
   let Layout = Component.layoutProps?.Layout || Fragment
   let layoutProps = Component.layoutProps?.Layout ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen } : {}
   let meta = Component.layoutProps?.meta || {}
-  let description = meta.metaDescription || meta.description || 'Documentation for the Tailwind CSS framework.'
+  let description = meta.metaDescription || meta.description || 'Documentation for the Steedos framework.'
 
   if(Component.getLayoutProps){
     const pageLayoutProps = Component.getLayoutProps(Component, pageProps);
     Layout = pageLayoutProps?.Layout || Fragment
     layoutProps = pageLayoutProps?.Layout ? { layoutProps: pageLayoutProps, navIsOpen, setNavIsOpen } : {}
     meta = pageLayoutProps?.meta || {}
-    description = meta.metaDescription || meta.description || 'Documentation for the Tailwind CSS framework.'
+    description = meta.metaDescription || meta.description || 'Documentation for the Steedos framework.'
   }
 
   if (router.pathname.startsWith('/examples/')) {
