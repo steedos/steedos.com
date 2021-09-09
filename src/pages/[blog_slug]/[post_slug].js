@@ -50,12 +50,12 @@ function TableOfContents({ tableOfContents, currentSection }) {
   return (
     <>
       <h5 className="text-gray-900 uppercase tracking-wide font-semibold mb-3 text-sm lg:text-xs">
-        本页内容
+        {/* 本页内容 */}
       </h5>
-      <ul className="overflow-x-hidden text-gray-500 font-medium">
+      <ul className="border-l border-gray-200 pl-6 overflow-x-hidden text-gray-500">
         {tableOfContents.map((section) => {
-          let sectionIsActive = currentSection === section.id ||
-            section.children.findIndex(({ id }) => id === currentSection) > -1
+          let sectionIsActive = currentSection === section.id
+            //  || section.children.findIndex(({ id }) => id === currentSection) > -1
 
           return (
             <Fragment key={section.id}>
@@ -63,9 +63,9 @@ function TableOfContents({ tableOfContents, currentSection }) {
                 <a
                   href={`#${section.id}`}
                   className={clsx(
-                    'block transform transition-colors duration-200 py-2 hover:text-gray-900',
+                    'block transform transition-colors duration-200 py-2 font-medium text-gray-900 hover:text-gray-700',
                     {
-                      'text-gray-900': sectionIsActive,
+                      'text-teal-600': sectionIsActive,
                     }
                   )}
                 >
@@ -83,9 +83,9 @@ function TableOfContents({ tableOfContents, currentSection }) {
                     <a
                       href={`#${subsection.id}`}
                       className={clsx(
-                        'block py-2 transition-colors duration-200 hover:text-gray-900 font-medium',
+                        'block py-2 transition-colors duration-200 hover:text-gray-700',
                         {
-                          'text-gray-900': subsectionIsActive,
+                          'text-teal-600': subsectionIsActive,
                         }
                       )}
                     >
@@ -193,13 +193,15 @@ export default function Post({ post, nav }) {
           // badge={{ key: 'Tailwind CSS version', value: meta.featureVersion }}
           // border={!classes && meta.headerSeparator !== false}
         />
-        <Editor key={post.slug}
-          ref={editor}
-          defaultValue={post.body_html}
-          readOnly={true}
-          readOnlyWriteCheckboxes={true}
-          className="steedos-rich-markdown-editor"
-        />
+        <div className="prose-disabled">
+          <Editor key={post.slug}
+            ref={editor}
+            defaultValue={post.body_html}
+            readOnly={true}
+            readOnlyWriteCheckboxes={true}
+            className="steedos-rich-markdown-editor"
+          />
+        </div>
       </div>
 
       {tableOfContents && tableOfContents.length > 0 && (
