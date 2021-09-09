@@ -34,7 +34,7 @@ function classNames(...classes) {
 
 const postDateTemplate = tinytime('{YYYY}-{Mo}-{DD}')
 
-export default function ProductDetail({ product, children, posts }) {
+export default function ProductDetail({ product }) {
   const [productVariant, setProductVariant] = useState(product.product_variants[0]);
   const onVariantRadiosChange = (values)=>{
     setProductVariant(find(product.product_variants, (item)=>{

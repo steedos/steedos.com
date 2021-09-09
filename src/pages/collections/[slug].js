@@ -3,44 +3,24 @@ import Head from 'next/head'
 import ReviewStars from '@/components/product/ReviewStars'
 import PriceMonthly from '@/components/product/PriceMonthly'
 
-import { getProducts } from '@/lib/product';
+import { getCollectionProducts } from '@/lib/product';
 
 import { getDefaultPrice } from '@/lib/product.client';
 
 export async function getServerSideProps(context) {
-  const products = await getProducts()
-
-  if (!products) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
-
+  const { slug } = context.query
+  const collection = await getCollectionProducts(slug)
   return {
     props: {
-      products: products
+      collection: collection
     }
   }
 }
 
 export default class Home extends React.Component {
-  componentDidMount () {
-    if(window?.location?.search){
-        const search = new URLSearchParams(window.location.search);
-        if(search.get("client")){
-            localStorage.setItem("client_url", window.atob(search.get("client")))
-        }
-        if(search.get("install_nodes")){
-            localStorage.setItem("install_nodes", window.atob(search.get("install_nodes")))
-        }
-    }
-  }
+  
   render(){
-    const { products } = this.props;
-    console.log(`products`, products)
+    const { collection } = this.props;
     return (
       <>
           <Head>
@@ -67,10 +47,10 @@ export default class Home extends React.Component {
                 </p> */}
               </div>
               <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {products.map((product) => {
+                {collection?.products?.map((product) => {
                   return (
-                  <a key={`/product/${product.product_type__expand.code}/${product._id}`} href={`/product/${product.product_type__expand.code}/${product._id}`}>
-                    <li key={`/product/${product.product_type__expand.code}/${product._id}`} className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
+                  <a key={`/products/${product.slug}`} href={`/products/${product.slug}`}>
+                    <li key={`/products/${product.slug}`} className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
                       {/* <div className="relative bg-gray-100 pt-[50%] overflow-hidden" style={{paddingTop:'50%'}}>
                         <div className="absolute inset-0 w-full h-full rounded-t-lg overflow-hidden">
                           <img src={meta.image} alt="" className="absolute inset-0 w-full h-full"/>

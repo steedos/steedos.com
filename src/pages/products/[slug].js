@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router'
 import Detail from '@/components/product/Detail'
-import { getProducts } from '@/lib/product';
+import { getProduct } from '@/lib/product';
 
 export async function getServerSideProps(context) {
-  const products = await getProducts()
+  const { slug } = context.query
+  const product = await getProduct(slug)
 
-  if (!products) {
+  if (!product) {
     return {
       redirect: {
         destination: '/',
@@ -16,22 +17,17 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      products: products
+      product: product
     }
   }
 }
 
-const ProductDetail = ({products}) => {
+const ProductDetail = ({product}) => {
   const router = useRouter()
-  const { name } = router.query
-  if(!products){return <></>}
-  const product = products.find((_product) =>{
-    return _product._id === name.join('/')
-  })
   if(!product){
     return {notFind: true}
   }
-  return <Detail product={product} posts={products}></Detail>
+  return <Detail product={product}></Detail>
 }
 
 export default ProductDetail

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 export default function BuyButton({ productVariant }) {
     const router = useRouter()
     const onClick=()=>{
-        router.push(`/product/checkout?ids=${productVariant._id}`)
+        router.push(`/store/checkout?ids=${productVariant._id}`)
     }
     return (
       <button
