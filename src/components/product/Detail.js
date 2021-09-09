@@ -192,7 +192,7 @@ export default function ProductDetail({ product }) {
               </section> */}
             </div>
           </div>
-          <section aria-labelledby="related-heading" className="mt-10 border-t border-gray-200 py-8 px-4 sm:px-0">
+          {product.html && <section aria-labelledby="related-heading" className="mt-10 border-t border-gray-200 py-8 px-4 sm:px-0">
             <div className="max-w-none pt-10 pb-8">
               <Editor
                   defaultValue={product.html}
@@ -205,7 +205,7 @@ export default function ProductDetail({ product }) {
             {/* {meta.footer && (
               <div className="pt-6 pb-16" dangerouslySetInnerHTML={{ __html: meta.footer }} />
             )} */}
-          </section>
+          </section>}
 
           {product.reviews && product.reviews.length > 0 && (
             <section aria-labelledby="related-heading" className="mt-10 border-t border-gray-200 py-8 px-4 sm:px-0">
