@@ -7,6 +7,8 @@ import { getProducts } from '@/lib/product';
 
 import { getDefaultPrice } from '@/lib/product.client';
 
+import { DocumentationLayout } from '@/layouts/DocumentationLayout'
+
 export async function getServerSideProps(context) {
   const products = await getProducts()
 
@@ -26,7 +28,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default class Home extends React.Component {
+export default class All extends React.Component {
   componentDidMount () {
     if(window?.location?.search){
         const search = new URLSearchParams(window.location.search);
@@ -131,5 +133,17 @@ export default class Home extends React.Component {
           </main>
       </>
     )
+  }
+}
+
+
+All.getLayoutProps = (page, pageProps)=>{
+  return {
+    meta: {
+      title: "all",
+      description: "",
+    },
+    nav: pageProps.nav,
+    Layout: DocumentationLayout,
   }
 }

@@ -6,6 +6,7 @@ import PriceMonthly from '@/components/product/PriceMonthly'
 import { getCollectionProducts } from '@/lib/product';
 
 import { getDefaultPrice } from '@/lib/product.client';
+import { DocumentationLayout } from '@/layouts/DocumentationLayout'
 
 export async function getServerSideProps(context) {
   const { slug } = context.query
@@ -17,7 +18,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default class Home extends React.Component {
+export default class Collection extends React.Component {
   
   render(){
     const { collection } = this.props;
@@ -40,13 +41,13 @@ export default class Home extends React.Component {
             <div className="mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
               <div className="py-6 space-y-2 md:space-y-5">
                 <h1 className="text-xl font-extrabold text-gray-900 tracking-tight sm:text-2xl">
-                  推荐应用
+                  {collection.name}
                 </h1>
                 {/* <p className="text-lg text-gray-500">
                   All the latest Tailwind CSS news, straight from the team.
                 </p> */}
               </div>
-              <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {collection?.products?.map((product) => {
                   return (
                   <a key={`/products/${product.slug}`} href={`/products/${product.slug}`}>
@@ -114,3 +115,14 @@ export default class Home extends React.Component {
     )
   }
 }
+
+// Collection.getLayoutProps = (page, pageProps)=>{
+//   return {
+//     meta: {
+//       title: pageProps.collection.name,
+//       description: "",
+//     },
+//     nav: pageProps.nav,
+//     // Layout: DocumentationLayout,
+//   }
+// }

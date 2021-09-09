@@ -1,5 +1,5 @@
 import { fetchAPI, ROOT_URL } from '@/lib/base.client'
-
+import { goLogin } from '@/lib/auth.client'
 /**
  * 
  * @param {
@@ -19,6 +19,10 @@ export async function submitOrder(orderInfo, router){
             
         }
     } catch (Exception) {
-        router.push(`/store/payment-fail`)
+        if(Exception.message === '401'){
+            goLogin()
+        }else{
+            router.push(`/store/payment-fail`)
+        }
     }
 }
