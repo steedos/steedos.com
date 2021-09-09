@@ -147,7 +147,7 @@ export async function getMenuItems(menuId){
 }
 
 export function getPostUrl(blogSlug, post){
-    return `/blogs/${blogSlug}/${post._id}`
+    return `/${blogSlug}/${post._id}`
 }
 
 /**

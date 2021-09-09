@@ -189,6 +189,7 @@ export function Header({ navIsOpen, onNavToggle }) {
 
   const [open, setOpen] = useState(false)
   const [userInfo, setUserInfo] = useState({})
+
   useSWR('AuthValidate', async ()=>{
     const userInfo = await authValidate();
     if(!userInfo.error){
@@ -361,7 +362,7 @@ export function Header({ navIsOpen, onNavToggle }) {
         </Dialog>
       </Transition.Root>
 
-      <header className="sticky lg:z-50 relative bg-white inset-0 border-b">
+      <header className="sticky z-10 lg:z-50 relative bg-white inset-0 border-b">
        
         <nav aria-label="Top" className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="">
