@@ -5,7 +5,10 @@ import tinytime from 'tinytime'
 export async function getServerSideProps(context) {
   const { blog_slug } = context.params;
   const blog = await getBlog(blog_slug);
-  const nav = blog? await getBlogSidebarLayoutNav(blog_slug, blog.sidebar): []
+  if (!blog) {
+    throw new Error(`Blog with slug '${params.blog_slug}' not found`)
+  }
+  const nav = await getBlogSidebarLayoutNav(blog_slug, blog.sidebar)
   return {
     props: {
       blog: blog,

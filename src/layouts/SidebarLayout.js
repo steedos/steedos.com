@@ -275,7 +275,8 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
     <SidebarContext.Provider value={{ nav, navIsOpen, setNavIsOpen }}>
       <div className="w-full max-w-8xl mx-auto">
         <div className="lg:flex">
-          <div
+          {nav && (
+            <div
             id="sidebar"
             onClick={() => setNavIsOpen(false)}
             className={clsx(
@@ -284,7 +285,7 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
                 hidden: !navIsOpen,
               }
             )}
-          >
+            >
             <div
               id="navWrapper"
               onClick={(e) => e.stopPropagation()}
@@ -295,7 +296,8 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
                 {sidebar}
               </Nav>
             </div>
-          </div>
+            </div>
+          )}
           <div
             id="content-wrapper"
             className={clsx(

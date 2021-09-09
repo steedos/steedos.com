@@ -16,10 +16,18 @@ import clsx from 'clsx'
 import { PageHeader } from '@/components/PageHeader'
 import { getPost, getBlogSidebarLayoutNav } from '@/lib/blog';
 
-export async function getServerSideProps(context) {
-  const { blog_slug, post_slug } = context.params;
+export async function getServerSideProps({
+  params,
+  locale,
+  locales,
+  preview,
+}) {
+  const { blog_slug, post_slug } = params;
   const post = await getPost(blog_slug, post_slug);
-  const nav = await getBlogSidebarLayoutNav(blog_slug, post.blog__expand.sidebar)
+  if (!post) {
+    throw new Error(`Post with slug '${params.post_slug}' not found`)
+  }
+  const nav = post.blog__expand && post.blog__expand.sidebar? await getBlogSidebarLayoutNav(blog_slug, post.blog__expand.sidebar):null
   return {
     props: {
       post: post,
@@ -187,16 +195,18 @@ export default function Post({ post, nav }) {
         />
       </div>
 
-      <div className="hidden xl:text-sm xl:block flex-none w-64 pl-8 mr-8">
-        <div className="flex flex-col justify-between overflow-y-auto sticky max-h-(screen-18) pt-10 pb-6 top-18">
-          
-          {tableOfContents && tableOfContents.length > 0 && (
-            <div className="mb-8">
-              <TableOfContents headings={headings} currentSection={currentSection} />
-            </div>
-          )}
+      {headings && headings.length > 0 && (
+        <div className="hidden xl:text-sm xl:block flex-none w-64 pl-8 mr-8">
+          <div className="flex flex-col justify-between overflow-y-auto sticky max-h-(screen-18) pt-10 pb-6 top-18">
+            
+            {tableOfContents && tableOfContents.length > 0 && (
+              <div className="mb-8">
+                <TableOfContents headings={headings} currentSection={currentSection} />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
