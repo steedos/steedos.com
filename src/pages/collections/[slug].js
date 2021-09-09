@@ -46,7 +46,7 @@ export default class Home extends React.Component {
                   All the latest Tailwind CSS news, straight from the team.
                 </p> */}
               </div>
-              <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {collection?.products?.map((product) => {
                   return (
                   <a key={`/products/${product.slug}`} href={`/products/${product.slug}`}>

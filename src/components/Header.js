@@ -189,7 +189,6 @@ export function Header({ navIsOpen, onNavToggle }) {
 
   const [open, setOpen] = useState(false)
   const [userInfo, setUserInfo] = useState({})
-
   useSWR('AuthValidate', async ()=>{
     const userInfo = await authValidate();
     if(!userInfo.error){
