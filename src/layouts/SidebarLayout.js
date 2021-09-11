@@ -53,7 +53,7 @@ function Nav({ nav, children, fallbackHref }) {
   
   return (
     <nav className="text-sm max-w-[37.5rem] mx-auto lg:max-w-none lg:mx-0 relative lg:sticky lg:top-10">
-      <ul role="list" className="space-y-8 border-l border-gray-200 pl-6">
+      <ul role="list" className="space-y-6 border-l border-gray-200 pl-6">
         {nav && nav.items && nav.items.map((item) => {
           return (
             <li className="space-y-3" key={item._id}>

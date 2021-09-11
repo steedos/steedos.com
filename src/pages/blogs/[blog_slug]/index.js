@@ -27,7 +27,6 @@ export default function Blog({ blog, nav }) {
 
       <ul className="divide-y divide-gray-200">
         {blog.posts.map((post) => {
-          console.log(post)
           const link = getPostUrl(blog.slug, post);
           return (
             <li key={post._id} className="py-12">
