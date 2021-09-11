@@ -72,9 +72,9 @@ export async function getPost(blogId, postSlug){
 
 export function getPostUrl(blogSlug, post){
     if (!post)
-        return `/${blogSlug}`
+        return `/blogs/${blogSlug}`
     else
-        return `/${blogSlug}/${post.slug}`
+        return `/blogs/${blogSlug}/${post.slug}`
 }
 
 /**
@@ -86,6 +86,8 @@ export function getPostUrl(blogSlug, post){
  * @returns 
  */
 export async function getBlogSidebarLayoutNav(blogSlug, menuId){
+    if (!menuId)
+        return null
     const menu = await getMenu(menuId);
     if (!menu)
         return null

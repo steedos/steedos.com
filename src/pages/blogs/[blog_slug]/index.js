@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { DocumentationLayout } from '@/layouts/DocumentationLayout'
 import { getBlog, getBlogSidebarLayoutNav, getPostUrl } from '@/lib/blog';
 import tinytime from 'tinytime'
+import { BasicLayout } from '@/layouts/BasicLayout';
 
 const postDateTemplate = tinytime('{MMMM} {DD}, {YYYY}')
 
@@ -12,7 +13,7 @@ export async function getServerSideProps(context) {
   if (!blog) {
     throw new Error(`Blog with slug '${params.blog_slug}' not found`)
   }
-  const nav = await getBlogSidebarLayoutNav(blog_slug, blog.sidebar)
+  const nav = await getBlogSidebarLayoutNav(blog_slug, blog.menu_primary)
   return {
     props: {
       blog: blog,
@@ -76,12 +77,13 @@ export default function Blog({ blog, nav }) {
 
 
 Blog.getLayoutProps = (page, pageProps)=>{
+  console.log(pageProps.nav)
   return {
     meta: {
       title: pageProps.blog.name,
       description: pageProps.blog.description,
     },
     nav: pageProps.nav,
-    Layout: DocumentationLayout,
+    Layout: ( pageProps.nav )? DocumentationLayout : BasicLayout,
   }
 }

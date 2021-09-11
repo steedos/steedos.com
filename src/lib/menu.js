@@ -4,7 +4,7 @@ import { fetchGraphql } from '@/lib/base'
 export async function getMenu(menuId) {
     const query = `
       {
-        site_menus {
+        site_menus(filters: ["_id", "=", ${menuId}]) {
           name,
           items: _related_site_menu_items_site_menu(filters: ["parent", "=", null]) {
             _id,
