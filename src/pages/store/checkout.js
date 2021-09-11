@@ -74,9 +74,9 @@ export default function Checkout({productsVariant, productsVariantPrice}) {
                                 {productVariant.name}
                               </a>
                             </h4>
-                            <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option1}: {productVariant.option1}</p>
-                            <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option2}: {productVariant.option2}</p>
-                            <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option3}: {productVariant.option3}</p>
+                            {productVariant.product__expand.option1 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option1}: {productVariant.option1}</p>}
+                            {productVariant.product__expand.option2 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option2}: {productVariant.option2}</p>}
+                            {productVariant.product__expand.option3 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option3}: {productVariant.option3}</p>}
                           </div>
 
                           <div className="ml-4 flex-shrink-0 flow-root">
@@ -88,15 +88,20 @@ export default function Checkout({productsVariant, productsVariantPrice}) {
                   ))}
                 </ul>
                 <dl className="border-t border-gray-200 py-6 px-4 space-y-6 sm:px-6">
-                  <div className="flex items-center justify-between">
+                  {/* 先隐藏商品小计及运费,待功能实现后(一个订单包含多个产品),再显示 */}
+                  {/* <div className="flex items-center justify-between">
                     <dt className="text-sm">总商品金额</dt>
                     <dd className="text-sm font-medium text-gray-900">{formatPrice(productsVariantPrice)}</dd>
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-sm">运费</dt>
                     <dd className="text-sm font-medium text-gray-900">{formatPrice()}</dd>
-                  </div>
+                  </div> 
                   <div className="flex items-center justify-between border-t border-gray-200 pt-6">
+                    <dt className="text-base font-medium">应付总额</dt>
+                    <dd className="text-base font-medium text-gray-900">{formatPrice(productsVariantPrice)}</dd>
+                  </div>*/}
+                  <div className="flex items-center justify-between pt-2">
                     <dt className="text-base font-medium">应付总额</dt>
                     <dd className="text-base font-medium text-gray-900">{formatPrice(productsVariantPrice)}</dd>
                   </div>
