@@ -69,7 +69,7 @@ const QUERY_PRODUCT_INFO = `
 export async function getProducts(){
     const query = `
     {
-        shop_products${QUERY_PRODUCT_INFO}
+        shop_products(filters: ["status","=", "published"])${QUERY_PRODUCT_INFO}
     }
     `
     const result = await fetchGraphql(query);
@@ -94,7 +94,7 @@ export async function getCollectionProducts(slug){
             slug,
             image,
             body_html,
-            products:_related_shop_products_product_collection${QUERY_PRODUCT_INFO}
+            products:_related_shop_products_product_collection(filters: ["status","=", "published"])${QUERY_PRODUCT_INFO}
         }   
     }
     `
