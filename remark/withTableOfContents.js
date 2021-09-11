@@ -49,7 +49,7 @@ module.exports.withTableOfContents = (options = {isWebpack: false}) => {
           if (level === 2) {
             contents.push({ title, slug, children: [] })
           } else {
-            if (contents[contents.length - 1]?.children)
+            if (contents[contents.length - 1] && contents[contents.length - 1].children)
               contents[contents.length - 1].children.push({ title, slug })
           }
         } else if (
