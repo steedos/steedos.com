@@ -12,6 +12,7 @@ import { getProductsVariant } from '@/lib/product';
 import { formatPrice } from '@/lib/product.client';
 import { each } from 'lodash'
 import SubmitOrderButton from '@/components/product/SubmitOrderButton'
+import { DocumentationLayout } from '@/layouts/DocumentationLayout'
 
 export async function getServerSideProps(context) {
   const { ids } = context.query;
@@ -109,4 +110,16 @@ export default function Checkout({productsVariant, productsVariantPrice}) {
       </div>
     </div>
   )
+}
+
+
+Checkout.getLayoutProps = (page, pageProps)=>{
+  return {
+    meta: {
+      title: "订单",
+      description: "",
+    },
+    nav: pageProps.nav,
+    Layout: DocumentationLayout,
+  }
 }

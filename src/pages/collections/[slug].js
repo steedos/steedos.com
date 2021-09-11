@@ -24,19 +24,6 @@ export default class Collection extends React.Component {
     const { collection } = this.props;
     return (
       <>
-          <Head>
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:site" content="@steedos" />
-            <meta name="twitter:creator" content="@steedos" />
-            <meta name="twitter:title" content="App Exchange - Steedos" />
-            <meta name="twitter:description" content="Steedos App Exchange." />
-            <meta property="og:url" content="https://appexachange.steedos.com" />
-            <meta property="og:type" content="article" />
-            <meta property="og:title" content="App Exchange - Steedos" />
-            <meta property="og:description" content="Steedos App Exchange." />
-            <title>App Exchange - Steedos</title>
-            <meta name="description" content="Steedos App Exchange." />
-          </Head>
           <main className="bg-gray-100">
             <div className="mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
               <div className="py-6 space-y-2 md:space-y-5">
@@ -116,13 +103,13 @@ export default class Collection extends React.Component {
   }
 }
 
-// Collection.getLayoutProps = (page, pageProps)=>{
-//   return {
-//     meta: {
-//       title: pageProps.collection.name,
-//       description: "",
-//     },
-//     nav: pageProps.nav,
-//     // Layout: DocumentationLayout,
-//   }
-// }
+Collection.getLayoutProps = (page, pageProps)=>{
+  return {
+    meta: {
+      title: pageProps.collection.name,
+      description: "",
+    },
+    nav: pageProps.nav,
+    Layout: DocumentationLayout,
+  }
+}
