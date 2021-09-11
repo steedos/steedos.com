@@ -24,8 +24,8 @@ export default class Collection extends React.Component {
     const { collection } = this.props;
     return (
       <>
-          <main className="bg-gray-100">
-            <div className="mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+          <main className="products-heading">
+            <div className="mx-auto py-8 px-4 sm:py-8 sm:px-1 lg:max-w-7xl lg:px-1">
               <div className="py-6 space-y-2 md:space-y-5">
                 <h1 className="text-xl font-extrabold text-gray-900 tracking-tight sm:text-2xl">
                   {collection.name}
