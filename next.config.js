@@ -2,19 +2,13 @@ const path = require('path')
 const querystring = require('querystring')
 const { createLoader } = require('simple-functional-loader')
 const frontMatter = require('front-matter')
-const withSmartQuotes = require('@silvenon/remark-smartypants')
-const { withTableOfContents } = require('./remark/withTableOfContents')
-const { withSyntaxHighlighting } = require('./remark/withSyntaxHighlighting')
-const { withProse } = require('./remark/withProse')
-const { withNextLinks } = require('./remark/withNextLinks')
-const { withLinkRoles } = require('./rehype/withLinkRoles')
 const minimatch = require('minimatch')
-const withCodeSamples = require('./remark/withCodeSamples')
-const { withPrevalInstructions } = require('./remark/withPrevalInstructions')
-const withAdmonitions = require('remark-admonitions')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+const withPlugins = require('next-compose-plugins');
+const withTM = require('next-transpile-modules')(['react-markdown'], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
+
 const {remarkPlugins} = require('./remark')
 const {rehypePlugins} = require('./rehype')
 
@@ -31,8 +25,14 @@ const fallbackDefaultExports = {
   'src/pages/course/**/*': ['@/layouts/VideoLayout', 'VideoLayout'],
 }
 
-module.exports = withBundleAnalyzer({
-  pageExtensions: ['js', 'jsx', 'mdx'],
+module.exports = withPlugins(
+  [
+    withBundleAnalyzer({
+      enabled: process.env.ANALYZE === `true`,
+    }),
+    // withTM
+  ], {
+  pageExtensions: ['js', 'jsx', 'mdx', 'tsx'],
   experimental: {
     modern: true,
   },

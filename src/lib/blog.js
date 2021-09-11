@@ -9,33 +9,25 @@ import { getMenu } from './menu';
  * @param {*} postSlug : post._id || post.slug(暂不支持)
  * @returns 
  */
-export async function getPost(blogSlug, postSlug){
+export async function getPost(blogId, postSlug){
     const query = `
         {
-            site_posts(filters: [["_id","=","${postSlug}"], "or", [["blog","=","${blogSlug}"], ["slug","=","${postSlug}"]]]){
+            site_posts(filters: [["_id","=","${postSlug}"], "or", [["blog","=","${blogId}"], ["slug","=","${postSlug}"]]]){
                 _id,
                 name,
                 image,
                 slug,
                 tags,
                 status,
-                published,
                 published_at,
                 featured,
-                body_html,
+                body,
                 blog,
                 blog__expand{
                     _id,
-                    authors,
-                    commentable,
                     name,
-                    owner,
-                    sidebar,
-                    site,
                     slug,
-                    url
                 }
-                site
             } 
         }
     `
@@ -79,7 +71,10 @@ export async function getPost(blogSlug, postSlug){
 
 
 export function getPostUrl(blogSlug, post){
-    return `/blogs/${blogSlug}/${post._id}`
+    if (!post)
+        return `/${blogSlug}`
+    else
+        return `/${blogSlug}/${post.slug}`
 }
 
 /**
@@ -119,7 +114,7 @@ export async function getBlog(blogSlug){
             _id,
             slug,
             name,
-            sidebar,
+            menu_primary,
             posts: _related_site_posts_blog(top:20){
                 _id,
                 name,
@@ -127,23 +122,8 @@ export async function getBlog(blogSlug){
                 tags,
                 image,
                 status,
-                published,
                 published_at,
                 featured,
-                body_html,
-                blog,
-                blog__expand{
-                    _id,
-                    authors,
-                    commentable,
-                    name,
-                    owner,
-                    sidebar,
-                    site,
-                    slug,
-                    url
-                }
-                site
             }
         } 
     }
