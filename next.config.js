@@ -11,9 +11,12 @@ const { withLinkRoles } = require('./rehype/withLinkRoles')
 const minimatch = require('minimatch')
 const withCodeSamples = require('./remark/withCodeSamples')
 const { withPrevalInstructions } = require('./remark/withPrevalInstructions')
+const withAdmonitions = require('remark-admonitions')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+const {remarkPlugins} = require('./remark')
+const {rehypePlugins} = require('./rehype')
 
 const fallbackLayouts = {
   'src/pages/docs/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
@@ -84,16 +87,8 @@ module.exports = withBundleAnalyzer({
         {
           loader: '@mdx-js/loader',
           options: {
-            remarkPlugins: [
-              withPrevalInstructions,
-              withCodeSamples,
-              withProse,
-              withTableOfContents,
-              withSyntaxHighlighting,
-              withNextLinks,
-              withSmartQuotes,
-            ],
-            rehypePlugins: [withLinkRoles],
+            remarkPlugins,
+            rehypePlugins,
           },
         },
         createLoader(function (source) {
