@@ -89,16 +89,17 @@ export async function getBlogSidebarLayoutNav(blogSlug, menuId){
     const menu = await getMenu(menuId);
     if (!menu)
         return null
-    const key = menu.name
-    const value = [];
     menu.items.forEach((item) => {
-        value.push({
-            title: item.name,
-            href: getPostUrl(blogSlug,item.link_post__expand ), //item.link_post__expand.slug
-        })
+        item.title = item.name;
+        item.href = getPostUrl(blogSlug,item.link_post__expand );
+
+        item.items && item.items.forEach((subitem) => {
+            subitem.title = subitem.name;
+            subitem.href = getPostUrl(blogSlug,subitem.link_post__expand );
+            
+        });
     });
-    const nav = {[key]: value};
-    return nav;
+    return menu;
 }
 
 

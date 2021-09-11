@@ -32,7 +32,7 @@ module.exports = withPlugins(
     }),
     // withTM
   ], {
-  pageExtensions: ['js', 'jsx', 'mdx', 'tsx'],
+  pageExtensions: ['js', 'jsx', 'mdx'],
   experimental: {
     modern: true,
   },

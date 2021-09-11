@@ -11,7 +11,7 @@ export default class Document extends NextDocument {
       <Html
         lang="en"
         className={`text-gray-500 antialiased ${
-          this.props.dangerousAsPath.startsWith('/examples/') ? '' : 'bg-white'
+          this.props.dangerousAsPath.startsWith('/examples/') ? '' : 'bg-white lg:bg-gray-50'
         }`}
       >
         <Head>

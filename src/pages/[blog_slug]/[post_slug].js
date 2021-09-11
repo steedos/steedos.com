@@ -89,7 +89,7 @@ export async function getServerSideProps({
         post: post,
         mdxSource,
         nav: nav,
-        tableOfContents: tableOfContents,
+        tableOfContents: [] //tableOfContents,
       }
     }
   } catch (e) {
@@ -112,6 +112,7 @@ export async function getServerSideProps({
 
 export default function Post({ post, nav, mdxSource, tableOfContents }) {
 
+  const toc = ( nav && nav.length > 0 )? [] : tableOfContents
   return (
     <ContentsLayout tableOfContents={tableOfContents} meta={{
       title: post.name,

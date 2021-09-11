@@ -33,74 +33,102 @@ const NavItem = forwardRef(({ href, children, isActive, isPublished, fallbackHre
 
 function Nav({ nav, children, fallbackHref }) {
   const router = useRouter()
-  const activeItemRef = useRef()
-  const scrollRef = useRef()
+  // const activeItemRef = useRef()
+  // const scrollRef = useRef()
 
-  useIsomorphicLayoutEffect(() => {
-    if (activeItemRef.current) {
-      const scrollRect = scrollRef.current.getBoundingClientRect()
-      const activeItemRect = activeItemRef.current.getBoundingClientRect()
+  // useIsomorphicLayoutEffect(() => {
+  //   if (activeItemRef.current) {
+  //     const scrollRect = scrollRef.current.getBoundingClientRect()
+  //     const activeItemRect = activeItemRef.current.getBoundingClientRect()
 
-      const top = activeItemRef.current.offsetTop
-      const bottom = top - scrollRect.height + activeItemRect.height
+  //     const top = activeItemRef.current.offsetTop
+  //     const bottom = top - scrollRect.height + activeItemRect.height
 
-      if (scrollRef.current.scrollTop > top || scrollRef.current.scrollTop < bottom) {
-        scrollRef.current.scrollTop =
-          activeItemRef.current.offsetTop - scrollRect.height / 2 + activeItemRect.height / 2
-      }
-    }
-  }, [router.pathname])
-
+  //     if (scrollRef.current.scrollTop > top || scrollRef.current.scrollTop < bottom) {
+  //       scrollRef.current.scrollTop =
+  //         activeItemRef.current.offsetTop - scrollRect.height / 2 + activeItemRect.height / 2
+  //     }
+  //   }
+  // }, [router.pathname])
+  
   return (
-    <nav
-      id="nav"
-      ref={scrollRef}
-      className="px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-sm pb-10 lg:pt-10 lg:pb-14 sticky?lg:h-(screen-18)"
-    >
-      <div className="relative flex mb-8 px-3 lg:hidden">
-        <VersionSwitcher />
-      </div>
-      <ul>
-        <TopLevelNav />
-        {children}
-        {nav &&
-          Object.keys(nav)
-            .map((category) => {
-              let publishedItems = nav[category].filter((item) => item.published !== false)
-              if (publishedItems.length === 0 && !fallbackHref) return null
-              return (
-                <li key={category} className="mt-8">
-                  <h5
-                    className={clsx(
-                      'px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs',
+    <nav className="text-sm max-w-[37.5rem] mx-auto lg:max-w-none lg:mx-0 relative lg:sticky lg:top-10">
+      <ul role="list" className="space-y-8 border-l border-gray-200 pl-6">
+        {nav && nav.items && nav.items.map((item) => {
+          return (
+            <li className="space-y-3" key={item._id}>
+              <a href={item.href} className={clsx(
+                  "block font-medium transition-colors duration-300 text-gray-900",
+                  {
+                    'text-teal-600': item.href === router.asPath,
+                  }
+                )}>{item.title}</a>
+              <ul role="list" className="space-y-3">
+                {item.items && item.items.map((subitem) => (
+                  <li className="ml-4" key={subitem._id}>
+                    <a href={subitem.href} className={clsx(
+                      "block transition-colors duration-300",
                       {
-                        'text-gray-900': publishedItems.length > 0,
-                        'text-gray-400': publishedItems.length === 0,
+                        'text-teal-600': subitem.href === router.asPath,
                       }
-                    )}
-                  >
-                    {category}
-                  </h5>
-                  <ul>
-                    {(fallbackHref ? nav[category] : publishedItems).map((item, i) => (
-                      <NavItem
-                        key={i}
-                        href={item.href}
-                        isActive={item.href === router.pathname}
-                        ref={item.href === router.pathname ? activeItemRef : undefined}
-                        isPublished={item.published !== false}
-                        fallbackHref={fallbackHref}
-                      >
-                        {item.shortTitle || item.title}
-                      </NavItem>
-                    ))}
-                  </ul>
-                </li>
-              )
-            })
-            .filter(Boolean)}
+                    )}>{subitem.title}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          )}
+        )}
       </ul>
     </nav>
+    // <nav
+    //   id="nav"
+    //   ref={scrollRef}
+    //   className="px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-sm pb-10 lg:pt-10 lg:pb-14 sticky?lg:h-(screen-18)"
+    // >
+    //   <div className="relative flex mb-8 px-3 lg:hidden">
+    //     <VersionSwitcher />
+    //   </div>
+    //   <ul>
+    //     <TopLevelNav />
+    //     {children}
+    //     {nav &&
+    //       Object.keys(nav)
+    //         .map((category) => {
+    //           let publishedItems = nav[category].filter((item) => item.published !== false)
+    //           if (publishedItems.length === 0 && !fallbackHref) return null
+    //           return (
+    //             <li key={category} className="mt-8">
+    //               <h5
+    //                 className={clsx(
+    //                   'px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs',
+    //                   {
+    //                     'text-gray-900': publishedItems.length > 0,
+    //                     'text-gray-400': publishedItems.length === 0,
+    //                   }
+    //                 )}
+    //               >
+    //                 {category}
+    //               </h5>
+    //               <ul>
+    //                 {(fallbackHref ? nav[category] : publishedItems).map((item, i) => (
+    //                   <NavItem
+    //                     key={i}
+    //                     href={item.href}
+    //                     isActive={item.href === router.pathname}
+    //                     ref={item.href === router.pathname ? activeItemRef : undefined}
+    //                     isPublished={item.published !== false}
+    //                     fallbackHref={fallbackHref}
+    //                   >
+    //                     {item.shortTitle || item.title}
+    //                   </NavItem>
+    //                 ))}
+    //               </ul>
+    //             </li>
+    //           )
+    //         })
+    //         .filter(Boolean)}
+    //   </ul>
+    // </nav>
   )
 }
 
@@ -273,17 +301,18 @@ function TopLevelNav() {
 export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar, fallbackHref }) {
   return (
     <SidebarContext.Provider value={{ nav, navIsOpen, setNavIsOpen }}>
+      <div className="hidden lg:block fixed top-12 bottom-0 right-0 left-1/2 bg-white"></div>
       <div className="w-full max-w-8xl mx-auto">
-        <div className="lg:flex">
+        <div className="w-full flex-none lg:grid lg:grid-cols-4 lg:gap-8">
           {nav && (
             <div
             id="sidebar"
             onClick={() => setNavIsOpen(false)}
             className={clsx(
-              'fixed z-40 inset-0 flex-none h-full bg-black bg-opacity-25 w-full lg:bg-white lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-72 lg:block',
-              {
-                hidden: !navIsOpen,
-              }
+              'bg-gray-50 lg:bg-transparent -mx-4 sm:-mx-6 lg:mx-0 py-12 sm:py-16 px-4 sm:px-6 lg:pl-0 lg:pr-8',
+              // {
+              //   hidden: !navIsOpen,
+              // }
             )}
             >
             <div
@@ -291,7 +320,6 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
               onClick={(e) => e.stopPropagation()}
               className="h-full overflow-y-auto scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white mr-24 lg:mr-0"
             >
-              <div className="hidden lg:block h-12 pointer-events-none absolute inset-x-0 z-10 bg-gradient-to-b from-white" />
               <Nav nav={nav} fallbackHref={fallbackHref}>
                 {sidebar}
               </Nav>
@@ -301,13 +329,16 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
           <div
             id="content-wrapper"
             className={clsx(
-              'min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible',
-              {
-                'overflow-hidden max-h-screen fixed': navIsOpen,
-              }
+              'relative col-span-3 lg:-ml-8 bg-white lg:shadow-md',
+              // {
+              //   'overflow-hidden max-h-screen fixed': navIsOpen,
+              // }
             )}
           >
-            {children}
+            <div className="hidden lg:block absolute top-0 bottom-0 -right-4 w-8 bg-white"></div>
+            <div className="relative py-8 lg:px-8">
+              {children}
+            </div>
           </div>
         </div>
       </div>
