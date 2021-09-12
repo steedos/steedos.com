@@ -8,9 +8,11 @@ import { DefaultLayout } from '@/layouts/DefaultLayout'
 import Router from 'next/router'
 import ProgressBar from '@badrap/bar-of-progress'
 import Head from 'next/head'
+import {MDXProvider} from '@mdx-js/react'
 import twitterLargeCard from '@/img/twitter-large-card.jpg'
 import { ResizeObserver } from '@juggle/resize-observer'
 import 'intersection-observer'
+import mdxComponents from '@/components/mdx';
 
 if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
   window.ResizeObserver = ResizeObserver
@@ -39,21 +41,10 @@ Router.events.on('routeChangeError', progress.finish)
 
 export default function App({ Component, pageProps, router }) {
 
+  const { 
+    meta = {} 
+  } = pageProps;
 
-  let Layout = Component.layoutProps?.Layout || Fragment
-  let layoutProps = Component.layoutProps?.Layout ? { layoutProps: Component.layoutProps, } : {}
-  let meta = Component.layoutProps?.meta || {}
-  let description = meta.metaDescription || meta.description || 'Documentation for the Steedos framework.'
-
-  if(Component.getLayoutProps){
-    const pageLayoutProps = Component.getLayoutProps(Component, pageProps);
-    Layout = pageLayoutProps?.Layout || Fragment
-    layoutProps = pageLayoutProps?.Layout ? { layoutProps: pageLayoutProps, } : {}
-    meta = pageLayoutProps?.meta || {}
-    description = meta.metaDescription || meta.description || 'Documentation for the Steedos framework.'
-  }
-
-  
   const getLayout =
     Component.getLayout ||
     ((Page) => (
@@ -68,27 +59,29 @@ export default function App({ Component, pageProps, router }) {
       <Head>
         <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
         <meta key="twitter:site" name="twitter:site" content="@tailwindcss" />
-        <meta key="twitter:description" name="twitter:description" content={description} />
-        <meta
+        <meta key="twitter:description" name="twitter:description" content={meta.description} />
+        {/* <meta
           key="twitter:image"
           name="twitter:image"
           content={`https://steedos.com${twitterLargeCard}`}
-        />
-        <meta key="twitter:creator" name="twitter:creator" content="@steedos" />
+        /> */}
+        {/* <meta key="twitter:creator" name="twitter:creator" content="@steedos" /> */}
         <meta
           key="og:url"
           property="og:url"
           content={`https://steedos.com${router.pathname}`}
         />
         <meta key="og:type" property="og:type" content="article" />
-        <meta key="og:description" property="og:description" content={description} />
-        <meta
+        <meta key="og:description" property="og:description" content={meta.description} />
+        {/* <meta
           key="og:image"
           property="og:image"
           content={`https://steedos.com${twitterLargeCard}`}
-        />
+        /> */}
       </Head>
-      {getLayout(Component, pageProps)}
+      <MDXProvider components={mdxComponents}>
+        {getLayout(Component, pageProps)}
+      </MDXProvider>
     </>
   )
 }
