@@ -200,7 +200,7 @@ export function Header({ navIsOpen, onNavToggle }) {
   })
   return (
     <>
-      <div className="py-2 bg-gradient-to-r from-indigo-600 to-light-blue-500 overflow-hidden">
+      <div className="py-2 bg-gradient-to-r from-teal-600 to-light-blue-500 overflow-hidden">
         <div className="relative max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <BannerMarkMobile className="sm:hidden absolute right-1/2 transform translate-x-[235px] translate-y-[-90px] w-[848px] h-[513px]" />
           <BannerMarkLeft className="hidden sm:block absolute right-1/2 transform translate-x-[-150px] translate-y-[-250px] w-[848px] h-[513px]" />
@@ -269,7 +269,7 @@ export function Header({ navIsOpen, onNavToggle }) {
                         key={category.name}
                         className={({ selected }) =>
                           classNames(
-                            selected ? 'text-indigo-600 border-indigo-600' : 'text-gray-900 border-transparent',
+                            selected ? 'text-teal-600 border-teal-600' : 'text-gray-900 border-transparent',
                             'flex-1 whitespace-nowrap py-4 px-1 border-b-2 text-base font-medium'
                           )
                         }
@@ -362,11 +362,11 @@ export function Header({ navIsOpen, onNavToggle }) {
         </Dialog>
       </Transition.Root>
 
-      <header className="sticky z-10 lg:z-50 relative bg-white inset-0 border-b">
+      <header className="sticky z-10 lg:z-50 relative bg-white inset-0 flex-none text-sm font-medium ring-1 ring-gray-900 ring-opacity-5 shadow-sm">
        
         <nav aria-label="Top" className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="">
-            <div className="h-16 flex items-center">
+            <div className="h-16 flex items-center py-1">
               <button
                 type="button"
                 className="bg-white p-2 rounded-md text-gray-400 lg:hidden"
@@ -395,9 +395,9 @@ export function Header({ navIsOpen, onNavToggle }) {
                             <Popover.Button
                               className={classNames(
                                 open
-                                  ? 'border-indigo-600 text-indigo-600'
+                                  ? 'border-teal-600 text-teal-600'
                                   : 'border-transparent text-gray-700 hover:text-gray-800',
-                                'px-2 relative z-10 flex items-center transition-colors ease-out duration-200 text-base font-medium border-b -mb-px pt-px'
+                                'px-2 relative z-10 flex items-center transition-colors ease-out duration-200 text-base font-medium border-b-2 -mb-px pt-px'
                               )}
                             >
                               <span>{category.name}</span>
@@ -418,7 +418,7 @@ export function Header({ navIsOpen, onNavToggle }) {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                           >
-                            <Popover.Panel className="absolute mt-1 z-10 top-full inset-x-0 text-sm text-gray-500">
+                            <Popover.Panel className="absolute z-10 top-full inset-x-0 text-sm text-gray-500">
                               {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                               <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
 

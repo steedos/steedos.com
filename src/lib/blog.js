@@ -9,10 +9,16 @@ import { getMenu } from './menu';
  * @param {*} postSlug : post._id || post.slug(暂不支持)
  * @returns 
  */
-export async function getPost(blogId, postSlug){
+export async function getPost(postSlug){
+    if (!postSlug)
+        return null
+    const slugSplit = postSlug.split('-');
+    if (slugSplit.length == 0)
+        return null;
+    const postId = slugSplit[slugSplit.length-1]
     const query = `
         {
-            site_posts(filters: [["_id","=","${postSlug}"], "or", [["blog","=","${blogId}"], ["slug","=","${postSlug}"]]]){
+            site_posts(filters: [["_id","=","${postId}"]]){
                 _id,
                 name,
                 image,
@@ -74,7 +80,7 @@ export function getPostUrl(blogSlug, post){
     if (!post)
         return `/blogs/${blogSlug}`
     else
-        return `/blogs/${blogSlug}/${post.slug}`
+        return `/blogs/${blogSlug}/${post.name}-${post._id}`
 }
 
 /**

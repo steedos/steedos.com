@@ -38,20 +38,15 @@ export async function getServerSideProps({
   try {
     // 这些只能在服务端引入，所以只能写在这里。
     const {serialize} = require('next-mdx-remote/serialize')
-    
     const markdownTOC = require('markdown-toc');
 
-    const { blog_slug, post_slug } = params;
-    const blog = await getBlog(blog_slug);
-    if (!blog) {
-      throw new Error(`Blog with slug '${params.blog_slug}' not found`)
-    }
+    const { post_slug } = params;
     const post = await getPost(post_slug);
     if (!post) {
       throw new Error(`Post with slug '${params.post_slug}' not found`)
     }
     
-    const nav = blog.menu_primary? await getBlogSidebarLayoutNav(blog_slug, blog.menu_primary):null
+    const nav = null
     const mdxSource = await serialize(post.body, {
       mdxOptions: {
         remarkPlugins,
@@ -89,7 +84,7 @@ export async function getServerSideProps({
         post: post,
         mdxSource,
         nav: nav,
-        tableOfContents: [] //tableOfContents,
+        tableOfContents: tableOfContents,
       }
     }
   } catch (e) {

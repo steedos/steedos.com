@@ -302,14 +302,14 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
   return (
     <SidebarContext.Provider value={{ nav, navIsOpen, setNavIsOpen }}>
       <div className="hidden lg:block fixed top-12 bottom-0 right-0 left-1/2 bg-white"></div>
-      <div className="w-full max-w-8xl mx-auto">
+      <div className="relative flex w-full max-w-container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="w-full flex-none lg:grid lg:grid-cols-4 lg:gap-8">
           {nav && (
             <div
             id="sidebar"
             onClick={() => setNavIsOpen(false)}
             className={clsx(
-              'bg-gray-50 lg:bg-transparent -mx-4 sm:-mx-6 lg:mx-0 py-12 sm:py-16 px-4 sm:px-6 lg:pl-0 lg:pr-8',
+              'bg-gray-50 lg:bg-transparent -mx-4 sm:-mx-6 lg:mx-0 py-8 sm:py-12 px-4 sm:px-6 lg:pl-0 lg:pr-8',
               // {
               //   hidden: !navIsOpen,
               // }
@@ -336,7 +336,7 @@ export function SidebarLayout({ children, navIsOpen, setNavIsOpen, nav, sidebar,
             )}
           >
             <div className="hidden lg:block absolute top-0 bottom-0 -right-4 w-8 bg-white"></div>
-            <div className="relative py-8 lg:px-8">
+            <div className="relative py-4 lg:px-8">
               {children}
             </div>
           </div>
