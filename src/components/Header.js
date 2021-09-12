@@ -185,7 +185,7 @@ function BannerMarkRight(props) {
   )
 }
 
-export function Header({ navIsOpen, onNavToggle }) {
+export function Header() {
 
   const [open, setOpen] = useState(false)
   const [userInfo, setUserInfo] = useState({})

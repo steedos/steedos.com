@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import Detail from '@/components/product/Detail'
 import { getProduct } from '@/lib/product';
-import { DocumentationLayout } from '@/layouts/DocumentationLayout'
 
 export async function getServerSideProps(context) {
   const { slug } = context.query
@@ -28,15 +27,4 @@ export default function ProductDetail({product}){
     return {notFind: true}
   }
   return <Detail product={product}></Detail>
-}
-
-ProductDetail.getLayoutProps = (page, pageProps)=>{
-  return {
-    meta: {
-      title: pageProps.product?.name,
-      description: pageProps.product?.description,
-    },
-    nav: pageProps.nav,
-    Layout: DocumentationLayout,
-  }
 }

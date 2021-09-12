@@ -6,7 +6,6 @@ import PriceMonthly from '@/components/product/PriceMonthly'
 import { getCollectionProducts } from '@/lib/product';
 
 import { getDefaultPrice } from '@/lib/product.client';
-import { DocumentationLayout } from '@/layouts/DocumentationLayout'
 
 export async function getServerSideProps(context) {
   const { slug } = context.query
@@ -100,16 +99,5 @@ export default class Collection extends React.Component {
           </main>
       </>
     )
-  }
-}
-
-Collection.getLayoutProps = (page, pageProps)=>{
-  return {
-    meta: {
-      title: pageProps.collection.name,
-      description: "",
-    },
-    nav: pageProps.nav,
-    Layout: DocumentationLayout,
   }
 }

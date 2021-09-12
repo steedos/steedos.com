@@ -1,9 +1,8 @@
 import Link from 'next/link'
 
-import { DocumentationLayout } from '@/layouts/DocumentationLayout'
+import { SidebarLayout } from '@/layouts/SidebarLayout'
 import { getBlog, getBlogSidebarLayoutNav, getPostUrl } from '@/lib/blog';
 import tinytime from 'tinytime'
-import { BasicLayout } from '@/layouts/BasicLayout';
 
 const postDateTemplate = tinytime('{MMMM} {DD}, {YYYY}')
 
@@ -17,7 +16,10 @@ export async function getServerSideProps(context) {
   return {
     props: {
       blog: blog,
-      nav: nav
+      nav: nav,
+      meta: {
+        title: blog.name,
+      }
     }
   }
 }
@@ -73,16 +75,11 @@ export default function Blog({ blog, nav }) {
   )
 }
 
-
-
-Blog.getLayoutProps = (page, pageProps)=>{
-  console.log(pageProps.nav)
-  return {
-    meta: {
-      title: pageProps.blog.name,
-      description: pageProps.blog.description,
-    },
-    nav: pageProps.nav,
-    Layout: ( pageProps.nav )? DocumentationLayout : BasicLayout,
-  }
+Blog.getLayout = (Page, pageProps) => {
+  const {nav} = pageProps
+  return (
+    <SidebarLayout nav={nav}>
+      <Page {...pageProps}/>
+    </SidebarLayout>
+  )
 }

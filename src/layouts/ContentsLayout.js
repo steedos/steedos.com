@@ -11,21 +11,15 @@ import { ClassTable } from '@/components/ClassTable'
 import { useRouter } from 'next/router'
 import { usePrevNext } from '@/hooks/usePrevNext'
 import Link from 'next/link'
-import { SidebarLayout, SidebarContext } from '@/layouts/SidebarLayout'
+// import { SidebarLayout, SidebarContext } from '@/layouts/SidebarLayout'
 import { PageHeader } from '@/components/PageHeader'
+import { Header } from '@/components/Header'
 import clsx from 'clsx'
 
 export const ContentsContext = createContext()
 
 function TableOfContents({ tableOfContents, currentSection }) {
-  let sidebarContext = useContext(SidebarContext)
-  let isMainNav = Boolean(sidebarContext)
 
-  function closeNav() {
-    if (isMainNav) {
-      sidebarContext.setNavIsOpen(false)
-    }
-  }
 
   return (
     <>
@@ -43,7 +37,6 @@ function TableOfContents({ tableOfContents, currentSection }) {
               <li>
                 <a
                   href={`#${section.slug}`}
-                  onClick={closeNav}
                   className={clsx(
                     'block transform transition-colors duration-200 py-2 hover:text-gray-900',
                     {
@@ -67,7 +60,6 @@ function TableOfContents({ tableOfContents, currentSection }) {
                   >
                     <a
                       href={`#${subsection.slug}`}
-                      onClick={closeNav}
                       className={clsx(
                         'block py-2 transition-colors duration-200 hover:text-gray-900 font-medium',
                         {
@@ -134,29 +126,29 @@ function useTableOfContents(tableOfContents) {
   return { currentSection, registerHeading, unregisterHeading }
 }
 
-export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
-  const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(
-    layoutProps.tableOfContents
-  )
+// export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
+//   const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(
+//     layoutProps.tableOfContents
+//   )
 
-  return (
-    <SidebarLayout
-      sidebar={
-        <div className="mb-8">
-          <TableOfContents
-            tableOfContents={layoutProps.tableOfContents}
-            currentSection={currentSection}
-          />
-        </div>
-      }
-      {...props}
-    >
-      <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
-        {children}
-      </ContentsContext.Provider>
-    </SidebarLayout>
-  )
-}
+//   return (
+//     <SidebarLayout
+//       sidebar={
+//         <div className="mb-8">
+//           <TableOfContents
+//             tableOfContents={layoutProps.tableOfContents}
+//             currentSection={currentSection}
+//           />
+//         </div>
+//       }
+//       {...props}
+//     >
+//       <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+//         {children}
+//       </ContentsContext.Provider>
+//     </SidebarLayout>
+//   )
+// }
 
 export function ContentsLayout({ children, meta, classes, tableOfContents }) {
   const router = useRouter()
@@ -171,67 +163,71 @@ export function ContentsLayout({ children, meta, classes, tableOfContents }) {
   let { prev, next } = {}; //usePrevNext()
 
   return (
-    <div id={meta.containerId} className="w-full flex">
-      <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
-        <PageHeader
-          title={meta.title}
-          description={meta.description}
-          badge={{ key: 'Tailwind CSS version', value: meta.featureVersion }}
-          border={!classes && meta.headerSeparator !== false}
-        />
-        <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
-          <div>
-            {classes && (
-              <ClassTable {...(isValidElement(classes) ? { custom: classes } : classes)} />
-            )}
-            {children}
-          </div>
-        </ContentsContext.Provider>
+    <>
 
-        {(prev || next) && (
-          <div className="mt-16 flex leading-6 font-medium">
-            {prev && (
-              <Link href={prev.href}>
-                <a className="flex mr-8 transition-colors duration-200 hover:text-gray-900">
-                  <span aria-hidden="true" className="mr-2">
-                    ←
-                  </span>
-                  {prev.shortTitle || prev.title}
-                </a>
-              </Link>
-            )}
-            {next && (
-              <Link href={next.href}>
-                <a className="flex text-right ml-auto transition-colors duration-200 hover:text-gray-900">
-                  {next.shortTitle || next.title}
-                  <span aria-hidden="true" className="ml-2">
-                    →
-                  </span>
-                </a>
-              </Link>
-            )}
+      <Header />
+      <div className="w-full flex">
+        <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
+          <PageHeader
+            title={meta.title}
+            description={meta.description}
+            badge={{ key: 'Tailwind CSS version', value: meta.featureVersion }}
+            border={!classes && meta.headerSeparator !== false}
+          />
+          <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+            <div>
+              {classes && (
+                <ClassTable {...(isValidElement(classes) ? { custom: classes } : classes)} />
+              )}
+              {children}
+            </div>
+          </ContentsContext.Provider>
+
+          {(prev || next) && (
+            <div className="mt-16 flex leading-6 font-medium">
+              {prev && (
+                <Link href={prev.href}>
+                  <a className="flex mr-8 transition-colors duration-200 hover:text-gray-900">
+                    <span aria-hidden="true" className="mr-2">
+                      ←
+                    </span>
+                    {prev.shortTitle || prev.title}
+                  </a>
+                </Link>
+              )}
+              {next && (
+                <Link href={next.href}>
+                  <a className="flex text-right ml-auto transition-colors duration-200 hover:text-gray-900">
+                    {next.shortTitle || next.title}
+                    <span aria-hidden="true" className="ml-2">
+                      →
+                    </span>
+                  </a>
+                </Link>
+              )}
+            </div>
+          )}
+          {/* <div className="mt-12 border-t border-gray-200 pt-6 text-right">
+            <Link
+              href={`https://github.com/tailwindlabs/tailwindcss.com/edit/master/src/pages${router.pathname}.mdx`}
+            >
+              <a className="mt-10 text-sm hover:text-gray-900">Edit this page on GitHub</a>
+            </Link>
+          </div> */}
+        </div>
+        {toc && toc.length>0 && (
+          <div className="hidden xl:text-sm xl:block flex-none w-64 pl-8 mr-8">
+            <div className="flex flex-col justify-between overflow-y-auto sticky max-h-(screen-18) pt-10 pb-6 top-18">
+              {toc.length > 0 && (
+                <div className="mb-8">
+                  <TableOfContents tableOfContents={toc} currentSection={currentSection} />
+                </div>
+              )}
+            </div>
           </div>
         )}
-        {/* <div className="mt-12 border-t border-gray-200 pt-6 text-right">
-          <Link
-            href={`https://github.com/tailwindlabs/tailwindcss.com/edit/master/src/pages${router.pathname}.mdx`}
-          >
-            <a className="mt-10 text-sm hover:text-gray-900">Edit this page on GitHub</a>
-          </Link>
-        </div> */}
       </div>
-      {toc && toc.length>0 && (
-        <div className="hidden xl:text-sm xl:block flex-none w-64 pl-8 mr-8">
-          <div className="flex flex-col justify-between overflow-y-auto sticky max-h-(screen-18) pt-10 pb-6 top-18">
-            {toc.length > 0 && (
-              <div className="mb-8">
-                <TableOfContents tableOfContents={toc} currentSection={currentSection} />
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+    </>
 
   )
 }

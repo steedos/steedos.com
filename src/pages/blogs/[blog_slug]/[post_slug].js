@@ -11,7 +11,7 @@ import {
 
 import dynamic from 'next/dynamic'
 
-import { DocumentationLayout } from '@/layouts/DocumentationLayout'
+import { SidebarLayout } from '@/layouts/SidebarLayout'
 import { ContentsLayout } from '@/layouts/ContentsLayout'
 import tinytime from 'tinytime'
 import clsx from 'clsx'
@@ -126,13 +126,12 @@ export default function Post({ post, nav, mdxSource, tableOfContents }) {
   )
 }
 
-Post.getLayoutProps = (page, pageProps) => {
-  return {
-    meta: {
-      title: pageProps.post.name,
-      description: pageProps.post.description,
-    },
-    nav: pageProps.nav,
-    Layout: DocumentationLayout,
-  }
+
+Post.getLayout = (Page, pageProps) => {
+  const {nav} = pageProps
+  return (
+    <SidebarLayout nav={nav}>
+      <Page {...pageProps}/>
+    </SidebarLayout>
+  )
 }

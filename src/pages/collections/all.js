@@ -7,8 +7,6 @@ import { getProducts } from '@/lib/product';
 
 import { getDefaultPrice } from '@/lib/product.client';
 
-import { DocumentationLayout } from '@/layouts/DocumentationLayout'
-
 export async function getServerSideProps(context) {
   const products = await getProducts()
 
@@ -136,14 +134,3 @@ export default class All extends React.Component {
   }
 }
 
-
-All.getLayoutProps = (page, pageProps)=>{
-  return {
-    meta: {
-      title: "all",
-      description: "",
-    },
-    nav: pageProps.nav,
-    Layout: DocumentationLayout,
-  }
-}

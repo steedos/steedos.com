@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import { CheckIcon } from '@heroicons/react/outline'
-import { DocumentationLayout } from '@/layouts/DocumentationLayout'
 
 export default class PaymentSuccess extends React.Component {
   constructor(props) {
@@ -88,16 +87,5 @@ export default class PaymentSuccess extends React.Component {
         </Transition.Root>
       </>
     )
-  }
-}
-
-PaymentSuccess.getLayoutProps = (page, pageProps)=>{
-  return {
-    meta: {
-      title: "支付成功",
-      description: "",
-    },
-    nav: pageProps.nav,
-    Layout: DocumentationLayout,
   }
 }

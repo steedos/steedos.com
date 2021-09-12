@@ -11,7 +11,6 @@ import {
 
 import dynamic from 'next/dynamic'
 
-import { DocumentationLayout } from '@/layouts/DocumentationLayout'
 import { ContentsLayout } from '@/layouts/ContentsLayout'
 import tinytime from 'tinytime'
 import clsx from 'clsx'
@@ -85,6 +84,10 @@ export async function getServerSideProps({
         mdxSource,
         nav: nav,
         tableOfContents: tableOfContents,
+        meta: {
+          title: post.name,
+          // description: post.summary
+        }
       }
     }
   } catch (e) {
@@ -109,25 +112,22 @@ export default function Post({ post, nav, mdxSource, tableOfContents }) {
 
   const toc = ( nav && nav.length > 0 )? [] : tableOfContents
   return (
-    <ContentsLayout tableOfContents={tableOfContents} meta={{
-      title: post.name,
-      description: post.summary
-    }}>
+    <>
       <MDXRemote {...mdxSource} components={components}/>
       {/* <Markdown remarkPlugins={remarkPlugins}>
         {post.body}
       </Markdown> */}
-    </ContentsLayout>
+    </>
   )
 }
 
-Post.getLayoutProps = (page, pageProps) => {
-  return {
-    meta: {
-      title: pageProps.post.name,
-      description: pageProps.post.description,
-    },
-    nav: pageProps.nav,
-    Layout: DocumentationLayout,
-  }
+
+Post.getLayout = (Page, pageProps) => {
+  console.log(pageProps)
+  const {meta, tableOfContents} = pageProps
+  return (
+    <ContentsLayout tableOfContents={tableOfContents} meta={meta}>
+      <Page {...pageProps}/>
+    </ContentsLayout>
+  )
 }

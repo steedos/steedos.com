@@ -4,6 +4,7 @@ import 'focus-visible'
 import { useState, useEffect, Fragment } from 'react'
 import { Header } from '@/components/Header'
 import { Title } from '@/components/Title'
+import { DefaultLayout } from '@/layouts/DefaultLayout'
 import Router from 'next/router'
 import ProgressBar from '@badrap/bar-of-progress'
 import Head from 'next/head'
@@ -37,35 +38,29 @@ Router.events.on('routeChangeComplete', () => {
 Router.events.on('routeChangeError', progress.finish)
 
 export default function App({ Component, pageProps, router }) {
-  let [navIsOpen, setNavIsOpen] = useState(false)
 
-  useEffect(() => {
-    if (!navIsOpen) return
-    function handleRouteChange() {
-      setNavIsOpen(false)
-    }
-    Router.events.on('routeChangeComplete', handleRouteChange)
-    return () => {
-      Router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [navIsOpen])
 
   let Layout = Component.layoutProps?.Layout || Fragment
-  let layoutProps = Component.layoutProps?.Layout ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen } : {}
+  let layoutProps = Component.layoutProps?.Layout ? { layoutProps: Component.layoutProps, } : {}
   let meta = Component.layoutProps?.meta || {}
   let description = meta.metaDescription || meta.description || 'Documentation for the Steedos framework.'
 
   if(Component.getLayoutProps){
     const pageLayoutProps = Component.getLayoutProps(Component, pageProps);
     Layout = pageLayoutProps?.Layout || Fragment
-    layoutProps = pageLayoutProps?.Layout ? { layoutProps: pageLayoutProps, navIsOpen, setNavIsOpen } : {}
+    layoutProps = pageLayoutProps?.Layout ? { layoutProps: pageLayoutProps, } : {}
     meta = pageLayoutProps?.meta || {}
     description = meta.metaDescription || meta.description || 'Documentation for the Steedos framework.'
   }
 
-  if (router.pathname.startsWith('/examples/')) {
-    return <Component {...pageProps} />
-  }
+  
+  const getLayout =
+    Component.getLayout ||
+    ((Page) => (
+      <DefaultLayout>
+        <Page {...pageProps} />
+      </DefaultLayout>
+    ))
 
   return (
     <>
@@ -93,12 +88,7 @@ export default function App({ Component, pageProps, router }) {
           content={`https://steedos.com${twitterLargeCard}`}
         />
       </Head>
-      {router.pathname !== '/xxx' && (
-        <Header navIsOpen={navIsOpen} onNavToggle={(isOpen) => setNavIsOpen(isOpen)} />
-      )}
-      <Layout {...layoutProps}>
-        <Component {...pageProps} />
-      </Layout>
+      {getLayout(Component, pageProps)}
     </>
   )
 }
