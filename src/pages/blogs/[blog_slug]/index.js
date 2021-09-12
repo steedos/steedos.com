@@ -6,11 +6,13 @@ import tinytime from 'tinytime'
 
 const postDateTemplate = tinytime('{MMMM} {DD}, {YYYY}')
 
-export async function getServerSideProps(context) {
-  const { blog_slug } = context.params;
+export async function getServerSideProps({params, res}) {
+  const { blog_slug } = params;
   const blog = await getBlog(blog_slug);
   if (!blog) {
-    throw new Error(`Blog with slug '${params.blog_slug}' not found`)
+    res.statusCode = 404;
+    res.end()
+    return {props: {}}
   }
   const nav = await getBlogSidebarLayoutNav(blog_slug, blog.menu_primary)
   return {
@@ -23,6 +25,7 @@ export async function getServerSideProps(context) {
     }
   }
 }
+
 export default function Blog({ blog, nav }) {
   return (
     <div className="px-4 sm:px-6 xl:px-8 pt-10 pb-16">

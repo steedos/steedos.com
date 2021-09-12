@@ -35,72 +35,65 @@ export async function getServerSideProps({
   locales,
   preview,
 }) {
-  try {
-    // 这些只能在服务端引入，所以只能写在这里。
-    const {serialize} = require('next-mdx-remote/serialize')
-    
-    const markdownTOC = require('markdown-toc');
+  // 这些只能在服务端引入，所以只能写在这里。
+  const {serialize} = require('next-mdx-remote/serialize')
+  
+  const markdownTOC = require('markdown-toc');
 
-    const { blog_slug, post_slug } = params;
-    const blog = await getBlog(blog_slug);
-    if (!blog) {
-      throw new Error(`Blog with slug '${params.blog_slug}' not found`)
+  const { blog_slug, post_slug } = params;
+  const blog = await getBlog(blog_slug);
+  if (!blog) {
+    res.statusCode = 404;
+    res.end()
+    return {props: {}}
+  }
+  const post = await getPost(post_slug);
+  if (!post) {
+    res.statusCode = 404;
+    res.end()
+    return {props: {}}
+  }
+  
+  const nav = blog.menu_primary? await getBlogSidebarLayoutNav(blog_slug, blog.menu_primary):null
+  const mdxSource = await serialize(post.body, {
+    mdxOptions: {
+      remarkPlugins,
+      rehypePlugins,
     }
-    const post = await getPost(post_slug);
-    if (!post) {
-      throw new Error(`Post with slug '${params.post_slug}' not found`)
-    }
-    
-    const nav = blog.menu_primary? await getBlogSidebarLayoutNav(blog_slug, blog.menu_primary):null
-    const mdxSource = await serialize(post.body, {
-      mdxOptions: {
-        remarkPlugins,
-        rehypePlugins,
-      }
-    })
-    const headings = markdownTOC(post.body).json
+  })
+  const headings = markdownTOC(post.body).json
 
-    const minHeading = 2;
+  const minHeading = 2;
 
-    let tableOfContents = []
-    let currentHeading = null
-    headings.forEach(heading => {
-      if (heading.lvl == minHeading) {
-        if (currentHeading)
-          tableOfContents.push(currentHeading);
-        currentHeading = {
-          title: heading.content,
-          slug: heading.content,
-          children: []
-        };
-      }
-      if (currentHeading && heading.lvl == minHeading + 1) {
-        currentHeading.children.push({
-          title: heading.content,
-          slug: heading.content,
-        })
-      }
-    });
-    if (currentHeading)
-      tableOfContents.push(currentHeading);
-    
-    return {
-      props: {
-        post: post,
-        mdxSource,
-        nav: nav,
-        tableOfContents: [] //tableOfContents,
-      }
+  let tableOfContents = []
+  let currentHeading = null
+  headings.forEach(heading => {
+    if (heading.lvl == minHeading) {
+      if (currentHeading)
+        tableOfContents.push(currentHeading);
+      currentHeading = {
+        title: heading.content,
+        slug: heading.content,
+        children: []
+      };
     }
-  } catch (e) {
-    // console.error(e.message)
-    // res.statusCode = 404
-    // res.end()
-    // return {props: {
-    //   post: {},
-    //   tableOfContents: []
-    // }}
-    throw e
+    if (currentHeading && heading.lvl == minHeading + 1) {
+      currentHeading.children.push({
+        title: heading.content,
+        slug: heading.content,
+      })
+    }
+  });
+  if (currentHeading)
+    tableOfContents.push(currentHeading);
+  
+  return {
+    props: {
+      post: post,
+      mdxSource,
+      nav: nav,
+      tableOfContents: [] //tableOfContents,
+    }
   }
 }
 
