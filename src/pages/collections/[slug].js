@@ -45,7 +45,7 @@ export default class Collection extends React.Component {
                       </div> */}
                       <div className=" p-6 space-y-6">
                         <div className="w-full flex items-center justify-between space-x-6 text-right">
-                          <img className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/${product.vender__expand?.logo}`} alt=""/>
+                          <img className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/${product.image}`} alt=""/>
                           <div className="flex-1 truncate">
                             <div className="flex items-center space-x-3">
                               <h3 className="text-gray-900 text-sm font-medium truncate"></h3>
