@@ -5,13 +5,12 @@ export default function SubmitOrderButton({ variants }) {
     const router = useRouter()
     const onClick= async ()=>{
         let orderInfo = {variants: []};
-        each(variants, (variant)=>{
+        each(variants, (variantQuantity, variantId)=>{
             orderInfo.variants.push({
-                _id: variant._id,
-                quantity: 1 //TODO 没有购物车，数量为 1
+                _id: variantId,
+                quantity: Number(variantQuantity)
             })
         })
-
         await submitOrder(orderInfo, router)
     }
     return (
