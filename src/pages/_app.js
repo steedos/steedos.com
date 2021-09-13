@@ -58,25 +58,25 @@ export default function App({ Component, pageProps, router }) {
       <Title suffix="华炎魔方">{meta.metaTitle || meta.title}</Title>
       <Head>
         <meta key="twitter:card" name="twitter:card" content="summary_large_image" />
-        <meta key="twitter:site" name="twitter:site" content="@tailwindcss" />
+        <meta key="twitter:site" name="twitter:site" content="@steedos" />
         <meta key="twitter:description" name="twitter:description" content={meta.description} />
         {/* <meta
           key="twitter:image"
           name="twitter:image"
-          content={`https://steedos.com${twitterLargeCard}`}
+          content={`${process.env.NEXT_PUBLIC_DEPLOYMENT_URL}${twitterLargeCard}`}
         /> */}
         {/* <meta key="twitter:creator" name="twitter:creator" content="@steedos" /> */}
         <meta
           key="og:url"
           property="og:url"
-          content={`https://steedos.com${router.pathname}`}
+          content={`${process.env.NEXT_PUBLIC_DEPLOYMENT_URL}${router.pathname}`}
         />
         <meta key="og:type" property="og:type" content="article" />
         <meta key="og:description" property="og:description" content={meta.description} />
         {/* <meta
           key="og:image"
           property="og:image"
-          content={`https://steedos.com${twitterLargeCard}`}
+          content={`${process.env.NEXT_PUBLIC_DEPLOYMENT_URL}${twitterLargeCard}`}
         /> */}
       </Head>
       <MDXProvider components={mdxComponents}>
