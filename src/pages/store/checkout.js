@@ -47,7 +47,6 @@ export async function getServerSideProps(context) {
 
 export default function Checkout({productsVariant, productsVariantPrice}) {
   return (
-    <div className="mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
       <div className="bg-gray-50">
         <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Checkout</h2>
@@ -112,6 +111,5 @@ export default function Checkout({productsVariant, productsVariantPrice}) {
           </div>
         </div>
       </div>
-    </div>
   )
 }
