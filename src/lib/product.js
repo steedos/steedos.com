@@ -93,7 +93,7 @@ export async function getCollectionProducts(slug){
             name,
             slug,
             image,
-            body_html,
+            body,
             products:_related_shop_products_product_collection(filters: ["status","=", "published"])${QUERY_PRODUCT_INFO}
         }   
     }
