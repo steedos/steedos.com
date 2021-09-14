@@ -1,6 +1,5 @@
 import * as React from 'react'
 import Image from 'next/image'
-import {NextPage} from 'next'
 
 const Error = ({statusCode}) => {
   return (

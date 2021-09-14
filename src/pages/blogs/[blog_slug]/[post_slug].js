@@ -38,7 +38,7 @@ export async function getServerSideProps({
   // 这些只能在服务端引入，所以只能写在这里。
   const {serialize} = require('next-mdx-remote/serialize')
   
-  const markdownTOC = require('markdown-toc');
+  // const markdownTOC = require('markdown-toc');
 
   const { blog_slug, post_slug } = params;
   const blog = await getBlog(blog_slug);
@@ -61,7 +61,7 @@ export async function getServerSideProps({
       rehypePlugins,
     }
   })
-  const headings = markdownTOC(post.body).json
+  const headings = []; //markdownTOC(post.body).json
 
   const minHeading = 2;
 

@@ -1,0 +1,17 @@
+{
+  "name": "steedosWebsiteDefaultLambda",
+  "hash": "S6/+x4lKh4UreNZYuBrqJc/StyWY3ZSXzs6gfYEluaU=",
+  "description": "Default Lambda@Edge for Next CloudFront distribution",
+  "memory": 2048,
+  "timeout": 30,
+  "code": "/Users/steedos/Documents/GitHub/steedos.com/.serverless_nextjs/default-lambda",
+  "shims": [],
+  "handler": "index.handler",
+  "runtime": "nodejs14.x",
+  "env": {},
+  "role": {
+    "arn": "arn:aws:iam::382025409778:role/7cpmmtc-pagye2p"
+  },
+  "arn": "arn:aws:lambda:us-east-1:382025409778:function:steedosWebsiteDefaultLambda",
+  "region": "us-east-1"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "steedos-website-dev",
+  "region": "ap-east-1",
+  "accelerated": false,
+  "url": "https://steedos-website-dev.s3.amazonaws.com"
+}

@@ -3,27 +3,27 @@ const querystring = require('querystring')
 const { createLoader } = require('simple-functional-loader')
 const frontMatter = require('front-matter')
 const minimatch = require('minimatch')
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//   enabled: process.env.ANALYZE === 'true',
+// })
 
 const {remarkPlugins} = require('./remark')
 const {rehypePlugins} = require('./rehype')
 
 
-const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['react-markdown'], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
+// const withPlugins = require('next-compose-plugins');
+// const withTM = require('next-transpile-modules')(['react-markdown'], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
 
-const withMDX = require(`@next/mdx`)({
-  extension: /\.mdx?$/,
-  options: {
-    rehypePlugins,
-    remarkPlugins
-  },
-})
+// const withMDX = require(`@next/mdx`)({
+//   extension: /\.mdx?$/,
+//   options: {
+//     rehypePlugins,
+//     remarkPlugins
+//   },
+// })
 
 
-const withMdxEnhanced = require('next-mdx-enhanced')
+// const withMdxEnhanced = require('next-mdx-enhanced')
 
 // const fallbackLayouts = {
 //   'src/pages/docs/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
@@ -38,31 +38,34 @@ const withMdxEnhanced = require('next-mdx-enhanced')
 //   'src/pages/course/**/*': ['@/layouts/VideoLayout', 'VideoLayout'],
 // }
 
-module.exports = withPlugins(
-  [
-    withBundleAnalyzer({
-      enabled: process.env.ANALYZE === `true`,
-    }),
-    // withMdxEnhanced({
-    //   layoutPath: 'layouts',
-    //   defaultLayout: true,
-    //   fileExtensions: ['mdx'],
-    //   remarkPlugins,
-    //   rehypePlugins,
-    //   usesSrc: true,
-    //   extendFrontMatter: {
-    //     process: (mdxContent, frontMatter) => {},
-    //     phase: 'prebuild|loader|both',
-    //   },
-    //   reExportDataFetching: false,
-    // })
-    withMDX({
-      pageExtensions: ['js', 'jsx', `mdx`],
-      rehypePlugins,
-      remarkPlugins
-    }),
-    // withTM
-  ], {
+module.exports = 
+  // withPlugins(
+  // [
+  //   // withBundleAnalyzer({
+  //   //   enabled: process.env.ANALYZE === `true`,
+  //   // }),
+  //   // withMdxEnhanced({
+  //   //   layoutPath: 'layouts',
+  //   //   defaultLayout: true,
+  //   //   fileExtensions: ['mdx'],
+  //   //   remarkPlugins,
+  //   //   rehypePlugins,
+  //   //   usesSrc: true,
+  //   //   extendFrontMatter: {
+  //   //     process: (mdxContent, frontMatter) => {},
+  //   //     phase: 'prebuild|loader|both',
+  //   //   },
+  //   //   reExportDataFetching: false,
+  //   // })
+  //   // withMDX({
+  //   //   pageExtensions: ['js', 'jsx', `mdx`],
+  //   //   rehypePlugins,
+  //   //   remarkPlugins
+  //   // }),
+  //   // withTM
+  // ], 
+  {
+  webpack5: true,
   pageExtensions: ['js', 'jsx', 'mdx'],
   experimental: {
     modern: true,
@@ -71,36 +74,53 @@ module.exports = withPlugins(
     return require('./redirects.json')
   },
   webpack(config, options) {
-    if (!options.dev) {
-      options.defaultLoaders.babel.options.cache = false
-    }
+    // if (!options.dev) {
+    //   options.defaultLoaders.babel.options.cache = false
+    // }
+    config.module.rules.push({
+      test: /.node$/,
+      loader: 'node-loader',
+    })
+    config.module.rules.push({
+      test: /\.(png|jpe?g|gif|webp)$/i,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            publicPath: '/_next',
+            name: 'static/media/[name].[hash].[ext]',
+          },
+        },
+      ],
+    })
 
-    // config.module.rules.push({
-    //   test: /\.(png|jpe?g|gif|webp)$/i,
-    //   use: [
-    //     {
-    //       loader: 'file-loader',
-    //       options: {
-    //         publicPath: '/_next',
-    //         name: 'static/media/[name].[hash].[ext]',
-    //       },
-    //     },
-    //   ],
-    // })
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        { loader: '@svgr/webpack', options: { svgoConfig: { plugins: { removeViewBox: false } } } },
+        {
+          loader: 'file-loader',
+          options: {
+            publicPath: '/_next',
+            name: 'static/media/[name].[hash].[ext]',
+          },
+        },
+      ],
+    })
 
-    // config.module.rules.push({
-    //   test: /\.svg$/,
-    //   use: [
-    //     { loader: '@svgr/webpack', options: { svgoConfig: { plugins: { removeViewBox: false } } } },
-    //     {
-    //       loader: 'file-loader',
-    //       options: {
-    //         publicPath: '/_next',
-    //         name: 'static/media/[name].[hash].[ext]',
-    //       },
-    //     },
-    //   ],
-    // })
+    config.module.rules.push({
+      test: /\.mdx/,
+      use: [
+        options.defaultLoaders.babel,
+        {
+          loader: '@mdx-js/loader',
+          options: {
+            remarkPlugins,
+            rehypePlugins,
+          },
+        },
+      ],
+    })
 
     // config.module.rules.push({
     //   test: /\.mdx$/,
@@ -173,4 +193,4 @@ module.exports = withPlugins(
 
     return config
   },
-})
+}

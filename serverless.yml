@@ -1,0 +1,23 @@
+myNextApplication:
+  component: "@sls-next/serverless-component" # it is recommended you pin the latest stable version of serverless-next.js
+  inputs:
+    # domain: ["test", "steedos.cn"]
+    name:
+      defaultLambda: steedosWebsiteDefaultLambda
+      apiLambda: steedosWebsiteApiLambda
+      imageLambda: steedosWebsiteImageLambda
+    stage: dev
+    deploy: true
+    bucketRegion: ap-east-1
+    bucketName: steedos-website-dev
+    region: ap-east-1
+    runtime: nodejs14.x
+    memory: 2048
+    timeout: 30
+    enableS3Acceleration: false
+    build:
+      env:
+        NEXT_PUBLIC_DEPLOYMENT_URL=https://d3cd4mvgva12si.cloudfront.net
+      postBuildCommands: []
+
+useDotenv: true
