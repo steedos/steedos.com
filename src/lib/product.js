@@ -35,7 +35,6 @@ const QUERY_PRODUCT_INFO = `
         extention,
         versions
     },
-    version,
     option1,
     option2,
     option3
