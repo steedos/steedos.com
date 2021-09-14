@@ -108,6 +108,7 @@ export const headerNav = {
     { name: '定价', href: '/pricing/platform' },
     { name: '文档', href: '/blog/docs' },
     { name: '应用市场', href: '/collections/apps' },
+    { name: '云服务', href: '/collections/cloud-servers' },
     // { name: 'Themes', href: '#' },
   ],
 }
