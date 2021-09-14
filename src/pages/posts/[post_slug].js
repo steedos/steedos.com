@@ -123,7 +123,6 @@ export default function Post({ post, nav, mdxSource, tableOfContents }) {
 
 
 Post.getLayout = (Page, pageProps) => {
-  console.log(pageProps)
   const {meta, tableOfContents} = pageProps
   return (
     <ContentsLayout tableOfContents={tableOfContents} meta={meta}>

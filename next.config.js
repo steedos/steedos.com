@@ -7,12 +7,12 @@ const minimatch = require('minimatch')
 //   enabled: process.env.ANALYZE === 'true',
 // })
 
-const {remarkPlugins} = require('./remark')
+// const {remarkPlugins} = require('./remark')
 const {rehypePlugins} = require('./rehype')
 
 
-// const withPlugins = require('next-compose-plugins');
-// const withTM = require('next-transpile-modules')(['react-markdown'], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
+const withPlugins = require('next-compose-plugins');
+const withTM = require('next-transpile-modules')(['react-markdown'], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
 
 // const withMDX = require(`@next/mdx`)({
 //   extension: /\.mdx?$/,
@@ -39,8 +39,8 @@ const {rehypePlugins} = require('./rehype')
 // }
 
 module.exports = 
-  // withPlugins(
-  // [
+  withPlugins(
+  [
   //   // withBundleAnalyzer({
   //   //   enabled: process.env.ANALYZE === `true`,
   //   // }),
@@ -62,8 +62,8 @@ module.exports =
   //   //   rehypePlugins,
   //   //   remarkPlugins
   //   // }),
-  //   // withTM
-  // ], 
+  withTM
+  ], 
   {
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'mdx'],
@@ -74,6 +74,7 @@ module.exports =
     return require('./redirects.json')
   },
   webpack(config, options) {
+    console.log(config)
     // if (!options.dev) {
     //   options.defaultLoaders.babel.options.cache = false
     // }
@@ -81,18 +82,18 @@ module.exports =
       test: /.node$/,
       loader: 'node-loader',
     })
-    config.module.rules.push({
-      test: /\.(png|jpe?g|gif|webp)$/i,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            publicPath: '/_next',
-            name: 'static/media/[name].[hash].[ext]',
-          },
-        },
-      ],
-    })
+    // config.module.rules.push({
+    //   test: /\.(png|jpe?g|gif|webp)$/i,
+    //   use: [
+    //     {
+    //       loader: 'file-loader',
+    //       options: {
+    //         publicPath: '/_next',
+    //         name: 'static/media/[name].[hash].[ext]',
+    //       },
+    //     },
+    //   ],
+    // })
 
     config.module.rules.push({
       test: /\.svg$/,
@@ -115,7 +116,7 @@ module.exports =
         {
           loader: '@mdx-js/loader',
           options: {
-            remarkPlugins,
+            remarkPlugins: [],
             rehypePlugins,
           },
         },
@@ -193,4 +194,4 @@ module.exports =
 
     return config
   },
-}
+});

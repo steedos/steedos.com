@@ -19,9 +19,10 @@ import { useRouter } from 'next/router'
 import { PageHeader } from '@/components/PageHeader'
 import { getPost, getBlog, getBlogSidebarLayoutNav } from '@/lib/blog';
 import Markdown from 'react-markdown'
+const {serialize} = require('next-mdx-remote/serialize')
 import { MDXRemote } from 'next-mdx-remote'
 import { Heading } from '@/components/Heading';
-const {remarkPlugins} = require('remark')
+// const {remarkPlugins} = require('remark')
 const {rehypePlugins} = require('rehype')
 
 const components = {
@@ -36,7 +37,6 @@ export async function getServerSideProps({
   preview,
 }) {
   // 这些只能在服务端引入，所以只能写在这里。
-  const {serialize} = require('next-mdx-remote/serialize')
   
   // const markdownTOC = require('markdown-toc');
 
@@ -57,7 +57,7 @@ export async function getServerSideProps({
   const nav = blog.menu_primary? await getBlogSidebarLayoutNav(blog_slug, blog.menu_primary):null
   const mdxSource = await serialize(post.body, {
     mdxOptions: {
-      remarkPlugins,
+      remarkPlugins: [],
       rehypePlugins,
     }
   })
@@ -92,7 +92,11 @@ export async function getServerSideProps({
       post: post,
       mdxSource,
       nav: nav,
-      tableOfContents: [] //tableOfContents,
+      tableOfContents: [], //tableOfContents,
+      meta: {
+        title: post.name,
+        // description: post.summary
+      }
     }
   }
 }
@@ -107,24 +111,15 @@ export default function Post({ post, nav, mdxSource, tableOfContents }) {
 
   const toc = ( nav && nav.length > 0 )? [] : tableOfContents
   return (
-    <ContentsLayout tableOfContents={tableOfContents} meta={{
-      title: post.name,
-      description: post.summary
-    }}>
-      <MDXRemote {...mdxSource} components={components}/>
-      {/* <Markdown remarkPlugins={remarkPlugins}>
-        {post.body}
-      </Markdown> */}
-    </ContentsLayout>
+    <MDXRemote {...mdxSource} components={components}/>
   )
 }
 
-
 Post.getLayout = (Page, pageProps) => {
-  const {nav} = pageProps
+  const {meta, tableOfContents} = pageProps
   return (
-    <SidebarLayout nav={nav}>
+    <ContentsLayout tableOfContents={tableOfContents} meta={meta}>
       <Page {...pageProps}/>
-    </SidebarLayout>
+    </ContentsLayout>
   )
 }
