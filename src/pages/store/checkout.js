@@ -133,7 +133,7 @@ function ProductVariantCheckout({ productVariant, defQuanticy = 1, onChange }) {
   return (
     <li key={productVariant._id} className="flex py-6 px-4 sm:px-6">
       <div className="flex-shrink-0">
-        <img src={getImageSrc(productVariant.image)} alt={productVariant.image} className="flex-none w-20 h-20 object-center object-cover bg-gray-200 rounded-md" />
+        <img src={getImageSrc(productVariant.image || productVariant.product__expand.image)} alt={productVariant.image || productVariant.product__expand.image} className="flex-none w-20 h-20 object-center object-cover bg-gray-200 rounded-md" />
       </div>
 
       <div className="ml-6 flex-1 flex flex-col">
