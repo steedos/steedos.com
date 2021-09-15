@@ -116,6 +116,47 @@ export async function getBlogSidebarLayoutNav(blogSlug, menuId){
  * @param {*} blogSlug 
  * @returns 
  */
+export async function getPosts(){
+    const query = `
+    {
+        site_posts{
+            _id,
+            name,
+            summary,
+            slug,
+            tags,
+            image,
+            status,
+            published_at,
+            featured,
+            owner__expand {
+                name,
+                avatar
+            }
+            blog__expand {
+                _id
+                name
+                slug
+            }
+        } 
+    }
+    `
+    const result = await fetchGraphql(query);
+
+    let posts = null;
+
+    if(result.data && result.data.site_posts){
+        posts = result.data.site_posts;
+    }
+
+    return posts;
+}
+
+/**
+ * 
+ * @param {*} blogSlug 
+ * @returns 
+ */
 export async function getBlog(blogSlug){
     const query = `
     {

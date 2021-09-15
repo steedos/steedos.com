@@ -4938,6 +4938,11 @@ data-uri-to-buffer@3.0.1:
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-3.0.1.tgz#594b8973938c5bc2c33046535785341abc4f3636"
   integrity sha512-WboRycPNsVw3B3TL559F7kuBUM4d8CgMEvk6xEJlOp7OBPjt6G7z8WMWlD2rOFZLk6OYfFIUGsCOWzcQH9K2og==
 
+date-fns@^2.23.0:
+  version "2.23.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.23.0.tgz#4e886c941659af0cf7b30fafdd1eaa37e88788a9"
+  integrity sha512-5ycpauovVyAk0kXNZz6ZoB9AYMZB4DObse7P3BPWmyEjXNORTI8EJ6X0uaSAq4sCHzM1uajzrkr6HnsLQpxGXA==
+
 deasync@^0.1.20:
   version "0.1.21"
   resolved "https://registry.yarnpkg.com/deasync/-/deasync-0.1.21.tgz#bb11eabd4466c0d8776f0d82deb8a6126460d30f"
@@ -6100,6 +6105,11 @@ fresh@0.5.2, fresh@^0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
+friendly-time@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/friendly-time/-/friendly-time-1.1.1.tgz#919bdbef1a1b540f3f881dcfcdeed92c56c2361a"
+  integrity sha512-1hTb4ga36uONG3RKY3eWdxp3/rTAfhcmEBtyKtjOdzdMAHwb94rul5WGkLvBjy0U1jelOrt/UM4ZAxRKfSM8SA==
+
 front-matter@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/front-matter/-/front-matter-4.0.2.tgz#b14e54dc745cfd7293484f3210d15ea4edd7f4d5"
@@ -6394,6 +6404,11 @@ gray-matter@^4.0.2:
     kind-of "^6.0.2"
     section-matter "^1.0.0"
     strip-bom-string "^1.0.0"
+
+groq@^2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/groq/-/groq-2.15.0.tgz#d5618e0424c866a7998722d6ed441b3cc97e8de3"
+  integrity sha512-V3VLBLftaEylbeXDwb2VoGa87SFLGLbU9h6Lz7vuZK+wcs4Kk92qG3A8nWtsdCp63hYKft0/AaXuanbkch0GeA==
 
 gsap@^3.6.0:
   version "3.6.1"
