@@ -4,7 +4,7 @@ steedos_root_url: ${env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}
 steedos_api_key: ${env.STEEDOS_SERVER_API_KEY}
 
 myNextApplication:
-  component: "@sls-next/serverless-component@3.4.0-alpha.6" # it is recommended you pin the latest stable version of serverless-next.js
+  component: "@sls-next/serverless-component" # it is recommended you pin the latest stable version of serverless-next.js
   inputs:
     # domain: ["test", "steedos.cn"]
     name:

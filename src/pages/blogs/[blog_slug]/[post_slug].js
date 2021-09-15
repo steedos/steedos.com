@@ -21,11 +21,11 @@ import { PageHeader } from '@/components/PageHeader'
 import { getPost, getBlog, getBlogSidebarLayoutNav } from '@/lib/blog';
 import Markdown from 'react-markdown'
 import {NextSeo} from 'next-seo'
-const {serialize} = require('next-mdx-remote/serialize')
-import { MDXRemote } from 'next-mdx-remote'
+// const {serialize} = require('next-mdx-remote/serialize')
+// import { MDXRemote } from 'next-mdx-remote'
 import { Heading } from '@/components/Heading';
-const {remarkPlugins} = require('remark')
-const {rehypePlugins} = require('rehype')
+// const {remarkPlugins} = require('remark')
+// const {rehypePlugins} = require('rehype')
 
 const components = {
   Heading,
@@ -56,12 +56,12 @@ export async function getServerSideProps({
     return {props: {}}
   }
   
-  const mdxSource = await serialize(post.body, {
-    mdxOptions: {
-      remarkPlugins,
-      rehypePlugins,
-    }
-  })
+  // const mdxSource = await serialize(post.body, {
+  //   mdxOptions: {
+  //     remarkPlugins: [],
+  //     rehypePlugins,
+  //   }
+  // })
   // const headings = []; //markdownTOC(post.body).json
 
   // const minHeading = 2;
@@ -90,7 +90,7 @@ export async function getServerSideProps({
   
   return {
     props: {
-      mdxSource,
+      // mdxSource,
       tableOfContents: [], //tableOfContents,
       title: post.name,
       ...post
@@ -110,10 +110,11 @@ export default function Post(props) {
 
   const {
     title = 'Missing title',
+    body,
     summary,
     seo_title,
     image,
-    mdxSource,
+    // mdxSource,
   } = props
 
   const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
@@ -168,8 +169,13 @@ export default function Post(props) {
             </ul>
           )} */}
         </header>
-        <main>
-            <MDXRemote {...mdxSource} components={components}/>
+        <main className="">
+          {body && (
+            <Markdown className="prose dark:prose-dark mt-1 sm:text-base text-sm">
+              {body}
+            </Markdown>
+          )}
+            {/* <MDXRemote {...mdxSource} components={components}/> */}
         </main>
       </article>
     </>
