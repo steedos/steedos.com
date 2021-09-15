@@ -14,5 +14,24 @@ export function goSignup(){
 }
 
 export function goLogout(){
+    removeAuthInfo()
     window.location.href = `${ROOT_URL}/accounts/a/#/logout?redirect_uri=${window.location.href}`
+}
+
+export function saveAuthInfo(userId, spaceId, authToken){
+    localStorage.setItem("steedos:userId", userId);
+    localStorage.setItem("steedos:spaceId", spaceId);
+    localStorage.setItem("steedos:token", authToken);
+}
+
+export function removeAuthInfo(){
+    localStorage.removeItem("steedos:userId");
+    localStorage.removeItem("steedos:spaceId");
+    localStorage.removeItem("steedos:token");
+}
+
+export function getAuthorization(){
+    const spaceId = localStorage.getItem('steedos:spaceId');
+    const token = localStorage.getItem('steedos:token');
+    return `Bearer ${spaceId},${token}`;
 }
