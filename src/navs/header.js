@@ -42,7 +42,7 @@ export const headerNav = {
           name: '报价',
           items: [
             { name: '私有部署', href: '/pricing/platform' },
-            { name: '云服务', href: '/platform/cloud' },
+            { name: '云服务', href: '/pricing/cloud' },
           ],
         },
       ],
@@ -106,7 +106,7 @@ export const headerNav = {
   ],
   pages: [
     { name: '定价', href: '/pricing/platform' },
-    { name: '文档', href: '/blog/docs' },
+    { name: '博客', href: '/blogs/news' },
     { name: '应用市场', href: '/collections/apps' },
     { name: '云服务', href: '/collections/cloud-servers' },
     // { name: 'Themes', href: '#' },
