@@ -138,7 +138,6 @@ export async function getBlog(blogSlug){
     }
     `
     const result = await fetchGraphql(query);
-    console.log(result)
 
     let blog = null;
 

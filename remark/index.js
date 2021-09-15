@@ -7,11 +7,15 @@ const { withNextLinks } = require('./withNextLinks')
 const withCodeSamples = require('./withCodeSamples')
 
 module.exports.remarkPlugins = [
-  withSmartQuotes,
-  withAdmonitions,
-  withCodeSamples,
+  // withSmartQuotes,
+  // withAdmonitions,
+  // withCodeSamples,
   withProse,
-  withTableOfContents({isWebpack: false}),
-  withSyntaxHighlighting,
-  withNextLinks,
+  // withTableOfContents({isWebpack: false}),
+  // withSyntaxHighlighting,
+  // withNextLinks,
+
+  require(`remark-slug`),
+  require(`remark-footnotes`),
+  require(`remark-code-titles`),
 ]

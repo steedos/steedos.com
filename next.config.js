@@ -7,20 +7,20 @@ const minimatch = require('minimatch')
 //   enabled: process.env.ANALYZE === 'true',
 // })
 
-// const {remarkPlugins} = require('./remark')
+const {remarkPlugins} = require('./remark')
 const {rehypePlugins} = require('./rehype')
 
 
 const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(['react-markdown'], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
 
-// const withMDX = require(`@next/mdx`)({
-//   extension: /\.mdx?$/,
-//   options: {
-//     rehypePlugins,
-//     remarkPlugins
-//   },
-// })
+const withMDX = require(`@next/mdx`)({
+  extension: /\.mdx?$/,
+  options: {
+    rehypePlugins,
+    remarkPlugins
+  },
+})
 
 
 // const withMdxEnhanced = require('next-mdx-enhanced')
@@ -57,24 +57,22 @@ module.exports =
   //   //   },
   //   //   reExportDataFetching: false,
   //   // })
-  //   // withMDX({
-  //   //   pageExtensions: ['js', 'jsx', `mdx`],
-  //   //   rehypePlugins,
-  //   //   remarkPlugins
-  //   // }),
-  withTM
+    withMDX,
+    withTM
   ], 
   {
   webpack5: true,
-  pageExtensions: ['js', 'jsx', 'mdx'],
+  pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
   experimental: {
     modern: true,
+  },
+  images: {
+    domains: ['res.cloudinary.com'],
   },
   async redirects() {
     return require('./redirects.json')
   },
   webpack(config, options) {
-    console.log(config)
     // if (!options.dev) {
     //   options.defaultLoaders.babel.options.cache = false
     // }
@@ -109,19 +107,19 @@ module.exports =
       ],
     })
 
-    config.module.rules.push({
-      test: /\.mdx/,
-      use: [
-        options.defaultLoaders.babel,
-        {
-          loader: '@mdx-js/loader',
-          options: {
-            remarkPlugins: [],
-            rehypePlugins,
-          },
-        },
-      ],
-    })
+    // config.module.rules.push({
+    //   test: /\.mdx/,
+    //   use: [
+    //     options.defaultLoaders.babel,
+    //     {
+    //       loader: '@mdx-js/loader',
+    //       options: {
+    //         remarkPlugins,
+    //         rehypePlugins,
+    //       },
+    //     },
+    //   ],
+    // })
 
     // config.module.rules.push({
     //   test: /\.mdx$/,

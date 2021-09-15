@@ -1,3 +1,15 @@
+/*
+  Usage:
+
+  const withMDX = require("@next/mdx")({
+    options: {
+      remarkPlugins: [
+        withProse,
+      ],
+    },
+  });
+*/
+
 const proseComponents = ['Heading']
 
 const isJsNode = (node) => {
@@ -14,18 +26,24 @@ module.exports.withProse = () => {
     tree.children = tree.children.flatMap((node, i) => {
       if (insideProse && isJsNode(node)) {
         insideProse = false
-        return [{ type: 'jsx', value: '</div>' }, node]
+        return [{type: 'jsx', value: '</div>'}, node]
       }
       if (!insideProse && !isJsNode(node)) {
         insideProse = true
         return [
-          { type: 'jsx', value: '<div className="prose">' },
+          {
+            type: 'jsx',
+            value:
+              '<div className="prose dark:prose-dark mt-5 max-w-none">',
+          },
           node,
-          ...(i === tree.children.length - 1 ? [{ type: 'jsx', value: '</div>' }] : []),
+          ...(i === tree.children.length - 1
+            ? [{type: 'jsx', value: '</div>'}]
+            : []),
         ]
       }
       if (i === tree.children.length - 1 && insideProse) {
-        return [node, { type: 'jsx', value: '</div>' }]
+        return [node, {type: 'jsx', value: '</div>'}]
       }
       return [node]
     })
