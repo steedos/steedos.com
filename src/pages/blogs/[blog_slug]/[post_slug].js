@@ -12,17 +12,19 @@ import {
 import dynamic from 'next/dynamic'
 
 import { SidebarLayout } from '@/layouts/SidebarLayout'
-import { ContentsLayout } from '@/layouts/ContentsLayout'
+import ArticleLayout from '@/layouts/ArticleLayout'
 import tinytime from 'tinytime'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import { PageHeader } from '@/components/PageHeader'
 import { getPost, getBlog, getBlogSidebarLayoutNav } from '@/lib/blog';
 import Markdown from 'react-markdown'
+import {NextSeo} from 'next-seo'
 const {serialize} = require('next-mdx-remote/serialize')
 import { MDXRemote } from 'next-mdx-remote'
 import { Heading } from '@/components/Heading';
-// const {remarkPlugins} = require('remark')
+const {remarkPlugins} = require('remark')
 const {rehypePlugins} = require('rehype')
 
 const components = {
@@ -54,49 +56,44 @@ export async function getServerSideProps({
     return {props: {}}
   }
   
-  const nav = blog.menu_primary? await getBlogSidebarLayoutNav(blog_slug, blog.menu_primary):null
   const mdxSource = await serialize(post.body, {
     mdxOptions: {
-      remarkPlugins: [],
+      remarkPlugins,
       rehypePlugins,
     }
   })
-  const headings = []; //markdownTOC(post.body).json
+  // const headings = []; //markdownTOC(post.body).json
 
-  const minHeading = 2;
+  // const minHeading = 2;
 
-  let tableOfContents = []
-  let currentHeading = null
-  headings.forEach(heading => {
-    if (heading.lvl == minHeading) {
-      if (currentHeading)
-        tableOfContents.push(currentHeading);
-      currentHeading = {
-        title: heading.content,
-        slug: heading.content,
-        children: []
-      };
-    }
-    if (currentHeading && heading.lvl == minHeading + 1) {
-      currentHeading.children.push({
-        title: heading.content,
-        slug: heading.content,
-      })
-    }
-  });
-  if (currentHeading)
-    tableOfContents.push(currentHeading);
+  // let tableOfContents = []
+  // let currentHeading = null
+  // headings.forEach(heading => {
+  //   if (heading.lvl == minHeading) {
+  //     if (currentHeading)
+  //       tableOfContents.push(currentHeading);
+  //     currentHeading = {
+  //       title: heading.content,
+  //       slug: heading.content,
+  //       children: []
+  //     };
+  //   }
+  //   if (currentHeading && heading.lvl == minHeading + 1) {
+  //     currentHeading.children.push({
+  //       title: heading.content,
+  //       slug: heading.content,
+  //     })
+  //   }
+  // });
+  // if (currentHeading)
+  //   tableOfContents.push(currentHeading);
   
   return {
     props: {
-      post: post,
       mdxSource,
-      nav: nav,
       tableOfContents: [], //tableOfContents,
-      meta: {
-        title: post.name,
-        // description: post.summary
-      }
+      title: post.name,
+      ...post
     }
   }
 }
@@ -107,19 +104,74 @@ export async function getServerSideProps({
 // )
 // console.log(MDXRemote)
 
-export default function Post({ post, nav, mdxSource, tableOfContents }) {
+export default function Post(props) {
 
-  const toc = ( nav && nav.length > 0 )? [] : tableOfContents
-  return (
-    <MDXRemote {...mdxSource} components={components}/>
-  )
-}
+  const router = useRouter()
 
-Post.getLayout = (Page, pageProps) => {
-  const {meta, tableOfContents} = pageProps
+  const {
+    title = 'Missing title',
+    summary,
+    seo_title,
+    image,
+    mdxSource,
+  } = props
+
+  const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
+  const imageUrl = image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${image}` : null
   return (
-    <ContentsLayout tableOfContents={tableOfContents} meta={meta}>
-      <Page {...pageProps}/>
-    </ContentsLayout>
+    <>
+      <NextSeo
+        title={title}
+        description={summary}
+        openGraph={{
+          title: seo_title || title,
+          description: summary,
+          url,
+          images: [
+            {
+              url: imageUrl,
+              alt: title,
+            },
+          ],
+        }}
+        // twitter={{
+        //   cardType: seo.cardType || 'summary_large_image',
+        //   site: seo.site || 'eggheadio',
+        //   handle: seo.handle,
+        // }}
+        // canonical={canonicalUrl}
+      />
+      <article className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-3 mb-16">
+        <header>
+          <h1 className="text-black max-w-screen-md lg:text-6xl md:text-5xl sm:text-4xl text-3xl w-full font-extrabold mb-8 lg:mb-10 leading-tighter">
+            {title}
+          </h1>
+          {/* {author && <Author author={author} />} */}
+          {imageUrl && (
+            <div className="mt-4">
+              <Image
+                src={imageUrl}
+                alt={title}
+                width={1280}
+                height={720}
+                quality={100}
+                className="rounded-lg"
+              />
+            </div>
+          )}
+          {/* {tags && (
+            <ul>
+              Posted in
+              {tags.map((tags: any) => (
+                <li key={tags}>{tags}</li>
+              ))}
+            </ul>
+          )} */}
+        </header>
+        <main>
+            <MDXRemote {...mdxSource} components={components}/>
+        </main>
+      </article>
+    </>
   )
 }
