@@ -1,27 +1,14 @@
-export function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i].trim();
-        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-    }
-    return "";
-}
+import { getAuthorization } from '@/lib/auth.client';
 
 export const ROOT_URL = process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL
 
-export async function fetchAPI(api, options = {}) {
+export async function fetchAPI(api, options = {credentials: 'include'}) {
     const headers = { 'Content-Type': 'application/json' }
-    const AUTHORIZATION = getCookie('X-Space-Token')
+    const AUTHORIZATION = getAuthorization()
     if (AUTHORIZATION) {
         headers[
             'Authorization'
-        ] = `Bearer ${AUTHORIZATION}`
-    }else{
-        const authToken = getCookie('X-Auth-Token');
-        const userId = getCookie('X-User-Id');
-        headers['X-User-Id'] =  userId;
-        headers['X-Auth-Token'] =  authToken;
+        ] = AUTHORIZATION
     }
 
     options.headers = Object.assign({}, headers, options.headers);
