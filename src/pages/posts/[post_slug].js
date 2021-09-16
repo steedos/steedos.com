@@ -19,12 +19,12 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { PageHeader } from '@/components/PageHeader'
 import { getPost, getBlog, getBlogSidebarLayoutNav } from '@/lib/blog';
-import Markdown from 'react-markdown'
 import {NextSeo} from 'next-seo'
 // const {serialize} = require('next-mdx-remote/serialize')
 // import { MDXRemote } from 'next-mdx-remote'
 import { Heading } from '@/components/Heading';
-// const {remarkPlugins} = require('remark')
+import Markdown from 'react-markdown'
+const {remarkPlugins} = require('remark')
 // const {rehypePlugins} = require('rehype')
 
 const components = {
@@ -42,13 +42,7 @@ export async function getServerSideProps({
   
   // const markdownTOC = require('markdown-toc');
 
-  const { blog_slug, post_slug } = params;
-  const blog = await getBlog(blog_slug);
-  if (!blog) {
-    res.statusCode = 404;
-    res.end()
-    return {props: {}}
-  }
+  const { post_slug } = params;
   const post = await getPost(post_slug);
   if (!post) {
     res.statusCode = 404;
@@ -171,7 +165,7 @@ export default function Post(props) {
         </header>
         <main className="">
           {body && (
-            <Markdown className="prose dark:prose-dark mt-1 sm:text-base text-sm">
+            <Markdown remarkPlugins={remarkPlugins} className="prose dark:prose-dark mt-1 sm:text-base text-sm">
               {body}
             </Markdown>
           )}
