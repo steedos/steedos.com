@@ -24,7 +24,7 @@ import {NextSeo} from 'next-seo'
 // const {serialize} = require('next-mdx-remote/serialize')
 // import { MDXRemote } from 'next-mdx-remote'
 import { Heading } from '@/components/Heading';
-// const {remarkPlugins} = require('remark')
+const {remarkPlugins} = require('remark')
 // const {rehypePlugins} = require('rehype')
 
 const components = {
@@ -171,7 +171,7 @@ export default function Post(props) {
         </header>
         <main className="">
           {body && (
-            <Markdown className="prose dark:prose-dark mt-1 sm:text-base text-sm">
+            <Markdown remarkPlugins={remarkPlugins} className="prose dark:prose-dark mt-1 sm:text-base text-sm">
               {body}
             </Markdown>
           )}

@@ -10,6 +10,20 @@ module.exports.remarkPlugins = [
   // withSmartQuotes,
   // withAdmonitions,
   // withCodeSamples,
+  // withProse,
+  // withTableOfContents({isWebpack: false}),
+  // withSyntaxHighlighting,
+  // withNextLinks,
+
+  require(`remark-slug`),
+  require(`remark-footnotes`),
+  require(`remark-code-titles`),
+]
+
+module.exports.remarkPluginsWebpack = [
+  // withSmartQuotes,
+  // withAdmonitions,
+  // withCodeSamples,
   withProse,
   // withTableOfContents({isWebpack: false}),
   // withSyntaxHighlighting,
@@ -19,3 +33,4 @@ module.exports.remarkPlugins = [
   require(`remark-footnotes`),
   require(`remark-code-titles`),
 ]
+

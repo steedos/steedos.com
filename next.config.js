@@ -7,7 +7,7 @@ const minimatch = require('minimatch')
 //   enabled: process.env.ANALYZE === 'true',
 // })
 
-const {remarkPlugins} = require('./remark')
+const {remarkPluginsWebpack} = require('./remark')
 const {rehypePlugins} = require('./rehype')
 
 
@@ -18,7 +18,7 @@ const withMDX = require(`@next/mdx`)({
   extension: /\.mdx?$/,
   options: {
     rehypePlugins,
-    remarkPlugins
+    remarkPlugins: remarkPluginsWebpack
   },
 })
 
