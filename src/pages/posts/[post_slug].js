@@ -105,21 +105,25 @@ export default function Post(props) {
   const {
     title = 'Missing title',
     body,
+    blog__expand, 
     summary,
     seo_title,
     image,
     // mdxSource,
   } = props
 
+  let seo_title_calc = seo_title ? seo_title : title;
+  if (blog__expand && blog__expand.name)
+    seo_title_calc += ' - ' + blog__expand.name
   const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
   const imageUrl = image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${image}` : null
   return (
     <>
       <NextSeo
-        title={title}
+        title={seo_title_calc}
         description={summary}
         openGraph={{
-          title: seo_title || title,
+          title: seo_title_calc,
           description: summary,
           url,
           images: [

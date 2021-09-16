@@ -29,7 +29,7 @@ export async function getPost(postSlug){
                 featured,
                 body,
                 blog,
-                blog__expand{
+                blog__expand {
                     _id,
                     name,
                     slug,

@@ -67,16 +67,10 @@ export const headerNav = {
       ],
       sections: [
         {
-          id: 'general',
-          name: 'General Use',
+          id: 'cloud-services',
+          name: '云服务',
           items: [
-            { name: 'Heroicons Solid', href: '#' },
-            { name: 'Heroicons Outline', href: '#' },
-            { name: 'Line Illustrations', href: '#' },
-            { name: 'Hero Illustrations', href: '#' },
-            { name: 'Branded Illustrations', href: '#' },
-            { name: 'Skeuomorphic Illustrations', href: '#' },
-            { name: 'Hand Drawn Illustrations', href: '#' },
+            { name: '华炎魔方', href: '#' },
           ],
         },
         {
