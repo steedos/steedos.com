@@ -114,7 +114,7 @@ export default function Home() {
             <figcaption className="sm:text-xl font-medium flex flex-col items-center">
               <div className="p-1 border-2 border-light-blue-400 rounded-full mb-3">
                 <img
-                  src={require('@/img/adam.jpg').default}
+                  src={require('@/img/adam.jpg')}
                   alt=""
                   className="w-10 h-10 rounded-full bg-light-blue-100"
                   loading="lazy"

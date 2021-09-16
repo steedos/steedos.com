@@ -1,6 +1,6 @@
 {
   "name": "steedosWebsiteDefaultLambda",
-  "hash": "yxxnGIGAxd77F8FTucOo8u9/XUewzGv5gs0yPXNsyyE=",
+  "hash": "Dur3JsHZsg9gxosvObSZnjeNq7EUFUpkFBQLkMb7UpU=",
   "description": "Default Lambda@Edge for Next CloudFront distribution",
   "memory": 2048,
   "timeout": 30,

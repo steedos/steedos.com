@@ -5,7 +5,7 @@ const { toRgba } = require('tailwindcss/lib/util/withAlphaVariable')
 
 module.exports = {
   // mode: 'jit',
-  purge: ['./src/**/*.{js,mdx}'],
+  purge: ['./src/**/*.{js,jsx,tsx,mdx}'],
   darkMode: 'class',
   theme: {
     colors: {
