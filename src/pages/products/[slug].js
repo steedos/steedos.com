@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import {NextSeo} from 'next-seo'
 import Detail from '@/components/product/Detail'
 import { getProduct } from '@/lib/product';
 
@@ -26,5 +27,34 @@ export default function ProductDetail({product}){
   if(!product){
     return {notFind: true}
   }
-  return <Detail product={product}></Detail>
+
+  const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
+  const imageUrl = product.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${product.image}` : null
+
+  return (
+    <>
+        <NextSeo
+        title={product.name}
+        description={product.description}
+        openGraph={{
+          title: product.name,
+          description: product.description,
+          url,
+          images: [
+            {
+              url: imageUrl,
+              alt: product.name,
+            },
+          ],
+        }}
+        // twitter={{
+        //   cardType: seo.cardType || 'summary_large_image',
+        //   site: seo.site || 'eggheadio',
+        //   handle: seo.handle,
+        // }}
+        // canonical={canonicalUrl}
+      />
+      <Detail product={product}></Detail>
+    </>
+  )
 }
