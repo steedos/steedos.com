@@ -1,6 +1,6 @@
 {
   "name": "steedosWebsiteImageLambda",
-  "hash": "fK+gyWtaRVeelS+HcEsnVS+gSQZDUT4fpPaDvCJjrtw=",
+  "hash": "Bqv4XQywNIqa90txSM5PUGI5FpoN/8mUCtvGdkrGqw8=",
   "description": "Image Lambda@Edge for Next CloudFront distribution",
   "memory": 2048,
   "timeout": 30,

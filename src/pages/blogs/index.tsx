@@ -19,7 +19,6 @@ const UpdatedAt: React.FunctionComponent<{date: string}> = ({date}) => (
 )
 
 export async function getServerSideProps({params, res}) {
-  const { blog_slug } = params;
   const posts = await getPosts();
   
   return {
@@ -34,11 +33,11 @@ const BlogPosts: React.FC = (props: any) => {
   return (
     <>
       <NextSeo
-        title='Articles'
+        title='博客'
       />
     <div className="text-black mx-auto max-w-screen-lg lg:py-16 py-10">
       <h1 className="md:text-4xl text-2xl text-center font-bold pb-16">
-        Articles
+      博客
       </h1>
       <div className="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-8">
         {posts && posts.map((article: any) => {

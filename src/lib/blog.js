@@ -110,16 +110,58 @@ export async function getBlogSidebarLayoutNav(blogSlug, menuId){
     return menu;
 }
 
-
 /**
  * 
  * @param {*} blogSlug 
  * @returns 
  */
 export async function getPosts(){
+        
     const query = `
     {
-        site_posts{
+        site_posts {
+            _id,
+            name,
+            summary,
+            slug,
+            tags,
+            image,
+            status,
+            published_at,
+            featured,
+            owner__expand {
+                name,
+                avatar
+            }
+            blog__expand {
+                _id
+                name
+                slug
+            }
+        } 
+    }
+    `
+    const result = await fetchGraphql(query);
+
+    let posts = null;
+
+    if(result.data && result.data.site_posts){
+        posts = result.data.site_posts;
+    }
+
+    return posts;
+}
+
+/**
+ * 
+ * @param {*} blogSlug 
+ * @returns 
+ */
+export async function getBlogPosts(blogId){
+        
+    const query = `
+    {
+        site_posts(filters:["blog","=","${blogId}"]){
             _id,
             name,
             summary,
@@ -164,17 +206,7 @@ export async function getBlog(blogSlug){
             _id,
             slug,
             name,
-            menu_primary,
-            posts: _related_site_posts_blog(top:20){
-                _id,
-                name,
-                slug,
-                tags,
-                image,
-                status,
-                published_at,
-                featured,
-            }
+            body,
         } 
     }
     `
