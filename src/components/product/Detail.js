@@ -27,8 +27,7 @@ import { getPrice } from '@/lib/product.client';
 import { getMedia } from '@/lib/product.client'
 import { find, each } from 'lodash'
 import BuyButton from '@/components/product/BuyButton'
-import Markdown from 'react-markdown'
-const {remarkPlugins} = require('remark')
+import { Markdown } from '@/components/Markdown'
 // const {rehypePlugins} = require('rehype')
 
 function classNames(...classes) {
@@ -197,9 +196,7 @@ export default function ProductDetail({ product }) {
           </div>
           {product.html && <section aria-labelledby="related-heading" className="mt-10 border-t border-gray-200 py-8 px-4 sm:px-0">
             <div className="max-w-none pt-10 pb-8">
-              <Markdown remarkPlugins={remarkPlugins} className="prose dark:prose-dark mt-1 sm:text-base text-sm">
-                {product.html}
-              </Markdown>
+              <Markdown body={product.html}></Markdown>
             </div>
 
             {/* {meta.footer && (

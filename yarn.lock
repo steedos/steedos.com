@@ -2382,6 +2382,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@pondorasti/remark-img-links@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@pondorasti/remark-img-links/-/remark-img-links-1.0.8.tgz#1ba8246834c0a5b6b13a9b25a77827d49f6bea25"
+  integrity sha512-UpW5AfimYi7EdkL9qvQ4trzIzgi5KERdd4KHN8fkVWrh2BqCzKuheJbAzSgIxJr0opQ7NvaIwf+JRjV/fBRdrA==
+  dependencies:
+    unist-util-visit "1.4.0"
+
 "@reach/observe-rect@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@reach/observe-rect/-/observe-rect-1.2.0.tgz#d7a6013b8aafcc64c778a0ccb83355a11204d3b2"
@@ -11733,6 +11740,13 @@ unist-util-visit-parents@^5.0.0:
   dependencies:
     "@types/unist" "^2.0.0"
     unist-util-is "^5.0.0"
+
+unist-util-visit@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/unist-util-visit/-/unist-util-visit-1.4.0.tgz#1cb763647186dc26f5e1df5db6bd1e48b3cc2fb1"
+  integrity sha512-FiGu34ziNsZA3ZUteZxSFaczIjGmksfSgdKqBfOejrrfzyUy5b7YrlzT1Bcvi+djkYDituJDy2XB7tGTeBieKw==
+  dependencies:
+    unist-util-visit-parents "^2.0.0"
 
 unist-util-visit@2.0.3, unist-util-visit@^2.0.0, unist-util-visit@^2.0.1, unist-util-visit@^2.0.3:
   version "2.0.3"
