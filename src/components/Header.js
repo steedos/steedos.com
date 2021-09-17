@@ -11,7 +11,7 @@ import { StarIcon } from '@heroicons/react/solid'
 import { headerNav } from '@/navs/header';
 import useSWR from 'swr'
 
-import { authValidate, goLogin, goLogout } from '@/lib/auth.client';
+import { authValidate, goLogin, goLogout, goSignup } from '@/lib/auth.client';
 
 const navigation = headerNav;
 
@@ -339,7 +339,7 @@ export function Header() {
                   </a>
                 </div>
                 <div className="flow-root">
-                  <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
+                  <a href="#" className="-m-2 p-2 block font-medium text-gray-900" onClick={goSignup}>
                     创建账户
                   </a>
                 </div>
@@ -495,7 +495,7 @@ export function Header() {
                     登录
                   </a>
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800" onClick={goSignup}>
                     创建账户
                   </a>
                 </div>}
