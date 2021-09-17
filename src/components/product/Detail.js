@@ -219,7 +219,7 @@ export default function ProductDetail({ product }) {
                     <div className='py-10'>
                       <h3 className="font-medium text-gray-900">{review.owner__expand.name}</h3>
                       <p>
-                        <time dateTime={review.created}>{postDateTemplate.render(new Date(review.created))}</time>
+                        <time dateTime={review.created}>{postDateTemplate.render(new Date(Number(review.created)))}</time>
                       </p>
 
 
