@@ -16,9 +16,6 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
 
-      - name: "Hello world"
-        run: echo "Hello $STEEDOS_SERVER_API_KEY $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY!"
-
       - uses: actions/checkout@v2
 
       - name: Configure AWS Credentials
@@ -33,17 +30,14 @@ jobs:
           source: 'serverless-dev.yml'
           target: 'serverless.yml'
 
-      - uses: actions/setup-node@v2-beta
+      - name: Use Node.js '14'
+        uses: actions/setup-node@v2
         with:
           node-version: '14'
+          cache: "yarn"
 
-      - name: Install dependencies
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: install --frozen-lockfile # will run `yarn install` command
+      - run: yarn --frozen-lockfile
 
-      # - name: Run tests
-      #   run: npm run test:ci
 
       - name: Serverless AWS authentication
         run: npx serverless --component=serverless-next config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
