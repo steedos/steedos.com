@@ -44,10 +44,10 @@ jobs:
       #   run: npx serverless --component=serverless-next config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Download `.serverless` state from S3
-        run: aws s3 sync s3://steedos-serverless-state-bucket/steedos.com.cn/dev/.serverless .serverless --delete
+        run: aws s3 sync s3://steedos-serverless-state-bucket/steedos.com.cn/dev/.serverless .serverless --delete --region ap-east-1
 
       - name: Deploy to AWS
         run: npx serverless
 
       - name: Upload `.serverless` state to S3
-        run: aws s3 sync .serverless s3://steedos-serverless-state-bucket/steedos.com.cn/dev/.serverless --delete
+        run: aws s3 sync .serverless s3://steedos-serverless-state-bucket/steedos.com.cn/dev/.serverless --delete --region ap-east-1
