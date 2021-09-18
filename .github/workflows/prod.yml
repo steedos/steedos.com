@@ -32,10 +32,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: env
-        env:
-          STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_API_KEY_PROD }}
-
       # - name: Run tests
       #   run: npm run test:ci
 
