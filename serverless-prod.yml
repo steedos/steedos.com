@@ -1,13 +1,13 @@
 steedos_api_key: ${env.STEEDOS_SERVER_API_KEY}
 
-myNextApplication:
+steedos-website-prod:
   component: "@sls-next/serverless-component" # it is recommended you pin the latest stable version of serverless-next.js
   inputs:
     domain: ["www", "steedos.com.cn"]
     name:
-      defaultLambda: prodSteedosWebsiteDefaultLambda
-      apiLambda: prodSteedosWebsiteApiLambda
-      imageLambda: prodSteedosWebsiteImageLambda
+      defaultLambda: steedos-website-prod-DefaultLambda
+      apiLambda: steedos-website-prod-ApiLambda
+      imageLambda: steedos-website-prod-ImageLambda
     stage: prod
     deploy: true
     bucketRegion: ap-east-1
