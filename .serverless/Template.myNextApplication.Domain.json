@@ -1,0 +1,13 @@
+{
+  "region": "us-east-1",
+  "privateZone": false,
+  "domain": "steedos.com.cn",
+  "subdomains": [
+    {
+      "domain": "beta.steedos.com.cn",
+      "distributionId": "E701ELLBNE6U0",
+      "url": "https://d3cd4mvgva12si.cloudfront.net",
+      "type": "awsCloudFront"
+    }
+  ]
+}

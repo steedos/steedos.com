@@ -6,7 +6,7 @@ steedos_api_key: ${env.STEEDOS_SERVER_API_KEY}
 myNextApplication:
   component: "@sls-next/serverless-component" # it is recommended you pin the latest stable version of serverless-next.js
   inputs:
-    # domain: ["test", "steedos.cn"]
+    domain: ["beta", "steedos.com.cn"]
     name:
       defaultLambda: steedosWebsiteDefaultLambda
       apiLambda: steedosWebsiteApiLambda
