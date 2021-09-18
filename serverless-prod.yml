@@ -25,4 +25,4 @@ myNextApplication:
       cleanupDotNext: true
       postBuildCommands: []
 
-useDotenv: true
+useDotenv: false
