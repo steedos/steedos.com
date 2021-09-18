@@ -12,6 +12,8 @@ jobs:
   deploy-staging:
     runs-on: ubuntu-latest
     environment: prod
+    env:
+      STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_SERVER_API_KEY }}
     steps:
       - uses: actions/checkout@v2
 
