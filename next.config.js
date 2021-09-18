@@ -37,6 +37,15 @@ const withMDX = require(`@next/mdx`)({
 //   'src/pages/{docs,components,pricing,platform}/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
 //   'src/pages/course/**/*': ['@/layouts/VideoLayout', 'VideoLayout'],
 // }
+let NEXT_PUBLIC_STEEDOS_SERVER_ROOT_HOSTNAME = null;
+try {
+  if(process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL){
+    let parsedSrc = new URL(process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL);
+    NEXT_PUBLIC_STEEDOS_SERVER_ROOT_HOSTNAME = parsedSrc.hostname
+  }
+} catch (err) {
+  console.error(err);
+}
 
 module.exports = 
   withPlugins(
@@ -67,7 +76,7 @@ module.exports =
     modern: true,
   },
   images: {
-    domains: ['res.cloudinary.com', 'huayan.steedos.cn', 'console.dev.steedos.cn', process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL],
+    domains: ['res.cloudinary.com', 'huayan.steedos.cn', 'console.dev.steedos.cn', NEXT_PUBLIC_STEEDOS_SERVER_ROOT_HOSTNAME],
   },
   async redirects() {
     return require('./redirects.json')
