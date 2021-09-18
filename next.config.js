@@ -70,6 +70,7 @@ module.exports =
     withTM
   ], 
   {
+  target: 'serverless',
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
   experimental: {
