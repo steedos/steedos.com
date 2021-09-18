@@ -14,6 +14,8 @@ jobs:
       STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_SERVER_API_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      NEXT_PUBLIC_DEPLOYMENT_URL: https://dev.steedos.com.cn
+      NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL: https://console.dev.steedos.cn
     steps:
 
       - uses: actions/checkout@v2
