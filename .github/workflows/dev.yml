@@ -9,9 +9,8 @@ on:
 jobs:
   deploy-staging:
     runs-on: ubuntu-latest
-    environment: dev
     env:
-      STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_SERVER_API_KEY }}
+      STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_SERVER_API_KEY_DEV }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       NEXT_PUBLIC_DEPLOYMENT_URL: https://dev.steedos.com.cn
