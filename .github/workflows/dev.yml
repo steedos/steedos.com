@@ -2,7 +2,9 @@
 #
 # GitHub Action for Serverless NextJS staging environment
 #
-name: Deploy staging-steedos-website
+name: Deploy dev-steedos-website
+environment: dev
+
 on:
   push:
     branches: [dev]
