@@ -1,0 +1,47 @@
+# .github/workflows/staging.yml
+#
+# GitHub Action for Serverless NextJS staging environment
+#
+name: Deploy staging-steedos-website
+on:
+  push:
+    branches: [master]
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - uses: canastro/copy-file-action@master
+        with:
+          source: 'serverless-dev.yml'
+          target: 'serverless.yml'
+
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # - name: Run tests
+      #   run: npm run test:ci
+
+      - name: Serverless AWS authentication
+        run: npx serverless --component=serverless-next config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # - name: Download `.serverless` state from S3
+      #   run: aws s3 sync s3://bhall2001-serverless-state-bucket/your-site-name/staging/.serverless .serverless --delete
+
+      - name: Deploy to AWS
+        run: npx serverless
+
+      - name: Upload `.serverless` state to S3
+        run: aws s3 sync .serverless s3://steedos-serverless-state-bucket/dev.steedos.com.cn/staging/.serverless --delete
