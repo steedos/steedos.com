@@ -3,7 +3,6 @@
 # GitHub Action for Serverless NextJS staging environment
 #
 name: Deploy dev-steedos-website
-environment: dev
 
 on:
   push:
@@ -11,6 +10,7 @@ on:
 jobs:
   deploy-staging:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - uses: actions/checkout@v2
 
