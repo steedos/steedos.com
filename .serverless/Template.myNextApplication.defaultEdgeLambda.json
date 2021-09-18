@@ -1,10 +1,10 @@
 {
   "name": "steedosWebsiteDefaultLambda",
-  "hash": "GtdWy2o9uUoRJfs2hbjwMfUIJ/oXFcW7uXnNVFOhAUw=",
+  "hash": "2idBnj2Dfh+W7F8xcQeFoEQu6cLGKpgRE0dTcE8OF5s=",
   "description": "Default Lambda@Edge for Next CloudFront distribution",
   "memory": 2048,
   "timeout": 30,
-  "code": "/Users/steedos/Documents/GitHub/steedos.com/.serverless_nextjs/default-lambda",
+  "code": "F:\\GitHub\\steedos.com\\.serverless_nextjs\\default-lambda",
   "shims": [],
   "handler": "index.handler",
   "runtime": "nodejs14.x",

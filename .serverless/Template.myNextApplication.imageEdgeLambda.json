@@ -1,10 +1,10 @@
 {
   "name": "steedosWebsiteImageLambda",
-  "hash": "EZighWhhKdAIysrZXCnBDtsE7+BHMy/aBIXgsoYNAGU=",
+  "hash": "O44OKzO2SYunmfK5cb6fbTMDz3tvmgiInvYJyINpI7k=",
   "description": "Image Lambda@Edge for Next CloudFront distribution",
   "memory": 2048,
   "timeout": 30,
-  "code": "/Users/steedos/Documents/GitHub/steedos.com/.serverless_nextjs/image-lambda",
+  "code": "F:\\GitHub\\steedos.com\\.serverless_nextjs\\image-lambda",
   "shims": [],
   "handler": "index.handler",
   "runtime": "nodejs14.x",
