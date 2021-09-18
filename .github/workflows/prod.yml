@@ -5,7 +5,8 @@
 name: Deploy staging-steedos-website
 on:
   push:
-    branches: [dev]
+    tags: # Deploy tag (e.g. v1.0) to production
+      - 'v**'
 jobs:
   deploy-staging:
     runs-on: ubuntu-latest
@@ -21,7 +22,7 @@ jobs:
 
       - uses: canastro/copy-file-action@master
         with:
-          source: 'serverless-dev.yml'
+          source: 'serverless-prod.yml'
           target: 'serverless.yml'
 
       - uses: actions/setup-node@v2-beta
@@ -33,7 +34,7 @@ jobs:
 
       - name: env
         env:
-          STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_API_KEY_DEV }}
+          STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_API_KEY_PROD }}
 
       # - name: Run tests
       #   run: npm run test:ci
@@ -48,4 +49,4 @@ jobs:
         run: npx serverless
 
       - name: Upload `.serverless` state to S3
-        run: aws s3 sync .serverless s3://steedos-serverless-state-bucket/steedos.com.cn/dev/.serverless --delete
+        run: aws s3 sync .serverless s3://steedos-serverless-state-bucket/steedos.com.cn/prod/.serverless --delete
