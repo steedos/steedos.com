@@ -1,17 +1,14 @@
-stage: ${env.STAGE}
-deploument_url: ${env.NEXT_PUBLIC_DEPLOYMENT_URL}
-steedos_root_url: ${env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}
 steedos_api_key: ${env.STEEDOS_SERVER_API_KEY}
 
 myNextApplication:
   component: "@sls-next/serverless-component" # it is recommended you pin the latest stable version of serverless-next.js
   inputs:
-    domain: ["beta", "steedos.com.cn"]
+    domain: ["dev", "steedos.com.cn"]
     name:
       defaultLambda: steedosWebsiteDefaultLambda
       apiLambda: steedosWebsiteApiLambda
       imageLambda: steedosWebsiteImageLambda
-    stage: ${stage}
+    stage: dev
     deploy: true
     bucketRegion: ap-east-1
     bucketName: steedos-website-dev
@@ -22,8 +19,8 @@ myNextApplication:
     enableS3Acceleration: false
     build:
       env:
-        NEXT_PUBLIC_DEPLOYMENT_URL=${deploument_url}
-        NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=${steedos_root_url}
+        NEXT_PUBLIC_DEPLOYMENT_UR=Lhttps://dev.steedos.com.cn
+        NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=https://console.dev.steedos.cn
         STEEDOS_SERVER_API_KEY=${steedos_api_key}
       cleanupDotNext: true
       postBuildCommands: []
