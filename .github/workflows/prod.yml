@@ -12,7 +12,7 @@ jobs:
   deploy-staging:
     runs-on: ubuntu-latest
     env:
-      STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_SERVER_API_KEY_PROD }}
+      STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_SERVER_API_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       NEXT_PUBLIC_DEPLOYMENT_URL: https://www.steedos.com.cn
@@ -26,6 +26,9 @@ jobs:
       #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       #     aws-region: ap-east-1
+
+      - name: Download `.serverless` state from S3
+        run: aws s3 sync s3://steedos-serverless-state-bucket/steedos.com.cn/prod/.serverless .serverless --delete
 
       - uses: canastro/copy-file-action@master
         with:
@@ -42,9 +45,6 @@ jobs:
 
       - name: Serverless AWS authentication
         run: npx serverless --component=serverless-next config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Download `.serverless` state from S3
-        run: aws s3 sync s3://steedos-serverless-state-bucket/steedos.com.cn/prod/.serverless .serverless --delete
 
       - name: Deploy to AWS
         run: npx serverless
