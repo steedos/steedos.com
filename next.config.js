@@ -7,13 +7,17 @@ const minimatch = require('minimatch')
 //   enabled: process.env.ANALYZE === 'true',
 // })
 
-const {remarkPluginsWebpack} = require('./remark')
-const {rehypePlugins} = require('./rehype')
-
 
 const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['react-markdown'], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
+const withTM = require('next-transpile-modules')(
+  [
+    'react-markdown',
+    'remark-gfm'
+  ], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
 
+const {remarkPluginsWebpack} = require('./remark')
+const {rehypePlugins} = require('./rehype')
+  
 const withMDX = require(`@next/mdx`)({
   extension: /\.mdx?$/,
   options: {

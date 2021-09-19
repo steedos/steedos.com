@@ -5,6 +5,8 @@ import Image from 'next/image'
 // import getConfig from 'next/config'
 const { remarkPlugins } = require('remark');
 const imgLinks = require("@pondorasti/remark-img-links")
+import remarkGfm from 'remark-gfm'
+
 // const { serverRuntimeConfig } = getConfig();
 const { domains: imageDomains } = process.env.__NEXT_IMAGE_OPTS;
 
@@ -27,18 +29,14 @@ const isAllowImageDomain = (src) => {
   }
 }
 
-export function Markdown({ body, _remarkPlugins }) {
+export function Markdown({ body }) {
 
-  const __remarkPlugins = [remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}]]
-
-  if (_remarkPlugins) {
-    __remarkPlugins.push(_remarkPlugins)
-  }
+  const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkGfm]
 
   return (
     <>
       {body && (
-        <RMarkdown remarkPlugins={__remarkPlugins} className="prose dark:prose-dark mt-1 sm:text-base text-sm"
+        <RMarkdown children={body} remarkPlugins={__remarkPlugins} className="prose dark:prose-dark mt-1 sm:text-base text-sm"
           components={{
             // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
             img: ({ node, ...props }) => {
@@ -57,7 +55,6 @@ export function Markdown({ body, _remarkPlugins }) {
             }
           }}
         >
-          {body}
         </RMarkdown>
       )}
     </>
