@@ -1,4 +1,4 @@
-steedos_api_key: ${env.STEEDOS_SERVER_API_KEY_PROD}
+steedos_api_key: ${env.STEEDOS_SERVER_API_KEY}
 
 steedos-website-prod:
   component: "@sls-next/serverless-component" # it is recommended you pin the latest stable version of serverless-next.js
