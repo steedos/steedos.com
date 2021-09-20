@@ -27,7 +27,7 @@ export const headerNav = {
           items: [
             { name: '概览', href: '/docs/platform/华炎魔方概览' },
             { name: '功能', href: '/docs/platform/华炎魔方功能' },
-            { name: '案例', href: '/blogs/news/华炎魔方助力大众公用实施数字化转型' },
+            { name: '动态', href: '/blogs/' },
           ],
         },
         {
@@ -35,6 +35,7 @@ export const headerNav = {
           name: '文档',
           items: [
             { name: '快速开始', href: '/docs/platform/快速开始' },
+            { name: '案例', href: '/blogs/news/华炎魔方助力大众公用实施数字化转型' },
           ],
         },
         {
@@ -69,15 +70,16 @@ export const headerNav = {
       ],
       sections: [
         {
-          id: 'appstore',
+          id: 'app-store',
           name: '应用商城',
           items: [
-            { name: '概览', href: '#' },
+            { name: '概览', href: '/docs/app-store/应用商城概览' },
+            { name: '推荐应用', href: '/collections/featured' },
           ],
         },
         {
           id: 'application',
-          name: '企业管理',
+          name: '企业管理类',
           items: [
             { name: '合同管理', href: '/products/contract' },
             { name: '项目管理', href: '/products/project' },
@@ -85,7 +87,7 @@ export const headerNav = {
         },
         {
           id: 'marketing',
-          name: '市场营销',
+          name: '市场营销类',
           items: [
             { name: '网站', href: '/products/site' },
             { name: '商城', href: '/products/store' },
@@ -95,6 +97,6 @@ export const headerNav = {
     },
   ],
   pages: [
-    { name: '博客', href: '/blogs/' },
+    // { name: '动态', href: '/blogs/' },
   ],
 }
