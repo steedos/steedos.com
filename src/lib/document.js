@@ -13,7 +13,7 @@ export async function getDocument(docSlug){
         return null
     const query = `
         {
-            documents(filters: [["slug","=","${docSlug}"]]){
+            documents(filters: [["_id","=","${docSlug}"]]){
               name
               body
               status
@@ -44,4 +44,35 @@ export async function getDocument(docSlug){
     }
 
     return document;
+}
+
+/**
+ * 
+ * @param {*} blogSlug 
+ * @returns 
+ */
+export async function getCollection(slug){
+  const query = `
+  {
+      document_collections(filters:["slug","=","${slug}"]){
+          _id,
+          slug,
+          name,
+          description,
+    			documents: _related_documents_collection {
+            _id,
+            name,
+          }
+      } 
+  }
+  `
+  const result = await fetchGraphql(query);
+
+  let collection = null;
+
+  if(result.data && result.data.document_collections && result.data.document_collections.length > 0){
+    collection = result.data.document_collections[0];
+  }
+
+  return collection;
 }
