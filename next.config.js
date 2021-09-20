@@ -12,7 +12,8 @@ const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(
   [
     'react-markdown',
-    'remark-gfm'
+    'remark-gfm',
+    'markdown-toc',
   ], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
 
 const {remarkPluginsWebpack} = require('./remark')

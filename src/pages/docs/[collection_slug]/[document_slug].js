@@ -17,13 +17,51 @@ import { getDocument} from '@/lib/document';
 import {NextSeo} from 'next-seo'
 import { Heading } from '@/components/Heading';
 import { Markdown } from '@/components/Markdown'
+import DocumentLayout from '@/layouts/DocumentLayout';
+import {fromMarkdown} from 'mdast-util-from-markdown';
 
+
+const getTableOfContents = (markdown) => {
+  const tree = fromMarkdown(markdown)
+  
+  const contents = []
+
+  for (let i = 0; i < tree.children.length; i++) {
+    let node = tree.children[i]
+
+    if (node.type === 'heading' && [2, 3].includes(node.depth)) {
+      const level = node.depth
+      const title = node.children
+        .filter((n) => n.type === 'text')
+        .map((n) => n.value)
+        .join('')
+      let slug = title
+
+      let allOtherSlugs = contents.flatMap((entry) => [
+        entry.slug,
+        ...entry.children.map(({ slug }) => slug),
+      ])
+      let i = 1
+      while (allOtherSlugs.indexOf(slug) > -1) {
+        slug = `${title}-${i}`
+        i++
+      }
+
+      if (level === 2) {
+        contents.push({ title, slug, children: [] })
+      } else {
+        contents[contents.length - 1].children.push({ title, slug })
+      }
+    }
+  }
+
+  return contents
+}
 
 export async function getServerSideProps({
   params,
   res,
 }) {
-
   const { collection_slug, document_slug } = params;
   const document = await getDocument(collection_slug, document_slug);
   if (!document) {
@@ -31,9 +69,12 @@ export async function getServerSideProps({
     res.end()
     return {props: {}}
   }
+  const tableOfContents = document.body? getTableOfContents(document.body): []
+  console.log(document)
   
   return {
     props: {
+      tableOfContents,
       ...document
     }
   }
@@ -45,6 +86,7 @@ export default function Document(props) {
 
   const {
     name = 'Missing title',
+    tableOfContents,
     body,
   } = props
 
@@ -74,37 +116,12 @@ export default function Document(props) {
         // }}
         // canonical={canonicalUrl}
       />
-      <article className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-3 mb-16">
-        <header>
-          <h1 className="text-black max-w-screen-md lg:text-5xl md:text-4xl sm:text-3xl text-2xl w-full font-extrabold mb-8 lg:mb-10 leading-tighter">
-            {name}
-          </h1>
-          {/* {author && <Author author={author} />} */}
-          {/* {imageUrl && (
-            <div className="mt-4">
-              <Image
-                src={imageUrl}
-                alt={title}
-                width={1280}
-                height={720}
-                quality={100}
-                className="rounded-lg"
-              />
-            </div>
-          )} */}
-          {/* {tags && (
-            <ul>
-              Posted in
-              {tags.map((tags: any) => (
-                <li key={tags}>{tags}</li>
-              ))}
-            </ul>
-          )} */}
-        </header>
-        <main className="">
-          <Markdown body={body}></Markdown>
-        </main>
-      </article>
+      <DocumentLayout meta={{title: name}}
+        tableOfContents={tableOfContents}
+      >
+        <Markdown body={body}></Markdown>
+      </DocumentLayout>
+      
     </>
   )
 }
