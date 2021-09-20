@@ -37,14 +37,14 @@ const Collection: React.FC = (props: any) => {
       </h1>
       <div className="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-8">
         {documents && documents.map((article: any) => {
-          const fullSlug = `/docs/${slug}/${article._id}`
+          const fullSlug = `/docs/${slug}/${article.name}`
           return (
             <div key={fullSlug} className="flex flex-col">
             
               <Link href={fullSlug}>
                 <a>
                   <h2 className="md:text-2xl text-xl font-bold leading-tighter">
-                    {name}
+                    {article.name}
                   </h2>
                 </a>
               </Link>

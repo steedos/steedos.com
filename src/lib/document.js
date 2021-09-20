@@ -8,12 +8,15 @@ import { fetchGraphql } from '@/lib/base'
  * @param {*} postSlug : post._id || post.slug(暂不支持)
  * @returns 
  */
-export async function getDocument(docSlug){
-    if (!docSlug)
-        return null
+export async function getDocument(collectionSlug, documentSlug){
+    if (!collectionSlug || !documentSlug)
+      return null;
+    const collection = await getCollection(collectionSlug)
+    if (!collection)
+      return null; 
     const query = `
         {
-            documents(filters: [["_id","=","${docSlug}"]]){
+            documents(filters: [["collection", "=", "${collection._id}"], ["name","=","${documentSlug}"]]){
               name
               body
               status

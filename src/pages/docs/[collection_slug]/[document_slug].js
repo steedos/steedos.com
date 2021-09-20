@@ -24,8 +24,8 @@ export async function getServerSideProps({
   res,
 }) {
 
-  const { doc_slug } = params;
-  const document = await getDocument(doc_slug);
+  const { collection_slug, document_slug } = params;
+  const document = await getDocument(collection_slug, document_slug);
   if (!document) {
     res.statusCode = 404;
     res.end()

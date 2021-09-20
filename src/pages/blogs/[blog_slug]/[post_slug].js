@@ -40,8 +40,8 @@ export async function getServerSideProps({
   
   // const markdownTOC = require('markdown-toc');
 
-  const { post_slug } = params;
-  const post = await getPost(post_slug);
+  const { blog_slug, post_slug } = params;
+  const post = await getPost(blog_slug, post_slug);
   if (!post) {
     res.statusCode = 404;
     res.end()

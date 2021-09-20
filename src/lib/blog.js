@@ -9,12 +9,15 @@ import { getMenu } from './menu';
  * @param {*} postSlug : post._id || post.slug(暂不支持)
  * @returns 
  */
-export async function getPost(postSlug){
-    if (!postSlug)
-        return null
+export async function getPost(blogSlug, postSlug){
+    if (!blogSlug || !postSlug)
+        return null;
+    const blog = await getBlog(blogSlug);
+    if (!blog)
+        return null;
     const query = `
         {
-            site_posts(filters: [["slug","=","${postSlug}"]]){
+            site_posts(filters: [["slug","=","${postSlug}"], ["blog","=","${blog._id}"]]){
                 _id,
                 name,
                 image,
