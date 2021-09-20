@@ -45,7 +45,7 @@ const BlogPosts: React.FC = (props: any) => {
       </h1>
       <div className="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-8">
         {posts && posts.map((article: any) => {
-          const fullSlug = `/posts/${article.name}-${article._id}`
+          const fullSlug = `/blogs/${blog.slug}/${article.slug}`
           const imageUrl = article.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${article.image}` :  ""
           const ownerImageUrl = article.owner__expand.avatar?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/avatars/${article.owner__expand.avatar}` : ""
           return (

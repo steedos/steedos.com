@@ -12,13 +12,9 @@ import { getMenu } from './menu';
 export async function getPost(postSlug){
     if (!postSlug)
         return null
-    const slugSplit = postSlug.split('-');
-    if (slugSplit.length == 0)
-        return null;
-    const postId = slugSplit[slugSplit.length-1]
     const query = `
         {
-            site_posts(filters: [["_id","=","${postId}"]]){
+            site_posts(filters: [["slug","=","${postSlug}"]]){
                 _id,
                 name,
                 image,
@@ -78,9 +74,9 @@ export async function getPost(postSlug){
 
 export function getPostUrl(blogSlug, post){
     if (!post)
-        return `/blogs/`
+        return `/blogs/${blogSlug}/`
     else
-        return `/blogs/${post.name}-${post._id}`
+        return `/blogs/${blogSlug}/${post.slug}`
 }
 
 /**
