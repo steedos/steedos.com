@@ -7,13 +7,18 @@ const minimatch = require('minimatch')
 //   enabled: process.env.ANALYZE === 'true',
 // })
 
-const {remarkPluginsWebpack} = require('./remark')
-const {rehypePlugins} = require('./rehype')
-
 
 const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['react-markdown'], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
+const withTM = require('next-transpile-modules')(
+  [
+    'react-markdown',
+    'remark-gfm',
+    'markdown-toc',
+  ], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
 
+const {remarkPluginsWebpack} = require('./remark')
+const {rehypePlugins} = require('./rehype')
+  
 const withMDX = require(`@next/mdx`)({
   extension: /\.mdx?$/,
   options: {
@@ -71,13 +76,16 @@ module.exports =
   ], 
   {
   target: 'serverless',
+  env: {
+    STEEDOS_SERVER_API_KEY: process.env.STEEDOS_SERVER_API_KEY,
+  },
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
   experimental: {
     modern: true,
   },
   images: {
-    domains: ['res.cloudinary.com', 'huayan.steedos.cn', 'console.dev.steedos.cn', NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL_HOSTNAME],
+    domains: ['res.cloudinary.com', 'huayan.steedos.cn', 'console.dev.steedos.cn', 'console.steedos.cn'],
   },
   async redirects() {
     return require('./redirects.json')

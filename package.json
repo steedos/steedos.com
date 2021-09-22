@@ -86,6 +86,7 @@
     "remark-code-titles": "^0.1.2",
     "remark-collapse": "^0.1.2",
     "remark-footnotes": "^2.0.0",
+    "remark-gfm": "^2.0.0",
     "remark-slug": "^6.1.0",
     "rich-markdown-editor": "^11.17.4-0",
     "seedrandom": "^3.0.5",

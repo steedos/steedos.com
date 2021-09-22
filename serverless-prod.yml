@@ -1,0 +1,28 @@
+steedos_api_key: ${env.STEEDOS_SERVER_API_KEY}
+
+steedos-website-prod:
+  component: "@sls-next/serverless-component" # it is recommended you pin the latest stable version of serverless-next.js
+  inputs:
+    domain: ["www", "steedos.com.cn"]
+    name:
+      defaultLambda: steedos-website-prod-DefaultLambda
+      apiLambda: steedos-website-prod-ApiLambda
+      imageLambda: steedos-website-prod-ImageLambda
+    stage: prod
+    deploy: true
+    bucketRegion: ap-east-1
+    bucketName: steedos-website-prod
+    region: ap-east-1
+    runtime: nodejs14.x
+    memory: 2048
+    timeout: 30
+    enableS3Acceleration: false
+    build:
+      env:
+        NEXT_PUBLIC_DEPLOYMENT_URL=https://www.steedos.com.cn
+        NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=https://console.steedos.cn
+        STEEDOS_SERVER_API_KEY=${steedos_api_key}
+      cleanupDotNext: true
+      postBuildCommands: []
+
+useDotenv: false

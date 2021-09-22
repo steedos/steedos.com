@@ -74,17 +74,17 @@ export default function Home() {
 
           </p>
           <div className="flex flex-wrap space-y-4 sm:space-y-0 sm:space-x-4 text-center">
-            <NextLink href="/docs">
+            <NextLink href="/docs/platform/快速开始">
               <a className="w-full sm:w-auto flex-none bg-gray-900 hover:bg-gray-700 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200">
-                Get started
+                快速开始
               </a>
             </NextLink>
-            <NpmInstallButton />
+            {/* <NpmInstallButton /> */}
           </div>
         </div>
-        <Hero />
+        {/* <Hero /> */}
       </header>
-      <section className="relative z-10 text-center max-w-screen-lg xl:max-w-screen-xl mx-auto">
+      {/* <section className="relative z-10 text-center max-w-screen-lg xl:max-w-screen-xl mx-auto">
         <div className="px-4 sm:px-6 md:px-8">
           <BigText as="h2" className="mb-8">
             <Widont>“Best practices” don’t actually work.</Widont>
@@ -125,8 +125,8 @@ export default function Home() {
             </figcaption>
           </figure>
         </div>
-      </section>
-      <Testimonials />
+      </section> */}
+      {/* <Testimonials /> */}
       <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
         {/* <ConstraintBased />
         <BuildAnything />
