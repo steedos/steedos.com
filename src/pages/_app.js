@@ -15,6 +15,7 @@ import 'intersection-observer'
 import mdxComponents from '@/components/mdx';
 import {has} from 'lodash';
 import { saveAuthInfo } from '@/lib/auth.client';
+import { getSite } from '@/lib/site';
 
 if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
   window.ResizeObserver = ResizeObserver
@@ -41,7 +42,35 @@ Router.events.on('routeChangeComplete', () => {
 })
 Router.events.on('routeChangeError', progress.finish)
 
-export default function App({ Component, pageProps, router }) {
+/**
+ * _app.js 下的 getServerSideProps 貌似不能执行
+ */
+export async function getServerSideProps({
+  params,
+  req
+}) {
+  console.log(`app.js getServerSideProps`)
+  let site = null;
+  try {
+    let parsedSrc = new URL(req.headers.referer);
+    site = await getSite(parsedSrc.hostname)
+  } catch (err) {
+    console.error(err);
+  }
+
+  if (!site) {
+    return {
+      notFound: true,
+    }
+  }
+  return {
+    props: {
+      site
+    }
+  }
+}
+
+export default function App({ Component, pageProps, router, site }) {
   if(typeof window !== 'undefined' && router.query){
     if(has(router.query, 'X-Auth-Token') && has(router.query, 'X-Space-Id') && has(router.query, 'X-User-Id')){
       const authToken = router.query['X-Auth-Token'];
