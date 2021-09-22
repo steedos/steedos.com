@@ -59,8 +59,7 @@ const getTableOfContents = (markdown) => {
 }
 
 export async function getServerSideProps({
-  params,
-  res,
+  params
 }) {
   const { collection_slug, document_slug } = params;
   const document = await getDocument(collection_slug, document_slug);
