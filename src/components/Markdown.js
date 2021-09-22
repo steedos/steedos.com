@@ -3,9 +3,9 @@ import RMarkdown from 'react-markdown';
 import { ROOT_URL } from '@/lib/base';
 import Image from 'next/image'
 // import getConfig from 'next/config'
+import remarkGfm from 'remark-gfm'
 const { remarkPlugins } = require('remark');
 const imgLinks = require("@pondorasti/remark-img-links")
-import remarkGfm from 'remark-gfm'
 
 // const { serverRuntimeConfig } = getConfig();
 const { domains: imageDomains } = process.env.__NEXT_IMAGE_OPTS;
