@@ -65,9 +65,9 @@ export async function getServerSideProps({
   const { collection_slug, document_slug } = params;
   const document = await getDocument(collection_slug, document_slug);
   if (!document) {
-    res.statusCode = 404;
-    res.end()
-    return {props: {}}
+    return {
+      notFound: true,
+    }
   }
   const tableOfContents = document.body? getTableOfContents(document.body): []
   

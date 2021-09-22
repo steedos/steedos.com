@@ -43,9 +43,9 @@ export async function getServerSideProps({
   const { blog_slug, post_slug } = params;
   const post = await getPost(blog_slug, post_slug);
   if (!post) {
-    res.statusCode = 404;
-    res.end()
-    return {props: {}}
+    return {
+      notFound: true,
+    }
   }
   
   // const mdxSource = await serialize(post.body, {

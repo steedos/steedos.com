@@ -12,10 +12,7 @@ export async function getServerSideProps(context) {
 
   if (!products) {
     return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
+      notFound: true,
     }
   }
 
