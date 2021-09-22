@@ -36,7 +36,7 @@ export function Markdown({ body }) {
   return (
     <>
       {body && (
-        <RMarkdown children={body} remarkPlugins={__remarkPlugins} className="prose dark:prose-dark mt-1 sm:text-base text-sm"
+        <RMarkdown children={body.replace(new RegExp('\\\\\n', 'g'), '\n')} remarkPlugins={__remarkPlugins} className="prose dark:prose-dark mt-1 sm:text-base text-sm"
           components={{
             // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
             img: ({ node, ...props }) => {
