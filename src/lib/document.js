@@ -16,8 +16,9 @@ export async function getDocument(collectionSlug, documentSlug){
       return null; 
     const query = `
         {
-            documents(filters: [["collection", "=", "${collection._id}"], ["name","=","${documentSlug}"]]){
+            documents(filters: [["collection", "=", "${collection._id}"], ["slug","=","${documentSlug}"]]){
               name
+              slug
               body
               status
               pinned
@@ -29,6 +30,7 @@ export async function getDocument(collectionSlug, documentSlug){
               child_documents: _related_documents_parent {
                 _id
                 name
+                slug
               }
               _related_files {
                 _id
@@ -64,6 +66,7 @@ export async function getCollection(slug){
           description,
     			documents: _related_documents_collection {
             _id,
+            slug,
             name,
           }
       } 

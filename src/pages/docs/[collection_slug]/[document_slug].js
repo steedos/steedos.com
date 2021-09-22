@@ -70,7 +70,6 @@ export async function getServerSideProps({
     return {props: {}}
   }
   const tableOfContents = document.body? getTableOfContents(document.body): []
-  console.log(document)
   
   return {
     props: {
