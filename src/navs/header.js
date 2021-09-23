@@ -6,15 +6,15 @@ export const headerNav = {
       name: '平台',
       featured: [
         {
-          name: '华炎魔方入门版',
-          href: '/docs/platform/platform-cloud-starter',
+          name: '客户案例：大众公用',
+          href: '/docs/customer-success-stories/dzug',
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-menu-03.jpg',
           imageAlt:
-            '华炎魔方云服务位于亚马逊中国区域，每个企业拥有独享空间，并可随时导出为私有部署模式。',
+            '华炎魔方仅用3个月的时间，为大众公用建立了完整的业务财务一体化管理系统。',
         },
         {
-          name: '华炎魔方专业版',
-          href: '/products/platform-cloud-professional',
+          name: '客户案例：建华建材',
+          href: '/docs/customer-success-stories/dzug',
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-menu-04.jpg',
           imageAlt:
             '华炎魔方云服务位于亚马逊中国区域，每个企业拥有独享空间，并可随时导出为私有部署模式。',
@@ -27,7 +27,7 @@ export const headerNav = {
           items: [
             { name: '概览', href: '/docs/platform/overview' },
             { name: '功能', href: '/docs/platform/features' },
-            { name: '动态', href: '/blogs/' },
+            { name: '客户案例', href: '/blogs/customer-success-stories/' },
           ],
         },
         {
@@ -35,7 +35,6 @@ export const headerNav = {
           name: '文档',
           items: [
             { name: '快速开始', href: '/docs/platform/getting_started' },
-            { name: '案例', href: '/blogs/news/华炎魔方助力大众公用实施数字化转型' },
           ],
         },
         {
