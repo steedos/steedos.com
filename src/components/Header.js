@@ -412,10 +412,10 @@ export function Header({site}) {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                           >
-                            <Popover.Panel className="mt-1 absolute z-10 top-full text-sm text-gray-500 bg-white rounded-lg shadow">
+                            <Popover.Panel className="mx-20 my-1 absolute z-10 top-full inset-x-0 text-sm text-gray-500 bg-white rounded-lg shadow">
                               <div className="relative">
-                                <div className="max-w-8xl mx-auto px-8">
-                                  <div className="grid grid-cols-1 gap-y-10 gap-x-8 py-8">
+                                <div className="max-w-8xl mx-auto px-16">
+                                  <div className="grid grid-cols-1 gap-y-10 gap-x-8 py-16">
                                     {/* <div className="col-start-2 grid grid-cols-2 gap-x-8">
                                       {category.featured.map((item) => (
                                         <div key={item.name} className="group relative text-base sm:text-sm">
@@ -436,7 +436,7 @@ export function Header({site}) {
                                         </div>
                                       ))}
                                     </div> */}
-                                    <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
+                                    <div className="row-start-1 grid grid-cols-4 gap-y-10 gap-x-8 text-sm">
                                       {category.sections.map((section) => (
                                         <div key={section.name} className="w-40">
                                           <p id={`${section.name}-heading`} className="font-medium text-gray-900">
