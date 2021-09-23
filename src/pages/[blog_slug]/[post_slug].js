@@ -104,7 +104,7 @@ export default function Post(props) {
             {name}
           </h1>
           {/* {author && <Author author={author} />} */}
-          {imageUrl && (
+          {/* {imageUrl && (
             <div className="mt-4">
               <Image
                 src={imageUrl}
@@ -115,7 +115,7 @@ export default function Post(props) {
                 className="rounded-lg"
               />
             </div>
-          )}
+          )} */}
           {/* {tags && (
             <ul>
               Posted in

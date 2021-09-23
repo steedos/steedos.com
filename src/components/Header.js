@@ -414,8 +414,8 @@ export function Header({site}) {
                           >
                             <Popover.Panel className="mx-20 my-1 absolute z-10 top-full inset-x-0 text-sm text-gray-500 bg-white rounded-lg shadow">
                               <div className="relative">
-                                <div className="max-w-8xl mx-auto px-16">
-                                  <div className="grid grid-cols-1 gap-y-10 gap-x-8 py-16">
+                                <div className="max-w-8xl mx-auto px-8">
+                                  <div className="grid grid-cols-1 gap-y-10 gap-x-8 py-10">
                                     {/* <div className="col-start-2 grid grid-cols-2 gap-x-8">
                                       {category.featured.map((item) => (
                                         <div key={item.name} className="group relative text-base sm:text-sm">

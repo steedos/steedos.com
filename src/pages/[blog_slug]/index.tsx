@@ -80,9 +80,7 @@ const BlogPosts: React.FC = (props: any) => {
                 <div className="aspect-w-16 aspect-h-9 md:mb-4 mb-2">
                   <Link href={fullSlug}>
                     <a>
-                      <div className="absolute top-0 left-0 w-full h-full bg-gray-200 dark:bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 dark:text-gray-600">
-                        {/* <IconPlaceholder /> */}
-                      </div>
+                        <IconPlaceholder />
                     </a>
                   </Link>
                 </div>
@@ -94,6 +92,11 @@ const BlogPosts: React.FC = (props: any) => {
                   </h2>
                 </a>
               </Link>
+              {article.summary && (
+                <div className="opacity-70 text-sm leading-snug mt-4">
+                  {article.summary}
+                </div>
+              )}
 {/* 
               {ownerImageUrl && (
                 <div className="mt-4 flex items-start text-sm">
@@ -120,11 +123,7 @@ const BlogPosts: React.FC = (props: any) => {
                     </div>
                   </div>
 
-                  {article.summary && (
-                    <div className="opacity-70 text-sm leading-snug  pl-2">
-                      {article.summary}
-                    </div>
-                  )}
+                  
                 </div>
               )} */}
             </div>
@@ -135,5 +134,25 @@ const BlogPosts: React.FC = (props: any) => {
   </>
   )
 }
+
+
+const IconPlaceholder = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g fill="none">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M4 3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+        fill="currentColor"
+      />
+    </g>
+  </svg>
+)
+
 
 export default BlogPosts;
