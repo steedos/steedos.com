@@ -42,35 +42,7 @@ Router.events.on('routeChangeComplete', () => {
 })
 Router.events.on('routeChangeError', progress.finish)
 
-/**
- * _app.js 下的 getServerSideProps 貌似不能执行
- */
-export async function getServerSideProps({
-  params,
-  req
-}) {
-  console.log(`app.js getServerSideProps`)
-  let site = null;
-  try {
-    let parsedSrc = new URL(req.headers.referer);
-    site = await getSite(parsedSrc.hostname)
-  } catch (err) {
-    console.error(err);
-  }
-
-  if (!site) {
-    return {
-      notFound: true,
-    }
-  }
-  return {
-    props: {
-      site
-    }
-  }
-}
-
-export default function App({ Component, pageProps, router, site }) {
+export default function App({ Component, pageProps = {}, router, site }) {
   if(typeof window !== 'undefined' && router.query){
     if(has(router.query, 'X-Auth-Token') && has(router.query, 'X-Space-Id') && has(router.query, 'X-User-Id')){
       const authToken = router.query['X-Auth-Token'];
@@ -84,10 +56,12 @@ export default function App({ Component, pageProps, router, site }) {
     meta = {} 
   } = pageProps;
 
+  meta.site = site;
+
   const getLayout =
     Component.getLayout ||
     ((Page) => (
-      <DefaultLayout>
+      <DefaultLayout site={meta.site}>
         <Page {...pageProps} />
       </DefaultLayout>
     ))
@@ -99,4 +73,20 @@ export default function App({ Component, pageProps, router, site }) {
       </MDXProvider>
     </>
   )
+}
+
+App.getInitialProps = async ({ctx}) => {
+  const { req } = ctx;
+  let site = null;
+  if(req){
+    try {
+      let parsedSrc = new URL(req.headers.referer);
+      site = await getSite(parsedSrc.hostname)
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  return { 
+    site: site 
+  }
 }

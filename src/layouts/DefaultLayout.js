@@ -10,10 +10,10 @@ export const Main = ({children}) => {
   )
 }
 
-export const DefaultLayout = ({children}) => {
+export const DefaultLayout = ({children, site}) => {
   return (
     <>
-      <Header />
+      <Header site={site}/>
       <Main>
         {children}
       </Main>

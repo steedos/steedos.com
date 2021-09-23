@@ -185,8 +185,7 @@ function BannerMarkRight(props) {
   )
 }
 
-export function Header() {
-
+export function Header({site}) {
   const [open, setOpen] = useState(false)
   const [userInfo, setUserInfo] = useState({})
 
