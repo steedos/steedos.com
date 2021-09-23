@@ -81,6 +81,9 @@ export default function Home() {
             </NextLink>
             {/* <NpmInstallButton /> */}
           </div>
+
+          <img className="rounded-lg mt-10" src="https://console.steedos.cn/api/files/images/jKowqCrKuByHDZMHN" alt=""></img>
+
         </div>
         {/* <Hero /> */}
       </header>
