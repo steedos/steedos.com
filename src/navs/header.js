@@ -6,11 +6,11 @@ export const headerNav = {
       name: '平台',
       featured: [
         {
-          name: '华炎魔方私有部署版',
-          href: '/docs/platform/私有部署版',
+          name: '华炎魔方入门版',
+          href: '/docs/platform/platform-cloud-starter',
           imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-menu-03.jpg',
           imageAlt:
-            '华炎魔方私有部署版开源且完全免费',
+            '华炎魔方云服务位于亚马逊中国区域，每个企业拥有独享空间，并可随时导出为私有部署模式。',
         },
         {
           name: '华炎魔方专业版',
@@ -25,8 +25,8 @@ export const headerNav = {
           id: 'platform',
           name: '华炎魔方平台',
           items: [
-            { name: '概览', href: '/docs/platform/华炎魔方概览' },
-            { name: '功能', href: '/docs/platform/华炎魔方功能' },
+            { name: '概览', href: '/docs/platform/overview' },
+            { name: '功能', href: '/docs/platform/features' },
             { name: '动态', href: '/blogs/' },
           ],
         },
@@ -34,7 +34,7 @@ export const headerNav = {
           id: 'docs',
           name: '文档',
           items: [
-            { name: '快速开始', href: '/docs/platform/快速开始' },
+            { name: '快速开始', href: '/docs/platform/getting_started' },
             { name: '案例', href: '/blogs/news/华炎魔方助力大众公用实施数字化转型' },
           ],
         },
@@ -73,7 +73,7 @@ export const headerNav = {
           id: 'app-store',
           name: '应用商城',
           items: [
-            { name: '概览', href: '/docs/app-store/应用商城概览' },
+            { name: '概览', href: '/docs/app-store/overview' },
             { name: '推荐应用', href: '/collections/featured' },
           ],
         },
