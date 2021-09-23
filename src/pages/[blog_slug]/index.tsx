@@ -11,6 +11,7 @@ import {find} from 'lodash'
 import { SidebarLayout } from '@/layouts/SidebarLayout'
 import { getBlog, getBlogPosts, getBlogSidebarLayoutNav, getPostUrl } from '@/lib/blog';
 import tinytime from 'tinytime'
+import { Markdown } from '@/components/Markdown'
 
 const postDateTemplate = tinytime('{MMMM} {DD}, {YYYY}')
 
@@ -50,6 +51,9 @@ const BlogPosts: React.FC = (props: any) => {
       <h1 className="md:text-4xl text-2xl text-center font-bold pb-16">
         {blog.name}
       </h1>
+      {blog.body && (<div className="pb-10">
+        <Markdown body={blog.body}></Markdown>
+      </div>)}
       <div className="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-8">
         {posts && posts.map((article: any) => {
           const fullSlug = `/${blog.slug}/${article.slug}`
@@ -90,7 +94,7 @@ const BlogPosts: React.FC = (props: any) => {
                   </h2>
                 </a>
               </Link>
-
+{/* 
               {ownerImageUrl && (
                 <div className="mt-4 flex items-start text-sm">
                   <div className="items-center flex space-x-3">
@@ -122,7 +126,7 @@ const BlogPosts: React.FC = (props: any) => {
                     </div>
                   )}
                 </div>
-              )}
+              )} */}
             </div>
           )
         })}
