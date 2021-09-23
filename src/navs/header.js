@@ -25,9 +25,18 @@ export const headerNav = {
           id: 'platform',
           name: '华炎魔方平台',
           items: [
-            { name: '概览', href: '/docs/platform/overview' },
-            { name: '功能', href: '/docs/platform/features' },
-            { name: '客户案例', href: '/blogs/customer-success-stories/' },
+            { name: '概览', href: '/platform/overview' },
+            { name: '解决方案', href: '/platform/solutions' },
+            { name: '功能', href: '/platform/features' },
+            { name: '报价', href: '/platform/pricing' },
+          ],
+        },
+        {
+          id: 'pricing',
+          name: '客户案例',
+          items: [
+            { name: '大众公用', href: '/customer-success-stories/dzug' },
+            { name: '建华建材', href: '/customer-success-stories/jianhuabm' },
           ],
         },
         {
@@ -35,15 +44,6 @@ export const headerNav = {
           name: '文档',
           items: [
             { name: '快速开始', href: '/docs/platform/getting_started' },
-          ],
-        },
-        {
-          id: 'pricing',
-          name: '报价',
-          items: [
-            { name: '基础版', href: '/products/platform-cloud-starter' },
-            { name: '标准版', href: '/products/platform-cloud-standard' },
-            { name: '专业版', href: '/products/platform-cloud-professional' },
           ],
         },
       ],

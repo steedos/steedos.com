@@ -77,9 +77,9 @@ export async function getPost(blogSlug, postSlug){
 
 export function getPostUrl(blogSlug, post){
     if (!post)
-        return `/blogs/${blogSlug}/`
+        return `/${blogSlug}/`
     else
-        return `/blogs/${blogSlug}/${post.slug}`
+        return `/${blogSlug}/${post.slug}`
 }
 
 /**

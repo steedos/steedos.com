@@ -5,7 +5,7 @@ import groq from 'groq'
 import {parse} from 'date-fns'
 import friendlyTime from 'friendly-time'
 import {NextSeo} from 'next-seo'
-
+import Error from 'next/error'
 import {find} from 'lodash'
 
 import { SidebarLayout } from '@/layouts/SidebarLayout'
@@ -21,10 +21,13 @@ const UpdatedAt: React.FunctionComponent<{date: string}> = ({date}) => (
 export async function getServerSideProps({params, res}) {
   const { blog_slug } = params;
   const blog = await getBlog(blog_slug);
+  const errorCode = !blog?404: 0;
+  
   const posts = blog? await getBlogPosts(blog._id): [];
   
   return {
     props: {
+      errorCode,
       blog,
       posts
     }
@@ -32,7 +35,11 @@ export async function getServerSideProps({params, res}) {
 }
 
 const BlogPosts: React.FC = (props: any) => {
-  const {blog, posts} = props;
+  const {errorCode, blog, posts} = props;
+
+  if (errorCode) {
+    return <Error statusCode={errorCode} />
+  }
 
   return (
     <>
@@ -45,7 +52,7 @@ const BlogPosts: React.FC = (props: any) => {
       </h1>
       <div className="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-8">
         {posts && posts.map((article: any) => {
-          const fullSlug = `/blogs/${blog.slug}/${article.slug}`
+          const fullSlug = `/${blog.slug}/${article.slug}`
           const imageUrl = article.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${article.image}` :  ""
           const ownerImageUrl = article.owner__expand.avatar?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/avatars/${article.owner__expand.avatar}` : ""
           return (

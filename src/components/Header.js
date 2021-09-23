@@ -365,7 +365,7 @@ export function Header({site}) {
        
         <nav aria-label="Top" className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="">
-            <div className="h-16 flex items-center py-1">
+            <div className="h-16 flex items-center">
               <button
                 type="button"
                 className="bg-white p-2 rounded-md text-gray-400 lg:hidden"
@@ -395,16 +395,11 @@ export function Header({site}) {
                               className={classNames(
                                 open
                                   ? 'border-teal-600 text-teal-600'
-                                  : 'border-transparent text-gray-700 hover:text-gray-800',
+                                  : 'border-transparent hover:border-teal-600 hover:text-teal-600 text-gray-700 hover:text-gray-800',
                                 'px-2 relative z-10 flex items-center transition-colors ease-out duration-200 text-base font-medium border-b-2 -mb-px pt-px'
                               )}
                             >
                               <span>{category.name}</span>
-                              <ChevronDownIcon
-                                className={`${open ? '' : 'text-opacity-70'}
-                                  ml-2 h-4 w-4 text-gray-300 group-hover:text-opacity-80 transition ease-in-out duration-150`}
-                                aria-hidden="true"
-                              />
                             </Popover.Button>
                           </div>
 
@@ -417,14 +412,11 @@ export function Header({site}) {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                           >
-                            <Popover.Panel className="absolute z-10 top-full inset-x-0 text-sm text-gray-500">
-                              {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                              <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
-
-                              <div className="relative bg-white">
+                            <Popover.Panel className="mt-1 absolute z-10 top-full text-sm text-gray-500 bg-white rounded-lg shadow">
+                              <div className="relative">
                                 <div className="max-w-8xl mx-auto px-8">
-                                  <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
-                                    <div className="col-start-2 grid grid-cols-2 gap-x-8">
+                                  <div className="grid grid-cols-1 gap-y-10 gap-x-8 py-8">
+                                    {/* <div className="col-start-2 grid grid-cols-2 gap-x-8">
                                       {category.featured.map((item) => (
                                         <div key={item.name} className="group relative text-base sm:text-sm">
                                           <div className="aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
@@ -443,10 +435,10 @@ export function Header({site}) {
                                           </p>
                                         </div>
                                       ))}
-                                    </div>
+                                    </div> */}
                                     <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
                                       {category.sections.map((section) => (
-                                        <div key={section.name}>
+                                        <div key={section.name} className="w-40">
                                           <p id={`${section.name}-heading`} className="font-medium text-gray-900">
                                             {section.name}
                                           </p>

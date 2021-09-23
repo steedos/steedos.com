@@ -9,6 +9,7 @@ import {
   useContext,
 } from 'react'
 
+import Error from 'next/error'
 import dynamic from 'next/dynamic'
 
 import { SidebarLayout } from '@/layouts/SidebarLayout'
@@ -36,72 +37,27 @@ export async function getServerSideProps({
   locales,
   preview,
 }) {
-  // 这些只能在服务端引入，所以只能写在这里。
-  
-  // const markdownTOC = require('markdown-toc');
 
   const { blog_slug, post_slug } = params;
-  const post = await getPost(blog_slug, post_slug);
-  if (!post) {
-    return {
-      notFound: true,
-    }
-  }
-  
-  // const mdxSource = await serialize(post.body, {
-  //   mdxOptions: {
-  //     remarkPlugins: [],
-  //     rehypePlugins,
-  //   }
-  // })
-  // const headings = []; //markdownTOC(post.body).json
-
-  // const minHeading = 2;
-
-  // let tableOfContents = []
-  // let currentHeading = null
-  // headings.forEach(heading => {
-  //   if (heading.lvl == minHeading) {
-  //     if (currentHeading)
-  //       tableOfContents.push(currentHeading);
-  //     currentHeading = {
-  //       title: heading.content,
-  //       slug: heading.content,
-  //       children: []
-  //     };
-  //   }
-  //   if (currentHeading && heading.lvl == minHeading + 1) {
-  //     currentHeading.children.push({
-  //       title: heading.content,
-  //       slug: heading.content,
-  //     })
-  //   }
-  // });
-  // if (currentHeading)
-  //   tableOfContents.push(currentHeading);
+  const blog = await getBlog(blog_slug);
+  const post = blog? await getPost(blog_slug, post_slug):null;
+  const errorCode = !blog || !post?404: 0;
   
   return {
     props: {
-      // mdxSource,
-      tableOfContents: [], //tableOfContents,
-      title: post.name,
+      errorCode,
       ...post
     }
   }
 }
-
-// const MDXRemote = dynamic(
-//   () => import('next-mdx-remote').then((mod) => mod.MDXRemote),
-//   { ssr: false }
-// )
-// console.log(MDXRemote)
 
 export default function Post(props) {
 
   const router = useRouter()
 
   const {
-    title = 'Missing title',
+    errorCode,
+    name = 'Missing title',
     body,
     blog__expand, 
     summary,
@@ -110,7 +66,11 @@ export default function Post(props) {
     // mdxSource,
   } = props
 
-  let seo_title_calc = seo_title ? seo_title : title;
+  if (errorCode) {
+    return <Error statusCode={errorCode} />
+  }
+
+  let seo_title_calc = seo_title ? seo_title : name;
   if (blog__expand && blog__expand.name)
     seo_title_calc += ' - ' + blog__expand.name
   const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
@@ -127,7 +87,7 @@ export default function Post(props) {
           images: [
             {
               url: imageUrl,
-              alt: title,
+              alt: name,
             },
           ],
         }}
@@ -141,14 +101,14 @@ export default function Post(props) {
       <article className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-3 mb-16">
         <header>
           <h1 className="text-black max-w-screen-md lg:text-5xl md:text-4xl sm:text-3xl text-2xl w-full font-extrabold mb-8 lg:mb-10 leading-tighter">
-            {title}
+            {name}
           </h1>
           {/* {author && <Author author={author} />} */}
           {imageUrl && (
             <div className="mt-4">
               <Image
                 src={imageUrl}
-                alt={title}
+                alt={name}
                 width={1280}
                 height={720}
                 quality={100}
