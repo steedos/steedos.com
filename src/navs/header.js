@@ -5,20 +5,20 @@ export const headerNav = {
       id: 'platform',
       name: '平台',
       featured: [
-        {
-          name: '客户案例：大众公用',
-          href: '/docs/customer-success-stories/dzug',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-menu-03.jpg',
-          imageAlt:
-            '华炎魔方仅用3个月的时间，为大众公用建立了完整的业务财务一体化管理系统。',
-        },
-        {
-          name: '客户案例：建华建材',
-          href: '/docs/customer-success-stories/dzug',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-menu-04.jpg',
-          imageAlt:
-            '华炎魔方云服务位于亚马逊中国区域，每个企业拥有独享空间，并可随时导出为私有部署模式。',
-        },
+        // {
+        //   name: '客户案例：大众公用',
+        //   href: '/docs/customer-success-stories/dzug',
+        //   imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-menu-03.jpg',
+        //   imageAlt:
+        //     '华炎魔方仅用3个月的时间，为大众公用建立了完整的业务财务一体化管理系统。',
+        // },
+        // {
+        //   name: '客户案例：建华建材',
+        //   href: '/docs/customer-success-stories/dzug',
+        //   imageSrc: 'https://console.steedos.cn/api/files/images/Qy3zLwE3JWdDoTxHA',
+        //   imageAlt:
+        //     '华炎魔方云服务位于亚马逊中国区域，每个企业拥有独享空间，并可随时导出为私有部署模式。',
+        // },
       ],
       sections: [
         {
@@ -44,7 +44,6 @@ export const headerNav = {
             { name: '基础版', href: '/products/platform-cloud-starter' },
             { name: '标准版', href: '/products/platform-cloud-standard' },
             { name: '专业版', href: '/products/platform-cloud-professional' },
-            { name: '私有部署版', href: '/docs/platform/私有部署版' },
           ],
         },
       ],
@@ -53,19 +52,19 @@ export const headerNav = {
       id: 'appstore',
       name: '应用商城',
       featured: [
-        {
-          name: '合同管理',
-          href: '/products/contract',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-menu-01.jpg',
-          imageAlt:
-            '借助华炎合同管理系统，你能够集中进行合同存储，提高合规性，自动化和加快整个合同生命周期，并获得更多其他业务优势。',
-        },
-        {
-          name: '项目管理',
-          href: '/products/project',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-menu-02.jpg',
-          imageAlt: '帮助您跟踪和管理项目，里程碑，任务，已阻止的任务，逾期任务，时间，费用预算，并具有详细的报表功能。',
-        },
+        // {
+        //   name: '合同管理',
+        //   href: '/products/contract',
+        //   imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-menu-01.jpg',
+        //   imageAlt:
+        //     '借助华炎合同管理系统，你能够集中进行合同存储，提高合规性，自动化和加快整个合同生命周期，并获得更多其他业务优势。',
+        // },
+        // {
+        //   name: '项目管理',
+        //   href: '/products/project',
+        //   imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-05-menu-02.jpg',
+        //   imageAlt: '帮助您跟踪和管理项目，里程碑，任务，已阻止的任务，逾期任务，时间，费用预算，并具有详细的报表功能。',
+        // },
       ],
       sections: [
         {
