@@ -39,6 +39,7 @@ export const headerNav = {
           name: '商城',
           items: [
             { name: '华炎魔方云服务', href: '/collections/platform-cloud' },
+            { name: '应用市场', href: '/collections/steedos-packages' },
           ],
         },
         {
@@ -83,10 +84,10 @@ export const headerNav = {
       sections: [
         {
           id: 'app-store',
-          name: '应用商城',
+          name: '商城',
           items: [
-            { name: '概览', href: '/docs/app-store/overview' },
-            { name: '推荐应用', href: '/collections/featured' },
+            { name: '华炎魔方云服务', href: '/collections/platform-cloud' },
+            { name: '应用市场', href: '/collections/steedos-packages' },
           ],
         },
         {
