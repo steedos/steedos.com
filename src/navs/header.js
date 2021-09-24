@@ -23,12 +23,23 @@ export const headerNav = {
       sections: [
         {
           id: 'platform',
-          name: '华炎魔方平台',
+          name: '平台',
           items: [
-            { name: '概览', href: '/platform/overview' },
+            { name: '低代码简介', href: '/platform/lowcode' },
+            { name: '华炎魔方平台', href: '/platform/overview' },
+            { name: '开源低代码', href: '/open-source/open-source-low-code' },
             { name: '解决方案', href: '/platform/solutions' },
             { name: '功能', href: '/platform/features' },
             { name: '报价', href: '/platform/pricing' },
+            
+          ],
+        },
+        {
+          id: 'purchase',
+          name: '商城',
+          items: [
+            { name: '华炎魔方云服务', href: '/collections/platform-cloud' },
+            { name: '应用市场', href: '/collections/steedos-packages' },
           ],
         },
         {
@@ -43,7 +54,11 @@ export const headerNav = {
           id: 'docs',
           name: '文档',
           items: [
-            { name: '快速开始', href: '/docs/platform/getting_started' },
+            { name: '开通云服务', href: '/docs/deploy/deploy-cloud' },
+            { name: '本地部署', href: '/docs/deploy' },
+            { name: '用户向导', href: '/docs/user' },
+            { name: '管理员向导', href: '/docs/admin' },
+            { name: '开发人员向导', href: '/docs/developer' },
           ],
         },
       ],
@@ -68,27 +83,31 @@ export const headerNav = {
       ],
       sections: [
         {
-          id: 'app-store',
-          name: '应用商城',
+          id: 'collections',
+          name: '商城',
           items: [
-            { name: '概览', href: '/docs/app-store/overview' },
-            { name: '推荐应用', href: '/collections/featured' },
+            { name: '华炎魔方云服务', href: '/collections/platform-cloud' },
+            { name: '应用市场', href: '/collections/steedos-packages' },
           ],
         },
         {
-          id: 'application',
-          name: '企业管理类',
+          id: 'management',
+          name: '运营效率类',
           items: [
             { name: '合同管理', href: '/products/contract' },
             { name: '项目管理', href: '/products/project' },
+            { name: '销售管理', href: '/products/crm' },
+            { name: '财务管理', href: '/products/finance' },
+            { name: '目标管理', href: '/products/okr' },
           ],
         },
         {
           id: 'marketing',
-          name: '市场营销类',
+          name: '客户体验类',
           items: [
-            { name: '网站', href: '/products/site' },
-            { name: '商城', href: '/products/store' },
+            { name: '网站管理', href: '/products/site' },
+            { name: '帮助文档管理', href: '/products/document' },
+            { name: '在线商城', href: '/products/shop' },
           ],
         },
       ],

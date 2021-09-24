@@ -213,7 +213,7 @@ export function Header({site}) {
               className="hidden sm:block mx-6 h-6 w-px bg-white bg-opacity-20"
             ></span>
             <div className="ml-6 sm:ml-0">
-              <Link href="/docs/platform/华炎魔方云服务">
+              <Link href="/docs/deploy/deploy-cloud">
                 <a className="whitespace-nowrap inline-flex rounded-md bg-white py-2 px-3 text-xs font-semibold uppercase text-blue-500 hover:bg-opacity-90">
                   了解更多 &rarr;
                 </a>
