@@ -6,10 +6,10 @@ import Image from 'next/image'
 import remarkGfm from 'remark-gfm'
 import { isString } from 'lodash'
 import Frame from '@/components/Frame'
-const { remarkPlugins } = require('remark');
-const imgLinks = require("@pondorasti/remark-img-links")
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+const { remarkPlugins } = require('remark');
+const imgLinks = require("@pondorasti/remark-img-links")
 
 
 // const { serverRuntimeConfig } = getConfig();
