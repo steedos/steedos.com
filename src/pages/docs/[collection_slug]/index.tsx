@@ -67,7 +67,7 @@ const Collection: React.FC = (props: any) => {
                   </div>
                 </div>
                 <div className="text-base font-medium">
-                  <a className="text-teal-600 hover:text-teal-700" aria-label={article.name} href={fullSlug}>Read more →</a>
+                  <a className="text-teal-600 hover:text-teal-700" aria-label={article.name} href={fullSlug}>阅读更多 →</a>
                 </div>
               </div>
             </article>
