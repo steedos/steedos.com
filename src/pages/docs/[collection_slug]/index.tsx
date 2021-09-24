@@ -31,28 +31,51 @@ const Collection: React.FC = (props: any) => {
         title={`${name}`}
         description={description}
       />
-    <div className="text-black mx-auto max-w-screen-lg lg:py-16 py-10">
-      <h1 className="md:text-4xl text-2xl text-center font-bold pb-16">
-        {name}
-      </h1>
-      <div className="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-8">
+    <div className="text-black mx-auto max-w-screen-lg w-full lg:py-16 py-10">
+      <main>
+        <div className="divide-y divide-gray-200">
+          <div className="pt-6 pb-8 space-y-2 md:space-y-5">
+            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl md:text-[4rem] md:leading-[3.5rem]">
+            {name}
+            </h1>
+            <p className="text-lg text-gray-500">{description}</p>
+          </div>
+        </div>
+        <ul className="divide-y divide-gray-200">
         {documents && documents.map((article: any) => {
           const fullSlug = `/docs/${slug}/${article.slug}`
           return (
-            <div key={fullSlug} className="flex flex-col">
-            
-              <Link href={fullSlug}>
-                <a>
-                  <h2 className="md:text-2xl text-xl font-bold leading-tighter">
-                    {article.name}
+          <li className="py-12" key={fullSlug}>
+            <article className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
+              {/* <dl>
+                <dt className="sr-only">Published on</dt>
+                <dd className="text-base font-medium text-gray-500">
+                  <time datetime="2021-08-11T19:30:00.000Z">August 12, 2021</time>
+                </dd>
+              </dl> */}
+              <div className="space-y-5 xl:col-span-3">
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold tracking-tight">
+                    <Link href={fullSlug}>
+                        <a className="text-gray-900">{article.name}</a>
+                    </Link>
                   </h2>
-                </a>
-              </Link>
-             
-            </div>
-          )
-        })}
-      </div>
+                  <div className="prose max-w-none text-gray-500">
+                    <div className="prose max-w-none">
+                      {/* <p>Almost 6 months in the making, we finally released <a href="https://tailwindui.com/#product-ecommerce">Tailwind UI Ecommerce</a> — the first all-new component kit for Tailwind UI since the initial launch back in February 2020.</p> */}
+                    </div>
+                  </div>
+                </div>
+                <div className="text-base font-medium">
+                  <a className="text-teal-600 hover:text-teal-700" aria-label={article.name} href={fullSlug}>Read more →</a>
+                </div>
+              </div>
+            </article>
+          </li>
+            )
+          })}
+        </ul>
+      </main>
     </div>
   </>
   )
