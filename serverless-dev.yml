@@ -3,7 +3,7 @@ steedos_api_key: ${env.STEEDOS_SERVER_API_KEY_DEV}
 steedos-website-dev:
   component: "@sls-next/serverless-component@v3.3.0" # it is recommended you pin the latest stable version of serverless-next.js
   inputs:
-    domain: ["dev", "steedos.com.cn"]
+    domain: ["dev", "steedos.cn"]
     name:
       defaultLambda: steedos-website-dev-DefaultLambda
       apiLambda: steedos-website-dev-ApiLambda
@@ -19,7 +19,7 @@ steedos-website-dev:
     enableS3Acceleration: false
     build:
       env:
-        NEXT_PUBLIC_DEPLOYMENT_URL=https://dev.steedos.com.cn
+        NEXT_PUBLIC_DEPLOYMENT_URL=https://dev.steedos.cn
         NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=https://console.dev.steedos.cn
         STEEDOS_SERVER_API_KEY=${steedos_api_key}
       cleanupDotNext: true
