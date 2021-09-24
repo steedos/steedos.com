@@ -1,5 +1,23 @@
 import { fetchGraphql } from '@/lib/base'
 
+const QUERY_SITE_MENUS = `
+{
+    name,
+    items: _related_site_menu_items_site_menu{
+      _id,
+      name,
+      children,
+      link_collection,
+      link_post,
+      link_product,
+      parent,
+      site_menu,
+      type,
+      url
+    }
+}
+`
+
 const QUERY_SITE_INFO = `
 {
     name,
@@ -10,7 +28,8 @@ const QUERY_SITE_INFO = `
     announcement_url,
     announcement_title,
     announcement_closable,
-    annoucement_enabled
+    annoucement_enabled,
+    menus:_related_site_menus_site${QUERY_SITE_MENUS}
 }
 `
 

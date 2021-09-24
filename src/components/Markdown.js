@@ -4,8 +4,11 @@ import { ROOT_URL } from '@/lib/base';
 import Image from 'next/image'
 // import getConfig from 'next/config'
 import remarkGfm from 'remark-gfm'
+import { isString } from 'lodash'
+import Frame from '@/components/Frame'
 const { remarkPlugins } = require('remark');
 const imgLinks = require("@pondorasti/remark-img-links")
+
 
 // const { serverRuntimeConfig } = getConfig();
 const { domains: imageDomains } = process.env.__NEXT_IMAGE_OPTS;
@@ -52,6 +55,19 @@ export function Markdown({ body }) {
               } else {
                 return <img className="rounded-lg" {...props} />
               }
+            },
+            a: ({ node, ...props }) => {
+              if (props.href && isString(props.href)) {
+                const result = props.href.match(/\/videos\//i);
+                if (result) {
+                  const src = props.href.replace('/videos/', '/embed/videos/')
+                  return <Frame
+                    src={src}
+                  />
+                }
+              }
+
+              return <a href={props.href}>{props.children}</a>
             }
           }}
         >
