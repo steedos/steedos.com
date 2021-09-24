@@ -27,11 +27,18 @@ export const headerNav = {
           items: [
             { name: '低代码简介', href: '/platform/lowcode' },
             { name: '华炎魔方平台', href: '/platform/overview' },
-            { name: '开源、开放', href: '/platform/open-source-low-code' },
+            { name: '开源低代码', href: '/open-source/open-source-low-code' },
             { name: '解决方案', href: '/platform/solutions' },
             { name: '功能', href: '/platform/features' },
             { name: '报价', href: '/platform/pricing' },
             
+          ],
+        },
+        {
+          id: 'purchase',
+          name: '商城',
+          items: [
+            { name: '华炎魔方云服务', href: '/collections/platform-cloud' },
           ],
         },
         {
@@ -46,7 +53,11 @@ export const headerNav = {
           id: 'docs',
           name: '文档',
           items: [
-            { name: '快速开始', href: '/docs/platform/getting_started' },
+            { name: '快速开始', href: '/docs/deploy/deploy_cloud' },
+            { name: '安装部署', href: '/docs/deploy' },
+            { name: '用户向导', href: '/docs/user' },
+            { name: '管理员向导', href: '/docs/admin' },
+            { name: '开发人员向导', href: '/docs/developer' },
           ],
         },
       ],
