@@ -40,6 +40,7 @@ export const headerNav = {
           items: [
             { name: '华炎魔方云服务', href: '/collections/platform-cloud' },
             { name: '应用市场', href: '/collections/steedos-packages' },
+            { name: '服务', href: '/collections/services' },
           ],
         },
         {

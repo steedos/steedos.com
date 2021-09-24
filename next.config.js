@@ -14,6 +14,7 @@ const withTM = require('next-transpile-modules')(
     'react-markdown',
     'remark-gfm',
     'markdown-toc',
+    'react-syntax-highlighter'
   ], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
 
 const {remarkPluginsWebpack} = require('./remark')
