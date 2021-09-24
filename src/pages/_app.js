@@ -13,7 +13,7 @@ import twitterLargeCard from '@/img/twitter-large-card.jpg'
 import { ResizeObserver } from '@juggle/resize-observer'
 import 'intersection-observer'
 import mdxComponents from '@/components/mdx';
-import {has} from 'lodash';
+import {has, isArray} from 'lodash';
 import { saveAuthInfo } from '@/lib/auth.client';
 import { getSite } from '@/lib/site';
 
@@ -45,9 +45,18 @@ Router.events.on('routeChangeError', progress.finish)
 export default function App({ Component, pageProps = {}, router, site }) {
   if(typeof window !== 'undefined' && router.query){
     if(has(router.query, 'X-Auth-Token') && has(router.query, 'X-Space-Id') && has(router.query, 'X-User-Id')){
-      const authToken = router.query['X-Auth-Token'];
-      const spaceId = router.query['X-Space-Id'];
-      const userId = router.query['X-User-Id'];
+      let authToken = router.query['X-Auth-Token'];
+      if(isArray(authToken)){
+        authToken = authToken[authToken.length-1]
+      }
+      let spaceId = router.query['X-Space-Id'];
+      if(isArray(spaceId)){
+        spaceId = spaceId[spaceId.length-1]
+      }
+      let userId = router.query['X-User-Id'];
+      if(isArray(userId)){
+        userId = userId[userId.length-1]
+      }
       saveAuthInfo(userId, spaceId, authToken)
     }
   }
