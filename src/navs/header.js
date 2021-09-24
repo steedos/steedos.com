@@ -107,7 +107,7 @@ export const headerNav = {
           items: [
             { name: '网站管理', href: '/products/site' },
             { name: '帮助文档管理', href: '/products/document' },
-            { name: '在线商城', href: '/products/store' },
+            { name: '在线商城', href: '/products/shop' },
           ],
         },
       ],
