@@ -83,7 +83,7 @@ export const headerNav = {
       ],
       sections: [
         {
-          id: 'app-store',
+          id: 'collections',
           name: '商城',
           items: [
             { name: '华炎魔方云服务', href: '/collections/platform-cloud' },
@@ -91,19 +91,23 @@ export const headerNav = {
           ],
         },
         {
-          id: 'application',
-          name: '企业管理类',
+          id: 'management',
+          name: '运营效率类',
           items: [
             { name: '合同管理', href: '/products/contract' },
             { name: '项目管理', href: '/products/project' },
+            { name: '销售管理', href: '/products/crm' },
+            { name: '财务管理', href: '/products/finance' },
+            { name: '目标管理', href: '/products/okr' },
           ],
         },
         {
           id: 'marketing',
-          name: '市场营销类',
+          name: '客户体验类',
           items: [
-            { name: '网站', href: '/products/site' },
-            { name: '商城', href: '/products/store' },
+            { name: '网站管理', href: '/products/site' },
+            { name: '帮助文档管理', href: '/products/document' },
+            { name: '在线商城', href: '/products/store' },
           ],
         },
       ],
