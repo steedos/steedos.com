@@ -1,0 +1,9 @@
+.embed-page {
+  height: 100%;
+}
+.embed-page body {
+  height: 100%;
+}
+.embed-page #__next {
+  height: 100%;
+}

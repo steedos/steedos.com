@@ -4,10 +4,13 @@ import { ROOT_URL } from '@/lib/base';
 import Image from 'next/image'
 // import getConfig from 'next/config'
 import remarkGfm from 'remark-gfm'
+import { isString } from 'lodash'
+import Frame from '@/components/Frame'
 const { remarkPlugins } = require('remark');
 const imgLinks = require("@pondorasti/remark-img-links")
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+
 
 // const { serverRuntimeConfig } = getConfig();
 const { domains: imageDomains } = process.env.__NEXT_IMAGE_OPTS;
@@ -63,6 +66,20 @@ export function img({ node, ...props }) {
   }
 }
 
+export function a({ node, ...props }) {
+  if (props.href && isString(props.href)) {
+    const result = props.href.match(/\/videos\//i);
+    if (result) {
+      const src = props.href.replace('/videos/', '/embed/videos/')
+      return <Frame
+        src={src}
+      />
+    }
+  }
+
+  return <a href={props.href}>{props.children}</a>
+}
+
 export function Markdown({ body }) {
 
   const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkGfm]
@@ -75,8 +92,8 @@ export function Markdown({ body }) {
           remarkPlugins={__remarkPlugins} className="prose dark:prose-dark mt-1 sm:text-base text-sm"
           components={{
             code,
-            // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
-            img
+            img, 
+            a,
           }}
         >
         </RMarkdown>

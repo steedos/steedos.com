@@ -86,7 +86,7 @@ module.exports =
     modern: true,
   },
   images: {
-    domains: ['res.cloudinary.com', 'huayan.steedos.cn', 'console.dev.steedos.cn', 'console.steedos.cn'],
+    domains: ['res.cloudinary.com', 'huayan.steedos.cn', 'console.dev.steedos.cn', 'console.steedos.cn', NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL_HOSTNAME],
   },
   async redirects() {
     return require('./redirects.json')

@@ -6,12 +6,20 @@ export default class MyDocument extends Document {
     return { ...initialProps }
   }
 
+
   render() {
+    let style = {}
+    if(this.props.dangerousAsPath.startsWith('/embed/')){
+      style.height='100%'
+    }
+
     return (
       <Html
         lang="en"
         className={`text-gray-500 antialiased ${
           this.props.dangerousAsPath.startsWith('/examples/') ? '' : 'bg-white lg:bg-gray-50'
+        } ${
+          this.props.dangerousAsPath.startsWith('/embed/') ? 'embed-page' : ''
         }`}
       >
         <Head>
