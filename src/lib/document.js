@@ -16,12 +16,14 @@ export async function getDocument(collectionSlug, documentSlug){
       return null; 
     const query = `
         {
-            documents(filters: [["collection", "=", "${collection._id}"], ["slug","=","${documentSlug}"]]){
+            documents(sort: "sort_no", filters: [["collection", "=", "${collection._id}"], ["slug","=","${documentSlug}"]]){
               name
               slug
               body
               status
               pinned
+              image
+              summary
               collection__expand {
                 _id
                 name
@@ -59,15 +61,17 @@ export async function getDocument(collectionSlug, documentSlug){
 export async function getCollection(slug){
   const query = `
   {
-      document_collections(filters:["slug","=","${slug}"]){
+      document_collections(sort: "sort_no", filters:["slug","=","${slug}"]){
           _id,
           slug,
           name,
           description,
-    			documents: _related_documents_collection {
+    			documents: _related_documents_collection(sort: "sort_no"){
             _id,
             slug,
             name,
+            image,
+            summary
           }
       } 
   }

@@ -3,6 +3,7 @@ import * as React from 'react'
 import Image from 'next/image'
 import friendlyTime from 'friendly-time'
 import {NextSeo} from 'next-seo'
+import { ROOT_URL } from '@/lib/base.client'
 
 import { getCollection } from '@/lib/document';
 import tinytime from 'tinytime'
@@ -62,7 +63,7 @@ const Collection: React.FC = (props: any) => {
                   </h2>
                   <div className="prose max-w-none text-gray-500">
                     <div className="prose max-w-none">
-                      {/* <p>Almost 6 months in the making, we finally released <a href="https://tailwindui.com/#product-ecommerce">Tailwind UI Ecommerce</a> — the first all-new component kit for Tailwind UI since the initial launch back in February 2020.</p> */}
+                      <p>{article.summary}</p>
                     </div>
                   </div>
                 </div>
@@ -70,6 +71,16 @@ const Collection: React.FC = (props: any) => {
                   <a className="text-teal-600 hover:text-teal-700" aria-label={article.name} href={fullSlug}>阅读更多 →</a>
                 </div>
               </div>
+              {/* <div className="space-y-5 xl:col-span-1">
+                {article.image}<Image
+                  src={`${ROOT_URL}/api/files/images/${article.image}`}
+                  alt={article.name}
+                  width={1280}
+                  height={720}
+                  quality={100}
+                  className="rounded-lg"
+                />
+              </div> */}
             </article>
           </li>
             )
