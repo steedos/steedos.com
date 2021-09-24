@@ -8,11 +8,6 @@ export default class MyDocument extends Document {
 
 
   render() {
-    let style = {}
-    if(this.props.dangerousAsPath.startsWith('/embed/')){
-      style.height='100%'
-    }
-
     return (
       <Html
         lang="en"
