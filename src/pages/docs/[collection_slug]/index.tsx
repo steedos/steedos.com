@@ -47,14 +47,25 @@ const Collection: React.FC = (props: any) => {
           const fullSlug = `/docs/${slug}/${article.slug}`
           return (
           <li className="py-12" key={fullSlug}>
-            <article className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
+            <article className="sm:flex lg:col-span-7">
               {/* <dl>
                 <dt className="sr-only">Published on</dt>
                 <dd className="text-base font-medium text-gray-500">
                   <time datetime="2021-08-11T19:30:00.000Z">August 12, 2021</time>
                 </dd>
               </dl> */}
-              <div className="space-y-5 xl:col-span-3">
+              <div className="flex-shrink-0 w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden sm:aspect-none sm:w-40 sm:h-40">
+                {article.image && <Image
+                    src={`${ROOT_URL}/api/files/images/${article.image}`}
+                    alt={article.name}
+                    width={160}
+                    height={160}
+                    quality={100}
+                    className="w-full h-full object-center object-cover sm:w-full sm:h-full"
+                  />
+                }
+              </div>
+              <div className="mt-6 sm:mt-0 sm:ml-6">
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold tracking-tight">
                     <Link href={fullSlug}>
@@ -71,16 +82,6 @@ const Collection: React.FC = (props: any) => {
                   <a className="text-teal-600 hover:text-teal-700" aria-label={article.name} href={fullSlug}>阅读更多 →</a>
                 </div>
               </div>
-              {/* <div className="space-y-5 xl:col-span-1">
-                {article.image}<Image
-                  src={`${ROOT_URL}/api/files/images/${article.image}`}
-                  alt={article.name}
-                  width={1280}
-                  height={720}
-                  quality={100}
-                  className="rounded-lg"
-                />
-              </div> */}
             </article>
           </li>
             )
