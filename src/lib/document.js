@@ -86,3 +86,25 @@ export async function getCollection(slug){
 
   return collection;
 }
+
+export async function getCollections(siteId){
+  //TODO：按站点获取数据 , filters:["site","=","${siteId}"]
+  const query = `
+  {
+      document_collections(sort: "sort_no"){
+          _id,
+          slug,
+          name,
+          description
+      } 
+  }
+  `
+  const result = await fetchGraphql(query);
+
+  let collections = null;
+
+  if(result.data && result.data.document_collections){
+    collections = result.data.document_collections;
+  }
+  return collections;
+}
