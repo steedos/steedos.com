@@ -10,6 +10,11 @@ import { getDefaultPrice } from '@/lib/product.client';
 export async function getServerSideProps(context) {
   const { slug } = context.query
   const collection = await getCollectionProducts(slug)
+  if (!collection) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       collection: collection
