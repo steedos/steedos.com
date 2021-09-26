@@ -4,9 +4,10 @@ import Image from 'next/image'
 import friendlyTime from 'friendly-time'
 import {NextSeo} from 'next-seo'
 import { ROOT_URL } from '@/lib/base.client'
-
+import removeMarkdown from 'remove-markdown'
 import { getCollection } from '@/lib/document';
 import tinytime from 'tinytime'
+import { Markdown } from '@/components/Markdown'
 
 const UpdatedAt: React.FunctionComponent<{date: string}> = ({date}) => (
   <div>{date}</div>
@@ -30,7 +31,7 @@ const Collection: React.FC = (props: any) => {
     <>
       <NextSeo
         title={`${name}`}
-        description={description}
+        description={removeMarkdown(description)}
       />
     <div className="text-black mx-auto max-w-screen-lg w-full lg:py-16 py-10">
       <main>
@@ -39,7 +40,7 @@ const Collection: React.FC = (props: any) => {
             <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl md:text-[4rem] md:leading-[3.5rem]">
             {name}
             </h1>
-            <p className="text-lg text-gray-500">{description}</p>
+            <Markdown body={description}></Markdown>
           </div>
         </div>
         <ul className="divide-y divide-gray-200">
