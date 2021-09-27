@@ -44,12 +44,13 @@ export const headerNav = {
         },
         {
           id: 'videos',
-          name: '培训课程',
+          name: '视频演示',
           items: [
             { name: '如何创建自定义应用？', href: '/videos/lesson-object' },
             { name: '如何创建子表？', href: '/videos/lesson-object-relationship' },
             { name: '如何使用公式计算？', href: '/videos/formula-calculates' },
             { name: '如何控制权限？', href: '/videos/authority_management' },
+            { name: '更多视频', href: '/videos/' },
             
           ],
         },
@@ -62,6 +63,7 @@ export const headerNav = {
             { name: '用户向导', href: '/docs/user' },
             { name: '管理员向导', href: '/docs/admin' },
             { name: '开发人员向导', href: '/docs/developer' },
+            { name: '低代码学院', href: '/docs/low-code-academy' },
           ],
         },
       ],
