@@ -22,10 +22,10 @@ const QUERY_SITE_VIDEOS = `
   }
 `
 
-export async function getVideos(siteId){
+export async function getVideos(){
     const query = `
         {
-            site_videos(filters:["site","=", "${siteId}"])${QUERY_SITE_VIDEOS}
+            site_videos ${QUERY_SITE_VIDEOS}
         }
     `
     const result = await fetchGraphql(query);

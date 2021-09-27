@@ -3,8 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getVideos,  } from '@/lib/video';
 
-export async function getServerSideProps({params, res}) {
-  const videos = await getVideos('614414b34f7a8652641b2a26');
+export async function getServerSideProps( props ) {
+  const videos = await getVideos();
   
   return {
     props: {
@@ -16,7 +16,7 @@ export async function getServerSideProps({params, res}) {
 const SiteVideos: React.FC = (props: any) => {
   const { videos } = props;
   return (
-    <div className="mx-auto max-w-screen-lg lg:py-16 py-10">
+    <div className="text-black mx-auto max-w-screen-lg lg:py-16 py-10">
       <h1 className="md:text-4xl text-2xl text-center font-bold pb-16">
         视频
       </h1>
@@ -57,9 +57,9 @@ const SiteVideos: React.FC = (props: any) => {
                   </h2>
                 </a>
               </Link>
-              <h2 className="uppercase font-semibold text-xs mt-2 text-gray-700 dark:text-gray-300">
+              {/* <h2 className="uppercase font-semibold text-xs mt-2 text-gray-700 dark:text-gray-300">
                 {video.owner__expand.name}
-              </h2>
+              </h2> */}
               {video.summary && (
                 <div className="prose sm:prose prose-sm dark:prose-dark mt-2 text-gray-700 dark:text-white">
                   {video.summary}

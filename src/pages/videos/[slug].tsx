@@ -128,17 +128,17 @@ const Video: FunctionComponent<any> = (props) => {
             </div>
           </div>
         </div>
-        <main className="max-w-screen-lg mx-auto pt-8">
+        <main className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-3 mb-16">
           <article>
-            <header className="mb-6">
-                <h1 className="text-2xl font-bold tracking-tight leading-tight">
+            <header>
+                <h1 className="text-black max-w-screen-md lg:text-4xl md:text-4xl sm:text-3xl text-2xl w-full font-bold mb-8 lg:mb-10">
                   {name}
                 </h1>
-                <div className="mt-2 flex items-center">
+                {/* <div className="mt-2 flex items-center">
                     <a className="text-base dark:text-gray-400 text-gray-800 hover:text-blue-600 transition-colors ease-in-out duration-300 flex items-center">
                       <span className="ml-1">{owner__expand.name}</span>
                     </a>
-                </div>
+                </div> */}
               </header>
               <Markdown body={body}></Markdown>
           </article>

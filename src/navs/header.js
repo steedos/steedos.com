@@ -35,20 +35,22 @@ export const headerNav = {
           ],
         },
         {
-          id: 'purchase',
-          name: '商城',
-          items: [
-            { name: '华炎魔方云服务', href: '/collections/platform-cloud' },
-            { name: '应用市场', href: '/collections/steedos-packages' },
-            { name: '服务', href: '/collections/services' },
-          ],
-        },
-        {
           id: 'pricing',
           name: '客户案例',
           items: [
             { name: '大众公用', href: '/customer-success-stories/dzug' },
             { name: '建华建材', href: '/customer-success-stories/jianhuabm' },
+          ],
+        },
+        {
+          id: 'videos',
+          name: '培训课程',
+          items: [
+            { name: '如何创建自定义应用？', href: '/videos/lesson-object' },
+            { name: '如何创建子表？', href: '/videos/lesson-object-relationship' },
+            { name: '如何使用公式计算？', href: '/videos/formula-calculates' },
+            { name: '如何控制权限？', href: '/videos/authority_management' },
+            
           ],
         },
         {
@@ -66,7 +68,7 @@ export const headerNav = {
     },
     {
       id: 'appstore',
-      name: '应用商城',
+      name: '应用市场',
       featured: [
         // {
         //   name: '合同管理',
@@ -85,15 +87,16 @@ export const headerNav = {
       sections: [
         {
           id: 'collections',
-          name: '商城',
+          name: '华炎魔方',
           items: [
-            { name: '华炎魔方云服务', href: '/collections/platform-cloud' },
-            { name: '应用市场', href: '/collections/steedos-packages' },
+            { name: '云平台', href: '/collections/platform-cloud' },
+            { name: '推荐应用', href: '/collections/steedos-packages' },
+            { name: '服务', href: '/collections/services' },
           ],
         },
         {
           id: 'management',
-          name: '运营效率类',
+          name: '运营效率类应用',
           items: [
             { name: '合同管理', href: '/products/contract' },
             { name: '项目管理', href: '/products/project' },
@@ -104,7 +107,7 @@ export const headerNav = {
         },
         {
           id: 'marketing',
-          name: '客户体验类',
+          name: '客户体验类应用',
           items: [
             { name: '网站管理', href: '/products/site' },
             { name: '帮助文档管理', href: '/products/document' },
