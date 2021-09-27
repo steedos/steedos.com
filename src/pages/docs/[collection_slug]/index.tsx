@@ -67,7 +67,7 @@ const Collection: React.FC = (props: any) => {
                 }
               </div>
               <div className="mt-6 sm:mt-0 sm:ml-6">
-                <div className="space-y-6">
+                <div className="space-y-4">
                   <h2 className="text-2xl font-bold tracking-tight">
                     <Link href={fullSlug}>
                         <a className="text-gray-900">{article.name}</a>
@@ -78,9 +78,9 @@ const Collection: React.FC = (props: any) => {
                       <p>{article.summary}</p>
                     </div>
                   </div>
-                </div>
-                <div className="text-base font-medium">
-                  <a className="text-teal-600 hover:text-teal-700" aria-label={article.name} href={fullSlug}>阅读更多 →</a>
+                  <div className="text-base font-medium">
+                    <a className="text-teal-600 hover:text-teal-700" aria-label={article.name} href={fullSlug}>阅读更多 →</a>
+                  </div>
                 </div>
               </div>
             </article>

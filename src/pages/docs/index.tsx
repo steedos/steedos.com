@@ -61,9 +61,9 @@ const Collection: React.FC = (props: any) => {
                       <Markdown body={article.description}></Markdown>
                     </div>
                   </div>
-                </div>
-                <div className="text-base font-medium">
-                  <a className="text-teal-600 hover:text-teal-700" aria-label={article.name} href={fullSlug}>阅读更多 →</a>
+                  <div className="text-base font-medium">
+                    <a className="text-teal-600 hover:text-teal-700" aria-label={article.name} href={fullSlug}>阅读更多 →</a>
+                  </div>
                 </div>
               </div>
             </article>
