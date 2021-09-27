@@ -20,8 +20,13 @@ import { Markdown } from '@/components/Markdown'
 import DocumentLayout from '@/layouts/DocumentLayout';
 import {fromMarkdown} from 'mdast-util-from-markdown';
 
+import BananaSlug from 'github-slugger'
+
+const slugs = new BananaSlug()
 
 const getTableOfContents = (markdown) => {
+
+  slugs.reset()
   const tree = fromMarkdown(markdown)
   
   const contents = []
@@ -35,17 +40,17 @@ const getTableOfContents = (markdown) => {
         .filter((n) => n.type === 'text')
         .map((n) => n.value)
         .join('')
-      let slug = title
+      let slug = slugs.slug(title, true) 
 
-      let allOtherSlugs = contents.flatMap((entry) => [
-        entry.slug,
-        ...entry.children.map(({ slug }) => slug),
-      ])
-      let i = 1
-      while (allOtherSlugs.indexOf(slug) > -1) {
-        slug = `${title}-${i}`
-        i++
-      }
+      // let allOtherSlugs = contents.flatMap((entry) => [
+      //   entry.slug,
+      //   ...entry.children.map(({ slug }) => slug),
+      // ])
+      // let i = 1
+      // while (allOtherSlugs.indexOf(slug) > -1) {
+      //   slug = `${title}-${i}`
+      //   i++
+      // }
 
       if (level === 2) {
         contents.push({ title, slug, children: [] })
