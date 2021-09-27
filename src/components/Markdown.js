@@ -89,7 +89,7 @@ export function Markdown({ body }) {
       {body && (
         <RMarkdown 
           children={body.replace(new RegExp('\\\\\n', 'g'), '\n')} 
-          remarkPlugins={__remarkPlugins} className="prose dark:prose-dark mt-1 sm:text-base text-sm"
+          remarkPlugins={__remarkPlugins} className="prose dark:prose-dark"
           components={{
             code,
             img, 

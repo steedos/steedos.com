@@ -78,7 +78,7 @@ const DocumentLayout: FunctionComponent<LayoutProps> = ({
             </div>
             <p className="mt-1 text-lg text-gray-500"></p>
           </div>
-          <div className="prose prose-sm max-w-[37.5rem] mx-auto">
+          <div className="prose mx-auto">
             {children}
           </div>
         </div>

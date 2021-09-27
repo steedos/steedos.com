@@ -61,7 +61,7 @@ const SiteVideos: React.FC = (props: any) => {
                 {video.owner__expand.name}
               </h2> */}
               {video.summary && (
-                <div className="prose sm:prose prose-sm dark:prose-dark mt-2 text-gray-700 dark:text-white">
+                <div className="prose dark:prose-dark mt-2 text-gray-700 dark:text-white">
                   {video.summary}
                 </div>
               )}
