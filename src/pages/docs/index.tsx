@@ -25,7 +25,7 @@ export async function getServerSideProps(ctx) {
 const Collection: React.FC = (props: any) => {
   console.log(`props`, props)
   const { collections } = props;
-  const name = '文档集';
+  const name = '文档中心';
   const description = '';
   return (
     <>
@@ -36,7 +36,7 @@ const Collection: React.FC = (props: any) => {
     <div className="text-black mx-auto max-w-screen-lg w-full lg:py-16 py-10">
       <main>
         <div className="divide-y divide-gray-200">
-          <div className="pt-6 pb-8 space-y-2 md:space-y-5">
+          <div className="py-6 space-y-2 md:space-y-5">
             <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl md:text-[4rem] md:leading-[3.5rem]">
             {name}
             </h1>
@@ -50,7 +50,7 @@ const Collection: React.FC = (props: any) => {
           <li className="py-12" key={fullSlug}>
             <article className="sm:flex lg:col-span-7">
               <div className="mt-6 sm:mt-0">
-                <div className="space-y-6">
+                <div className="space-y-4">
                   <h2 className="text-2xl font-bold tracking-tight">
                     <Link href={fullSlug}>
                         <a className="text-gray-900">{article.name}</a>
