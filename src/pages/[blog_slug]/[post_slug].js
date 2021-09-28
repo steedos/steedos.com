@@ -117,7 +117,7 @@ export default function Post(props) {
                     <ul>
                       {blog.menu.items &&  blog.menu.items.map((item) => (
                       <li>
-                        <a class="px-3 py-3 transition-colors duration-200 relative block hover:text-gray-900 text-gray-500" href={item.url}>
+                        <a class="px-3 py-2 transition-colors duration-200 relative block hover:text-gray-900 text-gray-500" href={item.url}>
                           <span class="rounded-md absolute inset-0 bg-cyan-50 opacity-0"></span><span class="relative">{item.name}</span>
                         </a>
                       </li>
@@ -135,20 +135,13 @@ export default function Post(props) {
               <h1 className="text-black max-w-screen-md lg:text-5xl md:text-4xl sm:text-3xl text-2xl w-full font-bold mb-8 lg:mb-10">
                 {name}
               </h1>
-              <div className="text-lg">
+              <div className="text-xl">
                 {summary}
               </div>
               {/* {author && <Author author={author} />} */}
               {imageUrl && (
                 <div className="my-8">
-                  <Image
-                    src={imageUrl}
-                    alt={name}
-                    width={1280}
-                    height={720}
-                    quality={100}
-                    className="rounded-lg"
-                  />
+                  <img class="rounded-lg" src={imageUrl} alt=""></img>
                 </div>
               )}
               {/* {tags && (

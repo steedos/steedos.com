@@ -27,7 +27,7 @@ export const headerNav = {
           items: [
             { name: '低代码简介', href: '/platform/lowcode' },
             { name: '华炎魔方平台', href: '/platform/overview' },
-            { name: '开源低代码', href: '/open-source/open-source-low-code' },
+            { name: '开源低代码', href: '/platform/open-source-low-code' },
             { name: '解决方案', href: '/platform/solutions' },
             { name: '功能', href: '/platform/features' },
             { name: '报价', href: '/platform/pricing' },
