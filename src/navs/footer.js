@@ -15,7 +15,7 @@ export const footerNav = [
   },
   {
     id: 'apps',
-    name: '应用市场',
+    name: '应用',
     items: [
       { name: '合同管理', href: '/products/contract' },
       { name: '项目管理', href: '/products/project' },
@@ -28,14 +28,12 @@ export const footerNav = [
   },
   {
     id: 'videos',
-    name: '视频演示',
+    name: '商城',
     items: [
-      { name: '如何创建自定义应用？', href: '/videos/lesson-object' },
-      { name: '如何创建子表？', href: '/videos/lesson-object-relationship' },
-      { name: '如何使用公式计算？', href: '/videos/formula-calculates' },
-      { name: '如何控制权限？', href: '/videos/authority_management' },
-      { name: '更多视频', href: '/videos/' },
-      
+      { name: '云平台', href: '/collections/platform-cloud' },
+      { name: '推荐应用', href: '/collections/steedos-packages' },
+      { name: '服务', href: '/collections/services' },
+      { name: '联系我们', href: '/company/contact-us' },
     ],
   },
   {
@@ -43,6 +41,7 @@ export const footerNav = [
     name: '资源',
     items: [
       { name: '快速开始', href: '/docs/deploy' },
+      { name: '视频教程', href: '/videos/' },
       { name: '用户向导', href: '/docs/user' },
       { name: '管理员向导', href: '/docs/admin' },
       { name: '开发人员向导', href: '/docs/developer' },

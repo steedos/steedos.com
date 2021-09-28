@@ -4,7 +4,7 @@ import { Logo } from '@/components/Logo'
 
 export const Footer = (props) => {
   return (
-  <footer aria-labelledby="footer-heading" className="bg-gray-50 mt-12">
+  <footer aria-labelledby="footer-heading" className="bg-gray-50 mt-12 pt-6">
     <h2 id="footer-heading" className="sr-only">
       Footer
     </h2>
@@ -15,7 +15,7 @@ export const Footer = (props) => {
         <div className="col-span-2 sm:col-span-1">
           <div>
             <h3 className="text-sm font-medium text-gray-900">{section.name}</h3>
-            <ul role="list" className="mt-6 space-y-6">
+            <ul role="list" className="mt-6 space-y-5">
               {section.items.map((item) => (
                 <li key={item.name} className="text-sm">
                   <a href={item.href} className="text-gray-500 hover:text-gray-600">
