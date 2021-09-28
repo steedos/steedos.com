@@ -80,7 +80,11 @@ export function a({ node, ...props }) {
   return <a href={props.href}>{props.children}</a>
 }
 
-export function Markdown({ body }) {
+export function Markdown(props) {
+  const { 
+    body, 
+    className = 'prose dark:prose-dark'
+  } = props
 
   const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkGfm]
 
@@ -89,7 +93,8 @@ export function Markdown({ body }) {
       {body && (
         <RMarkdown 
           children={body.replace(new RegExp('\\\\\n', 'g'), '\n')} 
-          remarkPlugins={__remarkPlugins} className="prose dark:prose-dark"
+          remarkPlugins={__remarkPlugins} 
+          className={className}
           components={{
             code,
             img, 

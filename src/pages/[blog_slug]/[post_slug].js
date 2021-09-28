@@ -125,8 +125,8 @@ export default function Post(props) {
             </ul>
           )} */}
         </header>
-        <main className="">
-          <Markdown body={body}></Markdown>
+        <main>
+          <Markdown body={body} className="prose sm:prose-lg lg:prose-xl"></Markdown>
         </main>
       </article>
     </>
