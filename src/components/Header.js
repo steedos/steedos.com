@@ -361,7 +361,7 @@ export function Header({site}) {
         </Dialog>
       </Transition.Root>
 
-      <header className="sticky z-10 lg:z-50 relative bg-white inset-0 flex-none text-sm font-medium ring-1 ring-gray-900 ring-opacity-5 shadow-sm">
+      <header className="sticky z-20 lg:z-50 relative bg-white inset-0 flex-none text-sm font-medium ring-1 ring-gray-900 ring-opacity-5 shadow-sm">
        
         <nav aria-label="Top" className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="">
