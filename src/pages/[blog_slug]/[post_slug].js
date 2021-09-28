@@ -104,20 +104,20 @@ export default function Post(props) {
       <div className="w-full h-full bg-no-repeat absolute hidden lg:block" style={{backgroundImage: `url("${background_image}");`}}>
       </div>
       <div className="w-full max-w-8xl mx-auto lg:flex px-4 sm:px-6 lg:px-8 z-10">
-        <nav id="sidebar" className="fixed z-40 inset-0 flex-none h-full lg:bg-gray-50 bg-opacity-75 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-72 lg:block hidden">
+        <nav id="sidebar" className="fixed z-40 inset-0 flex-none h-full lg:bg-gray-50 lg:bg-opacity-75 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-72 lg:block hidden">
           <div id="navWrapper" className="h-full overflow-y-auto scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white mr-24 lg:mr-0">
             <div className="text-xl font-bold tracking-tight text-gray-900 mt-16 px-8">
               {blog.name}
             </div>
             {blog.menu && blog.menu.items && (
-              <nav id="nav" className="px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-sm pb-10 lg:pt-10 lg:pb-14 sticky?lg:h-(screen-18)">
+              <nav id="nav" className="px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-md pb-10 lg:pt-10 lg:pb-14 sticky?lg:h-(screen-18)">
                 <ul>
                   <li class="mb-8">
                     {/* <h5 class="px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs text-gray-900">Getting started</h5> */}
                     <ul>
                       {blog.menu.items &&  blog.menu.items.map((item) => (
                       <li>
-                        <a class="px-3 py-2 transition-colors duration-200 relative block hover:text-gray-900 text-gray-500" href={item.url}>
+                        <a class="px-3 py-3 transition-colors duration-200 relative block hover:text-gray-900 text-gray-500" href={item.url}>
                           <span class="rounded-md absolute inset-0 bg-cyan-50 opacity-0"></span><span class="relative">{item.name}</span>
                         </a>
                       </li>
