@@ -154,7 +154,7 @@ export default function Post(props) {
               )} */}
             </header>
             <main className="py-8">
-              <Markdown body={body} className="prose sm:prose-lg lg:prose-lg"></Markdown>
+              <Markdown body={body} className="prose sm:prose-lg lg:prose-xl"></Markdown>
             </main>
           </article>
         </div>
