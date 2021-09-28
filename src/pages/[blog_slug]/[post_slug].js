@@ -104,12 +104,12 @@ export default function Post(props) {
       <div className="w-full h-full bg-no-repeat absolute hidden lg:block" style={{backgroundImage: `url("${background_image}");`}}>
       </div>
       <div className="w-full max-w-8xl mx-auto lg:flex px-4 sm:px-6 lg:px-8 z-10">
+        {blog.menu && blog.menu.items && (
         <nav id="sidebar" className="fixed z-40 inset-0 flex-none h-full lg:bg-gray-50 lg:bg-opacity-75 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-72 lg:block hidden">
           <div id="navWrapper" className="h-full overflow-y-auto scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white mr-24 lg:mr-0">
             <div className="text-xl font-bold tracking-tight text-gray-900 mt-16 px-8">
-              {blog.name}
+              {blog.menu.name}
             </div>
-            {blog.menu && blog.menu.items && (
               <nav id="nav" className="px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-md pb-10 lg:pt-10 lg:pb-14 sticky?lg:h-(screen-18)">
                 <ul>
                   <li class="mb-8">
@@ -126,18 +126,21 @@ export default function Post(props) {
                   </li>
                 </ul>
               </nav>
-            )}
           </div>
         </nav>
+        )}
         <div id="content-wrapper" className="lg:px-8 min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible">
           <article className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-6 mb-16">
             <header>
-              <h1 className="text-black max-w-screen-md lg:text-4xl md:text-4xl sm:text-3xl text-2xl w-full font-bold mb-8 lg:mb-10">
+              <h1 className="text-black max-w-screen-md lg:text-5xl md:text-4xl sm:text-3xl text-2xl w-full font-bold mb-8 lg:mb-10">
                 {name}
               </h1>
+              <div className="text-lg">
+                {summary}
+              </div>
               {/* {author && <Author author={author} />} */}
-              {/* {imageUrl && (
-                <div className="mt-4">
+              {imageUrl && (
+                <div className="my-8">
                   <Image
                     src={imageUrl}
                     alt={name}
@@ -147,7 +150,7 @@ export default function Post(props) {
                     className="rounded-lg"
                   />
                 </div>
-              )} */}
+              )}
               {/* {tags && (
                 <ul>
                   Posted in
@@ -157,7 +160,7 @@ export default function Post(props) {
                 </ul>
               )} */}
             </header>
-            <main>
+            <main className="py-8">
               <Markdown body={body} className="prose sm:prose-lg lg:prose-lg"></Markdown>
             </main>
           </article>

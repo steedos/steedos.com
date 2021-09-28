@@ -20,6 +20,7 @@ export async function getPost(blogSlug, postSlug){
             site_posts(filters: [["slug","=","${postSlug}"], ["blog","=","${blog._id}"]]){
                 _id,
                 name,
+                summary,
                 image,
                 slug,
                 tags,
@@ -27,7 +28,6 @@ export async function getPost(blogSlug, postSlug){
                 published_at,
                 featured,
                 body,
-                blog,
                 blog__expand {
                     _id,
                     name,
