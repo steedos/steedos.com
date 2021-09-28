@@ -110,22 +110,26 @@ export default function Post(props) {
             <div className="text-xl font-bold tracking-tight text-gray-900 mt-16 px-8">
               {blog.menu.name}
             </div>
-              <nav id="nav" className="px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-md pb-10 lg:pt-10 lg:pb-14 sticky?lg:h-(screen-18)">
-                <ul>
-                  <li class="mb-8">
-                    {/* <h5 class="px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs text-gray-900">Getting started</h5> */}
-                    <ul>
-                      {blog.menu.items &&  blog.menu.items.map((item) => (
-                      <li>
-                        <a class="px-3 py-2 transition-colors duration-200 relative block hover:text-gray-900 text-gray-500" href={item.url}>
-                          <span class="rounded-md absolute inset-0 bg-cyan-50 opacity-0"></span><span class="relative">{item.name}</span>
-                        </a>
-                      </li>
-                      ))}
-                    </ul>
-                  </li>
-                </ul>
-              </nav>
+            <nav id="nav" className="px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-md pb-10 lg:pt-10 lg:pb-14 sticky?lg:h-(screen-18)">
+              <ul>
+                <li class="mb-8">
+                  {/* <h5 class="px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs text-gray-900">Getting started</h5> */}
+                  <ul>
+                    {blog.menu.items &&  blog.menu.items.map((item) => (
+                    <li>
+                      <a class="px-3 py-2 transition-colors duration-200 relative block hover:text-gray-900 text-gray-500" href={item.url}>
+                        <span class="rounded-md absolute inset-0 bg-cyan-50 opacity-0"></span><span class="relative">{item.name}</span>
+                      </a>
+                    </li>
+                    ))}
+                  </ul>
+                </li>
+              </ul>
+              <div className="text-md tracking-tight text-black mt-12 px-3">
+                有疑问？<br/>
+                400-820-1612
+              </div>
+            </nav>
           </div>
         </nav>
         )}
