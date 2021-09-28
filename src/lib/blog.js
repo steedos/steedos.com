@@ -206,6 +206,13 @@ export async function getBlog(blogSlug){
             slug,
             name,
             body,
+            menu: menu_primary__expand{
+              name
+              items: _related_site_menu_items_site_menu(filters: ["parent", "=", null]) {
+                name
+                url
+              }
+            }
         } 
     }
     `

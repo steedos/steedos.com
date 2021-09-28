@@ -4,7 +4,7 @@ import { Footer } from '@/components/Footer'
 
 export const Main = ({children}) => {
   return (
-    <div className="w-full flex flex-col flex-grow px-5 dark:bg-gray-900 dark:text-gray-100">
+    <div className="w-full flex flex-col flex-grow dark:bg-gray-900 dark:text-gray-100">
       {children}
     </div>
   )
