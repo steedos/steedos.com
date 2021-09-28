@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
       <Html
         lang="en"
         className={`text-gray-500 antialiased ${
-          this.props.dangerousAsPath.startsWith('/examples/') ? '' : 'bg-gray-50'
+          this.props.dangerousAsPath.startsWith('/examples/') ? '' : 'bg-white'
         } ${
           this.props.dangerousAsPath.startsWith('/embed/') ? 'embed-page' : ''
         }`}

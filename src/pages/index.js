@@ -143,7 +143,7 @@ export default function Home() {
         <EditorTools />
         <ReadyMadeComponents /> */}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

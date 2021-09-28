@@ -17,7 +17,7 @@ export const DefaultLayout = ({children, site}) => {
       <Main>
         {children}
       </Main>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }

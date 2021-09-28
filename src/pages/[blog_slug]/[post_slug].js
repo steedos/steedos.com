@@ -105,7 +105,7 @@ export default function Post(props) {
       </div>
       <div className="w-full max-w-8xl mx-auto lg:flex px-4 sm:px-6 lg:px-8 z-10">
         {blog.menu && blog.menu.items && (
-        <nav id="sidebar" className="fixed z-40 inset-0 flex-none h-full lg:bg-white lg:bg-opacity-75 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-72 lg:block hidden">
+        <nav id="sidebar" className="fixed z-40 inset-0 flex-none h-full lg:bg-gray-50 lg:bg-opacity-75 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-72 lg:block hidden">
           <div id="navWrapper" className="h-full overflow-y-auto scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white mr-24 lg:mr-0">
             <div className="text-xl font-bold tracking-tight text-gray-900 mt-16 px-8">
               {blog.menu.name}
