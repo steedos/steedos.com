@@ -7,14 +7,16 @@ import { getCollectionProducts } from '@/lib/product';
 
 import { getDefaultPrice } from '@/lib/product.client';
 
-export async function getServerSideProps(context) {
-  const { slug } = context.query
+export async function getServerSideProps({params, query, res}) {
+  const { slug } = query
   const collection = await getCollectionProducts(slug)
   if (!collection) {
     return {
       notFound: true,
     }
   }
+
+  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
   return {
     props: {
       collection: collection

@@ -3,8 +3,8 @@ import {NextSeo} from 'next-seo'
 import Detail from '@/components/product/Detail'
 import { getProduct } from '@/lib/product';
 
-export async function getServerSideProps(context) {
-  const { slug } = context.query
+export async function getServerSideProps({params, res, query}) {
+  const { slug } = query
   const product = await getProduct(slug)
 
   if (!product) {

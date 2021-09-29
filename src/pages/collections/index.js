@@ -7,7 +7,7 @@ import { getProducts } from '@/lib/product';
 
 import { getDefaultPrice } from '@/lib/product.client';
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps({res}) {
   const products = await getProducts()
 
   if (!products) {
@@ -16,6 +16,7 @@ export async function getServerSideProps(context) {
     }
   }
 
+  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
   return {
     props: {
       products: products
