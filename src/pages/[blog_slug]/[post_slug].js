@@ -43,7 +43,7 @@ export async function getServerSideProps({
   const post = blog? await getPost(blog_slug, post_slug):null;
   const errorCode = !blog || !post?404: 0;
   
-  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
+  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       errorCode,

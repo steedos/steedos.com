@@ -34,7 +34,7 @@ export async function getServerSideProps({
     }
   }
 
-  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
+  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       title: video.name,

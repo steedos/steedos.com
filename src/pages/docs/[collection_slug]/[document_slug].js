@@ -76,7 +76,7 @@ export async function getServerSideProps({
   }
   const tableOfContents = document.body? getTableOfContents(document.body): []
   
-  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
+  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       tableOfContents,

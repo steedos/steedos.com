@@ -13,7 +13,7 @@ export async function getServerSideProps({params, res, query}) {
     }
   }
 
-  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
+  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       product: product
