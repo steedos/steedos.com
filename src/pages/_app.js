@@ -15,7 +15,7 @@ import 'intersection-observer'
 import mdxComponents from '@/components/mdx';
 import {has, isArray} from 'lodash';
 import { saveAuthInfo } from '@/lib/auth.client';
-import { getSite } from '@/lib/site';
+// import { getSite } from '@/lib/site';
 
 if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
   window.ResizeObserver = ResizeObserver
@@ -84,18 +84,18 @@ export default function App({ Component, pageProps = {}, router, site }) {
   )
 }
 
-App.getInitialProps = async ({ctx}) => {
-  const { req } = ctx;
-  let site = null;
-  if(req){
-    try {
-      let parsedSrc = new URL(req.headers.referer);
-      site = await getSite(parsedSrc.hostname)
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  return { 
-    site: site 
-  }
-}
+// App.getInitialProps = async ({ctx}) => {
+//   const { req } = ctx;
+//   let site = null;
+//   if(req){
+//     try {
+//       let parsedSrc = new URL(req.headers.referer);
+//       site = await getSite(parsedSrc.hostname)
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   }
+//   return { 
+//     site: site 
+//   }
+// }
