@@ -16,7 +16,7 @@ steedos-website-prod:
     runtime: nodejs14.x
     memory: 2048
     timeout: 30
-    enableS3Acceleration: true
+    enableS3Acceleration: false
     build:
       env:
         NEXT_PUBLIC_DEPLOYMENT_URL=https://www.steedos.cn
