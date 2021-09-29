@@ -97,7 +97,7 @@ export function Markdown(props) {
           className={className}
           components={{
             code,
-            img, 
+            // img, 
             a,
           }}
         >
