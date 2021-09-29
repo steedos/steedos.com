@@ -4,7 +4,7 @@ import { Logo } from '@/components/Logo'
 
 export const Footer = (props) => {
   return (
-  <footer aria-labelledby="footer-heading" className="bg-gray-50 mt-12 pt-6">
+  <footer aria-labelledby="footer-heading" className="bg-gray-50 pt-6">
     <h2 id="footer-heading" className="sr-only">
       Footer
     </h2>
