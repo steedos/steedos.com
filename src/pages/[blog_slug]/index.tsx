@@ -26,6 +26,7 @@ export async function getServerSideProps({params, res}) {
   
   const posts = blog? await getBlogPosts(blog._id): [];
   
+  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
   return {
     props: {
       errorCode,

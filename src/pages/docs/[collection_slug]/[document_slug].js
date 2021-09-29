@@ -64,7 +64,8 @@ const getTableOfContents = (markdown) => {
 }
 
 export async function getServerSideProps({
-  params
+  params,
+  res,
 }) {
   const { collection_slug, document_slug } = params;
   const document = await getDocument(collection_slug, document_slug);
@@ -75,6 +76,7 @@ export async function getServerSideProps({
   }
   const tableOfContents = document.body? getTableOfContents(document.body): []
   
+  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
   return {
     props: {
       tableOfContents,

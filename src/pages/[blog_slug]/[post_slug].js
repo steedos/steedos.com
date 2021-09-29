@@ -43,6 +43,7 @@ export async function getServerSideProps({
   const post = blog? await getPost(blog_slug, post_slug):null;
   const errorCode = !blog || !post?404: 0;
   
+  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
   return {
     props: {
       errorCode,
@@ -126,7 +127,7 @@ export default function Post(props) {
                 </li>
               </ul>
               <div className="text-md tracking-tight text-black mt-12 px-3">
-                有疑问？<br/>
+                有问题？<br/>
                 400-820-1612
               </div>
             </nav>

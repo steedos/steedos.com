@@ -6,6 +6,7 @@ import { getVideos,  } from '@/lib/video';
 export async function getServerSideProps( props ) {
   const videos = await getVideos();
   
+  res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate')
   return {
     props: {
       videos
