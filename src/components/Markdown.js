@@ -42,7 +42,6 @@ const isAllowImageDomain = (src) => {
 function customPlugin() {
   return (tree) => {
     visit(tree, (node) => {
-      console.log(`node.type`, node.type)
       if (
         node.type === 'textDirective' ||
         node.type === 'leafDirective' ||

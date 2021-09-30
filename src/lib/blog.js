@@ -121,17 +121,7 @@ export async function getPosts(){
         site_posts {
             _id,
             name,
-            summary,
             slug,
-            tags,
-            image,
-            status,
-            published_at,
-            featured,
-            owner__expand {
-                name,
-                avatar
-            }
             blog__expand {
                 _id
                 name
