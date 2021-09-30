@@ -1,3 +1,51 @@
 .steedos-rich-markdown-editor ul li {
     list-style: disc;
 }
+
+.notice-block {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    background: rgb(245, 190, 49);
+    color: rgb(24, 26, 27);
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin: 8px 0px;
+}
+
+.notice-block .icon {
+    width: 24px;
+    height: 24px;
+    align-self: flex-start;
+    margin-right: 4px;
+    position: relative;
+    top: 1px;
+}
+
+.notice-block p {
+    margin: 0px;
+}
+
+.notice-block .content {
+    min-height: auto;
+    margin: 0;
+    padding: 0;
+    line-height: 1.7em;
+}
+
+.notice-block .content h1, .notice-block .content h2, .notice-block .content h3, .notice-block .content h4, .notice-block .content h5, .notice-block .content h6 {
+    margin: 1em 0px 0.5em;
+    font-weight: 500;
+    cursor: default;
+    color: inherit;
+}
+
+.notice-block.warning {
+    background: rgb(255, 92, 128);
+    color: rgb(255, 255, 255);
+}
+
+.notice-block.tip {
+    background: rgb(158, 92, 247);
+    color: rgb(255, 255, 255);
+}
