@@ -34,7 +34,7 @@ const Collection: React.FC = (props: any) => {
         title={`${name}`}
         description={description}
       />
-    <div className="text-black mx-auto max-w-screen-lg w-full lg:py-16 py-10">
+    <div className="text-black mx-auto max-w-screen-lg w-full lg:py-16 py-10 px-6">
       <main>
         <div className="divide-y divide-gray-200">
           <div className="py-6 space-y-2 md:space-y-5">
