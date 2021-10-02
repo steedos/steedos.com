@@ -2,13 +2,14 @@ import React from 'react'
 import Head from 'next/head'
 import ReviewStars from '@/components/product/ReviewStars'
 import PriceMonthly from '@/components/product/PriceMonthly'
+import { Markdown } from '@/components/Markdown'
 
-import { getCollectionProducts } from '@/lib/product';
+import { getCollectionProducts, getCollections } from '@/lib/product';
 
 import { getDefaultPrice } from '@/lib/product.client';
 
-export async function getServerSideProps({params, query, res}) {
-  const { slug } = query
+export async function getStaticProps({params}) {
+  const { slug } = params
   const collection = await getCollectionProducts(slug)
   if (!collection) {
     return {
@@ -16,7 +17,6 @@ export async function getServerSideProps({params, query, res}) {
     }
   }
 
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       collection: collection
@@ -24,6 +24,22 @@ export async function getServerSideProps({params, query, res}) {
   }
 }
 
+export async function getStaticPaths() {
+  const items = await getCollections()
+
+  // Get the paths we want to pre-render based on posts
+  const paths = items.map((item) => ({
+    params: { 
+      slug: item.slug },
+  }))
+  console.log('Building Product Collections...');
+  console.log(paths);
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: blocking } will server-render pages
+  // on-demand if the path doesn't exist.
+  return { paths, fallback: 'blocking' }
+}
 export default class Collection extends React.Component {
   
   render(){
@@ -31,14 +47,14 @@ export default class Collection extends React.Component {
     return (
       <>
           <main className="products-heading">
-            <div className="mx-auto py-8 px-4 sm:py-8 sm:px-1 lg:max-w-7xl lg:px-1">
+            <div className="mx-auto py-8 px-4 sm:py-8 sm:px-6 lg:max-w-7xl lg:px-8">
               <div className="py-6 space-y-2 md:space-y-5">
                 <h1 className="text-xl font-extrabold text-gray-900 tracking-tight sm:text-2xl">
                   {collection.name}
                 </h1>
-                {/* <p className="text-lg text-gray-500">
-                  All the latest Tailwind CSS news, straight from the team.
-                </p> */}
+                <div className="">
+                  <Markdown body={collection.body}/>
+                </div>
               </div>
               <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {collection?.products?.map((product) => {
