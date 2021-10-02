@@ -40,6 +40,7 @@ export async function getStaticPaths() {
   // on-demand if the path doesn't exist.
   return { paths, fallback: 'blocking' }
 }
+
 export default class Collection extends React.Component {
   
   render(){

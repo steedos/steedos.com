@@ -5,7 +5,7 @@ import friendlyTime from 'friendly-time'
 import {NextSeo} from 'next-seo'
 import { ROOT_URL } from '@/lib/base.client'
 import removeMarkdown from 'remove-markdown'
-import { getCollection } from '@/lib/document';
+import { getCollection, getCollections } from '@/lib/document';
 import tinytime from 'tinytime'
 import { Markdown } from '@/components/Markdown'
 
@@ -13,16 +13,33 @@ const UpdatedAt: React.FunctionComponent<{date: string}> = ({date}) => (
   <div>{date}</div>
 )
 
-export async function getServerSideProps({params, res}) {
+export async function getStaticProps({params}) {
   const { collection_slug } = params;
   const collection = await getCollection(collection_slug);
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   
   return {
     props: {
       ...collection
-    }
+    },
+    revalidate: 3600, // In seconds
   }
+}
+
+export async function getStaticPaths() {
+  const items = await getCollections()
+
+  // Get the paths we want to pre-render based on posts
+  const paths = items.map((item) => ({
+    params: { 
+      collection_slug: item.slug },
+  }))
+  console.log('Building Document Collections...');
+  console.log(paths);
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: blocking } will server-render pages
+  // on-demand if the path doesn't exist.
+  return { paths, fallback: 'blocking' }
 }
 
 const Collection: React.FC = (props: any) => {

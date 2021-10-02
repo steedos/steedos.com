@@ -13,13 +13,13 @@ const UpdatedAt: React.FunctionComponent<{date: string}> = ({date}) => (
   <div>{date}</div>
 )
 
-export async function getServerSideProps(ctx) {
+export async function getStaticProps(ctx) {
   const collections = await getCollections();
-  ctx.res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       collections: collections
-    }
+    },
+    revalidate: 3600, // In seconds
   }
 }
 

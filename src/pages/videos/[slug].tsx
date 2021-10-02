@@ -8,23 +8,20 @@ import {useWindowSize} from 'react-use'
 import {NextSeo} from 'next-seo'
 import Head from 'next/head'
 import removeMarkdown from 'remove-markdown'
-import { getVideo } from '@/lib/video';
+import { getVideo, getVideos } from '@/lib/video';
 import { Markdown } from '@/components/Markdown'
 import { Player } from '@/components/player'
 
 const OFFSET_Y = 80
 const VIDEO_MIN_HEIGHT = 480
 
-export async function getServerSideProps({
+export async function getStaticProps({
   params,
   res,
   locale,
   locales,
   preview,
 }) {
-  // 这些只能在服务端引入，所以只能写在这里。
-  
-  // const markdownTOC = require('markdown-toc');
 
   const { slug } = params;
   const video = await getVideo(slug);
@@ -34,13 +31,29 @@ export async function getServerSideProps({
     }
   }
 
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       title: video.name,
       ...video
     }
   }
+}
+
+export async function getStaticPaths() {
+  const items = await getVideos()
+
+  // Get the paths we want to pre-render based on posts
+  const paths = items.map((item) => ({
+    params: { 
+      slug: item.slug },
+  }))
+  console.log('Building Videos...');
+  console.log(paths);
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: blocking } will server-render pages
+  // on-demand if the path doesn't exist.
+  return { paths, fallback: 'blocking' }
 }
 
 const Video: FunctionComponent<any> = (props) => {

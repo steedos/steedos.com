@@ -18,7 +18,7 @@ import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { PageHeader } from '@/components/PageHeader'
-import { getVideo } from '@/lib/video';
+import { getVideo, getVideos } from '@/lib/video';
 import { NextSeo } from 'next-seo'
 // const {serialize} = require('next-mdx-remote/serialize')
 // import { MDXRemote } from 'next-mdx-remote'
@@ -31,16 +31,13 @@ const components = {
     Heading,
 }
 
-export async function getServerSideProps({
+export async function getStaticProps({
     params,
     res,
     locale,
     locales,
     preview,
 }) {
-    // 这些只能在服务端引入，所以只能写在这里。
-
-    // const markdownTOC = require('markdown-toc');
 
     const { slug } = params;
     const video = await getVideo(slug);
@@ -50,13 +47,30 @@ export async function getServerSideProps({
         }
     }
 
-    res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
     return {
         props: {
             title: video.name,
             ...video
-        }
+        },
+        revalidate: 3600, // In seconds
     }
+}
+
+export async function getStaticPaths() {
+  const items = await getVideos()
+
+  // Get the paths we want to pre-render based on posts
+  const paths = items.map((item) => ({
+    params: { 
+      slug: item.slug },
+  }))
+  console.log('Building Videos...');
+  console.log(paths);
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: blocking } will server-render pages
+  // on-demand if the path doesn't exist.
+  return { paths, fallback: 'blocking' }
 }
 
 export default function VideoEmbed(props) {

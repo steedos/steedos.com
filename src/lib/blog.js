@@ -111,7 +111,6 @@ export async function getBlogSidebarLayoutNav(blogSlug, menuId){
 
 /**
  * 
- * @param {*} blogSlug 
  * @returns 
  */
 export async function getPosts(){
@@ -215,4 +214,30 @@ export async function getBlog(blogSlug){
     }
 
     return blog;
+}
+
+/**
+ * 
+ * @returns 
+ */
+export async function getBlogs(){
+        
+    const query = `
+    {
+        site_blogs {
+            _id,
+            name,
+            slug
+        } 
+    }
+    `
+    const result = await fetchGraphql(query);
+
+    let site_blogs = null;
+
+    if(result.data && result.data.site_blogs){
+        site_blogs = result.data.site_blogs;
+    }
+
+    return site_blogs;
 }

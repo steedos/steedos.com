@@ -76,12 +76,12 @@ export async function getStaticProps({
   }
   const tableOfContents = document.body? getTableOfContents(document.body): []
   
-  // res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       tableOfContents,
       ...document
-    }
+    },
+    revalidate: 3600, // In seconds
   }
 }
 
