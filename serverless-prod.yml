@@ -17,6 +17,11 @@ steedos-website-prod:
     memory: 2048
     timeout: 30
     enableS3Acceleration: false
+    cloudfront:
+      # if you want to use an existing cloudfront distribution, provide it here
+      distributionId: E4K275YG40ODU #optional
+      waitBeforeInvalidate: false # by default true, it waits for the CloudFront distribution to have completed before invalidating, to avoid possibly caching old page
+      
     build:
       env:
         NEXT_PUBLIC_DEPLOYMENT_URL=https://www.steedos.cn

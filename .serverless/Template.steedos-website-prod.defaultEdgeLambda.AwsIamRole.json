@@ -1,0 +1,38 @@
+{
+  "name": "lu5t2pt-kr5dwiu",
+  "arn": "arn:aws:iam::382025409778:role/lu5t2pt-kr5dwiu",
+  "service": [
+    "edgelambda.amazonaws.com",
+    "lambda.amazonaws.com"
+  ],
+  "policy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Resource": "*",
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Resource": "arn:aws:s3:::steedos-website-prod/*",
+        "Action": [
+          "s3:GetObject",
+          "s3:PutObject"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Resource": "arn:aws:sqs:ap-east-1:382025409778:steedos-website-prod.fifo",
+        "Action": [
+          "sqs:SendMessage"
+        ]
+      }
+    ]
+  },
+  "region": "us-east-1"
+}
