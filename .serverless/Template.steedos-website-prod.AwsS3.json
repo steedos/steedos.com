@@ -1,6 +1,0 @@
-{
-  "name": "steedos-website-prod",
-  "region": "ap-east-1",
-  "accelerated": false,
-  "url": "https://steedos-website-prod.s3.amazonaws.com"
-}

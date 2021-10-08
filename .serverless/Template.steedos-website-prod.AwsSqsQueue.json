@@ -1,6 +1,0 @@
-{
-  "name": "steedos-website-prod.fifo",
-  "arn": "arn:aws:sqs:ap-east-1:382025409778:steedos-website-prod.fifo",
-  "url": "https://sqs.ap-east-1.amazonaws.com/382025409778/steedos-website-prod.fifo",
-  "region": "ap-east-1"
-}
