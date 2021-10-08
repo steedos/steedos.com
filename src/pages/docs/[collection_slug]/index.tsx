@@ -21,7 +21,7 @@ export async function getStaticProps({params}) {
     props: {
       ...collection
     },
-    revalidate: process.env.NEXT_STATIC_PROPS_REVALIDATE, // In seconds
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
 }
 

@@ -32,7 +32,7 @@ export async function getStaticProps({params}) {
       blog,
       posts
     },
-    revalidate: process.env.NEXT_STATIC_PROPS_REVALIDATE, // In seconds
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
 }
 

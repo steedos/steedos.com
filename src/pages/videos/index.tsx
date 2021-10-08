@@ -10,7 +10,7 @@ export async function getStaticProps( {params,} ) {
     props: {
       videos
     },
-    revalidate: process.env.NEXT_STATIC_PROPS_REVALIDATE, // In seconds
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
 }
 

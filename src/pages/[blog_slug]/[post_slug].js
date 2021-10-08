@@ -32,7 +32,6 @@ const components = {
 
 export async function getStaticProps({
   params,
-  res,
   locale,
   locales,
   preview,
@@ -43,7 +42,6 @@ export async function getStaticProps({
   const post = blog? await getPost(blog_slug, post_slug):null;
   const errorCode = !blog || !post?404: 0;
   
-  // res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       errorCode,
@@ -51,7 +49,7 @@ export async function getStaticProps({
       blog,
       background_image: '/img/header-background-ellipse.png'
     },
-    revalidate: process.env.NEXT_STATIC_PROPS_REVALIDATE, // In seconds
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
 }
 
