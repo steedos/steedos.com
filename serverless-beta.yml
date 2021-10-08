@@ -1,0 +1,33 @@
+steedos_api_key: ${env.STEEDOS_SERVER_API_KEY}
+
+steedos-website-beta:
+  component: "@sls-next/serverless-component@3.4.0" # it is recommended you pin the latest stable version of serverless-next.js
+  inputs:
+    domain: ["beta", "steedos.cn"]
+    name:
+      defaultLambda: steedos-website-beta-DefaultLambda
+      apiLambda: steedos-website-beta-ApiLambda
+      imageLambda: steedos-website-beta-ImageLambda
+    stage: beta
+    deploy: true
+    bucketRegion: ap-east-1
+    bucketName: steedos-website-beta
+    region: ap-east-1
+    runtime: nodejs14.x
+    memory: 2048
+    timeout: 30
+    enableS3Acceleration: false
+    cloudfront:
+      # if you want to use an existing cloudfront distribution, provide it here
+      # distributionId: E4K275YG40ODU #optional
+      waitBeforeInvalidate: false # by default true, it waits for the CloudFront distribution to have completed before invalidating, to avoid possibly caching old page
+      
+    build:
+      env:
+        NEXT_PUBLIC_DEPLOYMENT_URL=https://beta.steedos.cn
+        NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=https://console.steedos.cn
+        STEEDOS_SERVER_API_KEY=${steedos_api_key}
+      cleanupDotNext: true
+      postBuildCommands: []
+
+useDotenv: false
