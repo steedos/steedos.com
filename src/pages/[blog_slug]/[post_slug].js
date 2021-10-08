@@ -51,7 +51,7 @@ export async function getStaticProps({
       blog,
       background_image: '/img/header-background-ellipse.png'
     },
-    revalidate: 3600, // In seconds
+    revalidate: process.env.NEXT_STATIC_PROPS_REVALIDATE, // In seconds
   }
 }
 

@@ -52,7 +52,7 @@ export async function getStaticProps({
             title: video.name,
             ...video
         },
-        revalidate: 3600, // In seconds
+        revalidate: process.env.NEXT_STATIC_PROPS_REVALIDATE, // In seconds
     }
 }
 

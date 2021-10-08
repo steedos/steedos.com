@@ -81,7 +81,7 @@ export async function getStaticProps({
       tableOfContents,
       ...document
     },
-    revalidate: 3600, // In seconds
+    revalidate: process.env.NEXT_STATIC_PROPS_REVALIDATE, // In seconds
   }
 }
 

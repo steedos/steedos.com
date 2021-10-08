@@ -18,6 +18,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       NEXT_PUBLIC_DEPLOYMENT_URL: https://beta.steedos.cn
       NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL: https://console.steedos.cn
+      NEXT_STATIC_PROPS_REVALIDATE: 60
     steps:
       - uses: actions/checkout@v2
 
