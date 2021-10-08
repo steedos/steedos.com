@@ -116,7 +116,8 @@ export default function VideoEmbed(props) {
                 <Player
                   hls_url={hls_url}
                   light={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/${thumb_image}`}
-                  height="400px"
+                  height="100%"
+                  width="100%"
                   // subtitlesUrl={subtitles_url}
                 />
             </div>
