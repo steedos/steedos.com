@@ -16,7 +16,7 @@ import {
 import { StarIcon } from '@heroicons/react/solid'
 import VariantRadios from '@/components/product/VariantRadios'
 import ReviewStars from '@/components/product/ReviewStars'
-import PriceMonthly from '@/components/product/PriceMonthly'
+import Price from '@/components/product/Price'
 import 'photoswipe/dist/photoswipe.css'
 import 'photoswipe/dist/default-skin/default-skin.css'
 import { Gallery, Item } from 'react-photoswipe-gallery'
@@ -26,7 +26,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { getPrice } from '@/lib/product.client';
 import { getMedia } from '@/lib/product.client'
 import { find, each } from 'lodash'
-import BuyButton from '@/components/product/BuyButton'
+import BuyNow from '@/components/product/BuyNow'
+import AddToCart from '@/components/product/AddToCart'
 import { Markdown } from '@/components/Markdown'
 // const {rehypePlugins} = require('rehype')
 
@@ -117,7 +118,7 @@ export default function ProductDetail({ product }) {
               <div className="mt-3">
                 <h2 className="sr-only">Product information</h2>
                 <p className="text-3xl text-gray-900">
-                  <PriceMonthly price={getPrice(productVariant)}></PriceMonthly>
+                  <Price price={getPrice(productVariant)}></Price>
                 </p>
               </div>
 
@@ -142,8 +143,10 @@ export default function ProductDetail({ product }) {
               </div>
 
               <VariantRadios product={product} onChange={onVariantRadiosChange}></VariantRadios>
-              <BuyButton productVariant={productVariant}></BuyButton>
-
+              <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+                <AddToCart productVariant={productVariant}></AddToCart>
+                <BuyNow productVariant={productVariant}></BuyNow>
+              </div>
               {/* <section aria-labelledby="details-heading" className="mt-12">
                 <h2 id="details-heading" className="sr-only">
                   Additional details

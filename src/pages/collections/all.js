@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import ReviewStars from '@/components/product/ReviewStars'
-import PriceMonthly from '@/components/product/PriceMonthly'
+import Price from '@/components/product/Price'
 
 import { getProducts } from '@/lib/product';
 
@@ -80,7 +80,7 @@ export default class All extends React.Component {
                             <div className="flex items-center space-x-3">
                               <h3 className="text-gray-900 text-sm font-medium truncate"></h3>
                             </div>
-                            <PriceMonthly price={getDefaultPrice(product)}></PriceMonthly>
+                            <Price price={getDefaultPrice(product)}></Price>
                           </div>
                         </div>
                         <div className="">

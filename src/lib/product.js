@@ -49,7 +49,15 @@ const QUERY_PRODUCT_INFO = `
         option2,
         option3
         price,
-        product
+        product,
+        product__expand{
+            _id,
+            name,
+            slug,
+            option1,
+            option2,
+            option3,
+        }
     },
     reviews:_related_shop_reviews_product{
         _id,
