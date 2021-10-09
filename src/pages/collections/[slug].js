@@ -20,7 +20,8 @@ export async function getStaticProps({params}) {
   return {
     props: {
       collection: collection
-    }
+    },
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
 }
 

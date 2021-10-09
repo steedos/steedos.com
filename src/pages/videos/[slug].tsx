@@ -35,7 +35,8 @@ export async function getStaticProps({
     props: {
       title: video.name,
       ...video
-    }
+    },
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
 }
 
