@@ -169,9 +169,9 @@ function ProductVariantCheckout({ productVariant, defQuanticy = 1, onChange }) {
                 {productVariant.name}
               </a>
             </h4>
-            {productVariant.product__expand.option1 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option1}: {productVariant.option1}</p>}
-            {productVariant.product__expand.option2 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option2}: {productVariant.option2}</p>}
-            {productVariant.product__expand.option3 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option3}: {productVariant.option3}</p>}
+            {productVariant.product__expand?.option1 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option1}: {productVariant.option1}</p>}
+            {productVariant.product__expand?.option2 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option2}: {productVariant.option2}</p>}
+            {productVariant.product__expand?.option3 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option3}: {productVariant.option3}</p>}
           </div>
 
           <div className="ml-4 flex-shrink-0 flow-root">

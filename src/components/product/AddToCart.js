@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { changeCart } from '@/lib/cart.client'
 import { CheckIcon } from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
-export default function AddToCart({ productVariant }) {
+export default function AddToCart({ productVariant = {} }) {
     const router = useRouter();
     let [isOpen, setIsOpen] = useState(false)
     const goCheckout = (params) => {
@@ -83,10 +83,10 @@ export default function AddToCart({ productVariant }) {
                   
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">{productVariant.product__expand.name}</p>
-                  {productVariant.product__expand.option1 ? <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option1}: {productVariant.option1}</p> : null}
-                  {productVariant.product__expand.option2 ? <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option2}: {productVariant.option2}</p> : null}
-                  {productVariant.product__expand.option3 ? <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option3}: {productVariant.option3}</p> : null}
+                  <p className="text-sm text-gray-500">{productVariant.product__expand?.name}</p>
+                  {productVariant.product__expand?.option1 ? <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option1}: {productVariant.option1}</p> : null}
+                  {productVariant.product__expand?.option2 ? <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option2}: {productVariant.option2}</p> : null}
+                  {productVariant.product__expand?.option3 ? <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option3}: {productVariant.option3}</p> : null}
                 </div>
                 <div className="mt-4">
                   <button
