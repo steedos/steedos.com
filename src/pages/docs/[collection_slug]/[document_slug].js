@@ -54,7 +54,7 @@ const getTableOfContents = (markdown) => {
 
       if (level === 2) {
         contents.push({ title, slug, children: [] })
-      } else {
+      } else if (contents[contents.length - 1]){
         contents[contents.length - 1].children.push({ title, slug })
       }
     }
