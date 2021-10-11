@@ -29,11 +29,6 @@ export async function getDocument(collectionSlug, documentSlug){
                 name
                 description
               }
-              child_documents: _related_documents_parent {
-                _id
-                name
-                slug
-              }
               _related_files {
                 _id
                 name
