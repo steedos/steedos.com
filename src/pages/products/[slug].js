@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
 import {NextSeo} from 'next-seo'
 import Detail from '@/components/product/Detail'
-import { getProduct } from '@/lib/product';
+import { getProduct, getProducts } from '@/lib/product';
 
-export async function getServerSideProps({params, res, query}) {
-  const { slug } = query
+export async function getStaticProps({params, query}) {
+  const { slug } = params
   const product = await getProduct(slug)
 
   if (!product) {
@@ -13,13 +13,32 @@ export async function getServerSideProps({params, res, query}) {
     }
   }
 
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       product: product
-    }
+    },
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
 }
+
+
+export async function getStaticPaths() {
+  const products = await getProducts()
+
+  // Get the paths we want to pre-render based on posts
+  const paths = products.map((product) => ({
+    params: { 
+      slug: product.slug },
+  }))
+  console.log('Building Products...');
+  console.log(paths);
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: blocking } will server-render pages
+  // on-demand if the path doesn't exist.
+  return { paths, fallback: 'blocking' }
+}
+
 export default function ProductDetail({product}){
   const router = useRouter();
   const {vid} = router.query;

@@ -53,6 +53,33 @@ export async function getDocument(collectionSlug, documentSlug){
     return document;
 }
 
+
+export async function getDocuments(){
+  const query = `
+    {
+      documents{
+        _id
+        name
+        slug
+        collection__expand {
+          _id
+          name
+          slug
+        }
+      } 
+    }
+  `
+  const result = await fetchGraphql(query);
+
+  let documents = null;
+
+  if(result.data && result.data.documents && result.data.documents.length > 0){
+      documents = result.data.documents;
+  }
+
+  return documents;
+}
+
 /**
  * 
  * @param {*} blogSlug 

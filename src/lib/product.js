@@ -76,7 +76,12 @@ const QUERY_PRODUCT_INFO = `
 export async function getProducts(){
     const query = `
     {
-        shop_products(filters: ["status","=", "published"])${QUERY_PRODUCT_INFO}
+        shop_products
+        {
+            _id,
+            name,
+            slug,
+        }
     }
     `
     const result = await fetchGraphql(query);
@@ -87,6 +92,27 @@ export async function getProducts(){
         products = result.data.shop_products;
     }
     return products;
+}
+
+export async function getCollections(){
+    const query = `
+    {
+        shop_collections
+        {
+            _id,
+            name,
+            slug,
+        }
+    }
+    `
+    const result = await fetchGraphql(query);
+
+    let shop_collections = null;
+
+    if(result.data && result.data.shop_collections){
+        shop_collections = result.data.shop_collections;
+    }
+    return shop_collections;
 }
 
 /**

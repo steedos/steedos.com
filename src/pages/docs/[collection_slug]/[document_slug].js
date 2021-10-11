@@ -13,7 +13,7 @@ import dynamic from 'next/dynamic'
 
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { getDocument} from '@/lib/document';
+import { getDocument, getDocuments} from '@/lib/document';
 import {NextSeo} from 'next-seo'
 import { Heading } from '@/components/Heading';
 import { Markdown } from '@/components/Markdown'
@@ -63,7 +63,7 @@ const getTableOfContents = (markdown) => {
   return contents
 }
 
-export async function getServerSideProps({
+export async function getStaticProps({
   params,
   res,
 }) {
@@ -76,13 +76,32 @@ export async function getServerSideProps({
   }
   const tableOfContents = document.body? getTableOfContents(document.body): []
   
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       tableOfContents,
       ...document
-    }
+    },
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
+}
+
+
+export async function getStaticPaths() {
+  const documents = await getDocuments()
+
+  // Get the paths we want to pre-render based on posts
+  const paths = documents.map((document) => ({
+    params: { 
+      collection_slug: document.collection__expand.slug,
+      document_slug: document.slug },
+  }))
+  console.log('Building Documents...');
+  console.log(paths);
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: blocking } will server-render pages
+  // on-demand if the path doesn't exist.
+  return { paths, fallback: 'blocking' }
 }
 
 export default function Document(props) {

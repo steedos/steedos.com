@@ -205,7 +205,7 @@ export default function ProductDetail({ product, vid }) {
             </div>
           </div>
           {product.html && <section aria-labelledby="related-heading" className="mt-10 border-t border-gray-200 py-8 px-4 sm:px-0">
-            <div className="max-w-none pt-10 pb-8">
+            <div className="max-w-none pb-8">
               <Markdown body={product.html}></Markdown>
             </div>
 

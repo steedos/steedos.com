@@ -13,13 +13,13 @@ const UpdatedAt: React.FunctionComponent<{date: string}> = ({date}) => (
   <div>{date}</div>
 )
 
-export async function getServerSideProps(ctx) {
+export async function getStaticProps(ctx) {
   const collections = await getCollections();
-  ctx.res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       collections: collections
-    }
+    },
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
 }
 
@@ -34,7 +34,7 @@ const Collection: React.FC = (props: any) => {
         title={`${name}`}
         description={description}
       />
-    <div className="text-black mx-auto max-w-screen-lg w-full lg:py-16 py-10">
+    <div className="text-black mx-auto max-w-screen-lg w-full lg:py-16 py-10 px-6">
       <main>
         <div className="divide-y divide-gray-200">
           <div className="py-6 space-y-2 md:space-y-5">

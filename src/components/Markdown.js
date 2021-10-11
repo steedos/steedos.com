@@ -100,9 +100,10 @@ export function a({ node, ...props }) {
         src={src}
       />
     }
-  }
 
-  return <a href={props.href}>{props.children}</a>
+    const target = props.href.match(/https:\/\//i) || props.href.match(/http:\/\//i) ? "_blank": "_self";
+    return <a href={props.href} target={target}>{props.children}</a>
+  }
 }
 
 export function info({ node, ...props }) {

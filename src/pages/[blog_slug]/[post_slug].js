@@ -19,7 +19,7 @@ import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { PageHeader } from '@/components/PageHeader'
-import { getPost, getBlog, getBlogSidebarLayoutNav } from '@/lib/blog';
+import { getPost, getBlog, getPosts } from '@/lib/blog';
 import {NextSeo} from 'next-seo'
 // const {serialize} = require('next-mdx-remote/serialize')
 // import { MDXRemote } from 'next-mdx-remote'
@@ -30,9 +30,8 @@ const components = {
   Heading,
 }
 
-export async function getServerSideProps({
+export async function getStaticProps({
   params,
-  res,
   locale,
   locales,
   preview,
@@ -43,15 +42,33 @@ export async function getServerSideProps({
   const post = blog? await getPost(blog_slug, post_slug):null;
   const errorCode = !blog || !post?404: 0;
   
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       errorCode,
       ...post,
       blog,
       background_image: '/img/header-background-ellipse.png'
-    }
+    },
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
+}
+
+export async function getStaticPaths() {
+  const posts = await getPosts()
+
+  // Get the paths we want to pre-render based on posts
+  const paths = posts.map((post) => ({
+    params: { 
+      blog_slug: post.blog__expand.slug,
+      post_slug: post.slug },
+  }))
+
+  console.log('Building Blogs...');
+  console.log(paths);
+  // We'll pre-render only these paths at build time.
+  // { fallback: blocking } will server-render pages
+  // on-demand if the path doesn't exist.
+  return { paths, fallback: 'blocking' }
 }
 
 export default function Post(props) {

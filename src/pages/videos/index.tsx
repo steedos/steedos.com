@@ -3,14 +3,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getVideos,  } from '@/lib/video';
 
-export async function getServerSideProps( {params, res} ) {
+export async function getStaticProps( {params,} ) {
   const videos = await getVideos();
   
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       videos
-    }
+    },
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
 }
 

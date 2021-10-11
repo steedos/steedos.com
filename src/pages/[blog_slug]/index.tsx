@@ -9,7 +9,7 @@ import Error from 'next/error'
 import {find} from 'lodash'
 
 import { SidebarLayout } from '@/layouts/SidebarLayout'
-import { getBlog, getBlogPosts, getBlogSidebarLayoutNav, getPostUrl } from '@/lib/blog';
+import { getBlog, getBlogPosts, getBlogs } from '@/lib/blog';
 import tinytime from 'tinytime'
 import { Markdown } from '@/components/Markdown'
 
@@ -19,21 +19,39 @@ const UpdatedAt: React.FunctionComponent<{date: string}> = ({date}) => (
   <div>{date}</div>
 )
 
-export async function getServerSideProps({params, res}) {
+export async function getStaticProps({params}) {
   const { blog_slug } = params;
   const blog = await getBlog(blog_slug);
   const errorCode = !blog?404: 0;
   
   const posts = blog? await getBlogPosts(blog._id): [];
   
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
   return {
     props: {
       errorCode,
       blog,
       posts
-    }
+    },
+    revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
+}
+
+
+export async function getStaticPaths() {
+  const items = await getBlogs()
+
+  // Get the paths we want to pre-render based on posts
+  const paths = items.map((item) => ({
+    params: { 
+      blog_slug: item.slug },
+  }))
+  console.log('Building Blogs...');
+  console.log(paths);
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: blocking } will server-render pages
+  // on-demand if the path doesn't exist.
+  return { paths, fallback: 'blocking' }
 }
 
 const BlogPosts: React.FC = (props: any) => {

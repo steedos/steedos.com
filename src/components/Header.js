@@ -263,7 +263,7 @@ export function Header({ site }) {
               <div className="px-4 pt-5 pb-2 flex">
                 <button
                   type="button"
-                  className="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400"
+                  className="focus:outline-none -m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400"
                   onClick={() => setOpen(false)}
                 >
                   <span className="sr-only">Close menu</span>
@@ -281,7 +281,7 @@ export function Header({ site }) {
                         className={({ selected }) =>
                           classNames(
                             selected ? 'text-teal-600 border-teal-600' : 'text-gray-900 border-transparent',
-                            'flex-1 whitespace-nowrap py-4 px-1 border-b-2 text-base font-medium'
+                            'flex-1 whitespace-nowrap py-4 px-1 border-b-2 text-base font-medium focus:outline-none '
                           )
                         }
                       >
@@ -292,7 +292,7 @@ export function Header({ site }) {
                 </div>
                 <Tab.Panels as={Fragment}>
                   {navigation.categories.map((category) => (
-                    <Tab.Panel key={category.name} className="pt-10 pb-8 px-4 space-y-10">
+                    <Tab.Panel key={category.name} className="focus:outline-none pt-10 pb-8 px-4 space-y-10">
                       <div className="grid grid-cols-2 gap-x-4">
                         {category.featured.map((item) => (
                           <div key={item.name} className="group relative text-sm">
@@ -373,14 +373,14 @@ export function Header({ site }) {
         </Dialog>
       </Transition.Root>
 
-      <header className="sticky z-20 lg:z-50 relative bg-white inset-0 flex-none text-sm font-medium ring-1 ring-gray-900 ring-opacity-5 shadow-sm">
-
+      <header className="bg-opacity-80 backdrop-filter backdrop-blur-md backdrop-saturate-150 sticky z-20 lg:z-50 relative bg-white inset-0 flex-none text-sm font-medium ring-1 ring-gray-900 ring-opacity-5 shadow-sm">
+       
         <nav aria-label="Top" className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="">
             <div className="h-16 flex items-center">
               <button
                 type="button"
-                className="bg-white p-2 rounded-md text-gray-400 lg:hidden"
+                className="p-2 rounded-md text-gray-400 lg:hidden"
                 onClick={() => setOpen(true)}
               >
                 <span className="sr-only">Open menu</span>

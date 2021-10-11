@@ -79,6 +79,7 @@ module.exports =
   target: 'serverless',
   env: {
     STEEDOS_SERVER_API_KEY: process.env.STEEDOS_SERVER_API_KEY,
+    NEXT_STATIC_PROPS_REVALIDATE: process.env.NEXT_STATIC_PROPS_REVALIDATE,
   },
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
