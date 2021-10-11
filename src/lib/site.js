@@ -25,10 +25,6 @@ const QUERY_SITE_INFO = `
     menu_footer,
     logo,
     icon,
-    announcement_url,
-    announcement_title,
-    announcement_closable,
-    annoucement_enabled,
     menus:_related_site_menus_site${QUERY_SITE_MENUS}
 }
 `
