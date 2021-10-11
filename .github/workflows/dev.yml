@@ -8,7 +8,7 @@ on:
     branches: [dev]
 jobs:
   deploy-staging:
-    runs-on: ubuntu-latestlatest
+    runs-on: ubuntu-latest
     environment: dev
     env:
       STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_SERVER_API_KEY }}
