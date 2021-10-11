@@ -1,19 +1,24 @@
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import { getProductVariants } from '@/lib/product.client'
-import { isFunction, map, each } from 'lodash'
+import { isFunction, map, each, find } from 'lodash'
 
-export default function VariantRadios({ product, onChange }) {
+export default function VariantRadios({ product, onChange, productVariant }) {
     const variants = getProductVariants(product);
+    
     let initValues = {};
     each(variants, (item)=>{
-        initValues[item.key] = item.options[0]
+        if(productVariant){
+            initValues[item.key] = productVariant[item.key]
+        }else{
+            initValues[item.key] = item.options[0]
+        }
     })
     const [values, setValues] = useState(initValues);
     return (
         <>
             {variants.map((variant)=>(
-                <VariantRadio key={variant.key} productVariant={variant} onChange={(value)=>{
+                <VariantRadio defValue={initValues[variant.key]} key={variant.key} productVariant={variant} onChange={(value)=>{
                     const newValues = Object.assign({}, values, {[variant.key]: value})
                     setValues(newValues)
                     if(onChange && isFunction(onChange)){
@@ -25,8 +30,8 @@ export default function VariantRadios({ product, onChange }) {
     )
 }
 
-function VariantRadio({ productVariant, onChange }) {
-    const [selected, setSelected] = useState(productVariant.options[0])
+function VariantRadio({ productVariant, onChange, defValue }) {
+    const [selected, setSelected] = useState(defValue || productVariant.options[0])
     return (
         <div className="mt-8">
                 <div className="flex items-center justify-between">

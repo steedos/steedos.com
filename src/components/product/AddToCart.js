@@ -21,7 +21,6 @@ export default function AddToCart({ productVariant }) {
         openModal();
         // router.push(`/store/checkout?ids=${productVariant._id}`)
     }
-    console.log(`productVariant`, productVariant)
     return (
       <>
       <button

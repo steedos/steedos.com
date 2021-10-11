@@ -37,8 +37,15 @@ function classNames(...classes) {
 
 const postDateTemplate = tinytime('{YYYY}-{Mo}-{DD}')
 
-export default function ProductDetail({ product }) {
-  const [productVariant, setProductVariant] = useState(product.product_variants[0]);
+export default function ProductDetail({ product, vid }) {
+  let variant = null;
+  if(vid){
+    variant = find(product.product_variants, (v)=>{
+      return v._id === vid;
+    })
+  }
+  
+  const [productVariant, setProductVariant] = useState(variant || product.product_variants[0]);
   const onVariantRadiosChange = (values)=>{
     setProductVariant(find(product.product_variants, (item)=>{
       let isEq = true;
@@ -142,7 +149,7 @@ export default function ProductDetail({ product }) {
                 />
               </div>
 
-              <VariantRadios product={product} onChange={onVariantRadiosChange}></VariantRadios>
+              <VariantRadios product={product} onChange={onVariantRadiosChange} productVariant={productVariant}></VariantRadios>
               <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
                 <AddToCart productVariant={productVariant}></AddToCart>
                 <BuyNow productVariant={productVariant}></BuyNow>

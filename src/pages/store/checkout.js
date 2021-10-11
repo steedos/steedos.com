@@ -49,6 +49,7 @@ export default function Checkout({productsVariant, productsVariantPrice}) {
   const [variantsSubTotalPrice, setVariantsSubTotalPrice] = useState({});
   const [variantsInfo, setVariantsInfo] = useState({});
   const [lines, setLines] = useState(productsVariant);
+  const [isQuick, setQuick] = useState(productsVariant);
   const router = useRouter()
   useSWR('userCartCheckout', async () => {
     let _cart = {};
@@ -67,8 +68,7 @@ export default function Checkout({productsVariant, productsVariantPrice}) {
         setVariantsSubTotalPrice(_variantsSubTotalPrice);
         setVariantsInfo(_variantsInfo);
         setLines(_lines);
-      } else {
-        console.log({lines: []})
+        setQuick(false);
       }
     }
     return _cart;
@@ -128,7 +128,7 @@ export default function Checkout({productsVariant, productsVariantPrice}) {
                   </div>
                 </dl>
 
-                <SubmitOrderButton variants={variantsInfo}></SubmitOrderButton>
+                <SubmitOrderButton variants={variantsInfo} isQuick={isQuick}></SubmitOrderButton>
               </div>
             </div>
           </div>

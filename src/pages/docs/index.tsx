@@ -24,7 +24,7 @@ export async function getServerSideProps(ctx) {
 }
 
 const Collection: React.FC = (props: any) => {
-  console.log(`props`, props)
+  // console.log(`props`, props)
   const { collections } = props;
   const name = '文档中心';
   const description = '';

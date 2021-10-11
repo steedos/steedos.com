@@ -73,7 +73,7 @@ export default function Cart() {
                           <div className="flex justify-between sm:grid sm:grid-cols-2">
                             <div className="pr-6">
                               <h3 className="text-sm">
-                                <a href={merchandise.href} className="font-medium text-gray-700 hover:text-gray-800">
+                                <a href={`/products/${merchandise.merchandise__expand.product__expand.slug}?vid=${merchandise.merchandise__expand._id}`} className="font-medium text-gray-700 hover:text-gray-800">
                                   {merchandise.merchandise__expand.product__expand.name}
                                 </a>
                               </h3>
