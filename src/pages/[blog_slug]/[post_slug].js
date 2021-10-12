@@ -158,7 +158,7 @@ export default function Post(props) {
                 {name}
               </h1>
               <div className="text-xl">
-                {summary}
+                <Markdown body={summary} className="prose sm:prose-lg lg:prose-xl"></Markdown>
               </div>
               {/* {author && <Author author={author} />} */}
               {imageUrl && (
