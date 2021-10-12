@@ -53,22 +53,23 @@ export async function getStaticPaths() {
 
 export default function Home(props) {
   const {
+    name,
     homepage = {name: '', body: ''}
   } = props
   const backgroundImageUrl = '/img/header-background-ellipse.png'
   const imageUrl = homepage.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${homepage.image}` : null
   return (
-    <div className="overflow-hidden">
+    <div className="text-center overflow-hidden">
       <Head>
         <meta
           key="twitter:title"
           name="twitter:title"
-          content="Tailwind CSS - Rapidly build modern websites without ever leaving your HTML."
+          content={`${name} - ${homepage.name}`}
         />
         <meta
           key="og:title"
           property="og:title"
-          content="Tailwind CSS - Rapidly build modern websites without ever leaving your HTML."
+          content={`${name} - ${homepage.name}`}
         />
         <title>{homepage.name}</title>
       </Head>
@@ -84,7 +85,7 @@ export default function Home(props) {
           <p className="max-w-screen-lg text-lg sm:text-2xl sm:leading-10 font-medium mb-10 sm:mb-11">
             {/* 华炎魔方将<InlineCode>低代码技术</InlineCode>与企业业务场景结合，
             助力企业在<InlineCode>最短时间</InlineCode>内开发<InlineCode>数字化</InlineCode>解决方案， 帮助企业快速落地现有业务战略， 以及<InlineCode>催生未来创新</InlineCode>。 */}
-            <Markdown body={homepage.summary} className="prose sm:prose-lg lg:prose-xl"></Markdown>
+            <Markdown body={homepage.summary} className="prose sm:prose-lg md:prose-xl lg:prose-2xl"></Markdown>
           </p>
           {/* <div className="flex flex-wrap space-y-4 sm:space-y-0 sm:space-x-4 text-center">
             <NextLink href="/docs/deploy/deploy-cloud">

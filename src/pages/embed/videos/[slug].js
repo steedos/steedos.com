@@ -112,13 +112,15 @@ export default function VideoEmbed(props) {
                     ],
                 }}
             />
-            <div style={{height: '400px'}} className="bg-black grid place-items-center">
+            <div className='react-player-wrapper' style={{position: 'relative', paddingTop: '56.25%' }}>
                 <Player
-                  hls_url={hls_url}
-                  light={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/${thumb_image}`}
-                  height="100%"
-                  width="100%"
-                  // subtitlesUrl={subtitles_url}
+                    className='react-player'
+                    hls_url={hls_url}
+                    light={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/${thumb_image}`}
+                    height="100%"
+                    width="100%"
+                    style={{position: 'absolute', top: 0, left: 0}}
+                    // subtitlesUrl={subtitles_url}
                 />
             </div>
         </>

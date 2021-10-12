@@ -4,7 +4,47 @@ import styled from "styled-components";
 
 // This wrapper allows us to pass non-standard HTML attributes through to the DOM element
 // https://www.styled-components.com/docs/basics#passed-props
-const Iframe = (props) => <iframe title="Embed" {...props} />;
+class Iframe extends React.Component {
+  container;
+  state = { contentHeight: 100 };
+
+  handleResize = () => {
+    const { body, documentElement } = this.container.contentWindow.document;
+    const contentHeight = Math.max(
+      body.clientHeight,
+      body.offsetHeight,
+      body.scrollHeight,
+      documentElement.clientHeight,
+      documentElement.offsetHeight,
+      documentElement.scrollHeight
+    );
+    if (contentHeight !== this.state.contentHeight) this.setState({ contentHeight });
+  };
+  
+  onLoad = () => {
+    this.container.contentWindow.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  }
+  
+  componentWillUnmount() {
+    this.container.contentWindow.removeEventListener('resize', this.handleResize);
+  }
+  
+  render() {
+    const { contentHeight } = this.state;
+    return (
+      <iframe
+        {...this.props} 
+        frameBorder="0"
+        onLoad={this.onLoad}
+        ref={(container) => { this.container = container; }}
+        scrolling="no"
+        style={{ width: '100%', height: `${contentHeight}px` }}
+        title="EmbedAuthSize"
+      />
+    );
+  }
+}
 
 type Props = {
   src?: string,
@@ -26,7 +66,6 @@ class Frame extends React.Component<Props> {
     const {
       border,
       width = "100%",
-      height = "400px",
       forwardedRef,
       icon,
       title,
@@ -35,13 +74,13 @@ class Frame extends React.Component<Props> {
       theme,
       src,
     } = this.props;
-    const Component = border ? StyledIframe : "iframe";
+    const Component = border ? StyledIframe : Iframe;
     const withBar = !!(icon || canonicalUrl);
 
     return (
       <Rounded
         width={width}
-        height={height}
+        // height={height}
         $withBar={withBar}
         className={isSelected ? "ProseMirror-selectednode" : ""}
         theme={theme}
@@ -51,10 +90,10 @@ class Frame extends React.Component<Props> {
             $withBar={withBar}
             sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
             width={width}
-            height={height}
+            // height={height}
             type="text/html"
             frameBorder="0"
-            title="embed"
+            // title="embed"
             loading="lazy"
             src={src}
             allowFullScreen
