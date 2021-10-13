@@ -135,7 +135,6 @@ export function Markdown(props) {
     className = 'prose dark:prose-dark'
   } = props
 
-  console.log(body)
   const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkDirective, customPlugin, remarkGfm]
 
   return (
