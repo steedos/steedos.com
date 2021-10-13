@@ -1,9 +1,10 @@
 import { fetchGraphql } from '@/lib/base'
 
-export async function getSite(domain){
+export async function getSiteByDomain(domain){
     const query = `
         {
             site_domains(filters:["domain","=", "${domain}"]){
+                site,
                 site__expand {
                     name,
                     logo,
@@ -28,6 +29,32 @@ export async function getSite(domain){
     return site;
 }
 
+
+export async function getSite(){
+    const query = `
+        {
+            sites {
+                name,
+                logo,
+                icon,
+                homepage: post_homepage__expand {
+                    name,
+                    summary,
+                    image,
+                    body
+                }
+            }
+        }
+    `
+    const result = await fetchGraphql(query);
+
+    let site = null;
+
+    if(result.data && result.data.sites && result.data.sites.length > 0){
+        site = result.data.sites[0];
+    }
+    return site;
+}
 
 export async function getSiteDomains(){
     const query = `
