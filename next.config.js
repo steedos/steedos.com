@@ -102,6 +102,32 @@ module.exports =
   async redirects() {
     return require('./redirects.json')
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          has: [
+            {
+              type: 'host',
+              value: '(?<host>.*)',
+            },
+          ],
+          source: '/',
+          destination: '/hosts/:host',
+        },
+        // {
+        //   has: [
+        //     {
+        //       type: 'host',
+        //       value: '(?<host>.*)',
+        //     },
+        //   ],
+        //   source: '/:path*',
+        //   destination: '/:host/:path*',
+        // },
+      ]
+    }
+  },
   webpack(config, options) {
     // if (!options.dev) {
     //   options.defaultLoaders.babel.options.cache = false

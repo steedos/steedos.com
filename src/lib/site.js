@@ -1,39 +1,20 @@
 import { fetchGraphql } from '@/lib/base'
 
-const QUERY_SITE_MENUS = `
-{
-    name,
-    items: _related_site_menu_items_site_menu{
-      _id,
-      name,
-      children,
-      link_collection,
-      link_post,
-      link_product,
-      parent,
-      site_menu,
-      type,
-      url
-    }
-}
-`
-
-const QUERY_SITE_INFO = `
-{
-    name,
-    menu_primary,
-    menu_footer,
-    logo,
-    icon,
-    menus:_related_site_menus_site${QUERY_SITE_MENUS}
-}
-`
-
 export async function getSite(domain){
     const query = `
         {
             site_domains(filters:["domain","=", "${domain}"]){
-                site__expand${QUERY_SITE_INFO}
+                site__expand {
+                    name,
+                    logo,
+                    icon,
+                    homepage: post_homepage__expand {
+                        name,
+                        summary,
+                        image,
+                        body
+                    }
+                }
             }
         }
     `
@@ -45,4 +26,28 @@ export async function getSite(domain){
         site = result.data.site_domains[0].site__expand;
     }
     return site;
+}
+
+
+export async function getSiteDomains(){
+    const query = `
+        {
+            site_domains{
+                name: domain
+                site__expand {
+                    name,
+                    logo,
+                    icon,
+                }
+            }
+        }
+    `
+    const result = await fetchGraphql(query);
+
+    let site_domains = null;
+
+    if(result.data && result.data.site_domains){
+        site_domains = result.data.site_domains
+    }
+    return site_domains;
 }
