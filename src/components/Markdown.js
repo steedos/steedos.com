@@ -1,5 +1,5 @@
 
-import RMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 import { ROOT_URL } from '@/lib/base';
 import Image from 'next/image'
 // import getConfig from 'next/config'
@@ -13,6 +13,7 @@ import remarkDirective from 'remark-directive'
 import hastscript from 'hastscript'
 const visit = require('unist-util-visit')
 const { remarkPlugins } = require('remark');
+import rehypeRaw from 'rehype-raw'
 const imgLinks = require("@pondorasti/remark-img-links")
 
 
@@ -60,7 +61,18 @@ function customPlugin() {
 }
 
 export function code({node, inline, className, children, ...props}) {
+  console.log(node)
+  console.log(inline)
+  console.log(className)
+  console.log(children)
+  console.log(props)
   const match = /language-(\w+)/.exec(className || '')
+  if (className === 'language-markup') {
+    const html = children
+    return (
+      <div dangerouslySetInnerHTML={{__html: html}}></div>
+    )
+  }
   return !inline && match ? (
     <SyntaxHighlighter
       children={String(children).replace(/\n$/, '')}
@@ -93,17 +105,21 @@ export function img({ node, ...props }) {
 
 export function a({ node, ...props }) {
   if (props.href && isString(props.href)) {
-    const result = props.href.match(/\/videos\//i);
+    const result = props.href.match(/\/embed\/videos\//i);
     if (result) {
-      const src = props.href.replace('/videos/', '/embed/videos/')
+      // const src = props.href.replace('/videos/', '/embed/videos/')
       return <Frame
-        src={src}
+        src={props.href}
       />
     }
 
     const target = props.href.match(/https:\/\//i) || props.href.match(/http:\/\//i) ? "_blank": "_self";
     return <a href={props.href} target={target}>{props.children}</a>
   }
+}
+
+export function pre({ node, ...props }) {
+  return <div>{props.children}</div>
 }
 
 export function info({ node, ...props }) {
@@ -124,25 +140,29 @@ export function Markdown(props) {
     className = 'prose dark:prose-dark'
   } = props
 
+  console.log(body)
   const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkDirective, customPlugin, remarkGfm]
 
   return (
     <>
       {body && (
-        <RMarkdown 
-          children={body.replace(new RegExp('\\\\\n', 'g'), '\n')} 
+        <ReactMarkdown 
+          children={body.replace(new RegExp('\\\\\n', 'g'), '<br/>')} 
           remarkPlugins={__remarkPlugins} 
+          rehypePlugins={[rehypeRaw]} 
           className={className}
+          skipHtml={false}
           components={{
             code,
             // img, 
             a,
             info,
             warning,
+            pre,
             tip
           }}
         >
-        </RMarkdown>
+        </ReactMarkdown>
       )}
     </>
   )
