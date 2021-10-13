@@ -8,7 +8,7 @@ import { isString } from 'lodash'
 import { InformationCircleIcon, ExclamationIcon, StarIcon } from '@heroicons/react/solid'
 import Frame from '@/components/Frame'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import {atomDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkDirective from 'remark-directive'
 import hastscript from 'hastscript'
 const visit = require('unist-util-visit')
@@ -71,7 +71,7 @@ export function code({node, inline, className, children, ...props}) {
   return !inline && match ? (
     <SyntaxHighlighter
       children={String(children).replace(/\n$/, '')}
-      style={dark}
+      style={atomDark}
       language={match[1]}
       PreTag="div"
       {...props}
