@@ -65,7 +65,7 @@ export function code({node, inline, className, children, ...props}) {
   if (className === 'language-markup') {
     const html = children
     return (
-      <div dangerouslySetInnerHTML={{__html: html}}></div>
+      <div className="not-prose" dangerouslySetInnerHTML={{__html: html}}></div>
     )
   }
   return !inline && match ? (
