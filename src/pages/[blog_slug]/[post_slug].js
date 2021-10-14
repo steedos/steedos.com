@@ -119,7 +119,7 @@ export default function Post(props) {
         // }}
         // canonical={canonicalUrl}
       />
-      <div className="w-full h-full bg-no-repeat absolute hidden lg:block" style={{backgroundImage: `url("${background_image}");`}}>
+      <div className="w-full h-full bg-no-repeat absolute hidden lg:block" style={{backgroundImage: `url("${background_image}")`}}>
       </div>
       <div className="w-full max-w-8xl mx-auto lg:flex px-4 sm:px-6 lg:px-8 z-10">
         {blog.menu && blog.menu.items && (
