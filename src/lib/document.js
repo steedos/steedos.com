@@ -29,11 +29,6 @@ export async function getDocument(collectionSlug, documentSlug){
                 name
                 description
               }
-              _related_files {
-                _id
-                name
-                size
-              }
             } 
         }
     `
