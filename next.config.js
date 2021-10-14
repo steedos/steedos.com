@@ -112,7 +112,7 @@ module.exports =
           },
         ],
         source: '/',
-        destination: '/hosts/:host',
+        destination: '/hosts/steedos.cn',
       },
       // {
       //   has: [

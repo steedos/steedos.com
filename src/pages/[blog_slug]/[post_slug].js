@@ -119,7 +119,7 @@ export default function Post(props) {
         // }}
         // canonical={canonicalUrl}
       />
-      <div className="w-full h-full bg-no-repeat absolute hidden lg:block" style={{backgroundImage: `url("${background_image}");`}}>
+      <div className="w-full h-full bg-no-repeat absolute hidden lg:block" style={{backgroundImage: `url("${background_image}")`}}>
       </div>
       <div className="w-full max-w-8xl mx-auto lg:flex px-4 sm:px-6 lg:px-8 z-10">
         {blog.menu && blog.menu.items && (
@@ -130,13 +130,13 @@ export default function Post(props) {
             </div>
             <nav id="nav" className="px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-md pb-10 lg:pt-10 lg:pb-14 sticky?lg:h-(screen-18)">
               <ul>
-                <li class="mb-8">
-                  {/* <h5 class="px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs text-gray-900">Getting started</h5> */}
+                <li className="mb-8">
+                  {/* <h5 className="px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs text-gray-900">Getting started</h5> */}
                   <ul>
                     {blog.menu.items &&  blog.menu.items.map((item) => (
                     <li>
-                      <a class="px-3 py-2 transition-colors duration-200 relative block hover:text-gray-900 text-gray-500" href={item.url}>
-                        <span class="rounded-md absolute inset-0 bg-cyan-50 opacity-0"></span><span class="relative">{item.name}</span>
+                      <a className="px-3 py-2 transition-colors duration-200 relative block hover:text-gray-900 text-gray-500" href={item.url}>
+                        <span className="rounded-md absolute inset-0 bg-cyan-50 opacity-0"></span><span className="relative">{item.name}</span>
                       </a>
                     </li>
                     ))}
@@ -163,7 +163,7 @@ export default function Post(props) {
               {/* {author && <Author author={author} />} */}
               {imageUrl && (
                 <div className="my-8">
-                  <img class="rounded-lg" src={imageUrl} alt=""></img>
+                  <img className="rounded-lg" src={imageUrl} alt=""></img>
                 </div>
               )}
               {/* {tags && (

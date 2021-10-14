@@ -106,10 +106,10 @@ module.exports = {
               color: theme('colors.violet.600'),
             },
             'code::before': {
-              // content: 'none',
+              content: '""'
             },
             'code::after': {
-              // content: 'none',
+              content: '""'
             },
             pre: {
               backgroundColor: null,

@@ -19,7 +19,7 @@ import { Footer } from '@/components/Footer'
 import { Markdown } from '@/components/Markdown'
 import NextLink from 'next/link'
 import Head from 'next/head'
-import {getSite, getSiteDomains} from '@/lib/site'
+import {getSite, getSiteByDomain, getSiteDomains} from '@/lib/site'
 
 
 export async function getStaticProps({params}) {
@@ -27,8 +27,7 @@ export async function getStaticProps({params}) {
   const {
     host,
   } = params
-  const site = await getSite(host)
-  console.log(site)
+  const site = await getSiteByDomain(host)
   
   return {
     props: {

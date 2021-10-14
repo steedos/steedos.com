@@ -1,0 +1,8 @@
+@tailwind base;
+/* Your own custom base styles */
+
+@tailwind components;
+/* Your own custom component styles */
+
+@tailwind utilities;
+/* Your own custom utilities */

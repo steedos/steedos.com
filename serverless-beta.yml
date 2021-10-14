@@ -21,7 +21,9 @@ steedos-website-beta:
       # if you want to use an existing cloudfront distribution, provide it here
       distributionId: E1JIYP4Y9Z7HNA #optional
       waitBeforeInvalidate: false # by default true, it waits for the CloudFront distribution to have completed before invalidating, to avoid possibly caching old page
-      
+      defaults:
+        forward:
+          headers: ["Authorization", "Host"]
     build:
       env:
         NEXT_PUBLIC_DEPLOYMENT_URL=https://beta.steedos.cn

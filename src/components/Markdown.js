@@ -1,5 +1,5 @@
 
-import RMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 import { ROOT_URL } from '@/lib/base';
 import Image from 'next/image'
 // import getConfig from 'next/config'
@@ -8,11 +8,12 @@ import { isString } from 'lodash'
 import { InformationCircleIcon, ExclamationIcon, StarIcon } from '@heroicons/react/solid'
 import Frame from '@/components/Frame'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import {atomDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkDirective from 'remark-directive'
 import hastscript from 'hastscript'
 const visit = require('unist-util-visit')
 const { remarkPlugins } = require('remark');
+import rehypeRaw from 'rehype-raw'
 const imgLinks = require("@pondorasti/remark-img-links")
 
 
@@ -61,10 +62,16 @@ function customPlugin() {
 
 export function code({node, inline, className, children, ...props}) {
   const match = /language-(\w+)/.exec(className || '')
+  if (className === 'language-markup') {
+    const html = children
+    return (
+      <div className="not-prose" dangerouslySetInnerHTML={{__html: html}}></div>
+    )
+  }
   return !inline && match ? (
     <SyntaxHighlighter
       children={String(children).replace(/\n$/, '')}
-      style={dark}
+      style={atomDark}
       language={match[1]}
       PreTag="div"
       {...props}
@@ -93,17 +100,21 @@ export function img({ node, ...props }) {
 
 export function a({ node, ...props }) {
   if (props.href && isString(props.href)) {
-    const result = props.href.match(/\/videos\//i);
+    const result = props.href.match(/\/embed\/videos\//i);
     if (result) {
-      const src = props.href.replace('/videos/', '/embed/videos/')
+      // const src = props.href.replace('/videos/', '/embed/videos/')
       return <Frame
-        src={src}
+        src={props.href}
       />
     }
 
     const target = props.href.match(/https:\/\//i) || props.href.match(/http:\/\//i) ? "_blank": "_self";
     return <a href={props.href} target={target}>{props.children}</a>
   }
+}
+
+export function pre({ node, ...props }) {
+  return <div>{props.children}</div>
 }
 
 export function info({ node, ...props }) {
@@ -129,20 +140,23 @@ export function Markdown(props) {
   return (
     <>
       {body && (
-        <RMarkdown 
-          children={body.replace(new RegExp('\\\\\n', 'g'), '\n')} 
+        <ReactMarkdown 
+          children={body.replace(new RegExp('\\\\\n', 'g'), '<br/>')} 
           remarkPlugins={__remarkPlugins} 
+          rehypePlugins={[rehypeRaw]} 
           className={className}
+          skipHtml={false}
           components={{
             code,
             // img, 
             a,
             info,
             warning,
+            pre,
             tip
           }}
         >
-        </RMarkdown>
+        </ReactMarkdown>
       )}
     </>
   )

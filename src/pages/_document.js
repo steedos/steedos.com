@@ -23,6 +23,8 @@ export default class MyDocument extends Document {
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00b4b6" />
+          <link rel="stylesheet" media="all" href="/css/tailwind-min.css" />
+  
           <meta name="theme-color" content="#ffffff" />
         </Head>
         <body>

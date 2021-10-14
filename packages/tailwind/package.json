@@ -1,0 +1,15 @@
+{
+  "name": "tailwind",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "compile": "tailwindcss --postcss -i src/tailwind.css -o dist/tailwind.css",
+    "build": "tailwindcss --postcss --minify -i src/tailwind.css -o dist/tailwind-min.css",
+    "deploy": "tailwindcss --postcss --minify -i src/tailwind.css -o ../../public/css/tailwind-min.css"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.4.1",
+    "tailwindcss": "^2.2.17"
+  }
+}
