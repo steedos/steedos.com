@@ -31,7 +31,7 @@ export async function getPost(blogSlug, postSlug){
                 blog__expand {
                     _id,
                     name,
-                    slug,
+                    slug
                 }
             } 
         }
@@ -195,6 +195,9 @@ export async function getBlog(blogSlug){
             slug,
             name,
             body,
+            site__expand {
+                name
+            },
             menu: menu_primary__expand{
               name
               items: _related_site_menu_items_site_menu(filters: ["parent", "=", null]) {

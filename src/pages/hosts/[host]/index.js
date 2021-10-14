@@ -70,7 +70,7 @@ export default function Home(props) {
           property="og:title"
           content={`${name} - ${homepage.name}`}
         />
-        <title>{homepage.name}</title>
+        <title>${name} - {homepage.name}</title>
       </Head>
 
       <div className="w-full h-full bg-no-repeat absolute hidden lg:block" style={{backgroundImage: `url("${backgroundImageUrl}");`}}>

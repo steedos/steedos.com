@@ -92,8 +92,11 @@ export default function Post(props) {
   }
 
   let seo_title_calc = seo_title ? seo_title : name;
-  if (blog && blog.name)
+  if (blog && blog.name){
     seo_title_calc += ' - ' + blog.name
+    // if (blog.site__expand) 
+    //   seo_title_calc += ' | ' + blog.site__expand.name
+  }
   const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
   const imageUrl = image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${image}` : null
   return (
