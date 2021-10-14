@@ -136,12 +136,13 @@ export function Markdown(props) {
   } = props
 
   const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkDirective, customPlugin, remarkGfm]
-
+  const markdownBody = body.replace(new RegExp('\n\\\\', 'g'), '<br/>\n')
+  console.log(markdownBody)
   return (
     <>
       {body && (
         <ReactMarkdown 
-          children={body.replace(new RegExp('\\\\\n', 'g'), '<br/>')} 
+          children={markdownBody} 
           remarkPlugins={__remarkPlugins} 
           rehypePlugins={[rehypeRaw]} 
           className={className}
