@@ -157,7 +157,7 @@ export default function Post(props) {
         <div id="content-wrapper" className="lg:px-8 min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible">
           <article className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-6 mb-16">
             <header>
-              <h1 className="text-black max-w-screen-md lg:text-5xl md:text-4xl sm:text-3xl text-2xl w-full font-bold mb-8 lg:mb-10">
+              <h1 className="text-black max-w-screen-md lg:text-6xl md:text-5xl sm:text-4xl text-3xl w-full font-bold mb-8 lg:mb-10 lg:leading-tight">
                 {name}
               </h1>
               <div className="text-xl">

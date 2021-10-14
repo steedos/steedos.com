@@ -136,7 +136,7 @@ export function Markdown(props) {
   } = props
 
   const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkDirective, customPlugin, remarkGfm]
-  const markdownBody = body ? body.replace(new RegExp('\n\\\\', 'g'), '<br/>\n') : ""
+  const markdownBody = body ? body.replace(new RegExp('\\\\\n', 'g'), '<br/>\n\n') : ""
   return (
     <>
       {markdownBody && (
