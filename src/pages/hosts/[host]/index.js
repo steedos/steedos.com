@@ -28,7 +28,6 @@ export async function getStaticProps({params}) {
     host,
   } = params
   const site = await getSiteByDomain(host)
-  console.log(site)
   
   return {
     props: {
