@@ -11,9 +11,9 @@ import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import {atomDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkDirective from 'remark-directive'
 import hastscript from 'hastscript'
+import rehypeRaw from 'rehype-raw'
 const visit = require('unist-util-visit')
 const { remarkPlugins } = require('remark');
-import rehypeRaw from 'rehype-raw'
 const imgLinks = require("@pondorasti/remark-img-links")
 
 
@@ -136,10 +136,10 @@ export function Markdown(props) {
   } = props
 
   const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkDirective, customPlugin, remarkGfm]
-  const markdownBody = body.replace(new RegExp('\n\\\\', 'g'), '<br/>\n')
+  const markdownBody = body ? body.replace(new RegExp('\n\\\\', 'g'), '<br/>\n') : ""
   return (
     <>
-      {body && (
+      {markdownBody && (
         <ReactMarkdown 
           children={markdownBody} 
           remarkPlugins={__remarkPlugins} 
