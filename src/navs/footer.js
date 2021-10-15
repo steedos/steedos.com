@@ -5,7 +5,7 @@ export const footerNav = [
     items: [
       { name: '什么是低代码?', href: '/platform/lowcode' },
       { name: '华炎魔方平台', href: '/platform/overview' },
-      { name: '解决方案', href: '/platform/solutions' },
+      { name: '技术架构', href: '/platform/architecture' },
       { name: '功能', href: '/platform/features' },
       { name: '报价', href: '/platform/pricing' },
       { name: '云服务', href: '/collections/platform-cloud' },
@@ -26,7 +26,7 @@ export const footerNav = [
   },
   {
     id: 'about',
-    name: '关于我们',
+    name: '公司',
     items: [
       { name: '关于我们', href: '/company/about-us' },
       { name: '客户案例', href: '/customer-success-stories/' },
@@ -37,7 +37,7 @@ export const footerNav = [
   },
   {
     id: 'docs',
-    name: '教程',
+    name: '资源',
     items: [
       { name: '视频', href: '/videos' },
       { name: '快速开始', href: '/docs/deploy' },
