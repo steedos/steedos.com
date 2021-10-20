@@ -17,8 +17,10 @@ export default function AddToCart({ productVariant = {} }) {
         setIsOpen(true)
     }
     const onClick= async ()=>{
-        await changeCart(productVariant._id);
-        openModal();
+        const newCart = await changeCart(productVariant._id, null, router);
+        if (newCart && !newCart.error) {
+          openModal();
+        }
         // router.push(`/store/checkout?ids=${productVariant._id}`)
     }
     return (

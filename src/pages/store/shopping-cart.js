@@ -21,7 +21,7 @@ export default function Cart() {
   }
 
   const onChangeQuantity = async (value, merchandise)=>{
-    const newCart = await changeCart(merchandise.merchandise__expand._id, value);
+    const newCart = await changeCart(merchandise.merchandise__expand._id, value, router);
     if (!newCart.error) {
       setCart(newCart)
     } else {
