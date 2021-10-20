@@ -118,7 +118,7 @@ export default function Cart() {
                 </ul>
               </section>
               {/* Order summary */}
-              <section aria-labelledby="summary-heading" className="mt-10 sm:ml-32 sm:pl-6">
+              <section aria-labelledby="summary-heading" className="mt-10">
                 <div className="rounded-lg py-6">
                   <h2 id="summary-heading" className="sr-only">
                     Order summary
