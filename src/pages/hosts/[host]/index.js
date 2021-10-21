@@ -116,17 +116,17 @@ export default function Home(props) {
                           type="submit"
                           className="block w-full py-3 px-4 rounded-md shadow bg-indigo-500 text-white font-medium hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 focus:ring-offset-gray-900"
                         >
-                          注册云服务
+                          开通云服务
                         </button>
                       </div>
                     </div>
                     <p className="mt-3 text-sm text-gray-300 sm:mt-4">
-                      开始您的低代码之旅. 点击提交表示您同意我们的
+                      开始您的华炎魔方低代码之旅。 点击提交表示您同意我们的
                       {' '}
                       <a href="#" className="font-medium text-white">
                         服务条款
                       </a>
-                      .
+                      。
                     </p>
                   </form>
                 </div>
