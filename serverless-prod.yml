@@ -3,7 +3,7 @@ steedos_api_key: ${env.STEEDOS_SERVER_API_KEY}
 steedos-website-prod:
   component: "@sls-next/serverless-component@3.4.0" # it is recommended you pin the latest stable version of serverless-next.js
   inputs:
-    domain: ["www", "steedos.cn"]
+    domain: ["www", "steedos.com"]
     name:
       defaultLambda: steedos-website-prod-DefaultLambda
       apiLambda: steedos-website-prod-ApiLambda
