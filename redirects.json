@@ -1,7 +1,8 @@
 [
-  { "source": "/c", "destination": "/", "permanent": true },
-  { "source": "/platform", "destination": "/platform/overview", "permanent": true },
-  { "source": "/platform/", "destination": "/platform/overview", "permanent": true },
+  { "source": "/cn", "destination": "/", "permanent": true },
+  { "source": "/cn/", "destination": "/", "permanent": true },
+  { "source": "/platform", "destination": "/", "permanent": true },
+  { "source": "/platform/", "destination": "/", "permanent": true },
   { "source": "/platform/cases", "destination": "/customer-success-stories/dzug", "permanent": true },
   { "source": "/pricing/platform", "destination": "/platform/pricing", "permanent": true },
   { "source": "/pricing/platform-cloud", "destination": "/platform/pricing", "permanent": true },
