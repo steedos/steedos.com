@@ -1,6 +1,6 @@
 [
-  { "source": "/cn", "destination": "/platform/overview", "permanent": true },
-  { "source": "/cn/", "destination": "/platform/overview", "permanent": true },
+  { "source": "/cn", "destination": "https://www.steedos.cn/", "permanent": true },
+  { "source": "/cn/", "destination": "https://www.steedos.cn/", "permanent": true },
   { "source": "/platform", "destination": "/", "permanent": true },
   { "source": "/platform/", "destination": "/", "permanent": true },
   { "source": "/platform/cases", "destination": "/customer-success-stories/dzug", "permanent": true },
