@@ -98,7 +98,7 @@ export default function Home(props) {
                 {homepage.summary}
                 </p>
                 <div className="mt-10 sm:mt-12">
-                  <form action="https://console.steedos.cn/accounts/a/#/signup" className="sm:max-w-xl sm:mx-auto lg:mx-0">
+                  <form action="https://console.steedos.cn/accounts/a/#/signup" className="sm:max-w-xl sm:mx-auto lg:mx-0" target="_blank">
                     <div className="sm:flex">
                       <div className="min-w-0 flex-1">
                         <label htmlFor="email" className="sr-only">
@@ -121,12 +121,13 @@ export default function Home(props) {
                       </div>
                     </div>
                     <p className="mt-3 text-sm text-gray-300 sm:mt-4">
-                      开始您的华炎魔方低代码之旅。 点击提交表示您同意我们的
+                    开始您的华炎魔方低代码之旅。 <a href="https://www.steedos.cn/docs/deploy/deploy-cloud" target="_blank">（阅读开通指南）</a>
+                    {/* 点击提交表示您同意我们的
                       {' '}
                       <a href="#" className="font-medium text-white">
                         服务条款
-                      </a>
-                      。
+                      </a> */}
+                      
                     </p>
                   </form>
                 </div>
