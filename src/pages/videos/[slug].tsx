@@ -143,7 +143,7 @@ const Video: FunctionComponent<any> = (props) => {
             </div>
           </div>
         </div>
-        <main className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-3 mb-16">
+        <main className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-3 mb-16 px-4 sm:px-6 lg:px-8 ">
           <article>
             <header>
                 <h1 className="text-black max-w-screen-md lg:text-4xl md:text-4xl sm:text-3xl text-2xl w-full font-bold mb-8 lg:mb-10">

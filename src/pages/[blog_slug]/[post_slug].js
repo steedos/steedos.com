@@ -92,8 +92,11 @@ export default function Post(props) {
   }
 
   let seo_title_calc = seo_title ? seo_title : name;
-  if (blog && blog.name)
+  if (blog && blog.name){
     seo_title_calc += ' - ' + blog.name
+    // if (blog.site__expand) 
+    //   seo_title_calc += ' | ' + blog.site__expand.name
+  }
   const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
   const imageUrl = image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${image}` : null
   return (
@@ -154,7 +157,7 @@ export default function Post(props) {
         <div id="content-wrapper" className="lg:px-8 min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible">
           <article className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-6 mb-16">
             <header>
-              <h1 className="text-black max-w-screen-md lg:text-5xl md:text-4xl sm:text-3xl text-2xl w-full font-bold mb-8 lg:mb-10">
+              <h1 className="text-black max-w-screen-md lg:text-6xl md:text-5xl sm:text-4xl text-3xl w-full font-bold mb-8 lg:mb-10 lg:leading-tight">
                 {name}
               </h1>
               <div className="text-xl">

@@ -107,24 +107,27 @@ export async function getStaticPaths() {
 export default function Document(props) {
 
   const router = useRouter()
-
   const {
     name = 'Missing title',
     tableOfContents,
     body,
+    summary,
+    collection__expand
   } = props
 
-  const title = name;
-  const description = ''
+  let title = name;
+  if (collection__expand) {
+    title += ' - ' + collection__expand.name
+  }
   const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
   return (
     <>
       <NextSeo
         title={title}
-        description={description}
+        description={summary}
         openGraph={{
           title: title,
-          description: description,
+          description: summary,
           url,
           images: [
             // {

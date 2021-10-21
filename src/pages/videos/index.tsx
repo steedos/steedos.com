@@ -17,7 +17,7 @@ export async function getStaticProps( {params,} ) {
 const SiteVideos: React.FC = (props: any) => {
   const { videos } = props;
   return (
-    <div className="text-black mx-auto max-w-screen-lg lg:py-16 py-10">
+    <div className="text-black mx-auto max-w-screen-lg lg:py-16 py-10 px-4 sm:px-6 lg:px-8">
       <h1 className="md:text-4xl text-2xl text-center font-bold pb-16">
         视频
       </h1>
