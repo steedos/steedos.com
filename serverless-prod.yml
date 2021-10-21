@@ -20,6 +20,10 @@ steedos-website-prod:
     cloudfront:
       # if you want to use an existing cloudfront distribution, provide it here
       distributionId: E4K275YG40ODU #optional
+      aliases: ["steedos.cn", "www.steedos.cn", "steedos.com", "www.steedos.com"]
+      certificate:
+        cloudFrontDefaultCertificate: false # specify false and one of IAM/ACM certificates, or specify true and omit IAM/ACM inputs for default certificate
+        acmCertificateArn: "arn:aws:acm:us-east-1:382025409778:certificate/6cf0679c-1dd8-49ec-9d90-8eb5734190fb"
       waitBeforeInvalidate: false # by default true, it waits for the CloudFront distribution to have completed before invalidating, to avoid possibly caching old page
       
     build:
