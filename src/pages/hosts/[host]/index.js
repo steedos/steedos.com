@@ -21,6 +21,7 @@ import NextLink from 'next/link'
 import Head from 'next/head'
 import {getSite, getSiteByDomain, getSiteDomains} from '@/lib/site'
 
+import { ChevronRightIcon } from '@heroicons/react/solid'
 
 export async function getStaticProps({params}) {
 
@@ -73,32 +74,79 @@ export default function Home(props) {
         <title>{name} - {homepage.name}</title>
       </Head>
 
-      <div className="w-full h-full bg-no-repeat absolute hidden lg:block" style={{backgroundImage: `url("${backgroundImageUrl}");`}}>
-      </div>
-      <header className="relative z-10 max-w-screen-lg mx-auto">
-        <div className="px-4 sm:px-6 md:px-8 mb-14 sm:mb-20 xl:mb-8">
-           
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-none font-extrabold tracking-tight text-gray-900 mt-10 mb-8 sm:mt-14 sm:mb-10">
-            {homepage.name}
-          </h1>
-          <p className="max-w-screen-lg text-lg sm:text-2xl sm:leading-10 font-medium mb-10 sm:mb-11">
-            {/* 华炎魔方将<InlineCode>低代码技术</InlineCode>与企业业务场景结合，
-            助力企业在<InlineCode>最短时间</InlineCode>内开发<InlineCode>数字化</InlineCode>解决方案， 帮助企业快速落地现有业务战略， 以及<InlineCode>催生未来创新</InlineCode>。 */}
-            <Markdown body={homepage.summary} className="prose sm:prose-lg md:prose-xl lg:prose-2xl"></Markdown>
-          </p>
-          {/* <div className="flex flex-wrap space-y-4 sm:space-y-0 sm:space-x-4 text-center">
-            <NextLink href="/docs/deploy/deploy-cloud">
-              <a className="w-full sm:w-auto flex-none bg-gray-900 hover:bg-gray-700 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200">
-                快速开始
-              </a>
-            </NextLink>
-          </div> */}
 
-          <img className="rounded-lg mt-10" src={imageUrl} alt=""></img>
-
+      <div className="pt-10 bg-gray-900 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
+        <div className="mx-auto max-w-7xl lg:px-8">
+          <div className="lg:grid lg:grid-cols-2 lg:gap-8">
+            <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
+              <div className="lg:py-24">
+                {/* <a
+                  href="#"
+                  className="inline-flex items-center text-white bg-black rounded-full p-1 pr-2 sm:text-base lg:text-sm xl:text-base hover:text-gray-200"
+                >
+                  <span className="px-3 py-0.5 text-white text-xs font-semibold leading-5 uppercase tracking-wide bg-indigo-500 rounded-full">
+                    We're hiring
+                  </span>
+                  <span className="ml-4 text-sm">Visit our careers page</span>
+                  <ChevronRightIcon className="ml-2 w-5 h-5 text-gray-500" aria-hidden="true" />
+                </a> */}
+                <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
+                  <span className="block">赋能企业，</span>
+                  <span className="block text-indigo-400">打造数字驱动型组织</span>
+                </h1>
+                <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                {homepage.summary}
+                </p>
+                <div className="mt-10 sm:mt-12">
+                  <form action="https://console.steedos.cn/accounts/a/#/signup" className="sm:max-w-xl sm:mx-auto lg:mx-0">
+                    <div className="sm:flex">
+                      <div className="min-w-0 flex-1">
+                        <label htmlFor="email" className="sr-only">
+                          手机
+                        </label>
+                        <input
+                          id="mobile"
+                          type="mobile"
+                          placeholder="请输入您的手机号"
+                          className="block w-full px-4 py-3 rounded-md border-0 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 focus:ring-offset-gray-900"
+                        />
+                      </div>
+                      <div className="mt-3 sm:mt-0 sm:ml-3">
+                        <button
+                          type="submit"
+                          className="block w-full py-3 px-4 rounded-md shadow bg-indigo-500 text-white font-medium hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 focus:ring-offset-gray-900"
+                        >
+                          注册云服务
+                        </button>
+                      </div>
+                    </div>
+                    <p className="mt-3 text-sm text-gray-300 sm:mt-4">
+                      开始您的低代码之旅. 点击提交表示您同意我们的
+                      {' '}
+                      <a href="#" className="font-medium text-white">
+                        服务条款
+                      </a>
+                      .
+                    </p>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div className="mt-12 -mb-16 sm:-mb-48 lg:m-0 lg:relative">
+              <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0">
+                {/* Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ */}
+                <img
+                  className="w-full lg:absolute lg:inset-y-0 lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                  src={imageUrl}
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      </header>
-      <article className="relative z-10 max-w-screen-lg mx-auto">
+      </div>
+    
+      <article className="pt-16 relative z-10 max-w-screen-lg mx-auto">
         <main className="px-4 sm:px-6 md:px-8 py-8">
           <Markdown body={homepage.body} className="prose sm:prose-lg lg:prose-xl"></Markdown>
         </main>
