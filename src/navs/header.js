@@ -58,7 +58,7 @@ export const headerNav = {
           id: 'docs',
           name: '文档',
           items: [
-            { name: '快速开始', href: '/docs/deploy' },
+            { name: '安装部署', href: '/docs/deploy' },
             { name: '用户向导', href: '/docs/user' },
             { name: '管理员向导', href: '/docs/admin' },
             { name: '开发人员向导', href: '/docs/developer' },
