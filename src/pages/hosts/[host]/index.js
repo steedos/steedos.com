@@ -20,6 +20,7 @@ import { Markdown } from '@/components/Markdown'
 import NextLink from 'next/link'
 import Head from 'next/head'
 import {getSite, getSiteByDomain, getSiteDomains} from '@/lib/site'
+import { useState } from 'react'
 
 import { ChevronRightIcon } from '@heroicons/react/solid'
 
@@ -56,6 +57,7 @@ export default function Home(props) {
     name,
     homepage = {name: '', body: ''}
   } = props
+  const [mobile, setMobile] = useState('')
   const backgroundImageUrl = '/img/header-background-ellipse.png'
   const imageUrl = homepage.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${homepage.image}` : null
   return (
@@ -108,12 +110,16 @@ export default function Home(props) {
                           id="mobile"
                           type="mobile"
                           placeholder="请输入您的手机号"
+                          onChange={(e)=>{setMobile(e.target.value)}}
                           className="block w-full px-4 py-3 rounded-md border-0 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 focus:ring-offset-gray-900"
                         />
                       </div>
                       <div className="mt-3 sm:mt-0 sm:ml-3">
                         <button
-                          type="submit"
+                          type="button"
+                          onClick={()=>{
+                            window.open(`https://console.steedos.cn/accounts/a/#/signup?mobile=${mobile}`);
+                          }}
                           className="block w-full py-3 px-4 rounded-md shadow bg-indigo-500 text-white font-medium hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 focus:ring-offset-gray-900"
                         >
                           开通云服务
