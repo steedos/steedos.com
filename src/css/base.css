@@ -3,3 +3,7 @@
 abbr[title] {
   text-decoration: none;
 }
+
+.prose .block.notice-block .icon svg{
+  height: 100%;
+}
