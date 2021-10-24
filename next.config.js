@@ -43,15 +43,6 @@ const withMDX = require(`@next/mdx`)({
 //   'src/pages/{docs,components,pricing,platform}/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
 //   'src/pages/course/**/*': ['@/layouts/VideoLayout', 'VideoLayout'],
 // }
-let NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL_HOSTNAME = null;
-try {
-  if(process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL){
-    let parsedSrc = new URL(process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL);
-    NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL_HOSTNAME = parsedSrc.hostname
-  }
-} catch (err) {
-  console.error(err);
-}
 
 module.exports = 
   withPlugins(
@@ -95,8 +86,7 @@ module.exports =
       'console.steedos.cn', 
       'steedos.cn', 
       'www.steedos.cn', 
-      'cn.steedos.cn', 
-      NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL_HOSTNAME
+      'cn.steedos.cn'
     ],
   },
   async redirects() {
