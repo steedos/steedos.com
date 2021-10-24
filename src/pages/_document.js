@@ -32,6 +32,7 @@ export default class MyDocument extends Document {
           <NextScript />
           <script> </script>
         </body>
+        <script src="https://hm.baidu.com/hm.js?71df50f1349009234f7e11d247f4c5db"/>
       </Html>
     )
   }
