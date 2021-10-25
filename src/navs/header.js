@@ -28,9 +28,9 @@ export const headerNav = {
             { name: '什么是低代码？', href: '/platform/lowcode' },
             { name: '华炎魔方平台', href: '/platform/overview' },
             { name: '技术架构', href: '/platform/architecture' },
-            { name: '功能', href: '/platform/features' },
+            { name: '特色亮点', href: '/platform/features' },
             { name: '报价', href: '/platform/pricing' },
-            { name: '开源', href: '/platform/open-source-low-code' },
+            { name: '试用', href: '/docs/deploy/deploy-cloud' },
           ],
         },
         {

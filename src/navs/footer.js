@@ -8,7 +8,7 @@ export const footerNav = [
       { name: '技术架构', href: '/platform/architecture' },
       { name: '特色亮点', href: '/platform/features' },
       { name: '报价', href: '/platform/pricing' },
-      { name: '文档', href: '/docs' },
+      { name: '试用', href: '/docs/deploy/deploy-cloud' },
       
     ],
   },
@@ -16,7 +16,6 @@ export const footerNav = [
     id: 'apps',
     name: '应用',
     items: [
-      { name: '平台云服务', href: '/collections/platform-cloud' },
       { name: '合同管理', href: '/products/contract' },
       { name: '项目管理', href: '/products/project' },
       { name: '销售管理', href: '/products/crm' },
@@ -41,8 +40,8 @@ export const footerNav = [
     name: '资源',
     items: [
       { name: '视频', href: '/videos' },
+      { name: '文档', href: '/docs' },
       { name: '安装部署', href: '/docs/deploy' },
-      { name: '用户向导', href: '/docs/user' },
       { name: '管理员向导', href: '/docs/admin' },
       { name: '开发人员向导', href: '/docs/developer' },
       { name: '低代码学院', href: '/docs/low-code-academy' },
