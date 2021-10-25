@@ -31,7 +31,6 @@ export const headerNav = {
             { name: '功能', href: '/platform/features' },
             { name: '报价', href: '/platform/pricing' },
             { name: '开源', href: '/platform/open-source-low-code' },
-            
           ],
         },
         {
@@ -50,7 +49,7 @@ export const headerNav = {
             { name: '如何创建子表？', href: '/videos/lesson-object-relationship' },
             { name: '如何使用公式计算？', href: '/videos/formula-calculates' },
             { name: '如何控制权限？', href: '/videos/authority_management' },
-            { name: '更多视频', href: '/videos/' },
+            { name: '更多视频 ...', href: '/videos/' },
             
           ],
         },
@@ -63,6 +62,7 @@ export const headerNav = {
             { name: '管理员向导', href: '/docs/admin' },
             { name: '开发人员向导', href: '/docs/developer' },
             { name: '低代码学院', href: '/docs/low-code-academy' },
+            { name: '更多文档 ...', href: '/docs' },
           ],
         },
       ],

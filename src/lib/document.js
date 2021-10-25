@@ -112,7 +112,14 @@ export async function getCollections(siteId){
           _id,
           slug,
           name,
-          description
+          description,
+    			documents: _related_documents_collection(sort: "sort_no"){
+            _id,
+            slug,
+            name,
+            image,
+            summary
+          }
       } 
   }
   `
