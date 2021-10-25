@@ -149,7 +149,7 @@ export async function getBlogPosts(blogId){
         
     const query = `
     {
-        site_posts(filters:["blog","=","${blogId}"]){
+        site_posts(filters:[["blog","=","${blogId}"], ["status","=","publish"]]){
             _id,
             name,
             summary,
