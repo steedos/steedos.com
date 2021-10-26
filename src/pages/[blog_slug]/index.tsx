@@ -84,12 +84,11 @@ const BlogPosts: React.FC = (props: any) => {
                 <div className="md:mb-4 mb-2">
                   <Link href={fullSlug}>
                     <a>
-                      <Image
+                      <img
                         src={imageUrl}
                         alt={article.name}
                         width={1280}
                         height={720}
-                        quality={100}
                         className="rounded-lg"
                       />
                     </a>

@@ -74,12 +74,11 @@ const Collection: React.FC = (props: any) => {
                 </dd>
               </dl> */}
               <div className="flex-shrink-0 w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden sm:aspect-none sm:w-40 sm:h-40">
-                {article.image && <Image
+                {article.image && <img
                     src={`${ROOT_URL}/api/files/images/${article.image}`}
                     alt={article.name}
                     width={160}
                     height={160}
-                    quality={100}
                     className="w-full h-full object-center object-cover sm:w-full sm:h-full"
                   />
                 }

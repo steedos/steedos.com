@@ -87,15 +87,15 @@ export function img({ node, ...props }) {
   if (!props.src) {
     return <></>
   }
-  if (isAllowImageDomain(props.src)) {
-    return (<Image {...props}
-      width={1280}
-      height={720}
-      quality={100}
-      className="rounded-lg" />)
-  } else {
+  // if (isAllowImageDomain(props.src)) {
+  //   return (<Image {...props}
+  //     width={1280}
+  //     height={720}
+  //     quality={100}
+  //     className="rounded-lg" />)
+  // } else {
     return <img className="rounded-lg" {...props} />
-  }
+  // }
 }
 
 export function a({ node, ...props }) {

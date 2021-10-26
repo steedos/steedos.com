@@ -29,12 +29,11 @@ const SiteVideos: React.FC = (props: any) => {
                 <div className="md:mb-4 mb-2">
                   <Link href={`/videos/${video.slug}`}>
                     <a>
-                      <Image
+                      <img
                         src={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/${video.thumb_image}`}
                         alt={video.name}
                         width={1280}
                         height={720}
-                        quality={100}
                         className="rounded-lg"
                       />
                     </a>
