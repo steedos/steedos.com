@@ -41,7 +41,20 @@ export function removeAuthInfo(){
 }
 
 export function getAuthorization(){
-    const spaceId = localStorage.getItem('steedos:spaceId');
-    const token = localStorage.getItem('steedos:token');
-    return `Bearer ${spaceId},${token}`;
+    try {
+        let spaceId = localStorage.getItem('steedos:spaceId');
+        let token = localStorage.getItem('steedos:token');
+
+        if (window.location.search && !spaceId && !token) {
+            var searchParams = new URLSearchParams(window.location.search);
+            spaceId = searchParams.get('X-Space-Id');
+            token = searchParams.get('X-Auth-Token');
+        }
+        if (!spaceId || !token) {
+            return null;
+        }
+        return `Bearer ${spaceId},${token}`;
+    } catch (error) {
+        console.error(error)
+    }
 }
