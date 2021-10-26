@@ -9,6 +9,6 @@
   { "source": "/pricing/platform-cloud", "destination": "/platform/pricing", "permanent": true },
   { "source": "/customers", "destination": "/customer-success-stories", "permanent": true },
   { "source": "/help", "destination": "/docs/", "permanent": true },
-  { "source": "/help/download", "destination": "/docs/user/getting-started#安装客户端", "permanent": false },
+  { "source": "/help/download", "destination": "/docs/user/getting-started", "permanent": false },
   { "source": "/developer", "destination": "/docs/developer", "permanent": true }
 ]
