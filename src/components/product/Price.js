@@ -1,5 +1,5 @@
 import { formatPrice } from '@/lib/product.client'
-export default function PriceMonthly({ price }) {
+export default function Price({ price }) {
   return (
     <>
       {price > 0 && (

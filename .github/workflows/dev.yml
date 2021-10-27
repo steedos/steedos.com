@@ -9,6 +9,7 @@ on:
 jobs:
   deploy-staging:
     runs-on: ubuntu-latest
+    environment: dev
     env:
       STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_SERVER_API_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

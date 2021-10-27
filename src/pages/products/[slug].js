@@ -40,7 +40,8 @@ export async function getStaticPaths() {
 }
 
 export default function ProductDetail({product}){
-  const router = useRouter()
+  const router = useRouter();
+  const {vid} = router.query;
   if(!product){
     return {notFind: true}
   }
@@ -71,7 +72,7 @@ export default function ProductDetail({product}){
         // }}
         // canonical={canonicalUrl}
       />
-      <Detail product={product}></Detail>
+      <Detail product={product} vid={vid}></Detail>
     </>
   )
 }

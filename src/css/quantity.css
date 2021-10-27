@@ -1,0 +1,58 @@
+.quantity {
+  border: 0.1rem solid rgba(18, 18, 18, 0.08);
+  position: relative;
+  height: 3rem;
+  width: 11rem;
+  display: flex;
+}
+
+.quantity__input {
+  color: currentColor;
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.85;
+  text-align: center;
+  background-color: transparent;
+  border: 0;
+  padding: 0 0.5rem;
+  width: 100%;
+  flex-grow: 1;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.quantity__button {
+  width: 3.5rem;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(18, 18, 18);
+  padding: 0;
+}
+
+.quantity__button svg {
+  width: 1rem;
+  pointer-events: none;
+}
+
+.quantity__input:-webkit-autofill,
+.quantity__input:-webkit-autofill:hover,
+.quantity__input:-webkit-autofill:active {
+  box-shadow: 0 0 0 10rem rgb(#FFFFFF) inset !important;
+  -webkit-box-shadow: 0 0 0 10rem rgb(#FFFFFF) inset !important;
+}
+
+.quantity__input::-webkit-outer-spin-button,
+.quantity__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity__input[type='number'] {
+  -moz-appearance: textfield;
+}

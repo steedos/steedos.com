@@ -1,18 +1,17 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+
 // import useSWR from 'swr'
-import { Fragment } from 'react'
-import { ChevronRightIcon, ChevronUpIcon, TrashIcon } from '@heroicons/react/solid'
-import { Popover, Transition } from '@headlessui/react'
-import PriceMonthly from '@/components/product/PriceMonthly'
+import Price from '@/components/product/Price'
 import { getImageSrc } from '@/lib/base.client'
 import { getPrice } from '@/lib/product.client';
 import { getProductsVariant } from '@/lib/product';
 import { formatPrice } from '@/lib/product.client';
-import { each, isFunction, sum, values } from 'lodash'
+import { each, isFunction, sum, values, has, map } from 'lodash'
 import SubmitOrderButton from '@/components/product/SubmitOrderButton'
-
+import useSWR from 'swr'
+import { getCart } from '@/lib/cart.client';
 export async function getServerSideProps(context) {
   const { ids } = context.query;
   let productsVariant = []
@@ -47,18 +46,44 @@ export async function getServerSideProps(context) {
 
 export default function Checkout({productsVariant, productsVariantPrice}) {
   const [totalPrice, setTotalPrice] = useState(productsVariantPrice)
-
   const [variantsSubTotalPrice, setVariantsSubTotalPrice] = useState({});
-
   const [variantsInfo, setVariantsInfo] = useState({});
+  const [lines, setLines] = useState(productsVariant);
+  const [isQuick, setQuick] = useState(productsVariant);
+  const router = useRouter()
+  useSWR('userCartCheckout', async () => {
+    let _cart = {};
+    if(!has(router.query, 'ids')){
+       _cart = await getCart();
+      if (!_cart.error) {
+        let _lines = [];
+        let _variantsSubTotalPrice = {};
+        let _variantsInfo = {};
+        map(_cart.lines, function(line){
+          _lines.push(Object.assign({}, line.merchandise__expand || {}, {quantity: line.quantity}))
+          _variantsSubTotalPrice[line.merchandise__expand._id] = line.estimated_cost.total_amount
+          _variantsInfo[line.merchandise__expand._id] = line.quantity
+        })
+        setTotalPrice(_cart.estimated_cost.total_amount);
+        setVariantsSubTotalPrice(_variantsSubTotalPrice);
+        setVariantsInfo(_variantsInfo);
+        setLines(_lines);
+        setQuick(false);
+      }
+    }
+    return _cart;
+  }, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false
+  })
 
   const calculateTotalPrice = ()=>{
     setTotalPrice(sum(values(variantsSubTotalPrice)));
   }
 
   const setVariantPrice = (_id, subTotalPrice, quantity)=>{
-    setVariantsSubTotalPrice(Object.assign({}, variantsSubTotalPrice, {[_id]: subTotalPrice}))
     setVariantsInfo(Object.assign({}, variantsInfo, {[_id]: quantity}))
+    setVariantsSubTotalPrice(Object.assign({}, variantsSubTotalPrice, {[_id]: subTotalPrice}))
   }
 
   useEffect(() => {
@@ -77,7 +102,7 @@ export default function Checkout({productsVariant, productsVariantPrice}) {
               <div className="mt-4 bg-white border border-gray-200 rounded-lg shadow-sm">
                 <h3 className="sr-only">Items in your cart</h3>
                 <ul role="list" className="divide-y divide-gray-200">
-                  {productsVariant.map((productVariant) => (
+                  {lines.map((productVariant) => (
                     <ProductVariantCheckout productVariant={productVariant} key={productVariant._id} onChange={(subTotalPrice, quantity)=>{
                       setVariantPrice(productVariant._id, subTotalPrice, quantity)
                     }}></ProductVariantCheckout>
@@ -103,7 +128,7 @@ export default function Checkout({productsVariant, productsVariantPrice}) {
                   </div>
                 </dl>
 
-                <SubmitOrderButton variants={variantsInfo}></SubmitOrderButton>
+                <SubmitOrderButton variants={variantsInfo} isQuick={isQuick}></SubmitOrderButton>
               </div>
             </div>
           </div>
@@ -115,7 +140,7 @@ export default function Checkout({productsVariant, productsVariantPrice}) {
 
 function ProductVariantCheckout({ productVariant, defQuanticy = 1, onChange }) {
   const [subTotalPrice, setSubTotalPrice] = useState(0)
-  const [quantity, setQuantity] = useState(defQuanticy)
+  const [quantity, setQuantity] = useState(productVariant.quantity || defQuanticy)
 
   const calculateSubTotalPrice = ()=>{
     let subTotal = quantity * (productVariant.price || 0)
@@ -144,13 +169,13 @@ function ProductVariantCheckout({ productVariant, defQuanticy = 1, onChange }) {
                 {productVariant.name}
               </a>
             </h4>
-            {productVariant.product__expand.option1 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option1}: {productVariant.option1}</p>}
-            {productVariant.product__expand.option2 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option2}: {productVariant.option2}</p>}
-            {productVariant.product__expand.option3 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option3}: {productVariant.option3}</p>}
+            {productVariant.product__expand?.option1 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option1}: {productVariant.option1}</p>}
+            {productVariant.product__expand?.option2 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option2}: {productVariant.option2}</p>}
+            {productVariant.product__expand?.option3 && <p className="mt-1 text-sm text-gray-500">{productVariant.product__expand.option3}: {productVariant.option3}</p>}
           </div>
 
           <div className="ml-4 flex-shrink-0 flow-root">
-            <p className="mt-1 text-sm font-medium text-gray-900"><PriceMonthly price={getPrice(productVariant)}></PriceMonthly></p>
+            <p className="mt-1 text-sm font-medium text-gray-900"><Price price={getPrice(productVariant)}></Price></p>
           </div>
         </div>
         <div className="flex mt-2">
@@ -178,7 +203,7 @@ function ProductVariantCheckout({ productVariant, defQuanticy = 1, onChange }) {
           </div>
 
           <div className="ml-4 flex-shrink-0 flow-root">
-            <p className="mt-1 text-sm font-medium text-gray-900"><PriceMonthly price={subTotalPrice}></PriceMonthly></p>
+            <p className="mt-1 text-sm font-medium text-gray-900"><Price price={subTotalPrice}></Price></p>
           </div>
         </div>
       </div>
