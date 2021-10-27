@@ -17,6 +17,9 @@ steedos-website-dev:
     memory: 2048
     timeout: 30
     enableS3Acceleration: false
+    cloudfront:
+      # if you want to use an existing cloudfront distribution, provide it here
+      distributionId: E1ONY9MU8PSX1R #optional
     build:
       env:
         NEXT_PUBLIC_DEPLOYMENT_URL=https://dev.steedos.cn
