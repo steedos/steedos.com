@@ -296,7 +296,7 @@ export function Header({ site }) {
                       <div className="grid grid-cols-2 gap-x-4">
                         {category.featured.map((item) => (
                           <div key={item.name} className="group relative text-sm">
-                            <div className="aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
+                            <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
                               <img src={item.imageSrc} alt={item.imageAlt} className="object-center object-cover" />
                             </div>
                             <a href={item.href} className="mt-6 block font-medium text-gray-900">

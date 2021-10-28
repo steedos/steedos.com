@@ -14,20 +14,22 @@ class Iframe extends React.Component {
       body.clientHeight,
       body.offsetHeight,
       body.scrollHeight,
-      documentElement.clientHeight,
-      documentElement.offsetHeight,
-      documentElement.scrollHeight
+      // documentElement.clientHeight,
+      // documentElement.offsetHeight,
+      // documentElement.scrollHeight
     );
     if (contentHeight !== this.state.contentHeight) this.setState({ contentHeight });
   };
   
   onLoad = () => {
     this.container.contentWindow.addEventListener('resize', this.handleResize);
+    // window.addEventListener('resize', this.handleResize);
     this.handleResize();
   }
   
   componentWillUnmount() {
     this.container.contentWindow.removeEventListener('resize', this.handleResize);
+    // window.removeEventListener('resize', this.handleResize);
   }
   
   render() {
