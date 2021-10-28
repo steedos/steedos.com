@@ -6,7 +6,7 @@ export const headerNav = {
       name: '平台',
       featured: [
         {
-          name: '华炎魔方助力大众共用实施业财一体化系统',
+          name: '华炎魔方助力大众共用实施数字化转型',
           href: '/customer-success-stories/dzug',
           imageSrc: 'https://console.steedos.cn/api/files/images/kq9hPmNhxCFDXMp3u',
           imageAlt:
@@ -70,7 +70,7 @@ export const headerNav = {
         {
           name: '开发者支持服务',
           href: '/products/developer-success-plan',
-          imageSrc: 'https://console.steedos.cn/api/files/files/byvfuG6LYqmeBkuwr',
+          imageSrc: 'https://console.steedos.cn/api/files/files/Dcjvtu6dTA95aAG7N',
           imageAlt: '我们为开发团队提供低代码开发全程辅导服务，帮助您的团队快速切换到全新的低代码开发模式。',
         },
       ],
