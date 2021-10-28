@@ -80,7 +80,7 @@ class Frame extends React.Component<Props> {
     const withBar = !!(icon || canonicalUrl);
 
     return (
-      <div
+      <Rounded
         width={width}
         // height={height}
         $withBar={withBar}
@@ -100,7 +100,7 @@ class Frame extends React.Component<Props> {
             src={src}
             allowFullScreen
           />
-      </div>
+      </Rounded>
     );
   }
 }
