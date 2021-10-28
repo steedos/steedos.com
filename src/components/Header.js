@@ -304,7 +304,7 @@ export function Header({ site }) {
                               {item.name}
                             </a>
                             <p aria-hidden="true" className="mt-1">
-                              Shop now
+                              {/* {item.imageAlt} */}
                             </p>
                           </div>
                         ))}
@@ -424,14 +424,17 @@ export function Header({ site }) {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                           >
-                            <Popover.Panel className="mx-20 my-1 absolute z-10 top-full inset-x-0 text-sm text-gray-500 bg-white rounded-lg shadow">
-                              <div className="relative">
-                                <div className="max-w-8xl mx-auto px-8">
-                                  <div className="grid grid-cols-1 gap-y-10 gap-x-8 py-10">
-                                    {/* <div className="col-start-2 grid grid-cols-2 gap-x-8">
+                          <Popover.Panel className="absolute top-full inset-x-0 text-sm text-gray-500">
+                            {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
+                            <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
+
+                            <div className="relative bg-white">
+                              <div className="max-w-8xl mx-auto px-8">
+                                <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
+                                    <div className="col-start-2 grid grid-cols-2 gap-x-8">
                                       {category.featured.map((item) => (
                                         <div key={item.name} className="group relative text-base sm:text-sm">
-                                          <div className="aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
+                                          <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
                                             <img
                                               src={item.imageSrc}
                                               alt={item.imageAlt}
@@ -443,14 +446,14 @@ export function Header({ site }) {
                                             {item.name}
                                           </a>
                                           <p aria-hidden="true" className="mt-1">
-                                            Shop now
+                                            {/* {item.imageAlt} */}
                                           </p>
                                         </div>
                                       ))}
-                                    </div> */}
-                                    <div className="row-start-1 grid grid-cols-4 gap-y-10 gap-x-8 text-sm">
+                                    </div>
+                                    <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
                                       {category.sections.map((section) => (
-                                        <div key={section.name} className="w-40">
+                                        <div key={section.name}>
                                           <p id={`${section.name}-heading`} className="font-medium text-gray-900">
                                             {section.name}
                                           </p>

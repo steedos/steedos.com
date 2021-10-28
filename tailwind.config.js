@@ -4,7 +4,7 @@ const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenCo
 const { toRgba } = require('tailwindcss/lib/util/withAlphaVariable')
 
 module.exports = {
-  // mode: 'jit',
+  mode: 'jit',
   purge: ['./src/**/*.{js,jsx,tsx,mdx}'],
   darkMode: 'class',
   theme: {
@@ -217,6 +217,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio'),
     function ({ addUtilities, theme }) {
       const shadows = theme('boxShadow')
       addUtilities(
