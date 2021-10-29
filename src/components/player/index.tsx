@@ -11,7 +11,6 @@ class Player extends React.Component {
     width: string,
     height: string,
     subtitlesUrl: string,
-    config: {attributes: {}},
   };
   render() {
     const { hls_url, ...options } = this.props as any
