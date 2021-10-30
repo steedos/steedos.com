@@ -7,3 +7,14 @@
 .embed-page #__next {
   height: 100%;
 } */
+
+.react-player__shadow {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border-radius: 16px !important;
+  width: 96px !important;
+  height: 72px !important;
+}
+
+.react-player__preview:hover .react-player__shadow {
+  background: red !important;
+}
