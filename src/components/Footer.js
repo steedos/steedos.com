@@ -32,6 +32,7 @@ export const Footer = (props) => {
       <div className="border-t border-gray-200 py-10 text-center">
         <p className="text-sm text-gray-500">&copy; 2021 华炎软件, 保留所有权利</p>
         <a className="text-xs text-gray-400 mt-2" href="https://beian.miit.gov.cn/#/Integrated/recordQuery">(沪ICP备09089283号-11)</a>
+        <img class="max-h-60 mx-auto pt-6" src="https://console.steedos.cn/api/files/images/YRgRK94fwndMxMcjM"/>
       </div>
     </div>
   </footer>

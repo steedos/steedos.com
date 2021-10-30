@@ -23,12 +23,13 @@ export const headerNav = {
       sections: [
         {
           id: 'platform',
-          name: '平台',
+          name: '低代码平台',
+          href: '/platform/overview',
           items: [
             { name: '什么是低代码？', href: '/platform/lowcode' },
-            { name: '华炎魔方平台', href: '/platform/overview' },
+            { name: '什么是华炎魔方?', href: '/platform/overview' },
             { name: '技术架构', href: '/platform/architecture' },
-            { name: '特色亮点', href: '/platform/features' },
+            { name: '功能', href: '/platform/features' },
             { name: '报价', href: '/platform/pricing' },
             { name: '试用', href: '/docs/deploy/deploy-cloud' },
           ],
@@ -36,18 +37,19 @@ export const headerNav = {
         {
           id: 'videos',
           name: '视频演示',
+          href: '/videos/',
           items: [
             { name: '如何创建自定义应用？', href: '/videos/lesson-object' },
             { name: '如何创建子表？', href: '/videos/lesson-object-relationship' },
             { name: '如何使用公式计算？', href: '/videos/formula-calculates' },
             { name: '如何控制权限？', href: '/videos/authority_management' },
-            { name: '更多视频 ...', href: '/videos/' },
             
           ],
         },
         {
           id: 'company',
           name: '关于华炎',
+          href: '/company/about-us',
           items: [
             { name: '关于我们', href: '/company/about-us' },
             { name: '客户案例', href: '/customer-success-stories/' },
@@ -78,6 +80,7 @@ export const headerNav = {
         {
           id: 'collections',
           name: '云平台',
+          href: '/collections/platform-cloud',
           items: [
             { name: '入门版', href: '/products/platform-cloud-starter' },
             { name: '标准版', href: '/products/platform-cloud-standard' },
@@ -86,19 +89,20 @@ export const headerNav = {
         },
         {
           id: 'apps',
-          name: '应用',
+          name: '应用市场',
+          href: '/collections/steedos-packages',
           items: [
             { name: '合同管理', href: '/products/contract' },
             { name: '项目管理', href: '/products/project' },
             { name: '销售管理', href: '/products/crm' },
             { name: '财务管理', href: '/products/finance' },
             { name: '在线商城', href: '/products/shop' },
-            { name: '浏览应用市场 ...', href: '/collections/steedos-packages' },
           ],
         },
         {
           id: 'service',
           name: '服务',
+          href: '/collections/services',
           items: [
             { name: '运维支持服务', href: '/products/support-success-plan' },
             { name: '开发者支持服务', href: '/products/developer-success-plan' },

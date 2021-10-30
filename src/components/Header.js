@@ -312,7 +312,7 @@ export function Header({ site }) {
                       {category.sections.map((section) => (
                         <div key={section.name}>
                           <p id={`${category.id}-${section.id}-heading-mobile`} className="font-medium text-gray-900">
-                            {section.name}
+                            <a href={section.href}>{section.name}</a>
                           </p>
                           <ul
                             role="list"
@@ -455,7 +455,7 @@ export function Header({ site }) {
                                       {category.sections.map((section) => (
                                         <div key={section.name}>
                                           <p id={`${section.name}-heading`} className="font-medium text-gray-900">
-                                            {section.name}
+                                            <a href={section.href}>{section.name}</a>
                                           </p>
                                           <ul
                                             role="list"
