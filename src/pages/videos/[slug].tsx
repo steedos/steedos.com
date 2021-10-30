@@ -130,13 +130,13 @@ const Video: FunctionComponent<any> = (props) => {
                   light={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/${thumb_image}`}
                   width="100%"
                   height="100%"
-                  config= {{
-                    attributes: {
-                      width: 'auto',
-                      height: 'auto'
-                    }
-                    }
-                  }
+                  // config= {{
+                  //   attributes: {
+                  //     width: 'auto',
+                  //     height: 'auto'
+                  //   }
+                  //   }
+                  // }
                   // subtitlesUrl={subtitles_url}
                 />
               </div>
