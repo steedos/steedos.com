@@ -70,8 +70,8 @@ export default function Cart() {
 
                       <div className="relative ml-4 flex-1 flex flex-col justify-between sm:ml-6">
                         <div>
-                          <div className="flex justify-between sm:grid sm:grid-cols-4">
-                            <div className="pr-6 col-span-2">
+                          <div className="flex justify-between sm:grid sm:grid-cols-7">
+                            <div className="pr-6 col-span-3">
                               <h3 className="text-sm">
                                 <a href={`/products/${merchandise.merchandise__expand.product__expand.slug}?vid=${merchandise.merchandise__expand._id}`} className="font-medium text-gray-700 hover:text-gray-800">
                                   {merchandise.merchandise__expand.product__expand.name}
@@ -81,11 +81,11 @@ export default function Cart() {
                               {merchandise.merchandise__expand.option2 ? <p className="mt-1 text-sm text-gray-500">{merchandise.merchandise__expand.product__expand.option2}: {merchandise.merchandise__expand.option2}</p> : null}
                               {merchandise.merchandise__expand.option3 ? <p className="mt-1 text-sm text-gray-500">{merchandise.merchandise__expand.product__expand.option3}: {merchandise.merchandise__expand.option3}</p> : null}
                             </div>
-                            <div className="mt-0">
+                            <div className="mt-0 col-span-3">
                               <label htmlFor={`quantity-${productIdx}`} className="sr-only">
                                 Quantity, {merchandise.merchandise__expand.product__expand.name}
                               </label>
-                              <div className="flex items-center justify-between">
+                              <div className="flex items-center">
                                 <dt className="text-sm text-gray-600">
                                   <QuantityInput quantity={merchandise.quantity} index={productIdx} merchandise={merchandise} onChange={onChangeQuantity}></QuantityInput>
                                 </dt>
