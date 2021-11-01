@@ -14,18 +14,18 @@ export default function Cart() {
   const router = useRouter();
   const relatedProducts = [];
   const products = [];
-  const [cart, setCart] = useState({lines: []})
+  const [cart, setCart] = useState({ lines: [] })
 
   const goCheckout = (params) => {
     router.push('/store/checkout')
   }
 
-  const onChangeQuantity = async (value, merchandise)=>{
+  const onChangeQuantity = async (value, merchandise) => {
     const newCart = await changeCart(merchandise.merchandise__expand._id, value, router);
     if (!newCart.error) {
       setCart(newCart)
     } else {
-      setCart({lines: []})
+      setCart({ lines: [] })
     }
   }
 
@@ -34,12 +34,12 @@ export default function Cart() {
     if (!_cart.error) {
       setCart(_cart)
     } else {
-      setCart({lines: []})
+      setCart({ lines: [] })
     }
   })
   return (
     <>
-      <main className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8" style={{width:'80rem'}}>
+      <main className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8" style={{ width: '80rem' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto pt-16">
             <div className="py-4 flex items-center justify-between">
@@ -70,8 +70,8 @@ export default function Cart() {
 
                       <div className="relative ml-4 flex-1 flex flex-col justify-between sm:ml-6">
                         <div>
-                          <div className="flex justify-between sm:grid sm:grid-cols-2">
-                            <div className="pr-6">
+                          <div className="flex justify-between sm:grid sm:grid-cols-4">
+                            <div className="pr-6 col-span-2">
                               <h3 className="text-sm">
                                 <a href={`/products/${merchandise.merchandise__expand.product__expand.slug}?vid=${merchandise.merchandise__expand._id}`} className="font-medium text-gray-700 hover:text-gray-800">
                                   {merchandise.merchandise__expand.product__expand.name}
@@ -81,26 +81,25 @@ export default function Cart() {
                               {merchandise.merchandise__expand.option2 ? <p className="mt-1 text-sm text-gray-500">{merchandise.merchandise__expand.product__expand.option2}: {merchandise.merchandise__expand.option2}</p> : null}
                               {merchandise.merchandise__expand.option3 ? <p className="mt-1 text-sm text-gray-500">{merchandise.merchandise__expand.product__expand.option3}: {merchandise.merchandise__expand.option3}</p> : null}
                             </div>
-
+                            <div className="mt-0">
+                              <label htmlFor={`quantity-${productIdx}`} className="sr-only">
+                                Quantity, {merchandise.merchandise__expand.product__expand.name}
+                              </label>
+                              <div className="flex items-center justify-between">
+                                <dt className="text-sm text-gray-600">
+                                  <QuantityInput quantity={merchandise.quantity} index={productIdx} merchandise={merchandise} onChange={onChangeQuantity}></QuantityInput>
+                                </dt>
+                                <dd class="text-sm font-medium text-gray-900">
+                                  <Trash onRemove={async () => {
+                                    return await onChangeQuantity(0, merchandise)
+                                  }} title={`您确定要从购物车移除 ${merchandise.merchandise__expand.product__expand.name} ? `}></Trash>
+                                </dd>
+                              </div>
+                            </div>
                             <p className="text-sm font-medium text-gray-900 text-right"><Price price={merchandise.estimated_cost?.total_amount}></Price></p>
                           </div>
 
-                          <div className="mt-4 flex items-center sm:block sm:absolute sm:top-0 sm:left-1/3 sm:mt-0">
-                            <label htmlFor={`quantity-${productIdx}`} className="sr-only">
-                              Quantity, {merchandise.merchandise__expand.product__expand.name}
-                            </label>
-                            <div className="flex items-center justify-between">
-                              <dt className="text-sm text-gray-600">
-                                <QuantityInput quantity={merchandise.quantity} index={productIdx} merchandise={merchandise} onChange={onChangeQuantity}></QuantityInput>
-                              </dt>
-                              <dd class="text-sm font-medium text-gray-900">
-                                <Trash onRemove={async ()=>{
-                                    return await onChangeQuantity(0, merchandise)
-                                }} title={`您确定要从购物车移除 ${merchandise.merchandise__expand.product__expand.name} ? `}></Trash>
-                              </dd>
-                          </div>
-                            
-                          </div>
+
                         </div>
 
                         {/* <p className="mt-4 flex text-sm text-gray-700 space-x-2">
