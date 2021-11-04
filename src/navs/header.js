@@ -30,8 +30,8 @@ export const headerNav = {
             { name: '什么是低代码？', href: '/platform/lowcode' },
             { name: '技术架构', href: '/platform/architecture' },
             { name: '功能', href: '/platform/features' },
-            { name: '客户案例', href: '/customer-success-stories' },
             { name: '报价', href: '/platform/pricing' },
+            { name: '开源', href: '/platform/open-source-low-code' },
             { name: '私有部署', href: '/docs/deploy/' },
           ],
         },
@@ -54,6 +54,7 @@ export const headerNav = {
           name: '资源',
           href: '/company/about-us',
           items: [
+            { name: '客户案例', href: '/customer-success-stories' },
             { name: '视频演示', href: '/videos' },
             { name: '安装部署', href: '/docs/deploy' },
             { name: '开发人员', href: '/docs/developer' },
