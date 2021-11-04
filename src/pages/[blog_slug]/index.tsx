@@ -73,77 +73,33 @@ const BlogPosts: React.FC = (props: any) => {
       {blog.body && (<div className="pb-10">
         <Markdown body={blog.body}></Markdown>
       </div>)}
-      <div className="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-8">
-        {posts && posts.map((article: any) => {
-          const fullSlug = `/${blog.slug}/${article.slug}`
-          const imageUrl = article.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${article.image}` :  ""
-          const ownerImageUrl = article.owner__expand.avatar?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/avatars/${article.owner__expand.avatar}` : ""
-          return (
-            <div key={fullSlug} className="flex flex-col">
-              {imageUrl ? (
-                <div className="md:mb-4 mb-2">
-                  <Link href={fullSlug}>
-                    <a>
-                      <img
-                        src={imageUrl}
-                        alt={article.name}
-                        width={1280}
-                        height={720}
-                        className="rounded-lg"
-                      />
-                    </a>
-                  </Link>
-                </div>
-              ) : (
-                <div className="aspect-w-16 aspect-h-9 md:mb-4 mb-2">
-                  <Link href={fullSlug}>
-                    <a>
-                        <IconPlaceholder />
-                    </a>
-                  </Link>
-                </div>
-              )}
-              <Link href={fullSlug}>
-                <a>
-                  <h2 className="md:text-2xl text-xl font-bold leading-tighter">
-                    {article.name}
-                  </h2>
-                </a>
-              </Link>
-              {article.summary && (
-                <div className="opacity-70 text-sm leading-snug mt-4">
-                  {article.summary}
-                </div>
-              )}
-{/* 
-              {ownerImageUrl && (
-                <div className="mt-4 flex items-start text-sm">
-                  <div className="items-center flex space-x-3">
-                    <Image
-                      src={ownerImageUrl}
-                      alt={article.owner__expand.name}
-                      quality={100}
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
-                    <div className="flex flex-col w-40">
-                      <div className="flex-none leading-tight opacity-90">
-                        {article.owner__expand.name}
-                      </div>
-                      {article.published_at && (
-                        <div className="place-content-end text-gray-500 leading-tight opacity-90">
-                          <UpdatedAt
-                            date={friendlyTime(new Date(article.published_at))}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
 
-                  
-                </div>
-              )} */}
+      <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-2 lg:gap-x-8">
+        {posts?.map((post) => {
+
+          const fullSlug = `/${blog.slug}/${post.slug}`
+          const imageUrl = post.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${post.image}` : null
+          return (
+            <div
+              key={post.slug}
+              className="group relative bg-white flex flex-col overflow-hidden"
+            >
+              <div className="aspect-w-5 aspect-h-3 bg-gray-200 group-hover:opacity-75 rounded-lg ">
+                <img
+                  src={imageUrl}
+                  className="w-full h-full object-center object-cover sm:w-full sm:h-full"
+                />
+              </div>
+              <div className="flex-1 py-6 space-y-4 flex flex-col">
+                <h3 className="md:text-2xl text-xl font-medium text-gray-900">
+                  <a href={`${fullSlug}`}>
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    {post.name}
+                  </a>
+                </h3>
+                {/* <p className="text-sm text-gray-500">{post.owner__expand?.name}</p> */}
+                <p className="text-md text-gray-500">{post.summary}</p>
+              </div>
             </div>
           )
         })}
