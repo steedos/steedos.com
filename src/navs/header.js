@@ -118,6 +118,7 @@ export const headerNav = {
     },
   ],
   pages: [
+    { name: '视频', href: '/videos/' },
     { name: '文档', href: '/docs/' },
   ],
 }
