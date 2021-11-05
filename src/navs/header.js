@@ -55,7 +55,7 @@ export const headerNav = {
           href: '/company/about-us',
           items: [
             { name: '客户案例', href: '/customer-success-stories' },
-            { name: '视频演示', href: '/videos' },
+            { name: '解决方案', href: '/solutions' },
             { name: '安装部署', href: '/docs/deploy' },
             { name: '开发人员', href: '/docs/developer' },
             { name: '低代码学院', href: '/docs/low-code-academy' },

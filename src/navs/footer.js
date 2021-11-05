@@ -9,7 +9,8 @@ export const footerNav = [
       { name: '技术架构', href: '/platform/architecture' },
       { name: '特色亮点', href: '/platform/features' },
       { name: '报价', href: '/platform/pricing' },
-      { name: '试用', href: '/docs/deploy/deploy-cloud' },
+      { name: '私有部署', href: '/docs/deploy' },
+      { name: '华炎云服务', href: '/cloud/overview' },
       
     ],
   },
@@ -32,7 +33,8 @@ export const footerNav = [
     href: '/company/about-us',
     items: [
       { name: '关于我们', href: '/company/about-us' },
-      { name: '客户案例', href: '/customer-success-stories/' },
+      { name: '客户案例', href: '/customer-success-stories' },
+      { name: '解决方案', href: '/solutions' },
       { name: '服务', href: '/collections/services' },
       { name: '联系我们', href: '/company/contact-us' },
     ],
