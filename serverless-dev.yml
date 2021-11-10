@@ -12,7 +12,7 @@ steedos-website-dev:
     deploy: true
     bucketRegion: ap-east-1
     bucketName: steedos-website-dev
-    # region: ap-east-1
+    region: ap-east-1
     runtime: nodejs14.x
     memory: 2048
     timeout: 30
