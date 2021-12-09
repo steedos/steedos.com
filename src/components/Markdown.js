@@ -62,12 +62,12 @@ function customPlugin() {
 
 export function code({node, inline, className, children, ...props}) {
   const match = /language-(\w+)/.exec(className || '')
-  if (className === 'language-markup') {
-    const html = children
-    return (
-      <div className="not-prose" dangerouslySetInnerHTML={{__html: html}}></div>
-    )
-  }
+//   if (className === 'language-markup') {
+//     const html = children
+//     return (
+//       <div className="not-prose" dangerouslySetInnerHTML={{__html: html}}></div>
+//     )
+//   }
   return !inline && match ? (
     <SyntaxHighlighter
       children={String(children).replace(/\n$/, '')}
