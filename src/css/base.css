@@ -7,3 +7,6 @@ abbr[title] {
 .prose .block.notice-block .icon svg{
   height: 100%;
 }
+.prose.mx-auto p,.prose.mx-auto li{
+  word-break: break-all;
+}
