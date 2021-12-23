@@ -337,7 +337,7 @@ export function Header({ site }) {
               <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                 {navigation.pages.map((page) => (
                   <div key={page.name} className="flow-root">
-                    <a href={page.href} className="-m-2 p-2 block font-medium text-gray-900">
+                    <a href={page.href} target={page.target} className="-m-2 p-2 block font-medium text-gray-900">
                       {page.name}
                     </a>
                   </div>
@@ -487,6 +487,7 @@ export function Header({ site }) {
                     <a
                       key={page.name}
                       href={page.href}
+                      target={page.target}
                       className="px-2 flex items-center text-base font-medium text-gray-700 hover:text-gray-800"
                     >
                       {page.name}
