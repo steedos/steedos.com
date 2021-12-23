@@ -121,5 +121,6 @@ export const headerNav = {
   pages: [
     { name: '视频', href: '/videos/' },
     { name: '文档', href: '/docs/' },
+    { name: '社区', href: 'https://community.steedos.cn/', target: '_blank' }
   ],
 }
