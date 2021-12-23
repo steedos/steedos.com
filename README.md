@@ -1,8 +1,8 @@
 # 华炎魔方官网
 
-cn：<https://www.steedos.cn/>，缓存1天。
-com：<https://www.steedos.com/>，缓存1小时。
-beta：<https://beta.steedos.cn/>，缓存1分钟。
+- cn：<https://www.steedos.cn/>，缓存1天。
+- com：<https://www.steedos.com/>，缓存1小时。
+- beta：<https://beta.steedos.cn/>，缓存1分钟。
 
 ## 开发流程
 
