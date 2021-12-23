@@ -63,7 +63,7 @@ export default function ProductDetail({ product, vid }) {
   }
   return (
     <>
-      <main className="max-w-7xl mx-auto sm:pt-16 sm:px-6 lg:px-8">
+      <main className="max-w-7xl mx-auto sm:pt-16 sm:px-6 lg:px-8 w-full">
         <div className="max-w-2xl mx-auto lg:max-w-none">
           {/* Product */}
           <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
