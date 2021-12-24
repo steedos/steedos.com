@@ -109,7 +109,7 @@ export default function ProductDetail({ product, vid }) {
                           key={image.name}
                         >
                           {({ ref, open }) => (
-                            <img className="object-center object-cover" style={{ height: 500, width: 667 }} ref={ref} onClick={open} src={image.src} />
+                            <img className="object-center object-cover mt-10 sm:mt-0" style={{ height: "86%", width: 667 }} ref={ref} onClick={open} src={image.src} />
                           )}
                         </Item>
                   </Tab.Panel>
