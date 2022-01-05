@@ -39,7 +39,7 @@ const DocumentLayout: FunctionComponent<LayoutProps> = ({
           return (
             <Fragment key={section.slug}>
             <li className="space-y-3">
-              <a href={`#${section.slug}`} className="block font-medium transition-colors duration-300 text-teal-600">{section.title}</a>
+              <a href={`#${section.slug.toLowerCase()}`} className="block font-medium transition-colors duration-300 text-teal-600">{section.title}</a>
               <ul role="list" className="space-y-3">
 
               {section.children.map((subsection) => {
@@ -47,7 +47,7 @@ const DocumentLayout: FunctionComponent<LayoutProps> = ({
 
                 return (
                 <li className="ml-4" key={subsection.slug}>
-                  <a href={`#${subsection.slug}`} className="block transition-colors duration-300">{subsection.title}</a>
+                  <a href={`#${subsection.slug.toLowerCase()}`} className="block transition-colors duration-300">{subsection.title}</a>
                 </li>
                 )
               })}
