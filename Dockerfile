@@ -34,6 +34,9 @@ COPY ./yarn.lock /app
 
 RUN yarn --force
 
+RUN --mount=type=secret,id=STEEDOS_SERVER_API_KEY \
+   export STEEDOS_SERVER_API_KEY=$(cat /run/secrets/STEEDOS_SERVER_API_KEY)
+
 RUN yarn build
 
 ENV NODE_ENV=production
