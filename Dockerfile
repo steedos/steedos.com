@@ -29,8 +29,8 @@ COPY ./yarn.lock /app
 
 # RUN npm config set registry http://registry.npm.taobao.org/
 # RUN yarn config set registry http://registry.npm.taobao.org/
-ENV npm_config_sharp_binary_host="https://npm.taobao.org/mirrors/sharp"
-ENV npm_config_sharp_libvips_binary_host="https://npm.taobao.org/mirrors/sharp-libvips"
+# ENV npm_config_sharp_binary_host="https://npm.taobao.org/mirrors/sharp"
+# ENV npm_config_sharp_libvips_binary_host="https://npm.taobao.org/mirrors/sharp-libvips"
 
 RUN yarn --force
 
