@@ -23,10 +23,11 @@ spec:
       labels:
         io.kompose.service: steedos-com
     spec:
-      imagePullSecrets:
-        - name: steedos-account
+      # imagePullSecrets:
+      #   - name: steedos-account
       containers:
         - image: ecr.aws.steedos.cn/ivscode/steedos/steedos.com:latest
+          imagePullPolicy: Always
           name: steedos-com
           ports:
             - containerPort: 3000
