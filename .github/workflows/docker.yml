@@ -1,4 +1,4 @@
-name: Docker publish to docker.io
+name: Docker publish to docker.io and ecr, deploy to k8s
 
 on:
   push:
@@ -47,27 +47,34 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64
+          build-args: |
+            "API_TOKEN=${{ secrets.API_TOKEN }}"
+          platforms: linux/amd64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: cn-northwest-1
-
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Tag, and push image to Amazon ECR
+      - name: Tag and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ivscode/steedos/steedos.com
           IMAGE_TAG: ${{ steps.docker_meta.outputs.tags }}
         run: |
-          docker tag steedos/steedos.com:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker pull steedos/steedos.com:latest
+          docker tag steedos/steedos.com:latest ${{ env.ECR_REGISTRY }}/ivscode/steedos/steedos.com:${{github.ref_name}}
+          docker tag steedos/steedos.com:latest ${{ env.ECR_REGISTRY }}/ivscode/steedos/steedos.com:latest
+          docker push ${{ env.ECR_REGISTRY }}/ivscode/steedos/steedos.com:latest
+          docker push ${{ env.ECR_REGISTRY }}/ivscode/steedos/steedos.com:${{github.ref_name}}
+      - name: Apply Deployment
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f deployment-k8s.yaml
