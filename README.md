@@ -1,6 +1,6 @@
 # 华炎魔方官网
 
-- cn：<https://www.steedos.cn/>，缓存1天。
+- cn：<https://www.steedos.cn/>，缓存1小时。
 - com：<https://www.steedos.com/>，缓存1小时。
 - beta：<https://beta.steedos.cn/>，缓存1分钟。
 
