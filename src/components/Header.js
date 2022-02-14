@@ -218,14 +218,14 @@ export function Header({ site }) {
           <BannerMarkRight className="hidden sm:block absolute left-1/2 transform translate-x-[330px] translate-y-[-357px] w-[848px] h-[513px]" />
           <div className="relative flex justify-center items-center">
             <div className="text-sm font-medium text-white">
-              华炎魔方云服务，精彩上线
+            华炎魔方低代码DevOps平台，精彩上线
             </div>
             <span
               aria-hidden="true"
               className="hidden sm:block mx-6 h-6 w-px bg-white bg-opacity-20"
             ></span>
             <div className="ml-6 sm:ml-0">
-              <Link href="/docs/deploy/deploy-cloud">
+              <Link href="/docs/deploy/devops">
                 <a className="whitespace-nowrap inline-flex rounded-md bg-white py-2 px-3 text-xs font-semibold uppercase text-blue-500 hover:bg-opacity-90">
                   了解更多 &rarr;
                 </a>
