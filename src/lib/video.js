@@ -25,7 +25,7 @@ const QUERY_SITE_VIDEOS = `
 export async function getVideos(){
     const query = `
         {
-            site_videos ${QUERY_SITE_VIDEOS}
+            site_videos(sort: "sort_no")${QUERY_SITE_VIDEOS}
         }
     `
     const result = await fetchGraphql(query);
@@ -41,7 +41,7 @@ export async function getVideos(){
 export async function getVideo(slug){
     const query = `
         {
-            site_videos(filters:["slug","=", "${slug}"])${QUERY_SITE_VIDEOS}
+            site_videos(sort: "sort_no", filters:["slug","=", "${slug}"])${QUERY_SITE_VIDEOS}
         }
     `
     const result = await fetchGraphql(query);
