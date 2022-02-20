@@ -3,7 +3,7 @@ import { fetchGraphql } from '@/lib/base'
 export async function getSiteByDomain(domain){
     const query = `
         {
-            site_domains(filters:["domain","=", "${domain}"]){
+            site_domains(filters:["name","=", "${domain}"]){
                 site,
                 site__expand {
                     name,
@@ -60,7 +60,7 @@ export async function getSiteDomains(){
     const query = `
         {
             site_domains{
-                name: domain
+                name
                 site__expand {
                     name,
                     logo,
