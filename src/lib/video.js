@@ -11,7 +11,9 @@ const QUERY_SITE_VIDEOS = `
         _id,
         slug,
         name,
-        sort_no
+        sort_no,
+        thumb_image,
+        summary
       }
     
   }
