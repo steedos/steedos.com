@@ -109,7 +109,7 @@ const Video: FunctionComponent<any> = (props) => {
         <script src="//cdn.bitmovin.com/player/web/8/bitmovinplayer.js" />
       </Head>
       <div>
-        <div className="bg-black -mt-3 sm:-mt-5 -mx-5">
+        <div className="bg-black -mt-3">
           <div
             className="w-full m-auto"
             style={{
