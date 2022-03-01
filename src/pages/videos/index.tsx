@@ -42,7 +42,7 @@ const SiteVideos: React.FC = (props: any) => {
           <div className="grid md:grid-cols-3 grid-cols-1 md:gap-6 gap-2">
             {video_collection && video_collection.videos.map((video: any) => {
               return (
-                <div key={`/videos/${video.slug}`} className="flex flex-col border-solid border-2 rounded-lg border-slate-100">
+                <div key={`/videos/${video.slug}`} className="flex flex-col border border-solid  rounded-lg border-slate-100">
                   {video.thumb_image ? (
                     <div className="md:mb-2 mb-2">
                       <Link href={`/videos/${video.slug}`}>
@@ -52,7 +52,7 @@ const SiteVideos: React.FC = (props: any) => {
                             alt={video.name}
                             width={1280}
                             height={720}
-                            className="rounded-lg"
+                            className="rounded-t-lg"
                           />
                         </a>
                       </Link>
@@ -70,13 +70,13 @@ const SiteVideos: React.FC = (props: any) => {
                   )}
                   <Link href={`/videos/${video.slug}`}>
                     <a>
-                      <b className=" hover:text-blue-600 dark:hover:text-blue-300 px-1">
+                      <b className=" hover:text-blue-600 dark:hover:text-blue-300 px-4">
                         {video.name}
                       </b>
                     </a>
                   </Link>
                   {video.summary && (
-                    <div className="prose dark:prose-dark text-gray-700 dark:text-white  p-1">
+                    <div className="prose dark:prose-dark text-gray-700 dark:text-white  p-4 pt-0">
                       {video.summary}
                     </div>
                   )}
