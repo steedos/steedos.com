@@ -454,12 +454,12 @@ export function Header({ site }) {
                                     <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
                                       {category.sections.map((section) => (
                                         <div key={section.name}>
-                                          <p id={`${section.name}-heading`} className="font-medium text-gray-900">
+                                          <p id={`${section.id}-heading`} className="font-medium text-gray-900">
                                             <a href={section.href}>{section.name}</a>
                                           </p>
                                           <ul
                                             role="list"
-                                            aria-labelledby={`${section.name}-heading`}
+                                            aria-labelledby={`${section.id}-heading`}
                                             className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
                                           >
                                             {section.items.map((item) => (

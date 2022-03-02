@@ -66,6 +66,85 @@ export const headerNav = {
       ],
     },
     {
+      id: 'documents',
+      name: '文档',
+      featured: [
+        {
+          name: '生产环境部署 - Docker （推荐）',
+          href: '/docs/deploy/deploy-docker',
+          imageSrc: 'https://console.steedos.cn/api/files/images/qAyN6KWYdgmKBuwQg',
+          imageAlt:'私有部署完全免费。',
+        },
+        {
+          name: '开发环境部署 - DevOps 远程开发',
+          href: '/docs/deploy/devops',
+          imageSrc: 'https://console.steedos.cn/api/files/images/AnNW9yDQZmTgWAAo7',
+          imageAlt: '远程开发项目，方便、快捷！',
+        },
+      ],
+      sections: [
+        {
+          id: 'deploy',
+          name: '安装部署',
+          href: '/docs/deploy',
+          items: [
+            { name: '开通华炎魔方云服务', href: '/docs/deploy/deploy-cloud' },
+            { name: '激活华炎魔方', href: '/docs/deploy/deploy-activate' },
+            { name: 'DevOps 远程开发', href: '/docs/deploy/devops' },
+          ],
+        },
+        {
+          id: 'user',
+          name: '用户向导',
+          href: '/docs/user',
+          items: [
+            { name: '用户使用入门', href: '/docs/user/getting-started' },
+            { name: '审批王使用入门', href: '/docs/user/workflow' },
+            { name: '客户端使用说明', href: '/docs/user/apps' },
+          ],
+        },
+        {
+          id: 'admin',
+          name: '管理员向导',
+          href: '/docs/admin',
+          items: [
+            { name: '创建应用程序', href: '/docs/admin/create_object' },
+            { name: '仪表盘开发向导', href: '/docs/admin/dashboard' },
+            { name: '连接第三方数据源', href: '/docs/admin/datasource' },
+          ],
+        },
+        {
+          id: 'developer',
+          name: '开发人员向导',
+          href: '/docs/developer',
+          items: [
+            { name: '开发人员快速向导', href: '/docs/developer/getting-started' },
+            { name: '元数据类型概览', href: '/docs/developer/meta-types' },
+            { name: '软件包发布与安装', href: '/docs/developer/package' },
+          ],
+        },
+        {
+          id: 'low-code-academy',
+          name: '低代码学院',
+          href: '/docs/low-code-academy',
+          items: [
+            { name: '合同管理系统', href: '/docs/low-code-academy/low-code-contract-app' },
+            { name: '集团会议管理系统', href: '/docs/low-code-academy/low-code-meeting-app' },
+            { name: '低代码DevOps教程', href: '/docs/low-code-academy/low-code-devops-hr' },
+          ],
+        },
+        {
+          id: 'more',
+          name: '更多',
+          href: '/docs',
+          items: [
+            { name: '低代码平台协议', href: 'https://www.low-code-protocol.com/' },
+            { name: '应用操作手册', href: '/docs/documents' },
+          ],
+        },
+      ]
+    }, 
+    {
       id: 'appstore',
       name: '商城',
       featured: [
@@ -116,10 +195,9 @@ export const headerNav = {
           ],
         },
       ],
-    },
+    }
   ],
   pages: [
-    { name: '文档', href: '/docs/' },
     { name: '视频', href: '/videos/' },
     { name: '社区', href: 'https://community.steedos.cn/', target: '_blank' }
   ],
