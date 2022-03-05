@@ -55,3 +55,4 @@ yarn build
 - 按下回车键就可以创建一个新Tag了
 - 最后点击表单底下的Publish release即可。
 
+创建releases后 [Git Actions](https://github.com/steedos/steedos.com/actions) 会再次自动开始打包并发布到.com和.cn官网，相关Actions执行完成后官网应该就上线了。
