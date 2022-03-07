@@ -20,6 +20,7 @@ const QUERY_SITE_VIDEOS = `
 `
 
 export async function getVideos(){
+    //TODO：按站点获取数据 , filters:["site","=","${siteId}"]
     const query = `
         {
             site_videos_collections(sort: "sort_no")${QUERY_SITE_VIDEOS}
