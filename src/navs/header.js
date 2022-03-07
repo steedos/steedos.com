@@ -150,7 +150,7 @@ export const headerNav = {
       featured: [
         {
           name: '运维支持服务',
-          href: '/products/cont/products/support-success-plan',
+          href: '/products/support-success-plan',
           imageSrc: 'https://console.steedos.cn/api/files/files/h8dYjfdrEspFb8icK',
           imageAlt:
             '使用华炎魔方平台需要指导？无论是安装、实施、培训、运维，我们都可以为您提供所需支持。',
