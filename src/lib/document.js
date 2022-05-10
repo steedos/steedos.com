@@ -47,7 +47,7 @@ export async function getDocument(collectionSlug, documentSlug){
 export async function getDocuments(){
   const query = `
     {
-      documents{
+      documents(filters:["status","=","published"]){
         _id
         name
         slug
