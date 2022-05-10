@@ -3,7 +3,7 @@ export const headerNav = {
   categories: [
     {
       id: 'platform',
-      name: '平台',
+      name: '产品',
       featured: [
         {
           name: '华炎魔方助力大众共用实施数字化转型',
@@ -23,10 +23,10 @@ export const headerNav = {
       sections: [
         {
           id: 'platform',
-          name: '华炎魔方',
+          name: '低代码平台',
           href: '/platform/overview',
           items: [
-            { name: '什么是华炎魔方?', href: '/platform/overview' },
+            { name: '华炎魔方概览', href: '/platform/overview' },
             { name: '什么是低代码？', href: '/platform/lowcode' },
             { name: '技术架构', href: '/platform/architecture' },
             { name: '功能', href: '/platform/features' },
@@ -88,9 +88,9 @@ export const headerNav = {
           name: '安装部署',
           href: '/docs/deploy',
           items: [
-            { name: '开通华炎魔方云服务', href: '/docs/deploy/deploy-cloud' },
-            { name: '激活华炎魔方', href: '/docs/deploy/deploy-activate' },
+            { name: 'Docker 私有部署', href: '/docs/deploy/deploy-docker' },
             { name: 'DevOps 远程开发', href: '/docs/deploy/devops' },
+            { name: '购买云服务', href: '/docs/deploy/deploy-cloud' },
           ],
         },
         {

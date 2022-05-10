@@ -122,10 +122,37 @@ export default function Post(props) {
         // }}
         // canonical={canonicalUrl}
       />
-      <div className="w-full h-full bg-no-repeat absolute hidden lg:block" style={{backgroundImage: `url("${background_image}")`}}>
+
+      <div className="pt-10 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden bg-blue-50">
+        <div className="mx-auto max-w-7xl lg:px-8">
+          <div className="lg:grid lg:grid-cols-5 lg:gap-8">
+            <div className="col-span-3 mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
+              <div className="lg:py-24">
+                <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-gray-900 sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
+                  <span className="block">{name}</span>
+                </h1>
+                <p className="mt-3 text-base text-gray-600 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                <Markdown body={summary} className="prose sm:prose-lg lg:prose-xl"></Markdown>
+                </p>
+              </div>
+            </div>
+            <div className="col-span-2 mt-12 -mb-16 sm:-mb-48 lg:m-0 lg:relative">
+              <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0">
+                {/* Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ */}
+                <img
+                  className="w-full lg:absolute lg:inset-y-0 lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                  src={imageUrl}
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      {/* <div className="w-full h-full bg-no-repeat absolute hidden lg:block" style={{backgroundImage: `url("${background_image}")`}}>
+      </div> */}
       <div className="w-full max-w-8xl mx-auto lg:flex px-4 sm:px-6 lg:px-8 z-10">
-        {blog.menu && blog.menu.items && (
+        {/* {blog.menu && blog.menu.items && (
         <nav id="sidebar" className="fixed z-40 inset-0 flex-none h-full lg:bg-gray-50 lg:bg-opacity-75 w-full lg:static lg:h-auto lg:overflow-y-visible lg:pt-0 lg:w-60 xl:w-72 lg:block hidden">
           <div id="navWrapper" className="h-full overflow-y-auto scrolling-touch lg:h-auto lg:block lg:relative lg:sticky lg:bg-transparent overflow-hidden lg:top-18 bg-white mr-24 lg:mr-0">
             <div className="text-xl font-bold tracking-tight text-gray-900 mt-16 px-8">
@@ -134,7 +161,6 @@ export default function Post(props) {
             <nav id="nav" className="px-1 pt-6 overflow-y-auto font-medium text-base sm:px-3 xl:px-5 lg:text-md pb-10 lg:pt-10 lg:pb-14 sticky?lg:h-(screen-18)">
               <ul>
                 <li className="mb-8">
-                  {/* <h5 className="px-3 mb-3 lg:mb-3 uppercase tracking-wide font-semibold text-sm lg:text-xs text-gray-900">Getting started</h5> */}
                   <ul>
                     {blog.menu.items &&  blog.menu.items.map((item) => (
                     <li>
@@ -153,31 +179,10 @@ export default function Post(props) {
             </nav>
           </div>
         </nav>
-        )}
+        )} */}
         <div id="content-wrapper" className="lg:px-8 min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible">
-          <article className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-6 mb-16">
-            <header>
-              <h1 className="text-black max-w-screen-md lg:text-6xl md:text-5xl sm:text-4xl text-3xl w-full font-bold mb-8 lg:mb-10 lg:leading-tight">
-                {name}
-              </h1>
-              <div className="text-xl">
-                <Markdown body={summary} className="prose sm:prose-lg lg:prose-xl"></Markdown>
-              </div>
-              {/* {author && <Author author={author} />} */}
-              {imageUrl && (
-                <div className="my-8">
-                  <img className="rounded-lg" src={imageUrl} alt=""></img>
-                </div>
-              )}
-              {/* {tags && (
-                <ul>
-                  Posted in
-                  {tags.map((tags: any) => (
-                    <li key={tags}>{tags}</li>
-                  ))}
-                </ul>
-              )} */}
-            </header>
+          <article className="mx-auto max-w-screen-lg lg:mt-14 md:mt-8 mt-6 mb-16">
+            
             <main className="py-8">
               <Markdown body={body} className="prose sm:prose-lg lg:prose-xl"></Markdown>
             </main>
