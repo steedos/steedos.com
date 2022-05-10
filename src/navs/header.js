@@ -37,16 +37,18 @@ export const headerNav = {
         },
         {
           id: 'cloud',
-          name: '华炎魔方云服务',
-          href: '/cloud/',
+          name: '解决方案',
+          href: '/collections/steedos-packages',
           items: [
-            { name: '云服务概览', href: '/cloud/overview' },
-            { name: '云计算', href: '/cloud/cloud-computing' },
-            { name: 'PaaS', href: '/cloud/paas' },
-            { name: 'SaaS', href: '/cloud/saas' },
-            { name: '云原生', href: '/cloud/cloud-native' },
-            { name: '多租户架构', href: '/cloud/multi-tenant' },
-            { name: '注册开通云服务', href: '/docs/deploy/deploy-cloud' },
+            { name: '项目管理', href: '/products/project' },
+            { name: '合同管理', href: '/products/contract' },
+            { name: '客户管理', href: '/products/crm' },
+            { name: '销售订单', href: '/products/order' },
+            { name: '采购管理', href: '/products/purchase' },
+            { name: '业财管理', href: '/products/finance' },
+            { name: '资产管理', href: '/products/asset' },
+            { name: '审批中心', href: '/products/workflow' },
+            { name: '协同办公', href: '/products/oa' },
           ],
         },
         {
@@ -66,8 +68,8 @@ export const headerNav = {
       ],
     },
     {
-      id: 'documents',
-      name: '文档',
+      id: 'resourses',
+      name: '资源',
       featured: [
         {
           name: '生产环境部署 - Docker （推荐）',
