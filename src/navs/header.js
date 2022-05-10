@@ -31,8 +31,10 @@ export const headerNav = {
             { name: '技术架构', href: '/platform/architecture' },
             { name: '功能', href: '/platform/features' },
             { name: '报价', href: '/platform/pricing' },
-            { name: '开源', href: '/platform/open-source-low-code' },
             { name: '私有部署', href: '/docs/deploy/' },
+            { name: '购买云服务', href: '/docs/deploy/deploy-cloud' },
+            { name: '开源', href: 'https://github.com/steedos/steedos-platform/', target: '_blank' },
+            { name: '低代码协议', href: 'https://low-code-protocol.com', target: '_blank' },
           ],
         },
         {
@@ -52,17 +54,19 @@ export const headerNav = {
           ],
         },
         {
-          id: 'resources',
-          name: '资源',
-          href: '/company/about-us',
+          id: 'features',
+          name: '功能',
+          href: '/videos',
           items: [
-            { name: '客户案例', href: '/customer-success-stories' },
-            { name: '解决方案', href: '/solutions' },
-            { name: '安装部署', href: '/docs/deploy' },
-            { name: '开发人员', href: '/docs/developer' },
-            { name: '低代码学院', href: '/docs/low-code-academy' },
-            { name: '关于华炎', href: '/company/about-us' },
-            { name: '联系我们', href: '/company/contact-us' },
+            { name: '零代码开发', href: '/videos/lesson-object' },
+            { name: '公式引擎', href: '/videos/formula-calculates' },
+            { name: '权限引擎', href: '/videos/authority_management' },
+            { name: '规则引擎', href: '/videos/workflow_rules' },
+            { name: '批准过程', href: '/videos/admin-contracts' },
+            { name: '报表引擎', href: '/videos/report' },
+            { name: '元数据引擎', href: '/videos/lesson-metadata' },
+            { name: '审批王', href: '/videos/admin-contracts' },
+            { name: 'DevOps', href: '/videos/live-course-devops' },
           ],
         },
       ],
@@ -86,6 +90,18 @@ export const headerNav = {
       ],
       sections: [
         {
+          id: 'resources',
+          name: '浏览文档',
+          href: '/company/about-us',
+          items: [
+            { name: '安装部署', href: '/docs/deploy' },
+            { name: '管理员向导', href: '/docs/admin' },
+            { name: '用户向导', href: '/docs/user' },
+            { name: '开发人员向导', href: '/docs/developer' },
+            { name: '低代码学院', href: '/docs/low-code-academy' },
+          ],
+        },
+        {
           id: 'deploy',
           name: '安装部署',
           href: '/docs/deploy',
@@ -93,16 +109,6 @@ export const headerNav = {
             { name: 'Docker 私有部署', href: '/docs/deploy/deploy-docker' },
             { name: 'DevOps 远程开发', href: '/docs/deploy/devops' },
             { name: '购买云服务', href: '/docs/deploy/deploy-cloud' },
-          ],
-        },
-        {
-          id: 'user',
-          name: '用户向导',
-          href: '/docs/user',
-          items: [
-            { name: '用户使用入门', href: '/docs/user/getting-started' },
-            { name: '审批王使用入门', href: '/docs/user/workflow' },
-            { name: '客户端使用说明', href: '/docs/user/apps' },
           ],
         },
         {
@@ -135,20 +141,11 @@ export const headerNav = {
             { name: '低代码DevOps教程', href: '/docs/low-code-academy/low-code-devops-hr' },
           ],
         },
-        {
-          id: 'more',
-          name: '更多',
-          href: '/docs',
-          items: [
-            { name: '低代码平台协议', href: 'https://www.low-code-protocol.com/' },
-            { name: '应用操作手册', href: '/docs/documents' },
-          ],
-        },
       ]
     }, 
     {
       id: 'appstore',
-      name: '商城',
+      name: '公司',
       featured: [
         {
           name: '运维支持服务',
@@ -166,34 +163,34 @@ export const headerNav = {
       ],
       sections: [
         {
+          id: 'company',
+          name: '关于我们',
+          href: '/company/about-us',
+          items: [
+            { name: '关于华炎', href: '/company/about-us' },
+            { name: '客户案例', href: '/customer-success-stories' },
+            { name: '解决方案', href: '/solutions' },
+            { name: '联系我们', href: '/company/contact-us' },
+          ],
+        },
+        {
+          id: 'customer',
+          name: '客户案例',
+          href: '/customer-success-stories',
+          items: [
+            { name: '建华建材', href: '/customer-success-stories/jianhuabm' },
+            { name: '大众公用', href: '/customer-success-stories/dzug' },
+            { name: '河北港口集团', href: '/customer-success-stories/porthebei' },
+          ],
+        },
+        {
           id: 'collections',
-          name: '云平台',
+          name: '商城',
           href: '/collections/platform-cloud',
           items: [
-            { name: '入门版', href: '/products/platform-cloud-starter' },
-            { name: '标准版', href: '/products/platform-cloud-standard' },
-            { name: '高级版', href: '/products/platform-cloud-professional' },
-          ],
-        },
-        {
-          id: 'apps',
-          name: '应用市场',
-          href: '/collections/steedos-packages',
-          items: [
-            { name: '合同管理', href: '/products/contract' },
-            { name: '项目管理', href: '/products/project' },
-            { name: '销售管理', href: '/products/crm' },
-            { name: '财务管理', href: '/products/finance' },
-            { name: '在线商城', href: '/products/shop' },
-          ],
-        },
-        {
-          id: 'service',
-          name: '服务',
-          href: '/collections/services',
-          items: [
-            { name: '运维支持服务', href: '/products/support-success-plan' },
-            { name: '开发者支持服务', href: '/products/developer-success-plan' },
+            { name: '云平台', href: '/collections/platform-cloud' },
+            { name: '应用市场', href: '/collections/steedos-packages' },
+            { name: '技术服务', href: '/collections/services' },
           ],
         },
       ],
