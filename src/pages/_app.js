@@ -67,18 +67,15 @@ export default function App({ Component, pageProps = {}, router, site }) {
 
   meta.site = site;
 
-  const getLayout =
-    Component.getLayout ||
-    ((Page) => (
-      <DefaultLayout site={meta.site}>
-        <Page {...pageProps} />
-      </DefaultLayout>
-    ))
+  const Layout =
+    Component.Layout || DefaultLayout
 
   return (
     <>
       <MDXProvider components={mdxComponents}>
-        {getLayout(Component, pageProps)}
+        <Layout site={meta.site}>
+          <Component {...pageProps} />
+        </Layout>
       </MDXProvider>
     </>
   )

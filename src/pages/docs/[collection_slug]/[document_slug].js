@@ -21,6 +21,7 @@ import DocumentLayout from '@/layouts/DocumentLayout';
 import {fromMarkdown} from 'mdast-util-from-markdown';
 
 import BananaSlug from 'github-slugger'
+import EmptyLayout from '@/layouts/EmptyLayout'
 
 const slugs = new BananaSlug()
 
@@ -152,3 +153,6 @@ export default function Document(props) {
     </>
   )
 }
+
+
+Document.Layout = EmptyLayout
