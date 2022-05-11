@@ -42,7 +42,8 @@ Router.events.on('routeChangeComplete', () => {
 })
 Router.events.on('routeChangeError', progress.finish)
 
-export default function App({ Component, pageProps = {}, router, site }) {
+export default function App({ Component, pageProps = {}, router }) {
+  let [navIsOpen, setNavIsOpen] = useState(false)
   if(typeof window !== 'undefined' && router.query){
     if(has(router.query, 'X-Auth-Token') && has(router.query, 'X-Space-Id') && has(router.query, 'X-User-Id')){
       let authToken = router.query['X-Auth-Token'];
@@ -61,19 +62,31 @@ export default function App({ Component, pageProps = {}, router, site }) {
     }
   }
 
-  const { 
-    meta = {} 
-  } = pageProps;
+  useEffect(() => {
+    if (!navIsOpen) return
+    function handleRouteChange() {
+      setNavIsOpen(false)
+    }
+    Router.events.on('routeChangeComplete', handleRouteChange)
+    return () => {
+      Router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [navIsOpen])
 
-  meta.site = site;
+  const Layout = Component.layoutProps?.Layout || DefaultLayout
 
-  const Layout =
-    Component.Layout || DefaultLayout
+  const layoutProps = Component.layoutProps?.Layout
+    ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen }
+    : {}
+  const showHeader = router.pathname !== '/'
+  const meta = Component.layoutProps?.meta || pageProps?.meta || {}
+  const description =
+    meta.metaDescription || meta.description || 'Documentation for the Tailwind CSS framework.'
 
   return (
     <>
       <MDXProvider components={mdxComponents}>
-        <Layout site={meta.site}>
+        <Layout {...layoutProps}>
           <Component {...pageProps} />
         </Layout>
       </MDXProvider>

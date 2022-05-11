@@ -13,7 +13,6 @@ import Error from 'next/error'
 import dynamic from 'next/dynamic'
 
 import { SidebarLayout } from '@/layouts/SidebarLayout'
-import ArticleLayout from '@/layouts/ArticleLayout'
 import tinytime from 'tinytime'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'

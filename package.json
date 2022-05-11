@@ -62,7 +62,7 @@
     "markdown-it": "^12.2.0",
     "markdown-toc": "^1.2.0",
     "minimatch": "^3.0.4",
-    "next": "^11.1.2",
+    "next": "^12.1.6",
     "next-compose-plugins": "^2.2.1",
     "next-mdx-enhanced": "^5.0.0",
     "next-mdx-remote": "^3.0.4",

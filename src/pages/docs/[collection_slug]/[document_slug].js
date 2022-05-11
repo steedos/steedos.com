@@ -17,7 +17,6 @@ import { getDocument, getDocuments} from '@/lib/document';
 import {NextSeo} from 'next-seo'
 import { Heading } from '@/components/Heading';
 import { Markdown } from '@/components/Markdown'
-import DocumentLayout from '@/layouts/DocumentLayout';
 import {fromMarkdown} from 'mdast-util-from-markdown';
 
 import BananaSlug from 'github-slugger'

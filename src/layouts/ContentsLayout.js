@@ -1,80 +1,94 @@
-import {
-  useState,
-  useEffect,
-  createContext,
-  Fragment,
-  useCallback,
-  isValidElement,
-  useContext,
-} from 'react'
+import { useState, useEffect, createContext, Fragment, useCallback, useContext } from 'react'
 import { ClassTable } from '@/components/ClassTable'
 import { useRouter } from 'next/router'
 import { usePrevNext } from '@/hooks/usePrevNext'
 import Link from 'next/link'
-// import { SidebarLayout, SidebarContext } from '@/layouts/SidebarLayout'
+import { SidebarLayout, SidebarContext } from '@/layouts/SidebarLayout'
 import { PageHeader } from '@/components/PageHeader'
-import { Header } from '@/components/Header'
 import clsx from 'clsx'
+import { Footer } from '@/components/Footer'
+import { Heading } from '@/components/Heading'
+import { MDXProvider } from '@mdx-js/react'
 
 export const ContentsContext = createContext()
 
 function TableOfContents({ tableOfContents, currentSection }) {
+  let sidebarContext = useContext(SidebarContext)
+  let isMainNav = Boolean(sidebarContext)
 
+  function closeNav() {
+    if (isMainNav) {
+      sidebarContext.setNavIsOpen(false)
+    }
+  }
+
+  function isActive(section) {
+    if (section.slug === currentSection) {
+      return true
+    }
+    if (!section.children) {
+      return false
+    }
+    return section.children.findIndex(isActive) > -1
+  }
+
+  let pageHasSubsections = tableOfContents.some((section) => section.children.length > 0)
 
   return (
     <>
-      <h5 className="text-gray-900 uppercase tracking-wide font-semibold mb-3 text-sm lg:text-xs">
+      <h5 className="text-slate-900 font-semibold mb-4 text-sm leading-6 dark:text-slate-100">
         本页内容
       </h5>
-      <ul className="overflow-x-hidden text-gray-500 font-medium">
-        {tableOfContents.map((section) => {
-          let sectionIsActive =
-            currentSection === section.slug ||
-            section.children.findIndex(({ slug }) => slug === currentSection) > -1
-
-          return (
-            <Fragment key={section.slug}>
-              <li>
+      <ul className="text-slate-700 text-sm leading-6">
+        {tableOfContents.map((section) => (
+          <Fragment key={section.slug}>
+            <li>
+              <a
+                href={`#${section.slug}`}
+                onClick={closeNav}
+                className={clsx(
+                  'block py-1',
+                  pageHasSubsections ? 'font-medium' : '',
+                  isActive(section)
+                    ? 'font-medium text-sky-500 dark:text-sky-400'
+                    : 'hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300'
+                )}
+              >
+                {section.title}
+              </a>
+            </li>
+            {section.children.map((subsection) => (
+              <li className="ml-4" key={subsection.slug}>
                 <a
-                  href={`#${section.slug}`}
+                  href={`#${subsection.slug}`}
+                  onClick={closeNav}
                   className={clsx(
-                    'block transform transition-colors duration-200 py-2 hover:text-gray-900',
-                    {
-                      'text-gray-900': sectionIsActive,
-                    }
+                    'group flex items-start py-1',
+                    isActive(subsection)
+                      ? 'text-sky-500 dark:text-sky-400'
+                      : 'hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-300'
                   )}
                 >
-                  {section.title}
+                  <svg
+                    width="3"
+                    height="24"
+                    viewBox="0 -9 3 24"
+                    className="mr-2 text-slate-400 overflow-visible group-hover:text-slate-600 dark:text-slate-600 dark:group-hover:text-slate-500"
+                  >
+                    <path
+                      d="M0 0L3 3L0 6"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  {subsection.title}
                 </a>
               </li>
-              {section.children.map((subsection) => {
-                let subsectionIsActive = currentSection === subsection.slug
-
-                return (
-                  <li
-                    className={clsx({
-                      'ml-4': isMainNav,
-                      'ml-2': !isMainNav,
-                    })}
-                    key={subsection.slug}
-                  >
-                    <a
-                      href={`#${subsection.slug}`}
-                      className={clsx(
-                        'block py-2 transition-colors duration-200 hover:text-gray-900 font-medium',
-                        {
-                          'text-gray-900': subsectionIsActive,
-                        }
-                      )}
-                    >
-                      {subsection.title}
-                    </a>
-                  </li>
-                )
-              })}
-            </Fragment>
-          )
-        })}
+            ))}
+          </Fragment>
+        ))}
       </ul>
     </>
   )
@@ -95,21 +109,16 @@ function useTableOfContents(tableOfContents) {
   useEffect(() => {
     if (tableOfContents.length === 0 || headings.length === 0) return
     function onScroll() {
-      let y = window.pageYOffset
-      let windowHeight = window.innerHeight
+      let style = window.getComputedStyle(document.documentElement)
+      let scrollMt = parseFloat(style.getPropertyValue('--scroll-mt').match(/[\d.]+/)?.[0] ?? 0)
+      let fontSize = parseFloat(style.fontSize.match(/[\d.]+/)?.[0] ?? 16)
+      scrollMt = scrollMt * fontSize
+
       let sortedHeadings = headings.concat([]).sort((a, b) => a.top - b.top)
-      if (y <= 0) {
-        setCurrentSection(sortedHeadings[0].id)
-        return
-      }
-      if (y + windowHeight >= document.body.scrollHeight) {
-        setCurrentSection(sortedHeadings[sortedHeadings.length - 1].id)
-        return
-      }
-      const middle = y + windowHeight / 2
+      let top = window.pageYOffset + scrollMt + 1
       let current = sortedHeadings[0].id
       for (let i = 0; i < sortedHeadings.length; i++) {
-        if (middle >= sortedHeadings[i].top) {
+        if (top >= sortedHeadings[i].top) {
           current = sortedHeadings[i].id
         }
       }
@@ -120,114 +129,94 @@ function useTableOfContents(tableOfContents) {
       passive: true,
     })
     onScroll()
-    return () => window.removeEventListener('scroll', onScroll, true)
+    return () => {
+      window.removeEventListener('scroll', onScroll, {
+        capture: true,
+        passive: true,
+      })
+    }
   }, [headings, tableOfContents])
 
   return { currentSection, registerHeading, unregisterHeading }
 }
 
-// export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
-//   const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(
-//     layoutProps.tableOfContents
-//   )
+export function ContentsLayoutOuter({ children, layoutProps, ...props }) {
+  const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(
+    layoutProps.tableOfContents
+  )
 
-//   return (
-//     <SidebarLayout
-//       sidebar={
-//         <div className="mb-8">
-//           <TableOfContents
-//             tableOfContents={layoutProps.tableOfContents}
-//             currentSection={currentSection}
-//           />
-//         </div>
-//       }
-//       {...props}
-//     >
-//       <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
-//         {children}
-//       </ContentsContext.Provider>
-//     </SidebarLayout>
-//   )
-// }
+  return (
+    <SidebarLayout
+      sidebar={
+        <div className="mb-8">
+          <TableOfContents
+            tableOfContents={layoutProps.tableOfContents}
+            currentSection={currentSection}
+          />
+        </div>
+      }
+      {...props}
+    >
+      <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+        {children}
+      </ContentsContext.Provider>
+    </SidebarLayout>
+  )
+}
 
-export function ContentsLayout({ children, meta, classes, tableOfContents }) {
+export function ContentsLayout({ children, meta, classes, tableOfContents, section }) {
   const router = useRouter()
   const toc = [
-    ...(classes
-      ? [{ title: 'Default class reference', slug: 'class-reference', children: [] }]
-      : []),
+    ...(classes ? [{ title: 'Quick reference', slug: 'class-reference', children: [] }] : []),
     ...tableOfContents,
   ]
 
   const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(toc)
-  let { prev, next } = {}; //usePrevNext()
+  let { prev, next } = usePrevNext()
 
   return (
-    <>
-
-      <Header />
-      <div className="w-full flex">
-        <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
-          <PageHeader
-            title={meta.title}
-            description={meta.description}
-            badge={{ key: 'Tailwind CSS version', value: meta.featureVersion }}
-            border={!classes && meta.headerSeparator !== false}
-          />
-          <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
-            <div>
-              {classes && (
-                <ClassTable {...(isValidElement(classes) ? { custom: classes } : classes)} />
-              )}
-              {children}
-            </div>
-          </ContentsContext.Provider>
-
-          {(prev || next) && (
-            <div className="mt-16 flex leading-6 font-medium">
-              {prev && (
-                <Link href={prev.href}>
-                  <a className="flex mr-8 transition-colors duration-200 hover:text-gray-900">
-                    <span aria-hidden="true" className="mr-2">
-                      ←
-                    </span>
-                    {prev.shortTitle || prev.title}
-                  </a>
-                </Link>
-              )}
-              {next && (
-                <Link href={next.href}>
-                  <a className="flex text-right ml-auto transition-colors duration-200 hover:text-gray-900">
-                    {next.shortTitle || next.title}
-                    <span aria-hidden="true" className="ml-2">
-                      →
-                    </span>
-                  </a>
-                </Link>
-              )}
-            </div>
-          )}
-          {/* <div className="mt-12 border-t border-gray-200 pt-6 text-right">
-            <Link
-              href={`https://github.com/tailwindlabs/tailwindcss.com/edit/master/src/pages${router.pathname}.mdx`}
+    <div className="max-w-3xl mx-auto pt-10 xl:max-w-none xl:ml-0 xl:mr-[15.5rem] xl:pr-16">
+      <PageHeader
+        title={meta.title}
+        description={meta.description}
+        repo={meta.repo}
+        badge={{ key: 'Tailwind CSS version', value: meta.featureVersion }}
+        section={section}
+      />
+      <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
+        {classes ? (
+          <>
+            <ClassTable {...classes} />
+            <div
+              id="content-wrapper"
+              className="relative z-20 prose prose-slate mt-12 dark:prose-dark"
             >
-              <a className="mt-10 text-sm hover:text-gray-900">Edit this page on GitHub</a>
-            </Link>
-          </div> */}
-        </div>
-        {toc && toc.length>0 && (
-          <div className="hidden xl:text-sm xl:block flex-none w-64 pl-8 mr-8">
-            <div className="flex flex-col justify-between overflow-y-auto sticky max-h-(screen-18) pt-10 pb-6 top-18">
-              {toc.length > 0 && (
-                <div className="mb-8">
-                  <TableOfContents tableOfContents={toc} currentSection={currentSection} />
-                </div>
-              )}
+              <MDXProvider components={{ Heading }}>{children}</MDXProvider>
             </div>
+          </>
+        ) : (
+          <div
+            id="content-wrapper"
+            className="relative z-20 prose prose-slate mt-8 dark:prose-dark"
+          >
+            <MDXProvider components={{ Heading }}>{children}</MDXProvider>
           </div>
         )}
-      </div>
-    </>
+      </ContentsContext.Provider>
 
+      {/* <Footer previous={prev} next={next}>
+        <Link
+          href={`https://github.com/steedos/low-code-protocol/edit/main/src/pages${router.pathname}.mdx`}
+        >
+          <a className="hover:text-slate-900 dark:hover:text-slate-400">Edit this page on GitHub</a>
+        </Link>
+      </Footer> */}
+
+      <div className="fixed z-20 top-[3.8125rem] bottom-0 right-[max(0px,calc(50%-45rem))] w-[19.5rem] py-10 px-8 overflow-y-auto hidden xl:block">
+        {toc.length > 0 && (
+          <TableOfContents tableOfContents={toc} currentSection={currentSection} />
+        )}
+      </div>
+    </div>
   )
 }
