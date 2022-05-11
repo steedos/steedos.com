@@ -41,11 +41,11 @@ const withMDX = require(`@next/mdx`)({
 })
 
 const fallbackLayouts = {
-  'src/pages/mdx/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
+  'src/pages/developer/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
 }
 
 const fallbackDefaultExports = {
-  'src/pages/mdx/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
+  'src/pages/developer/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
   'src/pages/blog/**/*': ['@/layouts/BlogPostLayout', 'BlogPostLayout'],
 }
 

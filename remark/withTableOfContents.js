@@ -3,7 +3,6 @@ const slugify = (title) => title; //require('@sindresorhus/slugify')
 
 module.exports.withTableOfContents = () => {
   return (tree) => {
-    console.log(tree)
     const component = addImport(tree, '@/components/Heading', 'Heading')
     const contents = []
 
