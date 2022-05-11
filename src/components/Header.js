@@ -186,7 +186,7 @@ function BannerMarkRight(props) {
   )
 }
 
-export function Header({ site }) {
+export function Header() {
   const [open, setOpen] = useState(false)
   const [userInfo, setUserInfo] = useState({})
   const [cart, setCart] = useState({lines: []})
