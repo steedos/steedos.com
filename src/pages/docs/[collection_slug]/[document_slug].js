@@ -141,12 +141,12 @@ export default function Document(props) {
         }}
       />
       <Header/>      
-<div className="relative flex w-full bg-gray-50">
+<div className="relative flex w-full bg-white lg:bg-gray-50">
   <div className="hidden lg:block absolute top-0 bottom-0 right-0 left-1/2 bg-white"></div>
-  <div className="relative flex w-full max-w-8xl mx-auto">
+  <div className="relative flex w-full max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="w-full flex-none lg:grid lg:grid-cols-3 lg:gap-8">
-      <div className="bg-gray-50 lg:bg-transparent -mx-4 sm:-mx-6 lg:mx-0 py-12 sm:py-6 px-4 sm:px-6 lg:pl-0 lg:pr-8">
-        <nav aria-label="Table of contents" className="text-sm max-w-[37.5rem] mx-auto lg:max-w-none lg:mx-0 lg:fixed w-full h-full pb-16 top-0 lg:pt-32 overflow-y-auto" x-data="TableOfContents()" x-init="init()">
+      <div className="bg-gray-50 lg:bg-transparent -mx-4 sm:-mx-6 lg:mx-0 py-12 sm:py-16 px-4 sm:px-6 lg:pl-0 lg:pr-8">
+        <nav aria-label="Table of contents" className="text-sm max-w-[37.5rem] mx-auto lg:max-w-none lg:mx-0 lg:fixed w-full h-full lg:pb-16 top-0 lg:pt-32 overflow-y-auto" x-data="TableOfContents()" x-init="init()">
         <ul role="list" className="space-y-8 border-l border-gray-200 pl-6">
         {tableOfContents.map((section) => {
           let sectionIsActive =
@@ -176,7 +176,7 @@ export default function Document(props) {
           <div className="absolute top-0 left-0 w-px bg-teal-500 origin-top transition-transform duration-300"></div>
         </nav>
       </div>
-      <div className="relative col-span-2 lg:-ml-8 bg-white lg:shadow-md px-4 sm:px-6 lg:px-8">
+      <div className="relative col-span-2 lg:-ml-8 bg-white lg:shadow-md">
         <div className="hidden lg:block absolute top-0 bottom-0 -right-4 w-8 bg-white"></div>
         
         <div className="relative py-16 lg:px-16">
@@ -194,7 +194,6 @@ export default function Document(props) {
     </div>
   </div>
 </div>
-      
     </>
   )
 }
