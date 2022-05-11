@@ -124,7 +124,7 @@ export default function Post(props) {
       />
 
       <div className="pt-10 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden bg-blue-50">
-        <div className="mx-auto max-w-7xl lg:px-8">
+        <div className="mx-auto max-w-8xl lg:px-8">
           <div className="lg:grid lg:grid-cols-5 lg:gap-8">
             <div className="col-span-3 mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
               <div className="lg:py-24">
@@ -136,7 +136,7 @@ export default function Post(props) {
                 </p>
               </div>
             </div>
-            <div className="col-span-2 mt-12 -mb-16 sm:-mb-48 lg:m-0 lg:relative">
+            <div className="col-span-2 mt-12 lg:m-0 lg:relative">
               <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0">
                 {/* Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ */}
                 <img

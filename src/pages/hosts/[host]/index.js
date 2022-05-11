@@ -139,7 +139,7 @@ export default function Home(props) {
                 </div>
               </div>
             </div>
-            <div className="mt-12 -mb-16 sm:-mb-48 lg:m-0 lg:relative">
+            <div className="mt-12 lg:m-0 lg:relative">
               <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0">
                 {/* Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ */}
                 <img
