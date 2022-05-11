@@ -92,33 +92,12 @@ export const headerNav = {
         {
           id: 'resources',
           name: '浏览文档',
-          href: '/company/about-us',
+          href: '/docs',
           items: [
             { name: '安装部署', href: '/docs/deploy' },
             { name: '管理员向导', href: '/docs/admin' },
-            { name: '用户向导', href: '/docs/user' },
             { name: '开发人员向导', href: '/docs/developer' },
-            { name: '低代码学院', href: '/docs/low-code-academy' },
-          ],
-        },
-        {
-          id: 'deploy',
-          name: '安装部署',
-          href: '/docs/deploy',
-          items: [
-            { name: 'Docker 私有部署', href: '/docs/deploy/deploy-docker' },
-            { name: 'DevOps 远程开发', href: '/docs/deploy/devops' },
-            { name: '购买云服务', href: '/docs/deploy/deploy-cloud' },
-          ],
-        },
-        {
-          id: 'admin',
-          name: '管理员向导',
-          href: '/docs/admin',
-          items: [
-            { name: '创建应用程序', href: '/docs/admin/create_object' },
-            { name: '仪表盘开发向导', href: '/docs/admin/dashboard' },
-            { name: '连接第三方数据源', href: '/docs/admin/datasource' },
+            { name: '用户向导', href: '/docs/user' },
           ],
         },
         {
@@ -141,34 +120,12 @@ export const headerNav = {
             { name: '低代码DevOps教程', href: '/docs/low-code-academy/low-code-devops-hr' },
           ],
         },
-      ]
-    }, 
-    {
-      id: 'appstore',
-      name: '公司',
-      featured: [
-        {
-          name: '运维支持服务',
-          href: '/products/support-success-plan',
-          imageSrc: 'https://console.steedos.cn/api/files/files/h8dYjfdrEspFb8icK',
-          imageAlt:
-            '使用华炎魔方平台需要指导？无论是安装、实施、培训、运维，我们都可以为您提供所需支持。',
-        },
-        {
-          name: '开发者支持服务',
-          href: '/products/developer-success-plan',
-          imageSrc: 'https://console.steedos.cn/api/files/files/Dcjvtu6dTA95aAG7N',
-          imageAlt: '我们为开发团队提供低代码开发全程辅导服务，帮助您的团队快速切换到全新的低代码开发模式。',
-        },
-      ],
-      sections: [
         {
           id: 'company',
           name: '关于我们',
           href: '/company/about-us',
           items: [
             { name: '关于华炎', href: '/company/about-us' },
-            { name: '客户案例', href: '/customer-success-stories' },
             { name: '解决方案', href: '/solutions' },
             { name: '联系我们', href: '/company/contact-us' },
           ],
@@ -193,11 +150,13 @@ export const headerNav = {
             { name: '技术服务', href: '/collections/services' },
           ],
         },
-      ],
-    }
+      ]
+    }, 
   ],
   pages: [
+    { name: '文档', href: '/docs/' },
     { name: '视频', href: '/videos/' },
-    { name: '社区', href: 'https://community.steedos.cn/', target: '_blank' }
+    { name: '社区', href: 'https://community.steedos.cn/', target: '_blank' },
+    { name: 'Github', href: 'https://github.com/steedos/steedos-platform', target: '_blank' }
   ],
 }
