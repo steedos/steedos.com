@@ -224,7 +224,7 @@ module.exports = {
 触发器中查询数据相关参数。
 
 - fields: string[] 字段名数组，选填。 例如：['字段名1', '字段名2']
-- filters: [QueryFilters](/docs/api-records-filters) 查询条件数组， 选填。
+- filters: [QueryFilters](./api-records-filters) 查询条件数组， 选填。
 - sort: string 排序规则， 格式为：`字段名 desc/asc`，选填。例如： "name desc" 表示按名称字段倒序排序。
 - top: number 返回记录数， 选填。
 - skip: number 跳过记录数，通常用于分页显示， 选填。
@@ -233,17 +233,17 @@ module.exports = {
 
 ### Context
 
-表示触发器函数在执行环境中的上下文参数，与微函数中的 [Context](/docs/functions#Context) 参数规范一致。
+表示触发器函数在执行环境中的上下文参数，与微函数中的 [Context](./functions#Context) 参数规范一致。
 
 其中 `context.org.id` 和 `context.org.user.id` 分别标识了触发器执行时当前用户所属公司 id 和当前用户 id。
 
-要在触发器中进行数据交互，可以调用参数 `context.org.dataApi` 中的相关函数，其规范见 [DataApi](/docs/functions-data-api)。
+要在触发器中进行数据交互，可以调用参数 `context.org.dataApi` 中的相关函数，其规范见 [DataApi](./functions-data-api)。
 
-另外还可以通过参数 `context.org.broker` 来调用微服务 [Actions](/docs/sidecar#函数（Actions）)。
+另外还可以通过参数 `context.org.broker` 来调用微服务 [Actions](./sidecar#函数（Actions）)。
 
 ### Logger
 
-输出不同级别的日志消息功能，与微函数中的 [Logger](/docs/functions#Logger) 参数规范一致。
+输出不同级别的日志消息功能，与微函数中的 [Logger](./functions#Logger) 参数规范一致。
 
 ## 示例
 

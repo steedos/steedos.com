@@ -17,15 +17,15 @@ description: 在软件包中定义的微函数里可以通过DataApi来实现数
 
 ### commitUnitOfWork
 
-▸ commitUnitOfWork(unitOfWork: [UnitOfWork](/docs/functions-unitofwork)): Promise<Map<string, [RecordModificationResult](#RecordModificationResult)>>
+▸ commitUnitOfWork(unitOfWork: [UnitOfWork](./functions-unitofwork)): Promise<Map<string, [RecordModificationResult](#RecordModificationResult)>>
 
-提交一个 [UnitOfWork](/docs/functions-unitofwork) ，执行所有注册到它的操作。如果这些操作中的任何一个失败，整个单元就会回滚。要检查单个操作的结果，请检查返回的映射(使用从 UnitOfWork.registerCreate 和 UnitOfWork.registerUpdate 返回的 [ReferenceId](#ReferenceId) 作为键值)。
+提交一个 [UnitOfWork](./functions-unitofwork) ，执行所有注册到它的操作。如果这些操作中的任何一个失败，整个单元就会回滚。要检查单个操作的结果，请检查返回的映射(使用从 UnitOfWork.registerCreate 和 UnitOfWork.registerUpdate 返回的 [ReferenceId](#ReferenceId) 作为键值)。
 
 参数列表：
 
 | 名称 | 类型 | 描述 |
 |----|----|----|
-| unitOfWork	| [UnitOfWork](/docs/functions-unitofwork) |	要提交的 [UnitOfWork](/docs/functions-unitofwork) |
+| unitOfWork	| [UnitOfWork](./functions-unitofwork) |	要提交的 [UnitOfWork](./functions-unitofwork) |
 
 返回值：Promise<Map<string, [RecordModificationResult](#RecordModificationResult)>>
 
@@ -66,13 +66,13 @@ description: 在软件包中定义的微函数里可以通过DataApi来实现数
 
 ### newUnitOfWork
 
-▸ newUnitOfWork(): [UnitOfWork](/docs/functions-unitofwork)
+▸ newUnitOfWork(): [UnitOfWork](./functions-unitofwork)
 
-创建一个新的空 [UnitOfWork](/docs/functions-unitofwork)。
+创建一个新的空 [UnitOfWork](./functions-unitofwork)。
 
-返回值: [UnitOfWork](/docs/functions-unitofwork)
+返回值: [UnitOfWork](./functions-unitofwork)
 
-返回一个空的 [UnitOfWork](/docs/functions-unitofwork)。
+返回一个空的 [UnitOfWork](./functions-unitofwork)。
 
 ### query
 
@@ -130,7 +130,7 @@ description: 在软件包中定义的微函数里可以通过DataApi来实现数
 
 Ƭ RecordForCreate: object
 
-调用 [create](#create) 或 在 [UnitOfWork](/docs/functions-unitofwork) 中注册一个创建新记录的操作时需要传入的记录信息。
+调用 [create](#create) 或 在 [UnitOfWork](./functions-unitofwork) 中注册一个创建新记录的操作时需要传入的记录信息。
 
 | 属性名称 | 类型 | 描述 |
 |----|----|----|
@@ -155,7 +155,7 @@ description: 在软件包中定义的微函数里可以通过DataApi来实现数
 
 Ƭ RecordForUpdate: object
 
-调用 [update](#update) 或 在 [UnitOfWork](/docs/functions-unitofwork) 中注册一个修改记录的操作时需要传入的记录信息。
+调用 [update](#update) 或 在 [UnitOfWork](./functions-unitofwork) 中注册一个修改记录的操作时需要传入的记录信息。
 
 | 属性名称 | 类型 | 描述 |
 |----|----|----|

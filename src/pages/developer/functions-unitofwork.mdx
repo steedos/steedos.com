@@ -3,7 +3,7 @@ title: 微函数 UnitOfWork
 description: 在软件包中定义的微函数里可以通过 DataApi 创建或发起 UnitOfWork 以执行批量作业相关操作。
 ---
 
-本协议约定在低代码平台编写微函数时调用 [DataApi](/docs/functions-data-api) 创建或发起的 UnitOfWork 规范。
+本协议约定在低代码平台编写微函数时调用 [DataApi](./functions-data-api) 创建或发起的 UnitOfWork 规范。
 
 ## 方法
 
@@ -11,19 +11,19 @@ description: 在软件包中定义的微函数里可以通过 DataApi 创建或�
 
 ### registerCreate
 
-▸ registerCreate(record: [RecordForCreate](/docs/functions-data-api#RecordForCreate)): string
+▸ registerCreate(record: [RecordForCreate](./functions-data-api#RecordForCreate)): string
 
-为 UnitOfWork 注册一个 [RecordForCreate](/docs/functions-data-api#RecordForCreate) ，并返回一个 [ReferenceId](/docs/functions-data-api#ReferenceId) ，这个 ReferenceId 可以在这个 UnitOfWork 的后续操作中引用被创建的记录。
+为 UnitOfWork 注册一个 [RecordForCreate](./functions-data-api#RecordForCreate) ，并返回一个 [ReferenceId](./functions-data-api#ReferenceId) ，这个 ReferenceId 可以在这个 UnitOfWork 的后续操作中引用被创建的记录。
 
 参数列表：
 
 | 名称 | 类型 | 描述 |
 |----|----|----|
-| record	| [RecordForCreate](/docs/functions-data-api#RecordForCreate) |	要新建的记录信息 |
+| record	| [RecordForCreate](./functions-data-api#RecordForCreate) |	要新建的记录信息 |
 
 返回值：string
 
-返回表示创建好的记录的 [ReferenceId](/docs/functions-data-api#ReferenceId)。
+返回表示创建好的记录的 [ReferenceId](./functions-data-api#ReferenceId)。
 
 ### registerDelete
 
@@ -40,23 +40,23 @@ description: 在软件包中定义的微函数里可以通过 DataApi 创建或�
 
 返回值：string
 
-返回一个表示被删除记录的 [ReferenceId](/docs/functions-data-api#ReferenceId)。
+返回一个表示被删除记录的 [ReferenceId](./functions-data-api#ReferenceId)。
 
 ### registerUpdate
 
-▸ registerUpdate(record: [RecordForUpdate](/docs/functions-data-api#RecordForUpdate)): string
+▸ registerUpdate(record: [RecordForUpdate](./functions-data-api#RecordForUpdate)): string
 
-为 UnitOfWork 注册一个 [RecordForUpdate](/docs/functions-data-api#RecordForUpdate) ，并返回一个 [ReferenceId](/docs/functions-data-api#ReferenceId) ，这个 ReferenceId 可以在这个 UnitOfWork 的后续操作中用来引用被修改的记录。
+为 UnitOfWork 注册一个 [RecordForUpdate](./functions-data-api#RecordForUpdate) ，并返回一个 [ReferenceId](./functions-data-api#ReferenceId) ，这个 ReferenceId 可以在这个 UnitOfWork 的后续操作中用来引用被修改的记录。
 
 参数列表：
 
 | 名称 | 类型 | 描述 |
 |----|----|----|
-| record	| [RecordForUpdate](/docs/functions-data-api#RecordForUpdate) |	要修改的记录信息 |
+| record	| [RecordForUpdate](./functions-data-api#RecordForUpdate) |	要修改的记录信息 |
 
 返回值：string
 
-返回表示修改好的记录的 [ReferenceId](/docs/functions-data-api#ReferenceId)。
+返回表示修改好的记录的 [ReferenceId](./functions-data-api#ReferenceId)。
 
 ## 参考资料
 
