@@ -77,7 +77,7 @@ module.exports =
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
   experimental: {
-    modern: true,
+    // modern: true,
     // esmExternals: true
   },
   images: {

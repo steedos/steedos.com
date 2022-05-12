@@ -111,7 +111,7 @@ const Video: FunctionComponent<any> = (props) => {
       <div>
         <div className="bg-black -mt-3">
           <div
-            className="w-full m-auto"
+            className="w-full mx-auto"
             style={{
               maxWidth:
                 height > VIDEO_MIN_HEIGHT + OFFSET_Y
@@ -143,10 +143,10 @@ const Video: FunctionComponent<any> = (props) => {
             </div>
           </div>
         </div>
-        <main className="mx-auto max-w-screen-md lg:mt-14 md:mt-8 mt-3 mb-16 px-4 sm:px-6 lg:px-8 ">
+        <main className="mx-auto max-w-7xl lg:mt-14 md:mt-8 mt-3 mb-16 px-4 sm:px-6 lg:px-8 ">
           <article>
             <header>
-                <h1 className="text-black max-w-screen-md lg:text-4xl md:text-4xl sm:text-3xl text-2xl w-full font-bold mb-8 lg:mb-10">
+                <h1 className="text-black max-w-7xl lg:text-4xl md:text-4xl sm:text-3xl text-2xl w-full font-bold mb-8 lg:mb-10">
                   {name}
                 </h1>
                 {/* <div className="mt-2 flex items-center">

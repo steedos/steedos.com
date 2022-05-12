@@ -5,10 +5,6 @@ import { useRouter } from 'next/router'
 export function usePrevNext() {
   let router = useRouter()
   let { nav } = useContext(SidebarContext)
-  if (!nav) return {
-    prev: undefined,
-    next: undefined
-  };
   let pages = Object.keys(nav).flatMap((category) => nav[category])
   let pageIndex = pages.findIndex((page) => page.href === router.pathname)
   return {

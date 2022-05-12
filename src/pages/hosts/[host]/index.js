@@ -1,4 +1,4 @@
-import { Testimonials } from '@/components/Testimonials'
+// import { Testimonials } from '@/components/Testimonials'
 // import { DarkMode } from '@/components/home/DarkMode'
 // import { ConstraintBased } from '@/components/home/ConstraintBased'
 // import { BuildAnything } from '@/components/home/BuildAnything'
