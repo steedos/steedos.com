@@ -127,4 +127,6 @@ export default function VideoEmbed(props) {
     )
 }
 
-VideoEmbed.Layout = EmptyLayout
+VideoEmbed.layoutProps = {
+    Layout: EmptyLayout
+}

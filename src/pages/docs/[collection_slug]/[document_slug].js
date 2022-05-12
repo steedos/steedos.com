@@ -198,4 +198,6 @@ export default function Document(props) {
 }
 
 
-Document.Layout = EmptyLayout
+Document.layoutProps = {
+  Layout: EmptyLayout
+}

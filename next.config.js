@@ -19,6 +19,10 @@ const {
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+const defaultConfig = require('tailwindcss/resolveConfig')(require('tailwindcss/defaultConfig'))
+const dlv = require('dlv')
+const Prism = require('prismjs')
+
 
 const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(
@@ -163,6 +167,14 @@ module.exports =
       ],
     })
 
+    config.resolve.alias['defaultConfig$'] = require.resolve('tailwindcss/defaultConfig')
+    config.module.rules.push({
+      test: require.resolve('tailwindcss/defaultConfig'),
+      use: createLoader(function (_source) {
+        return `export default ${JSON.stringify(defaultConfig)}`
+      }),
+    })
+    
     let mdx = [
       {
         loader: '@mdx-js/loader',
