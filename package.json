@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "export": "next build && next export",
     "deploy": "cross-env STAGE=dev serverless --debug",

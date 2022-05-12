@@ -7,11 +7,11 @@ import { DocSearchModal } from '@docsearch/react'
 import clsx from 'clsx'
 import { useActionKey } from '@/hooks/useActionKey'
 
-const INDEX_NAME = 'low-code-protocol'
-const API_KEY = ''
-const APP_ID = ''
+const INDEX_NAME = 'steedos-com'
+const API_KEY = '115e0980e01f77c613b8677fcfa2588f'
+const APP_ID = 'XLH8R06L45'
 
-const SearchContext = createContext()
+const SearchContext = createContext({})
 
 export function SearchProvider({ children }) {
   const router = useRouter()

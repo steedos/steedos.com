@@ -15,6 +15,8 @@ import 'intersection-observer'
 import mdxComponents from '@/components/mdx';
 import {has, isArray} from 'lodash';
 import { saveAuthInfo } from '@/lib/auth.client';
+import { SearchProvider } from '@/components/Search'
+
 // import { getSite } from '@/lib/site';
 
 if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
@@ -85,11 +87,13 @@ export default function App({ Component, pageProps = {}, router }) {
 
   return (
     <>
-      <MDXProvider components={mdxComponents}>
-        <Layout {...layoutProps}>
-          <Component {...pageProps} />
-        </Layout>
-      </MDXProvider>
+      <SearchProvider>
+        <MDXProvider components={mdxComponents}>
+          <Layout {...layoutProps}>
+            <Component {...pageProps} />
+          </Layout>
+        </MDXProvider>
+      </SearchProvider>
     </>
   )
 }

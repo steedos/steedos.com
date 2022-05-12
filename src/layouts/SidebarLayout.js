@@ -97,7 +97,7 @@ function Nav({ nav, children, fallbackHref, mobile = false }) {
 
   return (
     <nav ref={scrollRef} id="nav" className="lg:text-sm lg:leading-6 relative">
-      {/* <div className="sticky top-0 -ml-0.5 pointer-events-none">
+      <div className="sticky top-0 -ml-0.5 pointer-events-none">
         {!mobile && <div className="h-10 bg-white dark:bg-slate-900" />}
         <div className="bg-white dark:bg-slate-900 relative pointer-events-auto">
           <SearchButton className="hidden w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700">
@@ -138,9 +138,9 @@ function Nav({ nav, children, fallbackHref, mobile = false }) {
           </SearchButton>
         </div>
         {!mobile && <div className="h-8 bg-gradient-to-b from-white dark:from-slate-900" />}
-      </div> */}
+      </div>
       <ul>
-        {/* <TopLevelNav mobile={mobile} /> */}
+        <TopLevelNav mobile={mobile} />
         {children}
         {nav &&
           Object.keys(nav)
@@ -250,7 +250,7 @@ function TopLevelNav({ mobile }) {
     <>
       <TopLevelLink
         mobile={mobile}
-        href="/docs/installation"
+        href="/docs/deploy/devops"
         isActive={pathname.startsWith('/docs')}
         className="mb-4"
         shadow="group-hover:shadow-sky-200 dark:group-hover:bg-sky-500"
@@ -282,11 +282,11 @@ function TopLevelNav({ mobile }) {
           </>
         }
       >
-        Documentation
+        文档
       </TopLevelLink>
       <TopLevelLink
         mobile={mobile}
-        href="https://tailwindui.com/components?utm_source=tailwindcss&utm_medium=navigation"
+        href="/developer/overview?utm_source=steedos.com&utm_medium=navigation"
         className="mb-4"
         shadow="group-hover:shadow-indigo-200 dark:group-hover:bg-indigo-500"
         icon={
@@ -315,11 +315,11 @@ function TopLevelNav({ mobile }) {
           </>
         }
       >
-        Components
+        开发人员
       </TopLevelLink>
       <TopLevelLink
         mobile={mobile}
-        href="https://www.youtube.com/tailwindlabs"
+        href="/videos"
         className="mb-4"
         shadow="group-hover:shadow-pink-200 dark:group-hover:bg-pink-500"
         icon={
@@ -343,9 +343,9 @@ function TopLevelNav({ mobile }) {
           </>
         }
       >
-        Screencasts
+        视频
       </TopLevelLink>
-      <TopLevelLink
+      {/* <TopLevelLink
         mobile={mobile}
         href="https://play.tailwindcss.com"
         className="mb-4"
@@ -383,8 +383,8 @@ function TopLevelNav({ mobile }) {
         }
       >
         Playground
-      </TopLevelLink>
-      <TopLevelLink
+      </TopLevelLink> */}
+      {/* <TopLevelLink
         mobile={mobile}
         href="/resources"
         isActive={pathname === '/resources'}
@@ -430,10 +430,10 @@ function TopLevelNav({ mobile }) {
         }
       >
         <span className={pathname === '/resources' ? 'dark:text-purple-400' : ''}>Resources</span>
-      </TopLevelLink>
+      </TopLevelLink> */}
       <TopLevelLink
         mobile={mobile}
-        href="https://github.com/tailwindlabs/tailwindcss/discussions"
+        href="https://community.steedos.cn"
         className="mb-8"
         shadow="group-hover:shadow-violet-200 dark:group-hover:bg-violet-500"
         icon={
@@ -477,7 +477,7 @@ function TopLevelNav({ mobile }) {
           </>
         }
       >
-        Community
+        社区
       </TopLevelLink>
     </>
   )
