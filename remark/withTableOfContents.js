@@ -67,9 +67,9 @@ module.exports.withTableOfContents = () => {
         } else if (level === 3) {
           contents[contents.length - 1].children.push({ title, slug, children: [] })
         } else {
-          contents[contents.length - 1].children[
-            contents[contents.length - 1].children.length - 1
-          ].children.push({ title, slug })
+          // contents[contents.length - 1].children[
+          //   contents[contents.length - 1].children.length - 1
+          // ].children.push({ title, slug })
         }
       } else if (
         node.type === 'jsx' &&

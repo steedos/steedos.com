@@ -3,15 +3,15 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 // import socialSquare from '@/img/social-square.jpg'
 import { Title } from '@/components/Title'
-import { documentationNav } from '@/navs/documentation'
+import { developerNav } from '@/navs/developer'
 import { Header } from '@/components/Header'
 
-export function DocumentationLayout(props) {
+export function DeveloperLayout(props) {
   let router = useRouter()
 
   return (
     <>
-      <Title suffix={router.pathname === '/' ? undefined : '华炎魔方文档'}>
+      <Title suffix={router.pathname === '/' ? undefined : '华炎魔方开发者'}>
         {props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}
       </Title>
       <Head>
@@ -23,9 +23,9 @@ export function DocumentationLayout(props) {
         /> */}
       </Head>
       <Header/>
-      <SidebarLayout nav={documentationNav} {...props} />
+      <SidebarLayout nav={developerNav} {...props} />
     </>
   )
 }
 
-DocumentationLayout.nav = documentationNav
+DeveloperLayout.nav = developerNav

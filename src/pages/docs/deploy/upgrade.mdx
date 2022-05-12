@@ -1,0 +1,288 @@
+---
+title: 升级已有老版本项目
+description: 如何对已有项目进行内核版本升级并尽量保留之前项目中的数据库数据。
+---
+
+本教程指导您如何对已有项目进行内核版本升级并尽量保留之前项目中的数据库数据。
+
+如果可能，比如对于刚启动不久的项目想升级到最新版本，最推荐的升级方式是通过在终端执行 `npx create-steedos-app my-app` 命令来创建一个全新的华炎魔方项目，然后把原项目中的元数据、环境变量等其他项目配置文件或代码文件迁移到新项目中。
+
+\
+
+:::tip
+虽然这里提供升级向导，但是非必要的话，强烈建议用最新版本的华炎魔方创建全新的项目，而不是升级老项目，特别是项目本身版本号跨度大，又希望保全之前已有数据库数据的情况下，不太建议做大升级。
+
+:::
+
+\
+
+:::warning
+所有的升级操作都存在一定风险，强烈建议任何正式环境升级前都应该先备份数据库，尤其是版本跨度比较大时。
+
+:::
+
+\
+## 如何升级内核版本
+
+根目录下有一个package.json文件，该文件中可以维护项目中各个依赖的npm包的版本号。
+
+要升级华炎魔方的内核版本号，只需要把该文件dependencies节点下的内容替换成 `"@steedos/service-community": "^2.x"` 或者 `"@steedos/service-community": "指定版本"` 就可以了。
+
+```json
+{
+  "dependencies": {
+    "@steedos/service-charts": "2.1.27",
+    "@steedos/service-metadata-server": "2.1.27",
+    "@steedos/service-mongodb-server": "2.1.27",
+    "@steedos/service-package-loader": "2.1.27",
+    "@steedos/service-package-registry": "2.1.27",
+    "@steedos/service-pages": "2.1.27",
+    "@steedos/service-steedos-server": "2.1.27",
+    ...
+  }
+}
+```
+
+* **升级到最新版本**
+
+  ```json
+  "dependencies": {
+       "@steedos/service-community": "^2.1"
+  },
+  ```
+* **升级到指定版本**
+
+  ```json
+  "dependencies": {
+       "@steedos/service-community": "2.1.74"
+  },
+  ```
+
+对于较老版本的魔方项目，在升级内核版本时，除了应该把版本号升级到最新的魔方版本之外，还需要确定下项目根目录下的`steedos-config.yml,.env,package.json`等文件与最新版本的 [模板项目](https://github.com/steedos/steedos-platform/tree/2.1/steedos-projects/project-template)中同名文件内容是否有明显差异，推荐升级时把有差异的文件内容也复制到您的项目中以避免因配置文件不一致或缺少相关依赖包引起的问题。
+
+修改好package.json文件中的版本号后，命令行中`cd`到项目目录并执行下`yarn`即可安装相关依赖包，待安装完成后再执行下`yarn start`即可以新版本启动服务。
+
+
+:::info
+[查询最新华炎魔方内核版本号](https://www.npmjs.com/package/steedos-server)
+
+:::
+
+\
+
+:::tip
+一般来说直接按上述操作方法即可升级项目内核版本，但是有时版本号跨度比较大时会有些额外操作步骤，请参考以下对应版本升级说明。
+
+:::
+
+\
+## 升级前准备
+
+### 开发或部署环境准备
+
+请参考文档 [安装部署](/docs/deploy)，根据您要升级的目标环境按相应的文档教程操作。
+
+### 激活华炎魔方
+
+从2.1版本开始，所有的私有部署都需要在云平台上先激活，请参考文档 [私有部署 - 激活华炎魔方](/docs/deploy/deploy-activate)。
+
+激活华炎魔方过程中新建“我的魔方”时，如果希望项目升级内核后使用新的数据库，“魔方ID”属性请空着不要填写，云平台会随机生成新的华炎魔方ID值；如果想继续使用项目原来已有数据库，就要填写为已有项目的魔方ID值，不可以空着，后续升级过程强依赖这个华炎魔方ID值。
+
+已有项目的魔方ID值可以打开“设置>公司设置>公司”界面，浏览器地址栏中最后一个字符串就是魔方ID值，比如`/app/admin/spaces/view/WE9mT9WktDHAjJDpC` 中取最后的`WE9mT9WktDHAjJDpC`。
+
+\
+
+:::warning
+如果想保留项目原有数据库，一定要注意“魔方ID”属性不可以空着，否则云平台会随机生成新的华炎魔方ID值，这样升级后就无法正常使用原项目已有数据库。
+
+:::
+
+\
+
+:::info
+因为云平台上每个账户暂时只能创建一个华炎魔方，所以如果目前想创建更多魔方ID来升级老项目的话，只能为每个老项目注册一个云账户，以后云平台有可能会允许一个账户创建多个魔方ID。
+
+:::
+
+### 查看华炎魔方版本号
+
+点击页面右上角“头像”图标，然后点击“关于”即可查看当前华炎魔方版本号。
+
+## 1.23升级至2.1
+
+2\.x版本与1.x版本相比较有较大差别，所以需要一些额外的操作步骤才能顺利把1.23的项目升级至2.1版本。
+
+### 升级前后文件目录对比
+
+如下图所示，升级前（右侧）目录中有两个应用，迁移到升级后（左侧）目录后可以被正常识别加载。
+
+ ![升级前后目录对比](https://console.steedos.cn/api/files/images/AM9dXq5Psf6hkWoRS)
+
+### 项目文件升级步骤
+
+#### 找到并下载2.1最新版本模板项目文件夹
+
+见 [project-template](https://github.com/steedos/steedos-platform/tree/2.1/steedos-projects/project-template)， 你也可以选择命令行创建一个2.1版本的华炎魔方项目，会自动下载并生成这个项目模板文件夹。
+
+ ![](https://console.steedos.cn/api/files/images/Qdq9yu5NznMJYu7yG)
+
+
+:::info
+通过命令行 `npx create-steedos-app@2.1 my-app` 可以自动下载并创建一个2.1版本的华炎魔方模板项目。
+
+:::
+
+\
+#### 拷贝模板项目默认软件包文件夹
+
+把2.1模板项目中的 `steedos-app` 文件夹拷贝到要升级的项目根目录文件夹中。
+
+#### 迁移原项目的软件包文件夹到默认软件包文件夹
+
+从华炎魔方2.1版本开始，`steedos-app` 文件夹将被视为默认软件包文件夹。
+
+如上述”*升级前后目录对比*”图中所示，原来有一个软件包文件夹project，可以把里面的元数据迁移至默认软件包文件夹 `steedos-app` 中，如果原来有多个软件包文件夹，也可以一并拷贝到这个默认软件包文件夹中。
+
+
+:::info
+如果原来有多个软件包文件夹，除了可以一并迁移至默认软件包文件夹外，还可以把它们分别迁移至独立的软件包中，请参考下一小节。
+
+:::
+
+\
+#### 迁移原项目的软件包文件夹到其他软件包文件夹
+
+从华炎魔方2.1版本开始，`steedos-packages` 文件夹将被视为存放除默认软件包外的其他软件包文件夹。
+
+如上述”*升级前后目录对比*”图中所示，有另一个软件包文件夹oa，可以把整个软件包文件夹拷贝到 `steedos-packages` 文件夹中，如果还有其他更多软件包，都可以各自存放到该文件夹中，里面每个子文件夹将作为一个软件包存在。
+
+#### 补充各个软件包的微服务文件
+
+从华炎魔方2.1版本开始，每个软件包中都必须有一个微服务文件`package.service.js` ，所有缺少该文件的软件包将无法正常加载。
+
+如上述”*升级前后目录对比*”图中所示，名为`oa`的软件包文件夹中原先并没有文件`package.service.js` ，但是默认软件包文件夹中是有该文件的，可以直接从默认软件包文件夹`steedos-app`中拷贝一份该文件至 `oa` 文件夹；如果还有其他软件包缺少该文件都应该拷贝一份补上。
+
+#### 补充微服务文件夹
+
+从华炎魔方2.1版本开始，所有的华炎魔方项目都将使用微服务架构，根目录不可以缺少微服务文件夹 `services`。
+
+如上述”*升级前后目录对比*”图中所示，原来并没有名为 `services` 的文件夹，可以直接从上述第一步提到的“华炎魔方模板项目”文件夹中拷贝一份`services`文件夹至原项目根目录。
+
+#### 补充软件包配置文件夹
+
+从华炎魔方2.1版本开始，可以在根目录下名为 `.steedos` 的文件夹中配置要安装和使用的软件包。
+
+如上述”*升级前后目录对比*”图中所示，原来并没有名为 `.steedos` 的文件夹，可以直接从上述第一步提到的“华炎魔方模板项目”文件夹中拷贝一份`.steedos`文件夹至原项目根目录。
+
+#### 配置要安装的软件包
+
+软件包配置文件夹`.steedos`下的 `package.json` 文件可用来指定要从`npm`中安装哪些软件包到本地的`node_modules`中。
+
+默认从“华炎魔方模板项目”中拷贝下来的`.steedos/package.json`文件依赖了 `@steedos-labs/master`和 `@steedos-labs/oa`这两个软件包。
+
+如上述”*升级前后目录对比*”图中所示，原项目中已经有本地的 `oa` 软件包了，所以可以移除 `@steedos-labs/oa` 这个软件包以避免冲突。
+
+```json
+{
+    "name": "steedos-project-packages",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "dependencies": {
+        "@steedos-labs/master": "2.1.30"
+    }
+}
+```
+
+#### 配置要启用哪些软件包
+
+软件包配置文件夹`.steedos`下的 `steedos-packages.yml` 文件可用来指定要启用哪些软件包。
+
+默认从“华炎魔方模板项目”中拷贝下来的`.steedos-packages.yml`文件启用了 `steedos-app-default` 、`@steedos-labs/master`和 `@steedos-labs/oa`这三个软件包。
+
+如上述”*升级前后目录对比*”图中所示，原项目中已经有本地的 `oa` 软件包了，所以可以移除 `@steedos-labs/oa` 这个软件包以避免冲突，同时引用本地的 `oa` 软件包。
+
+```yaml
+steedos-app-default:
+  enable: true
+  version: 2.1.30
+  description: A Steedos App
+  local: true
+  path: steedos-app
+'@steedos-labs/master':
+  enable: true
+  version: 2.1.17
+  description: ''
+  local: false
+  path: .steedos/node_modules/@steedos-labs/master
+'@steedos/oa':
+  enable: true
+  version: 1.0.0
+  description: ''
+  local: true
+  path: steedos-packages/oa
+```
+
+#### 补充moleculer配置文件
+
+从华炎魔方2.1版本开始，所有的华炎魔方项目都将使用微服务架构，根目录不可以缺少moleculer配置文件 `moleculer.config.js`。
+
+如上述”*升级前后目录对比*”图中所示，原来并没有名为 `moleculer.config.js` 的文件，可以直接从上述第一步提到的“华炎魔方模板项目”文件夹中拷贝一份`moleculer.config.js`文件至原项目根目录。
+
+#### 修改华炎魔方配置文件
+
+相比之前的版本，华炎魔方2.1版本开始，配置文件 `steedos-config.yml` 改动较大，也引入了很多环境变量。
+
+因为改动比较多，可以直接从上述第一步提到的“华炎魔方模板项目”文件夹中拷贝一份`steedos-config.yml`文件至原项目根目录覆盖原有文件。
+
+#### 修改华炎魔方环境变量文件
+
+相比之前的版本，华炎魔方2.1版本开始，环境变量配置文件`.env` 改动较大，也引入了一些新的环境变量。
+
+因为改动比较多，可以直接从上述第一步提到的“华炎魔方模板项目”文件夹中拷贝一份`.env`文件至原项目根目录覆盖原有文件。
+
+有私密环境变量需要配置，所以需要增加`.env.local`文件来配置本地环境变量，请配置以下环境变量：
+
+```yaml
+PORT=5000
+ROOT_URL=http://192.168.0.95:5000
+TRANSPORTER=redis://127.0.0.1:6379
+CACHER=redis://127.0.0.1:6379/3
+MONGO_URL=mongodb://127.0.0.1:27017/steedos-syqcc
+
+
+STEEDOS_CLOUD_SPACE_ID=xxx
+STEEDOS_CLOUD_API_KEY=yyy
+
+[metadata]
+METADATA_SERVER=http://127.0.0.1:5000
+METADATA_APIKEY=yyy
+```
+
+#### 增加Docker部署相关文件
+
+如果需要Docker部署，请直接从上述第一步提到的“华炎魔方模板项目”文件夹中拷贝`.docker-compose.yml、Dockerfile、Dockerfile-codeserver`文件至原项目根目录。
+
+#### 增加Vscode配置文件
+
+如果项目根目录下缺少vscode配置文件夹 `.vscode`，请直接从上述第一步提到的“华炎魔方模板项目”文件夹中拷贝`.vscode`文件夹至原项目根目录。
+
+#### 移除无用文件
+
+项目根目录下的`server.js`文件是较早版本才需要的，新版本已经不用了。
+
+#### 升级根目录下node配置文件相关包版本
+
+项目根目录下的 `package.json` 文件是node项目的配置文件，该文件可以升级相关依赖包版本。
+
+由于1.x与2.1版本该文件改动较大，建议直接从上述第一步提到的“华炎魔方模板项目”文件夹中拷贝`.package.json`文件至原项目根目录覆盖原有文件，如果原项目有其他依赖包或额外配置，请在覆盖原有文件前作备份对比后再覆盖。
+
+
+:::info
+以上“目录文件升级步骤”是照着第一步提到的“华炎魔方模板项目”文件夹目录把原项目目录缺少的文件补上，也可以反过来把原项目目录中软件包直接拷贝到模板项目的相关位置，有可能效果更简单。
+
+:::
+
+### 运行升级后的项目
+
+上述文件目录升级完成后，就可以开始运行项目测试效果了，请打开命令行窗口，先在根目录执行 `yarn`来安装相关依赖包，然后执行 `yarn start` 就可以运行项目了。

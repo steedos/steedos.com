@@ -1,0 +1,1008 @@
+---
+title: 开发人员快速向导
+description: 本教程指导您如何使用 VS Code，同步元数据，并通过编写代码实现高级业务逻辑。
+---
+
+本教程指导您如何使用 VS Code，同步元数据，并通过编写代码实现高级业务逻辑。
+
+## 部署开发环境
+
+同步元数据前，需在本地部署开发环境。
+
+请参考教程 [开发环境部署 - DevOps 远程开发](/docs/deploy/devops) 使用我们为国内用户提供的华炎魔方DevOps服务，启动远程开发环境来开发或试用华炎魔方，以免去本地安装开发环境的繁琐过程。
+
+要调式华炎魔方平台源码，请参考文档 [开发环境部署 - 调试平台源码](/docs/developer/deploy-gitpod) 使用 [Gitpod](https://gitpod.io/) 启动远程开发环境。
+
+## 配置元数据同步
+
+以下是要使用元数据同步功能需要在本地开发环境中进行的必要配置操作，在我们推荐的远程开发环境中可以跳过这些配置过程 ，因为我们已经在Gitpod远程开发环境中预先处理好了这些配置。
+
+### 安装steedos命令
+
+安装或更新Steedos CLI命令工具
+
+```bash
+npm i steedos-cli --global
+```
+
+### 安装 vs code 及插件
+
+[参考官方文件下载并安装 VS Code](https://code.visualstudio.com/)。
+
+打开 VS Code，在扩展商城中搜索 Steedos，选择`Steedos Extension Pack`”，并点击`Install`”开始安装，默认该扩展会同时安装“Steedos CLI Integration”扩展，所以不需要单独安装CLI扩展。
+
+ ![](https://console.steedos.cn/api/files/images/QEtoyPozXdRDbWocP)
+
+### 配置环境变量
+
+建议在 `.env.local` 中配置本地环境变量。环境变量中可能会有 API_KEY等保密信息，而此文件默认不会被提交到 git 仓库中。
+
+创建或修改 `.env.local` 文件，设置环境变量。
+
+```bash
+[metadata]
+METADATA_SERVER=#华炎魔方服务器URL
+METADATA_APIKEY=#华炎魔方 API Key
+```
+
+\
+参数说明如下：
+
+* `METADATA_SERVER`: 元数据服务器的网址，如果是本地开发环境，可以配置为 http://IP地址:端口号 ；如果使用华炎魔方云服务，需配置 https 协议，例如 https://zhuangjianguo.steedos.cn/
+* `METADATA_APIKEY`: 华炎云控制台分配的 API KEY，如果是云服务，可以直接在云服务记录中复制；如果是本地开发环境，需要先创建一条私有部署记录。
+
+### 配置集群模式启动
+
+要使用同步代码功能需要配置mongodb集群模式启动，请参考相关文档先配置好集群模式。
+
+* Windows开发环境 - 配置mongodb集群模式启动：请参考 [开发环境部署 - Windows → 配置mongodb集群模式启动](https://www.steedos.cn/docs/deploy/deploy-windows#%E9%85%8D%E7%BD%AEmongodb%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E5%90%AF%E5%8A%A8)。
+* Mac开发环境 - 配置mongodb集群模式启动：请参考 [开发环境部署 - Mac](/docs/deploy/deploy-mac) 中的 ”安装Mongodb数据库服务“ 小节。
+
+## 软件包
+
+通过定义软件包，可以将复杂的项目需求拆分成多个子模块分别由不同的团队开发。对于可以复用的需求，也可以封装为软件包，以便在多个项目中引用。
+
+华炎魔方基于 nodejs 标准的 npm 规范定义软件包。
+
+### 软件包格式
+
+每个软件包至少包含以下内容：
+
+* `package.json`：基于 npmjs 标准规范，定义软件包的信息， 用于描述软件包名称、版本、依赖的软件包信息。具体参考 <https://docs.npmjs.com/cli/v7/configuring-npm/package-json>
+* `package.service.js`：软件包微服务，是一个遵循 Moleculer 规范的微服务定义文件，可以编写代码，控制软件包加载时、启动、停止时执行的操作。具体参考： <https://moleculer.services/docs/0.14/services.html>
+* `main/default`文件夹：包含软件包中具体的内容，包括元数据、触发器、服务端路由、自定义脚本等等。
+
+### 多软件包模式
+
+华炎魔方项目根目录有一个文件夹`steedos-app`，这个文件夹中定义了一个名为`steedos-app-default`的默认软件包。
+
+一个华炎魔方项目是可以定义多个软件包的，在文件夹`steedos-packages`中的每个子文件夹就是一个软件包，多软件包模式的魔方项目软件包文件目录结构为：
+
+```bash
+my-app
+├── steedos-app
+├── steedos-packages
+    ├── package1
+    ├── package2
+    └── package3
+```
+
+我们推荐使用多软件包的方式开发华炎魔方项目。
+
+### 创建软件包
+
+可以把项目根目录的 `steedos-app` 文件夹复制下来并粘贴到 `steedos-packages` 文件夹中，并执行以下操作来创建一个新的软件包。
+
+* 修改软件包文件夹名称
+* 修改软件包名称，即软件包文件夹中 `package.json` 文件中的“name”属性。
+
+### 切换默认软件包
+
+如需要切换当前开发的软件包，需要先在 `.env.local` 或 `.env`文件中配置以下环境变量来变更默认软件包的位置，或者您也可以使用VSCODE编辑器的“查看→命令面板”中的`set Default Package Path`命令来自动创建相关环境变量：
+
+```json
+[package] 
+DEFAULT_PACKAGE_PATH=steedos-packages/project #配置为相关软件包目录
+```
+
+ ![](https://console.steedos.cn/api/files/images/ohZxpK9ZsmumMTchF)
+
+### 软件包配置文件
+
+项目根目录有个 `.steedos` 文件夹，该文件夹是一个独立的 NPM 项目，在该项目中可以定义要在华炎魔方项目中引用哪些软件包。
+
+* **.steedos/package.json**：这是 NPM 项目的配置文件，可以在`dependencies`中定义要安装哪些软件包到本地。
+* **.steedos/steedos-packages.yml**：在该文件中可以配置当前华炎魔方项目要引用哪些软件包，包括之前在`package.json`文件依赖项中定义的软件包也需要在这里引用才能生效。
+
+  每个软件包可以定义的属性说明如下：
+
+  ```javascript
+  '@steedos-labs/oa': # 软件包名称
+    enable: true #是否启用该软件包
+    version: 2.1.20 # 软件包版本号
+    description: '' # 软件包备注
+    local: false # 是否是本地项目下的软件包，只要不是安装到`.steedos/node_modules`文件夹下的软件包都应该设置为true
+    path: .steedos/node_modules/@steedos-labs/oa #软件包所在文件目录，所有软件包都必须在这里填写软件包所在硬盘目录
+  ```
+
+### 重新加载软件包
+
+通常来说我们会在以下情况下需要重新加载软件包：
+
+* 软件包安装或升级后加载异常。
+* 在开发过程中为软件包编写了代码需要测试相关开发成果。
+
+请在“设置”应用中进入“应用程序→软件包”界面，在软件包列表找到要重新加载的软件包，然后点击其右侧下拉菜单并在展开的菜单中点击“重新加载”菜单来重新加载软件包。
+
+
+:::info
+我们也可以参考下面 [上传元数据](#%E4%B8%8A%E4%BC%A0%E5%85%83%E6%95%B0%E6%8D%AE) 小节来把软件包中编写的元数据代码“Deploy”到界面上来测试相关开发成果。
+
+:::
+
+## 同步元数据
+
+### 浏览并下载元数据
+
+前述配置完成后，在 VS Code 的左侧工具栏会出现下图的图标，单击该图标，则会自动展示可以下载的元数据清单，您只需要点击所需文件的右边下载图标便可将其下载到本地文件。
+
+需要注意的是，如果本地已经存在改文件则会直接覆盖，所以下载元数据前，应先将现有代码提交到git仓库，以便查看本次下载修改的文件。
+
+ ![](https://console.steedos.cn/api/files/images/8o3JqQDox4Gijxorn)如果未配置元数据同步相关的环境变量的话，点击右上角的刷新按钮、下载按钮等都会报错`Please run command, steedos source:config`，我们只要按上面“配置环境变量”小节把相关环境变量配置上，或者在项目命令行上运行指令`steedos source:config`在向导中配置相关环境变量即可。
+
+### 上传元数据
+
+如果从 git 仓库更新到其他人修改的元数据，或是直接修改了元数据的配置文件，可以通过上传命令将元数据上传到华炎魔方服务器中。
+
+在项目文件夹中选择需要上传的元数据，点击右键，并选择`Steedos: Deploy Source` 菜单。
+
+ ![](https://console.steedos.cn/api/files/images/ju5NqucSwB3H6EtKu)使用华炎魔方VS Code代码同步插件不但可以通过“Deploy Source”来把本地的代码发布到数据库中，也可以通过“Retrieve Source”操作来把在界面上可视化开发的元数据同步成代码下载到本地，对于可以通过在界面上进行可视化开发来维护的元数据，我们推荐开发人员不要在本地VS Code中开发，以尽量保证系统中的元数据配置始终来源于同一个方向，这样可以避免元数据重复等问题的发生。
+
+### 同步指定文件或文件夹
+
+元数据已经同步到本地后，可以浏览项目文件夹，点击对应的元数据文件或文件夹，上传或下载对应元数据。
+
+ ![](https://console.steedos.cn/api/files/images/t8sHRTEsPFr2PL8JZ)
+
+### 设置元数据同步路径
+
+需要注意的是默认情况下上面的操作会把代码同步到默认软件包`steedos-app`目录中，如果需要把界面上配置的元数据同步到`steedos-packages`文件夹下的软件包目录中，我们需要先配置下以下环境变量来变更默认软件包的位置，或者您也可以按上面“切换默认软件包”小节提到的使用VSCODE编辑器的“查看→命令面板”中的`setDefaultPackagePath`命令来自动创建相关环境变量：
+
+```bash
+[package]
+DEFAULT_PACKAGE_PATH=steedos-packages/xxx #配置为相关软件包目录
+```
+
+在配置该环境变量后，再点击Steedos插件面板上相关元数据右侧的下载按钮即可把代码同步到`xxx`这个软件包的目录下，而不是同步到默认软件包目录下。
+
+同样的在配置上面默认软件包环境变量后，只能在该软件包目录下的文件或文件夹上才可以执行`Deploy Source`，`Retrieve Source`等右键操作。
+
+## 触发器
+
+当记录执行增删改操作时，可编写自动触发的js脚本，在事件触发前或是事件触发后执行。同一个对象的同一个事件，可以在不同软件包中定义多个触发器。
+
+* 触发器所在的软件包中必须含有其对应的对象文件或者继承的对象文件。
+* 自定义对象触发器文件名不能携带 __c , 在触发器文件中需要手动配置listenTo的值：对象 API 名称。
+
+### 触发器文件.trigger.js
+
+触发器文件名称以`.trigger.js`结尾，格式如下：
+
+```javascript
+module.exports = {
+    listenTo: '对象API名称',
+    beforeInsert: [async] Function,
+    beforeUpdate: [async] Function,
+    beforeDelete: [async] Function,
+    beforeFind: [async] Function,
+    afterInsert: [async] Function,
+    afterUpdate: [async] Function,
+    afterDelete: [async] Function,
+}
+```
+
+其中
+
+* `listenTo`: 对象名称，选填。如果没有定义此属性，则取文件名中第一个 `.` 之前的文字作为listenTo的值
+* `beforeInsert`: 数据新增前执行, 选填
+* `beforeUpdate`: 数据修改前执行, 选填
+* `beforeDelete`: 数据删除前执行, 选填
+* `beforeFind` : 查询数据之前执行, 选填
+* `afterInsert`: 数据新增后执行, 选填
+* `afterUpdate`: 数据修改后执行, 选填
+* `afterDelete`: 数据删除后执行, 选填
+
+\
+#### 事件前触发
+
+事件前触发的触发器，可以用于校验用户录入的数据是否正确，如果有问题，可以抛错，错误信息会反馈到前端操作页面；还可以结合权限控制当前操作等。 [触发器&权限](/docs/admin/permission_set#%E8%A7%A6%E5%8F%91%E5%99%A8%E6%9D%83%E9%99%90)。
+
+以下触发器在事件前触发
+
+* beforeInsert
+* beforeUpdate
+* beforeDelete
+* beforeFind
+
+#### 事件后触发
+
+事件后触发的触发器，可以用于执行关联的事件。例如：任务创建完成后发送通知给指定人员。
+
+以下触发器在事件后触发
+
+* afterInsert
+* afterUpdate
+* afterDelete
+
+#### 参数说明
+
+所有脚本函数均为无参函数，所属数据可从`this`中获取，`this`结构如下
+
+* `id`: 记录的唯一标识\[string\],
+* `userId`: 当前用户唯一标识\[string\],
+* `spaceId`: 当前工作区\[string\],
+* `doc`: 需要新增/修改的记录内容\[json\],
+* `previousDoc`: 修改/删除前的记录\[json\], //仅afterUpdate, afterDelete时存在此属性
+* `object_name`: 当前对象名称\[string\],
+* `datasource_name`: 数据源名称\[string\],
+* `getObject`: function(object_name: string)
+* `query`: 查询数据相关参数\[json\], //仅beforeFind时存在此属性
+
+#### 触发器函数的返回值
+
+* 如果return的是false，则中断操作，如在before.insert里return false,则不执行insert操作。
+
+\
+### 触发器示例
+
+```javascript
+beforeInsert: async function () {
+    var doc = this.doc
+    if (doc.code) {
+        let count = await this.getObject('picklists').count({ filters: [['space', '=', doc.space], ['code', '=', doc.code]] })
+        if (count > 0) {
+            throw new Error("唯一编码不能重复");
+        }
+    }
+},
+```
+
+\
+### 创建触发器
+
+* 打开命令面板，在输入框中输入“Steedos:”,则会出现可选的命令列表，选择“Create Object Trigger”
+* 根据提示填写触发器名称并回车
+* 选择需要的trigger，例如 beforeInsert, beforeUpdate等，可多选，点击“OK”
+* 选择目标文件夹，默认是“triggers”文件夹下，选择该目录并回车，系统会生成触发器文件并保存到对应的文件夹中。
+* 在triggers.js文件中调整listenTo属性值；在指定触发器函数中编写相关代码。                                             ![](https://console.steedos.cn/api/files/images/diL9pZn4H6qA5MCaK)
+
+## 服务端路由
+
+在华炎魔方项目中，可以基于 [nodejs express](http://expressjs.com/en/4x/api.html)，定义服务端路由，在服务端处理个性化业务逻辑。
+
+### 路由文件.router.js
+
+服务端路由文件以 `.router.js` 结尾，文件必须 export default [express.Router](http://expressjs.com/en/4x/api.html#router) 实例。
+
+### 路由示例
+
+```javascript
+  const express = require("express");
+  const router = express.Router();
+
+  router.get('/path', async function (req, res) {
+      res.status(200).send({message: 'test ok'});
+  });
+  exports.default = router;
+```
+
+\
+### 创建服务端路由
+
+打开命令面板，在输入框中输入“Steedos:”,则会出现可选的命令列表，选择`Create Router`，按提示操作即可。
+
+ ![](https://console.steedos.cn/api/files/images/ozd89E9Qzn3ZAbMAk)
+
+## 自定义服务端api
+
+在系统中，可以定义API处理相关的业务逻辑并返回结果。
+
+### 声明自定义api
+
+文件规范
+
+* 文件名称必须以 `.router.js` 结尾, 比如: `xxx.router.js`
+* 文件必须使用 `exports.default `导出一个 [express.Router](http://expressjs.com/en/4x/api.html#router) 的实例
+
+### 使用代码编写实例
+
+```javascript
+const express = require("express");
+const router = express.Router();
+router.get('/path', async function (req, res) { 
+    res.status(200).send({ message: 'test ok' }); 
+}); 
+exports.default = router;
+```
+
+### 使用代码编写实例 (登录认证)
+
+* 认证处理器: `core.requireAuthentication`, 认证成功, 则可以在req中获取到当前用户信息`req.user` ; 认证失败, 则会返回401错误
+
+```javascript
+const express = require("express"); 
+const router = express.Router(); 
+const core = require('@steedos/core');
+router.get('/path', core.requireAuthentication, async function (req, res) { 
+    res.status(200).send({ message: 'test ok' }); 
+}); 
+exports.default = router;
+```
+
+### 使用 dx 插件创建 router 文件
+
+* 1、打开命令面板，在输入框中输入“Steedos:”,则会出现可选的命令列表，选择“Create Router”
+
+ ![](https://console.steedos.cn/api/files/images/kZ2Jt5kudWSdf6Enj)
+
+* 2、输入router 文件名称，输入回车
+
+ ![](https://console.steedos.cn/api/files/images/SknrBDaysG489mfbi)
+
+* 3、选择将要生成的目录
+
+ ![](https://console.steedos.cn/api/files/images/kY2Ap4kz3t4AcAWbM)
+
+* 4、生成的router文件内容如图所示
+
+ ![](https://console.steedos.cn/api/files/images/5vBLCTwFtLFoLWmGK)
+
+## 自定义操作按钮
+
+对象操作按钮是华炎魔方支持的元数据之一，我们可以在对象设置界面或使用代码来设置自定义按钮。
+
+在按钮要执行的脚本中可以调用华炎魔方前端内核函数实现各种功能，比如可以调用 `SteedosUI.showModal` 函数来弹出表单或表格窗口，请查阅文档 [前端函数索引](/docs/developer/steedosui)了解目前可供调用的内核函数说明。
+
+### 界面上配置
+
+要在对象设置界面配置自定义操作按钮，请点开设置应用并进入“对象设置→对象”选择一个对象，然后在对象详细页面中找到“操作按钮”子表并点击其右上角新建按钮即可新建一个自定义操作按钮。
+
+\
+ ![](https://console.steedos.cn/api/files/images/maYxv5HaJrMjZArdj)其中执行的脚本需要按照以下格式要求填写脚本代码，所有脚本都应该写入一个 `function`函数体内。
+
+```yaml
+function(object_name, record_id){
+  // 在这里补充按钮点击事件业务需求脚本。
+}
+```
+
+### 用代码开发
+
+要用代码开发对象上自定义操作按钮，需要先在对象元数据文件夹中新建`buttons`文件夹用于放置操作按钮相关元数据，以下示例描述了给会议对象开发一个“会后评分”操作按钮的简易过程。
+
+请在`steedos-app/main/default/objects/meeting__c/buttons/`文件夹中分别新建对应的yml和js文件。
+
+#### 按钮配置文件`scoring.button.yml`
+
+```yaml
+name: scoring
+is_enable: true
+label: 会后评分
+'on': record_only
+visible: true
+```
+
+其中`on`参数表示按钮要放在什么位置，以下是可选参数：
+
+* list: 只显示在列表右上角;
+* record: 显示在记录查看页右上角，以及列表视图中每项的下拉菜单中;
+* record_more: 显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中;
+* list_item: 只显示在列表视图中每项的下拉菜单中;
+* record_only: 只显示在记录查看页右上角;
+* record_only_more: 只显示在记录查看页右上角的“更多”下拉菜单中"
+
+#### 按钮脚本文件`scoring.button.js`
+
+```javascript
+module.exports = {
+    scoring: function (object_name, record_id) {
+        $(document.body).addClass('loading');
+        let url = `api/meeting/scoring/application`;
+        let options = {
+            type: 'post',
+            async: true,
+            data: JSON.stringify({ meetingId: record_id }),
+            success: function (data) {
+                toastr.success('已发起会议评分申请。');
+                FlowRouter.reload();
+                $(document.body).removeClass('loading');
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(t(XMLHttpRequest.responseJSON.message))
+                $(document.body).removeClass('loading');
+            }
+        };
+        Steedos.authRequest(url, options);
+    },
+    scoringVisible: function (object_name, record_id, permissions, record) {
+        return record.type__c === '领导会议'; // 领导会议 显示会议评分按钮
+    }
+}
+```
+
+该文件导出两个函数，分别定义按钮事件和按钮显示规则。
+
+* 函数名称规范：按钮事件函数名称没有特别限制，一个正常的函数名称即可；但是按钮显示规则函数要求命名为按钮事件函数同名加上`Visible`后缀。
+* 按钮事件函数：该函数接收的两个参数`object_name, record_id`表示对象api名称和记录ID值。点击按钮时会触发该函数，其内可以通过`Steedos.authRequest`调用华炎魔方API接口。当按钮显示记录详细页，可以调用 `this.record`  、`Creator.getObjectRecord()` 获取当前记录信息； 当按钮显示在列表上，可以调用 `gridRef.current.api.getSelectedRows()` 获取当前选中的记录。
+* 按钮显示规则函数：该函数接收的两个参数`object_name, record_id, permissions, record`表示对象api名称、记录ID值、当前用户对该记录权限及当前记录信息。只有该函数返回值为`true`才会显示按钮。
+
+## 自定义列表视图
+
+对象列表视图是华炎魔方支持的元数据之一，我们可以在对象列表界面或对象设置界面或使用代码来新建自定义列表视图。
+
+### 界面上配置
+
+进入对象列表界面点击”列表视图设置“按钮，点击”新建“选项，输入”显示名称“、”API名称“等信息后点击”保存“按钮即可。更多详情请查看 [如何创建列表视图](/docs/admin/create_object#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E5%88%97%E8%A1%A8%E8%A7%86%E5%9B%BE) 。
+
+### 用代码开发
+
+要用代码开发对象上自定义列表视图，需要先在对象元数据文件夹中新建 listviews 文件夹用于放置列表视图相关元数据，然后创建 `列表视图名.listview.yml` 文件并补充属性内容。以下示例描述了给任务对象拓展了一个”`important_tasks`“的列表视图。该列表视图只出示被标记了”重要“的任务。
+
+文件路径： `/steedos-packages/app-extend/main/default/objects/tasks/listviews/important_tasks.listview.yml`
+
+```yaml
+name: important_tasks
+columns:
+  - field: name
+  - field: assignees
+  - field: important_tasks
+filter_scope: space
+label: 重要任务
+shared: true
+# filters: [["important_tasks","=",true]]
+filters: !<tag:yaml.org,2002:js/function> |-
+  function (){
+      return [["important","=",true]];
+  }
+sort:
+  - field_name: 'due_date'
+    order: desc
+```
+
+示例中属性含义：
+
+* name: `string` API 名称；
+* columns: `array` 列表显示的字段；
+* filter_scope: `string`过滤范围；
+* label: `string`  视图显示名称；
+* shared: `Boolean` 是否共享；
+* filters:  `array、function`  过滤条件；
+* sort: `array`  排序。
+
+## 自定义应用
+
+在华炎魔方中可以配置应用程序时可以配置外接应用与把第三方应用集成到华炎魔方中。
+
+点击顶部左上角九宫格图标弹出的“应用程序启动器”会列出当前系统启用的所有应用程序，可以在“设置”应用的“应用程序→应用程序”界面维护这些应用程序，要集成第三方外接应用，请在这里新建一个应用，并在“外接应用”栏输入相关属性：
+
+* 外部链接：请输入外接应用的访问地址，如果想通过链接脚本来打开外接应用，可以不填写该项。
+* 使用iframe打开：是否在华炎魔方内嵌iframe打开外接应用。
+* 在新窗口打开：是否使用新窗口来打开外接应用。
+* 链接脚本：这里可以输入希望在顶部左上角九宫格图标弹出的“应用程序启动器”中点击该外接应用时要触发执行的`javascript`脚本，一般来说外接应用需要单点登录时可以在这里编写脚本来实现。
+
+链接脚本最终会在一个不带参数的闭包函数中执行`(function(){" + 链接脚本+ "})()`，并且可以在链接脚本中通过变量`app`来引用当前点击的应用，比如`app.url`会输出我们为当前应用配置的外部链接地址，还可以在链接脚本中通过变量`event`来引用点击该外部链接时的事件参数，比如
+
+在链接脚本中可以增加代码`event.preventDefault();`来阻止点击外接链接A标签时的浏览器默认行为。
+
+如果勾选了“使用iframe打开”的话，链接脚本中还可以通过变量`iframe`来引用用于打开外部应用的iframe，比如我们可以加入脚本`iframe.attr("src", url)`来让iframe打开一个带有动态参数的url地址。
+
+以下示例脚本演示了如何调用外接应用的登录接口来实现单点登录，并在登录成功后使用iframe来打开外接应用的逻辑。
+
+```javascript
+var loginUrl = "https://mail.xxx.com/user/?q=login.do";
+var openUrl = "https://mail.xxx.com";
+event.preventDefault();
+var loginSucFun = function(){
+    iframe.attr("src", openUrl);
+}
+$.ajax({
+    type: "POST",
+    url: loginUrl,
+    data: {
+      ...
+    },
+    success: function(result) {
+        loginSucFun();
+    },
+    error: function() {
+        toastr.error("xxx系统登录验证失败，可能链接脚本或域账户设置不正确！");
+    }
+});
+```
+
+## 自定义前端脚本
+
+华炎魔方支持编写自定义前端脚本，可以在任何一个软件包的`main/defaunt/client`文件夹中的`.client.js`后缀的脚本文件中编写全局脚本代码，所有脚本代码都会被自动注入到华炎魔方网页端执行。
+
+比如我们可以在路径 `steedos-app/main/defaunt/client` 路径下分别创建以下脚本文件用于百度统计分析及自定义全局样式。
+
+* style.client.js
+* analytics.baidu.client.js
+
+## 自定义样式
+
+因为前面提到华炎魔方支持编写自定义前端脚本，所以我们可以通过在脚本文件中加入一段代码来实现自定义样式。
+
+`steedos-app/main/defaunt/client/style.client.js`
+
+```javascript
+(function () {
+    try {
+        var styleCss = $(`<style>
+            .steedos .slds-global-header_container{
+              background: #000;
+            }
+            .steedos .slds-global-header_container .slds-button_icon {
+              color: #fff;
+            }
+        </style>`);
+        $("head").append(styleCss);
+    } catch (error) {
+        console.log(error);
+    }
+})();
+```
+
+以上脚本代码可以把页面顶部背景颜色换成黑色主题。
+
+## 表单事件
+
+### initialValues
+
+表单初始化数据时执行。
+
+initialValues 可以定义为同步函数或是异步函数。
+
+```javascript
+# xxx.object.yml
+form:
+  initialValues: !!js/function |
+    function(){
+      return {
+          name: "Hello World",
+          code: "hello_world"
+      }
+    }
+```
+
+### onValuesChange
+
+* 修改记录时执行
+* 一个参数，参数内容如下：
+
+  ```javascript
+  {
+    changedValues: {...},  // 正在被修改的字段信息
+    values: {...}, // 表单所有字段的信息
+    form: {...}   // 表单中的一些函数
+  }
+  ```
+* 示例，根据”每月开销（元）“自动判断属于”低、中、高“哪个消费”层次”。代码如下：
+
+  ```javascript
+  # xxx.object.yml
+  form:
+    onValuesChange: !!js/function |
+      function(args){
+        const money = args.changedValues.money;
+        if(money < 1000){
+          args.form.setFieldsValue({type: '低'});
+        }else if(money>=1000 && money<=2000){
+          args.form.setFieldsValue({type: '中'});
+        }else{
+          args.form.setFieldsValue({type: '高'});
+        }
+      }
+  ```
+
+### beforeDelete
+
+* 删除记录之前执行
+* 无参函数，所属数据可从this中获取:
+
+  ```javascript
+  { 
+    doc: 当前记录, 
+    id: 记录ID,
+    object_name: 当前对象名称, 
+    spaceId: 当前工作区唯一标识, 
+    userId: 当前用户唯一标识, 
+  }
+  ```
+* 返回值：
+  * `return false`: 终止提交
+  * `return {字段名1: 错误原因1, 字段名2: 错误原因2}`: 终止提交，根据字段名将错误原因显示在编辑窗口的字段下
+  * `throw new Error('需要显示的错误信息')`: 终止提交，并自动在页面右上角报错信息
+* 示例：
+
+  ```javascript
+  # xxx.object.yml
+  form:
+    beforeDelete: !!js/function |
+      function () {
+        ...
+        throw new Error('禁止删除');
+      }
+  ```
+
+\
+### afterDelete
+
+* 删除记录成功后执行
+* 无参函数，所属数据可从this中获取:
+
+  ```javascript
+  { 
+    doc: 当前记录, 
+    id: 记录ID,
+    object_name: 当前对象名称, 
+    previousDoc: 删除前的完整记录,
+    spaceId: 当前工作区唯一标识, 
+    userId: 当前用户唯一标识, 
+  }
+  ```
+* 示例：
+
+  ```javascript
+  # xxx.object.yml
+  form:
+    afterDelete: !!js/function |
+      function () {
+        ...
+        window.open('xxx');
+      }
+  ```
+
+### beforeView
+
+* 记录详细页面：记录显示前执行
+* 无参函数，所属数据可从this中获取:
+
+  ```javascript
+  { 
+    doc: 要显示的记录, 
+    id: 记录ID,
+    object_name: 当前对象名称, 
+    schema: Schema,
+    spaceId: 当前工作区唯一标识, 
+    userId: 当前用户唯一标识, 
+  }
+  ```
+* 示例：
+
+  ```javascript
+  # xxx.object.yml
+  form:
+    beforeView: !!js/function |
+      function () {
+        if(this.doc.is_trial){
+          this.doc.name = this.doc.name + "(试用)";
+        }
+      }
+  ```
+
+### afterView
+
+* 记录详细页面：记录显示之后执行
+* 无参函数，所属数据可从this中获取:
+
+  ```javascript
+  { 
+    doc: 要显示的记录, 
+    id: 记录ID,
+    object_name: 当前对象名称, 
+    schema: Schema,
+    spaceId: 当前工作区唯一标识, 
+    userId: 当前用户唯一标识, 
+  }
+  ```
+* 示例：
+
+  ```javascript
+  # xxx.object.yml
+  form:
+    afterView: !!js/function |
+      function () {
+        //如果当前记录的is_trial为true，则修改详细页面header背景颜色、字体颜色
+        if(this.doc.is_trial){
+          $(".slds-page-header_bleed").css('background-color', '#4CAF50').css('color', '#ffffff');
+        }
+      }
+  ```
+
+\
+## 表单公式
+
+华炎魔方支持在前端定义表单公式来实现各种界面效果，比如配置字段显示隐藏规则，配置字段是否必填规则等。
+
+### 语法说明
+
+**公式格式**
+
+`{{ javascript语法的表达式 }}`
+
+必须以 ‘`{{`‘ 开头，以 ’`}}`’ 结尾。
+
+**支持变量**
+
+* formData : `Dictionary<any>`  当前表单数据；例如：表单中有个下拉框字段“性别”，其对应的API名称是“sex”,  formData.sex 就能获取到该字段选中项的值。
+* global: `Dictionary<any>`  全局变量，目前支持的全局变量清单详情请查阅后续的“全局变量附录“小节。比如公式表达式`global.now`会输出当前时间值。
+
+比如给某个字段的`visible_on`属性配置公式 `{{ formData.sex === 'male' ? true: false }}` 表示当表单中`sex`字段值为“male”时才显示该字段。
+
+表达式只要求用双层大括号中的脚本是合法的javascript语句就行，对于形式没有任何限制，比如上面的公式也可以写成如下所示的多行脚本公式：
+
+```javascript
+{{
+    (function(){
+      if(['male'].indexOf(formData.sex) > -1){
+        return true;
+      }else{
+        return false;
+      }
+    })()
+  }}
+```
+
+\
+### 字段显示公式
+
+我们可以在字段的`visible_on`属性中配置表单公式来实现字段的显示隐藏，当表达式返回 ture表示显示当前字段，否则隐藏当前字段。
+
+如果`visible_on` 属性值中依赖了某个字段，且存在其它字段的 `visible_on` 属性值中依赖了当前字段，请添加 `depend_on` 属性一起使用。
+
+假设合同对象上有一个“已收票金额”字段，需要在合同是“付款合同”时才显示此字段，我们只要按以下代码配置该字段的`visible_on`属性即可：
+
+```javascript
+name: received_invoice_amount
+type: summary
+label: 已收票金额
+# depend_on:
+#   - payment
+visible_on: "{{ formData.payment === true ? true: false }}"
+```
+
+上面是把字段显示公式写在低代码对象字段配置文件中，我们也可以在对象字段设置界面配置“字段显示公式”属性来实现一样的动态显示字段逻辑。
+
+ ![](https://console.steedos.cn/api/files/images/EwBLwQEMciHdEwjC5)另外还可以给对象配置“页面布局”，在页面布局上有“操作”按钮、“字段”、“相关子表”属性，这些属性上也是可以配置显示条件公式的，当公式表达式执行结果返回`true`表示显示对应的“操作”按钮、“字段”及“相关子表”，反之则表示隐藏它们。
+
+ ![](https://console.steedos.cn/api/files/images/nyvgQvXWkBzo59EPS)
+
+### 字段必填公式
+
+我们可以在字段的`required`属性中配置表单公式来实现字段的动态必填规则，当表达式返回 ture表示当前字段必填，否则当前字段不是必填。
+
+假设合同对象上有一个“结束日期”`(end_date)`字段，需要在合同的“合同状态”`(contract_fulfillment_state)`为“结束”`(fullfill)`时必填，我们只要按以下代码配置该字段的`required`属性即可：
+
+```javascript
+name: end_date
+type: date
+label: 合同结束日期
+required: "{{ formData.contract_fulfillment_state === 'fullfill' ? true: false }}"
+```
+
+字段必填公式目前只能写在低代码对象字段配置文件中，无法在对象设置界面配置该公式表达式。
+
+### 过滤条件公式
+
+我们可以给相关表`(lookup)`字段或主表子表字段配置`filters`属性来让该字段只列出一部分过滤后的选项而不是列出所有选项供用户选择。
+
+有时我们需要根据表单中某个字段的值来过滤相关表或主表子表字段的选项范围，这时我们可以把相关表或主表子表字段的`filters`中配置为表单公式即可实现相关需求。
+
+假设我们要给合同对象配置一个相关任务字段，在用户填写该字段值时，我们希望只列出任务标题中包含“合同标签”字段值的任务供用户选择，只要按以下代码配置该字段的`filters`属性即可：
+
+```javascript
+label: '相关任务'
+type: lookup
+reference_to: tasks
+depend_on:
+  - tag
+filters: '{{[["name","contains",formData.tag]]}}'
+```
+
+注意公式表达式中引用的变量会根据变量本身的数据类型自动补全引号，也就是说上面的表达式中`formData.tag`变量是字符串类型，所以该公式执行后会自动为该变量值补全引号，比如当用户在表单中输入的“合同标签”`(tag)`字段值为“软件”时，该公式表达式执行结果为`[["name","contains",”软件”]]`。
+
+### 全局变量附录
+
+在表单公式中可以通过`global`来引用全局变量，目前支持的全局变量如下所示：
+
+| 属性名 | 值类型 | 属性含义 |
+|----|----|----|
+| mode | string | 当前表单状态（read / edit） |
+| now | date | 当前时间 |
+| spaceId | string | 当前工作区id |
+| user | object | 当前用户信息 |
+| userId | string | 当前用户id |
+
+下面是一份全局变量及其值示例：
+
+```javascript
+{
+  mode: 'read',   // read: 只读;  edit: 编辑。
+  now: Tue Oct 26 2021 14:14:55 GMT+0800 (中国标准时间),
+  spaceId: "M6x6ddKvpj9ddcYYm",
+  user:{
+    authToken: "87abc38cd77f7a7613e76672dcfc5fd7ff2c21016e4202b131af579e7416c292787d198ffe45fb6674d8a3"
+    companies: [{_id: '43t84iMQTbsqvE25z', name: '分部1', organization: '3bJaD7L8jjbYW4vY8'}]
+    company: {_id: '43t84iMQTbsqvE25z', name: '分部1', organization: '3bJaD7L8jjbYW4vY8'}
+    company_id: "43t84iMQTbsqvE25z"
+    company_ids: ['43t84iMQTbsqvE25z']
+    email: "2291335xxx@qq.com"
+    is_space_admin: true
+    language: "zh-CN"
+    locale: "zh-cn"
+    mobile: "1347960xxxx"
+    name: "ldx_test_app1"
+    organization: {_id: 'EzrZricSyxyJARRut', name: '部门1-1-1', company_id: '43t84iMQTbsqvE25z', fullname: '部门1-1/部门1-1-1'}
+    organizations: [{_id: 'EzrZricSyxyJARRut', name: '部门1-1-1', company_id: '43t84iMQTbsqvE25z', fullname: '部门1-1/部门1-1-1'}]
+    password_expired: false
+    permission_shares: []
+    profile: "admin"
+    roles: ['admin']
+    space: {_id: 'M6x6ddKvpj9ddcYYm', name: '部门1', admins: ['606d7baa3393516019dbfb39', 'FCK84wXMAd9qcL27N']}
+    spaceId: "M6x6ddKvpj9ddcYYm"
+    spaces: [{_id: 'M6x6ddKvpj9ddcYYm', name: '部门1'}]
+    steedos_id: "606d7baa3393516019dbfb39"
+    userId: "606d7baa3393516019dbfb39"
+    utcOffset: 8
+  },
+  userId: "606d7baa3393516019dbfb39",
+}
+```
+
+其中`global.user`返回的是当前登录用户信息，下面列出了其主要变量清单：
+
+| 属性名 | 值类型 | 属性含义 |
+|----|----|----|
+| authToken | string | 登录信息 |
+| companies | array | 所属分部 |
+| company | object | 主分部 |
+| company_id | string | 主分部id |
+| company_ids | array | 所属分部id |
+| email | string | 邮箱 |
+| is_space_admin | boolean | 是否是工作区管理员 |
+| language | string | 语言 |
+| locale | string | 本地语言 |
+| mobile | string | 手机号 |
+| name | string | 用户名 |
+| organization | object | 主部门 |
+| organizations | array | 所属部门 |
+| password_expired | boolean | 登录密码过期 |
+| permission_shares | array | 共享规则 |
+| profile | string | 简档 |
+| roles | array | 用户角色 |
+| space | object | 当前工作区 |
+| spaceId | string | 当前工作区id |
+| spaces | array | 用户所属工作区集合 |
+| userId | string | 用户id |
+| utcOffset | number | 国际化UTC时间偏差；北京时间时该值为 8。 |
+
+## 表单级联
+
+在项目开发中，我们经常会需要在表单上实现多个字段之间的级联效果，比如常见的省市选项级联等，下面我们描述下如果在华炎魔方中实现类似需求。
+
+### 下拉级联
+
+当需要实现选项固定的字段的下拉级联效果时，我们推荐把字段配置为`select`类型，并在`optionsFunction`属性中编写级联逻辑代码，以下是一个简单的省市级联效果字段配置示例。
+
+`select`类型即是选择框字段类型，该字段类型说明请参考文档 [字段类型索引](/docs/admin/field_type) 中的 [选择框字段类型](/docs/admin/field_type#%E9%80%89%E6%8B%A9%E6%A1%86%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B)。
+
+需要注意`city`字段需要配置`depend_on`属性指向`province`，表示当`province`字段值变更时级联触发`city`字段选项重新计算并且会清除`city`字段值。
+
+```yaml
+province:
+    type: select
+    label: 省
+    group: 省市级联
+    options:
+      - label: 北京
+          value: 'bj'
+      - label: 上海
+          value: 'sh'
+      - label: 江苏
+          value: 'js'
+city:
+  type: select
+  label: 市
+  group: 省市级联
+  depend_on:
+    - province
+  optionsFunction: !<tag:yaml.org,2002:js/function> |-
+    function (values){
+      const cityData = {
+        bj: [{ label: '东城区', value: 'bj-1' }, { label: '西城区', value: 'bj-2' }],
+        sh: [{ label: '松江', value: 'sh-1' }, { label: '浦东', value: 'sh-2' }],
+        js: [{ label: '南京', value: 'js-1' }, { label: '杭州', value: 'js-2' }]
+      };
+      return cityData[values.province];
+    }
+```
+
+### 选项过滤
+
+很多情况下字段选项并不是固定的，而是需要请求后台接口来列出相关选项的，这时我们会把字段类型配置为 “相关表” 或 “主表子表”，其使用说明请参考 [字段类型索引](/docs/admin/field_type)。
+
+在华炎魔方中可以为这两种类型的字段配置`filters`或`filtersFunction`属性来限定选项的过滤条件，在这两个属性中配置业务代码都可以实现多个字段间选项级联效果。
+
+#### 过滤函数
+
+假设有一个产品对象，我们希望新建产品记录时，用户在选择了产品类别后，可以在选择所属品牌时，只列出之前选好的产品类别下的品牌供用户选择，我们只要按下面的代码来配置产品类别和品牌字段即可：
+
+```yaml
+category:
+  label: 产品类别
+  type: lookup
+  reference_to: categories
+brand:
+  label: 品牌
+  type: lookup
+  reference_to: brands
+  depend_on:
+    - category
+  filtersFunction: !<tag:yaml.org,2002:js/function> |-
+    function (filters, values){
+      return [["category","=",values.category]]
+    }
+```
+
+#### 表单公式
+
+上述示例是通过给字段配置`filtersFunction`属性，增加选项过滤逻辑来实现字段间选项级联效果，我们也可以把字段的`filters`属性配置为表单公式来实现一样的效果：
+
+```yaml
+category:
+  label: 产品类别
+  type: lookup
+  reference_to: categories
+brand:
+  label: 品牌
+  type: lookup
+  reference_to: brands
+  depend_on:
+    - category
+  filters: '{{[["category","=",formData.category]]}}'
+```
+
+#### 复杂示例
+
+无论是把字段`filtersFunction`属性配置为函数表达式，还是把字段的`filters`属性配置为表单公式，我们都可以编写复杂的`javascript`表达式来实现字段级联效果，以下示例使用表单公式实现选项过滤逻辑，在表单公式中调用了函数`Creator.getObjectRecord`请求接口并把接口返回的数据作为过滤条件的参数：
+
+```yaml
+name: supplier
+label: 收款方
+reference_to: accounts
+type: lookup
+depend_on:
+  - contract
+filters: "{{
+    (function(){
+      var filters = [];
+      var contract = _.isObject(formData.contract) ? formData.contract._id : formData.contract;
+      if (!contract) {
+        return filters;
+      }
+      var contracts = Creator.getObjectRecord('contracts', contract, 'othercompany');
+      if (contracts.othercompany.length == 1) {
+        filters.push(['_id', '=', contracts.othercompany]);
+      }
+      if (contracts.othercompany.length > 1) {
+        filters.push(['_id', 'in', contracts.othercompany]);
+      }
+      return filters;
+    })()
+  }}"
+```
+
+该示例演示了用户在表单中选择记录的所属合同字段值后，填写记录的“收款方”时，我们在弹出的选项列表中只列出之前选中的合同的“业务伙伴”作为“收款方”供选择。
+
+\

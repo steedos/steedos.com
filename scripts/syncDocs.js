@@ -78,9 +78,19 @@ async function sync(){
   const collections = await getCollections();
   console.log(collections)
   collections.forEach(collection => {
+    const dirname = path.join(process.cwd(), 'src', 'pages', 'docs', collection.slug)
+    if (!fs.statSync(dirname))
+      fs.mkdirSync(dirname)
     collection.documents.forEach(doc => {
-      const filename = path.join(process.cwd(), 'src', 'pages', 'docs', collection.slug, doc.slug + '.mdx')
-      fs.writeFileSync(filename, doc.body)
+      const filename = path.join(dirname, doc.slug + '.mdx')
+      const content = 
+`---
+title: ${doc.name}
+description: ${doc.summary}
+---
+
+${doc.body}`
+      fs.writeFileSync(filename, content)
     })
   });
 }

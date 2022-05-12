@@ -1,0 +1,1185 @@
+---
+title: 开发集团会议管理系统，实现会议全生命周期管理
+description: 本教程以会议管理为例，指导您如何使用华炎魔方，整合业务需求，通过页面对象字段配置，编写触发器、路由、公共函数等代码开发实现高级业务逻辑，开发企业个性化的业务管理应用。
+---
+
+本教程以会议管理为例，指导您如何使用华炎魔方，整合业务需求，通过页面对象字段配置，编写触发器、路由、公共函数等代码开发实现高级业务逻辑，开发企业个性化的业务管理应用。
+
+## 前期准备
+
+### 业务需求
+
+本案例会议模块需求主要是涵盖企业会议管理的会前管理及会后评分功能：
+
+* 会议创建：基本会议管理需求包括会议创建、会议冲突提醒、会议审批；
+* 会议通知：通知会议参会人员、车辆管理人员、会议日历视图展示；另外，会议集成企业内部其他系统，如电子邮件系统、短信平台、门禁卡系统、视频会议系统、企业办公平台进行会议信息通知；
+* 会议准备：提前的任务准备也很重要，比如订餐、场地服务、会议招待、外部参会人员的车辆安排等；
+* 会后评分：会议结束后，自动发起评分流程，进行会议召开情况总结反馈。
+
+### 需求分析
+
+将上述业务需求整理分析成华炎魔方系统实现的功能要点：
+
+* 会议对象：会议室、会议、外部参会人员、日程、任务、会后评分；
+* 流程审批：会议审批流程、会议车辆审批流程、会后评分流程；
+* 基础开发：对象页面布局配置、对象流程映射配置、会议时间校验、会议冲突提醒、会议列表日历视图展示开发等；
+* 字段控制：根据参会人员中是否存在领导控制会议信息展示额外信息字段、外部参会人员如有车辆信息可控制发起会议车辆审批流程的按钮、控制会议详情页相关表数据；
+* 字段更新：会议流程审批过程更新对象会议状态字段、会议车辆审批流程结束后更新相关车位信息、会后评分流程结束后数据回写至相应会议信息中；
+* 流程触发：可以发起相应审批流程，会议审批通过后自动通知参会人员、自动为任务处理人创建会前任务；
+* 接口调用：推送相应会议数据至第三方系统。
+
+### 开发流程
+
+首先，需要在本地的Linux/Mac/Windows环境中安装华炎魔方低代码开放平台，以及其他一些必要的开发工具。更为简化的方式，是在线申请开通华炎魔方云服务 。
+
+安装好华炎魔方后，就可以以此为基础进行应用开发了。这个过程包括：
+
+* 部署开发环境：[windows](https://steedos.cn/docs/deploy/deploy-windows)、[mac](https://steedos.cn/docs/deploy/deploy-mac)；
+* 可视化开发，在页面上直接配置对象（表）与应用
+* 通过同步工具，将配置的对象与应用转成代码
+* 基于代码进行进一步的开发，增加处理业务逻辑的API接口、触发器、按钮等
+
+## 可视化开发
+
+在华炎魔方中构建应用程序时，可以使用可视化界面管理所有的元数据。本地私有环境部署配置完成后，开发的第一步，就是由管理员在“设置”里，对系统进行管理，并对对象、应用等元数据进行配置。
+
+比如会议管理，主要的对象就是会议，我们首先来配置它。
+
+### 创建会议对象
+
+管理员在设置》对象设置》对象页面新建会议对象，填写完对象信息后保存即可。
+
+ ![](https://console.steedos.cn/api/files/images/y3YCKpqr3su5TtQwS)
+
+#### 新建会议对象字段
+
+对象新建时，系统会自动给对象增加4个对象字段，而其他的字段可自行定义。以会议对象，准备设置如下字段：
+
+| 序号 | 字段名 | 字段API | 类型 |
+|:---|----|----|----|
+| 1 | 会议主题 | name | 文本 |
+| 2 | 会议类型 | type | 选择框（选项值：领导会议、一般会议） |
+| 3 | 会议室 | meeting_room | 相关表（自定义对象：会议室） |
+| 4 | 会议开始时间 | start | 日期时间 |
+| 5 | 会议结束时间 | end | 日期时间 |
+| 6 | 内部参会人员 | staff | 相关表（内置对象：用户） |
+| 7 | 会议状态 | status | 选择框（选项值：草稿、审批中、审批完成） |
+| 8 | 是否需视频终端支持 | is_support | 复选框 |
+| 9 | 是否需用餐任务 | dining | 复选框 |
+| 10 | 用餐服务执行人 | dining_executive | 相关表（内置对象：用户） |
+
+我们在刚刚创建的会议对象的详情页面上，“对象字段”列表左上角的“新建”按钮，逐一新建所需字段。
+
+ ![](https://console.steedos.cn/api/files/images/CBfeMjMy3EkPzgyYE)
+
+新建和修改字段时，可以配置排序号、宽字段、必填等高级选项，字段属性填写完毕，点击“提交”，完成对象字段创建操作。
+
+需要说明的是页面创建的对象或字段数据保存后，API名称会自动加上”__c”的后缀，用来区分页面还是代码创建的对象或字段。
+
+### 设置列表视图
+
+对象创建完成后，需要设置对象的列表视图，来调整数据列表页的字段展示。在对象的列表显示页，可创建、修改、删除相应数据记录，也可导出列表页所有数据；
+
+在对象新建完成后，系统还会自动新建2个列表视图，
+
+* 所有（all）
+* 最近查看（rescent）
+
+可自行修改其设置。点击“编辑”,可以按先后顺序，增加列表视图上所要显示的字段；也可拖动“显示的列”字段，调整列表视图上字段的显示顺序。
+
+ ![](https://console.steedos.cn/api/files/images/SCL9KdwfiXDFrZdnn)
+
+已配置的对象字段、列表视图样式可以通过对象详情页的“预览”按钮，进行查看。
+
+### 创建会议子表
+
+在会议管理中，除了会议，我们在创建会议时还需要添加外部参会人员信息、以及会后评分信息等。在华炎魔方里，会议表是一个对象；外部参会人员表/会后评分表则是另一个对象，而会议表与外部参会人员表/会后评分表存在密切的逻辑关系。
+
+#### 主表与子表
+
+在会议信息中，外部参会人员表/会后评分表可能会有多条记录，这里，会议表是主表，外部参会人员表/会后评分表则是子表。
+
+在华炎魔方中，会议（主表）是一个对象，外部参会人员/会后评分（子表）则是另一个对象，需要分别定义。同时，在子表对象上可以定义一个“主表/子表”字段来描述主子表对象的关系。
+
+#### 新建子对象
+
+下面，我们新建会议对象的子对象：外部参会人员、会后评分
+
+同理，管理员进入设置》对象设置》对象，点击新建按钮，输入显示名、API名称等，点击保存按钮，即新建对象。
+
+#### 新建对象字段
+
+对象新建后，我们继续设定其他的字段。按会议业务需求，拟设置会议子表如下字段：
+
+#### 外部参会人员对象字段
+
+| 序号 | 字段名 | 字段API | 类型 |
+|----|----|----|----|
+| 1 | 姓名 | name | 文本 |
+| 2 | 单位 | company | 文本 |
+| 3 | 手机号 | phone | 文本 |
+| 4 | 邮箱 | email | 邮件地址 |
+| 5 | 车牌号 | license | 文本 |
+| 6 | 车位信息 | parking_lot | 文本 |
+| 7 | 会议信息 | meeting | 主表/子表（会议） |
+
+#### 会后评分对象字段
+
+| 序号 | 字段名 | 字段API | 类型 |
+|----|----|----|----|
+| 1 | 说明 | name | 长文本 |
+| 2 | 分数 | score | 数值 |
+| 3 | 创建人 | created_by | 相关表（内置对象：人员） |
+| 4 | 会议信息 | meeting | 主表/子表（会议） |
+
+\
+其中这两个对象的的“相关会议“这个字段，就实现了主子表之间的关联关系 。
+
+
+:::tip
+在子表对象（外部参会人员/会后评分）的详情页面上，点“新建”按钮新建主表/子表类型字段来关联会议主对象信息。
+
+:::
+
+ ![](https://console.steedos.cn/api/files/images/Hkz5KfEtw5FSp5sbJ)对象字段添加完成后，可修改/新建列表视图，预览创建的对象。
+
+### 创建审批流程
+
+根据案例实际需求会议会触发会议审批流程、会议车辆审批流程、会后评分流程，相应参会人员通知和会前任务处理分别通过系统标准的日程和任务实现。
+
+管理员进入设置》审批王》流程，点击新建按钮来创建会议流程，新建过程中分类字段需要在设置》审批王》分类菜单下提前维护。
+
+ ![](https://console.steedos.cn/api/files/images/nKf9BpBmZ7YZoLSSZ)流程记录创建完成后，点击流程记录进入流程详细页，设置流程表单字段和流程节点，流程详细设置见[设置和维护审批王](https://steedos.cn/docs/admin/workflow-admin)相关文档。
+
+以“会议车辆审批流程”为例，配置好的表单流程图如下：
+
+ ![审批表单配置页面](https://console.steedos.cn/api/files/images/kvoFxx3AjeLDfSwwM)      ![审批流程配置页面](https://console.steedos.cn/api/files/images/ex2WMiJFeDQsdD539)
+
+本次会议模块开发案例设置了三条对应记录“会议审批流程”、“会议车辆审批流程”、“会后领导评分流程”，流程设置完成后**启用**流程即可。
+
+ ![](https://console.steedos.cn/api/files/images/it2NFmbszc2FsFsmR)
+
+### 关联对象和流程
+
+怎样将配置好的会议对象和会议流程关联？本案例中将通过配置华炎魔方的“[对象流程映射](https://steedos.cn/docs/admin/workflow-admin#%E5%AF%B9%E8%B1%A1%E6%B5%81%E7%A8%8B%E6%98%A0%E5%B0%84)”功能，以“会议车辆审批流程”为例，把会议对象信息以及会议子表外部参会人员明细数据带到审批王表单中，流程发起审批流转到车辆管理员审批填写相应外部参会人员车位信息后，车位信息回写到对象台账中，来实现对象主（子）表数据和审批王表单（表格）的数据双向同步。
+
+管理员进入设置》审批王》对象流程映射，来分别配置相应的对象和审批王表单对应的字段。
+
+ ![](https://console.steedos.cn/api/files/images/3Agc3wt5nYXRB8vWX)对象：选择华炎魔方对象，因为涉及到对象子表同步到审批王明细表表格，所以在设置对象流程映射规则时选择对象为子表对象，这样字段映射关系中对象字段既可以选择到会议对象字段，又可以选择到外部参会人子对象字段数据来和审批王表单字段进行对应；
+
+流程：审批王需要被同步的流程记录；
+
+对象至表单：华炎魔方对象字段同步到审批王表单字段的配置项目；
+
+表单至对象：审批王表单字段同步到华炎魔方对象字段的配置项，即审批单填写的车位信息回写到外部参会人员对象的车位信息字段中。
+
+\
+
+:::tip
+1、可能会出现对象搜索不到情况，需打开对象设置中的“**允许配置对象流程**”、“**允许查看申请单**”开关，来配置对象流程映射；
+
+2、主子对象字段都能选择的前提条件是子对象中关联的主对象字段必须为“**主子表**”字段类型。
+
+:::
+
+配置完成后，对象数据创建完就可以在详细页面点击“发起审批”的按钮，来发起审批流程。
+
+ ![](https://console.steedos.cn/api/files/images/k83sRNuAsKsrXqC5t)
+
+### 创建应用
+
+建立好会议、会议室、外部参会人员、会后评分等会议相关对象后，我们可以建立自定义会议应用了。
+
+#### 新建应用：会议
+
+管理员进入 设置》应用程序》对象，点击新建按钮来创建新应用，
+
+ ![](https://console.steedos.cn/api/files/images/ssGJahNooRcNyLLBx)
+
+输入应用程序的名称、API名称、应用描述等，选择好桌面主菜单、手机主菜单，点击保存按钮。
+
+用户创建自定义应用可以参考[如何创建自定义应用程序](https://steedos.cn/docs/admin/create_object)文档介绍内容，进一步详细了解相关功能。
+
+建立自定义应用后，就可以进入应用，查看这个应用的具体情况；
+
+点击左上角的“应用程序启动器”图标，可以点击进入会议应用。
+
+ ![应用启动器](https://console.steedos.cn/api/files/images/3actGgxfqSrjbAwjv)
+
+ ![会议列表页](https://console.steedos.cn/api/files/images/69rzque4eadxgKXd8)里面已经有之前在预览时录入的数据。
+
+点击某条会议记录，查看会议详情页，详情页不但显示会议相关信息字段，也会将作为子表对象记录展示在详情页。会议详情页如下：
+
+ ![会议记录详情页](https://console.steedos.cn/api/files/images/KDLFQjRZMdf6snepv)
+
+说明：
+
+* 外部参会人员、会议评分作为会议的子表在主子对象及字段设置完成后，主表对象记录详情页面默认展示子表对象数据；
+* 附件、任务作为系统标准对象，创建对象开启“允许上传附件”、“允许添加任务”开关即可；
+
+   ![](https://console.steedos.cn/api/files/images/Pm6zL642NGADtT9DF)
+* 本案例中用户希望使用图形化审批流程，只能将对象的批准过程审批功能切换到审批王流程审批，所以在创建对象时还需把对象的“允许配置对象流程”、“允许查看申请单”开关来配置对象流程映射，实现流程对象数据同步；
+* 如果主表对象记录详情页面还需显示额外相关表数据，需要单独配置列表的页面布局设置。
+
+经过上述的配置，我们就建立起了会议管理系统的框架。具备了会议应用的基本功能，比如创建会议记录，创建会议外部参会人等相关子表数据等。
+
+## 元数据同步
+
+在界面配置好相应的对象及应用后，可以将这些元数据通过同步工具转换为代码，为后续的代码扩充作准备。
+
+\
+首先需要安装华炎魔方同步工具，安装方法和过程如下：
+
+### 在VS Code中安装插件
+
+在Visual Studio Code中，进入 扩展页面，搜索“Steedos”，安装 “Steedos Extensions for Visual Studio Code”插件
+
+ ![](https://console.steedos.cn/api/files/images/PGupNQcN46k2tQF5z)
+
+### 配置环境变量
+
+修改根目录下的 .env，增加以下两个参数，来实现元数据同步功能，其中METADATA_SERVER 为系统的Root的URL，METADATA_APIKEY为[激活本地私有化华炎魔方](https://steedos.cn/docs/deploy/deploy-activate)自动生成的的API Key。
+
+\
+```javascript
+[metadata]
+METADATA_SERVER=http://127.0.0.1:5000
+METADATA_APIKEY=-D0hUDsU0-_nhonh8TKZRukDZsqQQwiLCy
+```
+
+### 重启服务
+
+修改配置文件后，需重启华炎魔方服务。
+
+重启后，在 VS Code中，进入Steedos插件页，可以看到自定义的对象及应用等。
+
+ ![](https://console.steedos.cn/api/files/images/KGGrnecRrmWCPxde5)
+
+### 从数据库同步到代码
+
+在 VS Code中，切换到Steedos插件，可以看到已在页面配置的元数据，包括对象、应用等。[同步元数据](https://steedos.cn/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE)详细介绍。
+
+#### 将页面配置的对象、应用同步为代码
+
+点击VS Code工具九宫格同步插件后，可以分别点击Custom Objects、customApplicantions、Flows、Layouts下的数据来分别同步页面创建的对象、应用、审批王流程、页面布局等相关数据。
+
+ ![](https://console.steedos.cn/api/files/images/wPvANei4L3HpijsDf)
+
+#### 对象元数据
+
+同步到代码的元数据后，每个对象会单独生成一个对象文件夹，文件夹内部主要包括以下几类文件，文件分别对应页面的相关配置项：
+
+* \*\*\*.object.yml ：对象的基本配置属性；
+* \*\*\*.fileld.yml ：fields文件夹其下是对象的每个字段对应的文件 ；
+* \*\*\*.listview.yml：listviews文件夹其下是对象下的列表视图对应的文件 ；
+* \*\*\*.app.ym：应用的基本配置属性。
+
+ ![](https://console.steedos.cn/api/files/images/uMut2KjFACTGrggjJ)
+
+## 业务逻辑开发
+
+在上一节，我们已将页面配置的对象及应用转为了转了代码，下面，我们就可以通过代码来扩充业务逻辑了。
+
+例如，在会议管理的需求中，我们整理的功能如下：
+
+* 基础开发：对象页面布局配置（通过页面布局配置已实现）、对象流程映射配置（通过流程对象映射配置已实现）、会议时间校验、会议冲突提醒、会议列表日历视图展示开发等；
+* 字段控制：根据参会人员中是否存在领导控制会议信息展示额外信息字段、外部参会人员如有车辆信息可控制发起会议车辆审批流程的按钮、控制会议详情页相关表数据；
+* 字段更新：会议流程审批过程更新对象会议状态字段、会议车辆审批流程结束后更新相关车位信息、会后评分流程结束后数据回写至相应会议信息中（通过流程对象映射配置已实现）；
+* 流程触发：可以发起相应审批流程，会议审批通过后自动通知参会人员、自动为任务处理人创建会前任务；
+* 接口调用：推送相应会议数据至第三方系统。
+
+下面，我们按照开发的功能点来逐一了解开发过程。
+
+### 会议时间校验
+
+需要写触发器判断新建修改会议记录时，会议开始结束时间是否先后值大小正常。
+
+请先创建触发器文件夹并创建会议对象对应触发器的文件，文件路径为`steedos-app/main/default/triggers/meeting.trigger.js`，如果您使用vscode开发，在集成我们的steedos插件后，可以让vscode自动帮您创建触发器文件，如图所示：
+
+ ![使用vscode中的steedos插件自动创建触发器文件](https://console.steedos.cn/api/files/images/jEv2ZLrpqopXG64Sd)
+
+
+:::info
+文件路径`steedos-app/main/default`是默认应用文件夹，默认应用的元数据都应该放里面，触发器文件`meeting.trigger.js` 名称后缀必须以`.trigger.js`结尾。
+
+:::
+
+\
+以下是触发器代码内容，校验“会议开始时间必须早于结束时间”。
+
+```javascript
+const _ = require('lodash');
+
+/**
+ * 校验记录字段数据合法性
+ * @param {*} doc 会议记录
+ */
+const validData = function (doc) {
+    if (doc.start__c > doc.end__c) {
+        throw new Error('会议开始时间晚于结束时间。');
+    }
+}
+
+module.exports = {
+    listenTo: 'meeting__c',
+
+    beforeInsert: async function () {
+        const doc = this.doc;
+        validData(doc);
+    },
+
+    beforeUpdate: async function () {
+        const doc = this.doc;
+        const id = this.id;
+        if (doc.start__c || doc.end__c) {
+            const oldDoc = await this.getObject(this.object_name).findOne(id);
+            const newDoc = {
+                ...oldDoc,
+                ...doc
+            }
+            manager.validData(newDoc);
+        }
+    }
+}
+```
+
+### 会议冲突提醒
+
+需要写触发器判断新建修改会议记录时，会议室是否已被占用。
+
+为了方便后续增加更多的业务逻辑代码，我们新建单独的业务文件来处理相关业务逻辑，并导出相关函数给触发器等地方调用。
+
+可以新建一个`manager`文件夹，并在其中新建一个文件集中处理会议相关业务逻辑，文件路径`steedos-app/main/default/manager/meeting.js`，以下为该文件内容，在上一节`validData`函数中增加“会议室是否已被占用”业务函数。
+
+```javascript
+"use strict";
+const objectql = require("@steedos/objectql");
+
+/**
+ * 查找会议室和时间有冲突的会议
+ * @param {*} _id 
+ * @param {*} roomId 
+ * @param {*} start 
+ * @param {*} end 
+ * @returns 
+ */
+async function clashRemind(_id, roomId, start, end) {
+    const meetingObj = objectql.getObject('meeting__c');
+    const meetings = await meetingObj.find({ filters: [['_id', '!=', _id], ['meeting_room__c', '=', roomId], [[['start__c', '<=', start], ['end__c', '>', start]], 'or', [['start__c', '<', end], ['end__c', '>=', end]], 'or', [['start__c', '>=', start], ['end__c', '<=', end]]]] });
+    return meetings.length
+}
+/**
+ * 校验记录字段数据合法性
+ * @param {*} doc 会议记录
+ */
+async function validData(doc) {
+    if (doc.start__c >= doc.end__c) {
+        throw new Error('会议开始时间晚于结束时间。');
+    }
+    const clashs = await clashRemind(doc._id, doc.meeting_room__c, doc.start__c, doc.end__c);
+    if (clashs) {
+        throw new Error('该时间段的此会议室已被占用。');
+    }
+}
+```
+
+\
+然后修改下之前的会议对象触发器文件，在里面调用这里导出的`validData`函数。
+
+```javascript
+const manager = require('../manager/meeting');
+const _ = require('lodash');
+
+module.exports = {
+    listenTo: 'meeting__c',
+
+    beforeInsert: async function () {
+        const doc = this.doc;
+        await manager.validData(doc);
+    },
+
+    beforeUpdate: async function () {
+        const doc = this.doc;
+        const id = this.id;
+        if (doc.start__c || doc.end__c) {
+            const oldDoc = await this.getObject(this.object_name).findOne(id);
+            const newDoc = {
+                ...oldDoc,
+                ...doc
+            }
+            await manager.validData(newDoc);
+        }
+    }
+}
+```
+
+### 使用日历视图展示会议列表
+
+华炎魔方内置了日历视图功能，只要给对象配置一个类型为`calendar`的视图就能实现日历视图功能。
+
+需要在列表视图元数据文件夹新建一个列表视图元数据文件，路径为`steedos-app/main/default/objects/meeting__c/listviews/calendar_view.listview.yml`。
+
+```yaml
+name: calendar_view
+type: calendar
+label: 日历视图
+filter_scope: space
+sort:
+  - - created
+    - desc
+filters:
+  - - owner 
+    - = 
+    - '{userId}'
+  - or 
+  - - staff__c
+    - = 
+    - '{userId}'
+options:
+  startDateExpr: start__c
+  endDateExpr: end__c
+  textExpr: name
+  views:
+    - type: day
+      maxAppointmentsPerCell: unlimited
+      groups:
+        - _room
+    - type: week
+      maxAppointmentsPerCell: unlimited
+    - month
+    - agenda
+  title:
+    - name
+    - meeting_room__c
+    - start__c
+    - end__c
+  currentView: day
+  firstDayOfWeek: 1
+  startDayHour: 8
+  endDayHour: 18
+  resources:
+    - fieldExpr: _room
+      valueExpr: _id
+      displayExpr: name
+      label: 会议室
+      dataSource:
+        store:
+          type: odata
+          version: 4
+          url: "/api/v4/meeting_room__c?$orderby=name"
+          withCredentials: false
+          
+```
+
+
+:::info
+注意列表视图文件`calendar_view.listview.yml`名称后缀必须以`.listview.yml`结尾。
+
+:::
+
+\
+### 动态控制表单字段的显示隐藏
+
+#### 根据参会人员中是否存在领导控制会议信息展示额外信息字段
+
+我们支持给字段配置“字段显示公式”，可以控制某些字段只在特定条件下才显示，语法见：[字段显示公式语法说明](https://www.steedos.cn/docs/developer/visible_on)。
+
+找到之前同步为代码的会议对象元数据，从其中找到要根据“参会人员中是否存在领导”来判断是否显示的字段元数据文件，并分别配置其“字段显示公式”，即`visible_on`属性。
+
+要判断“参会人员中是否存在领导”需要查询数据库数据，所以我们先把相关判断的业务逻辑写成接口供“字段显示公式”调用。
+
+我们需要先新建服务端路由文件夹`routes`,然后在其中新建路由文件来写相关API接口，文件路径`steedos-app/main/default/routes/include_leader.router.js`，内容如下：
+
+```javascript
+const express = require("express");
+const router = express.Router();
+const core = require('@steedos/core');
+const _ = require('lodash');
+const objectql = require('@steedos/objectql');
+const manager = require('../manager/meeting');
+
+/**
+ * 此接口接收参数users, 根据传入参数判断其中是否包括了公司领导。如果包括了，则返回true,否则返回false
+ * return: { include: true/false }
+ */
+router.post('/api/include/leader', core.requireAuthentication, async function (req, res) {
+    try {
+        const userSession = req.user;
+        const spaceId = userSession.spaceId;
+        const { users = [] } = req.body;
+        let include = false;
+        const spaceUsers = await manager.getLeaders(spaceId, users);
+        if(spaceUsers.length > 0){
+            include = true;
+        }
+        res.status(200).send({ include: include });
+    } catch (error) {
+        res.status(200).send({ include: false });
+    }
+});
+exports.default = router;
+```
+
+\
+以上接口接收传入的`users`参数，并返回以`include`变量标识是否传入的`users`中包括领导的结果。
+
+可以看到以上代码中把“过滤传入的用户id集合中为领导的id值”逻辑封装到之前提到的会议业务逻辑文件中了，增强代码可读性，方便后续单独维护，同时兼顾了该业务逻辑可能被多处调用的可能。
+
+```javascript
+/**
+ * 获取内部参会人员中的领导
+ * @param {string} spaceId 
+ * @param {array} users 人员id
+ * @returns array
+ */
+async function getLeaders(spaceId, users) {
+    const spaceUserObj = objectql.getObject('space_users');
+    const spaceUsers = await spaceUserObj.find({ filters: [['space', '=', spaceId], ['position', 'contains', '领导'], ['user', 'in', users]] });
+    return spaceUsers;
+}
+```
+
+\
+
+:::info
+注意路由文件`include_leader.router.js`名称后缀必须以`.router.js`结尾。
+
+:::
+
+\
+然后我们就可以在相关字段元数据文件中调用它了，下面是三个字段的元数据内容，其内都配置`visible_on`属性，并在其中使用函数`Steedos.authRequest`调用了上面提到的`/api/include/leader`接口，接口返回的`include`变量值为true时才显示该操作按钮。
+
+* 字段“用餐”：`steedos-app/main/default/objects/meeting__c/fields/dining__c.field.yml`：
+
+```javascript
+name: dining__c
+group: 会议任务
+label: 用餐
+sort_no: 220
+type: boolean
+visible_on: "{{
+  function(){return Steedos.authRequest('/api/include/leader', { type: 'post', async: false, data: JSON.stringify({users: formData.staff__c}) }).include}()
+}}"
+```
+
+\
+* 字段“用餐服务执行人”：`steedos-app/main/default/objects/meeting__c/fields/dining_executive__c.field.yml`：
+
+```javascript
+name: dining_executive__c
+group: 会议任务
+label: 用餐服务执行人
+multiple: true
+reference_to: users
+searchable: true
+sort_no: 230
+type: lookup
+visible_on: "{{
+  function(){return Steedos.authRequest('/api/include/leader', { type: 'post', async: false, data: JSON.stringify({users: formData.staff__c}) }).include}()
+}}"
+```
+
+\
+* 字段“是否需视频终端支持”：`steedos-app/main/default/objects/meeting__c/fields/is_support__c.field.yml`：
+
+```javascript
+name: is_support__c
+label: 是否需视频终端支持
+required: false
+sort_no: 190
+type: boolean
+depend_on:
+  - staff__c
+visible_on: "{{
+  function(){return Steedos.authRequest('/api/include/leader', { type: 'post', async: false, data: JSON.stringify({users: formData.staff__c}) }).include}()
+}}"
+```
+
+\
+### 动态控制按钮的显示隐藏
+
+#### 参会人员中有领导参加，显示会后评分按钮进行流程审批
+
+华炎魔方支持自定义按钮，并且可以很方便的配置按钮事件来触发发起流程审批操作。
+
+需要先在会议对象元数据文件夹中新建`buttons`文件夹用于放置操作按钮相关元数据。
+
+请在`steedos-app/main/default/objects/meeting__c/buttons/`文件夹中分别新建文件`scoring.button.yml`和文件`scoring.button.js`，它们是“会议评分”按钮对应的yml和js文件，文件内容如下：
+
+```yaml
+name: scoring
+is_enable: true
+label: 会议评分
+'on': record_only
+visible: true
+```
+
+\
+```javascript
+module.exports = {
+    scoring: function (object_name, record_id) {
+        $(document.body).addClass('loading');
+        let url = `api/meeting/scoring/application`;
+        let options = {
+            type: 'post',
+            async: true,
+            data: JSON.stringify({ meetingId: record_id }),
+            success: function (data) {
+                toastr.success('已发起会议评分申请。');
+                FlowRouter.reload();
+                $(document.body).removeClass('loading');
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(t(XMLHttpRequest.responseJSON.message))
+                $(document.body).removeClass('loading');
+            }
+        };
+        Steedos.authRequest(url, options);
+    },
+    scoringVisible: function (object_name, record_id, permissions, record) {
+        return record.type__c === '领导会议'; // 领导会议 显示会议评分按钮
+    }
+}
+```
+
+\
+以上两个文件定义的按钮可用于发起评分审批，当评分完成后需要显示会后评分的“分数汇总”，该值保存在会议对象的`sum__c`字段中，不过我们需要在会议记录详细界面动态显示隐藏该字段，只在会议类型为“领导会议”时才显示该字段。
+
+要实现该需求，同样可以通过配置字段的“字段显示公式”即`visible_on`属性来实现，该字段元数据如下所示：
+
+```yaml
+name: sum__c
+data_type: number
+label: 分数汇总
+group: 会后评分
+precision: 18
+scale: 2
+sort_no: 200
+summary_field: score__c
+summary_object: meeting_score__c
+summary_type: sum
+type: summary
+visible_on: "{{formData && formData.type__c === '一般会议' ? false : true}}"
+hidden: true
+```
+
+关于“字段显示公式”上面也提到过一次，该字段`visible_on` 表达式中的`formData`表示当前表单字段值集合，可以很方便的引用表单中其他字段值，另外你还可以在表达式中调用`global`变量，表示注入的全局变量，详情请参考：[显示条件公式](https://www.steedos.cn/docs/developer/visible_on)。
+
+#### 外部参会人员有车辆信息，显示车辆审批按钮
+
+与上面的会后评分按钮类似，我们也可以增加一个“车辆审批”按钮，判断到当前会议的外部参会人员有车辆信息时才在会议审批通过后显示该按钮，这样会议发起人就可以点击该按钮来发起车辆审批。
+
+不过我们可以更进一步，不提供按钮让会议发起人手动操作发起车辆审批，而是想办法让系统在判断到会议审批通过后，自动为外部参会人员有车辆信息的会议发起车辆审批。
+
+首先，当会议审批通过后，需要自动更新会议记录的“会议状态”为“已审批”，即自动把会议记录的`status__c`字段值更新为`reserve`，这样我们后续就可以在会议对象触发器中判断会议状态是否变更为“已审批”。
+
+对于配置了对象流程映射的对象，申请单审批状态每次变更都会自动同步到该对象关联记录上的“审批状态”字段值中，即申请单的审批状态会实时同步到其关联对象记录的`instance_state`字段值中，据此我们可以在会议对象的触发器中判断到申请单审批状态变化时变更会议对象记录的会议状态。
+
+现在我们可以在会议对象的触发器文件`steedos-app/main/default/triggers/meeting.trigger.js`中增加相关业务代码来实现“自动为外部参会人员有车辆信息的会议发起车辆审批”：
+
+* `beforeUpdate`函数中根据申请单的状态自动更新会议状态。
+* `afterUpdate`函数中判断会议是否已完成并进一步实现发起车辆审批逻辑。
+
+```javascript
+const manager = require('../manager/meeting');
+const _ = require('lodash');
+module.exports = {
+    listenTo: 'meeting__c',
+    beforeUpdate: async function () {
+        const doc = this.doc;
+        const id = this.id;
+        if (doc.instance_state) {
+            if (['completed', 'approved'].includes(doc.instance_state)) {
+                doc.status__c = 'reserve';
+            } else if (['rejected', 'terminated'].includes(doc.instance_state)) {
+                doc.status__c = 'cancel';
+            } else {
+                doc.status__c = 'approve';
+            }
+        }
+    },
+    afterUpdate: async function () {
+        const id = this.doc._id;
+        // 当会议审批通过之后自动触发车辆审批
+        await manager.approveParticipants(id);
+    }
+}
+```
+
+从以上`beforeUpdate`代码中可以看出会议申请单的“审批状态”与会议的“会议状态”关系如下表格所示：
+
+| 审批状态 | 状态描述 | 会议状态 | 状态描述 |
+|:---:|:---:|:---:|:---:|
+| completed | 审批完成 | reserve | 已审核 |
+| approved | 审核通过 | reserve | 已审核 |
+| rejected | 审核被驳回 | cancel | 已取消 |
+| terminated | 申请单被中止 | cancel | 已取消 |
+| 其他 |    | approve | 审批中 |
+
+为增强代码可读性及后续维护方便，我们把发起车辆审批相关业务代码封装成`approveParticipants`函数并在之前提到的专门的会议业务逻辑文件中导出以供调用，以下是要添加到文件`steedos-app/main/default/manager/meeting.js中的`中的相关代码片段：
+
+```javascript
+const objectql = require("@steedos/objectql");
+const Fiber = require('fibers');
+
+/**
+ * 会议审批通过之后自动触发车辆审批
+ * @param {*} meetingId 
+ */
+async function approveParticipants(meetingId) {
+    const partObj = objectql.getObject('meeting_participants__c');//“外部参会人员”对象
+    const meetingObj = objectql.getObject('meeting__c');//“会议”对象
+    const owObj = objectql.getObject('object_workflows');//“对象流程映射”对象
+    const suObj = objectql.getObject('space_users');//“用户”对象
+    const meetingDoc = await meetingObj.findOne(meetingId);
+    const spaceId = meetingDoc.space;
+    const userId = meetingDoc.owner;
+    const suDoc = (await suObj.find({ filters: [['space', '=', spaceId], ['user', '=', userId]] }))[0];
+    const userInfo = { _id: suDoc.user, name: suDoc.name };
+    if (meetingDoc.status__c == 'reserve') {
+        //查找当前会议的“外部参会人员”信息
+        const partDocs = await partObj.find({ filters: [['meeting__c', '=', meetingId]] });
+        // 查找对象流程映射记录
+        const owDoc = (await owObj.find({ filters: [['space', '=', spaceId], ['object_name', '=', 'meeting_participants__c']] }))[0];
+        if (!owDoc) {
+            throw new Error('请配置外部参会人员表对象流程映射。');
+        }
+
+        for (const doc of partDocs) {
+            // 只有填写了车牌信息的外部参会人员信息才发起审批，license__c是车牌信息字段，当值为空表示没有车牌信息
+            // 已经发起的不重复发起
+            if (!doc.license__c || doc.instance_state) {
+                continue;
+            }
+            //关于Fiber，这是一个可以把异步执行的代码块以同步的方式运行的函数，详细可参考其官网介绍：https://github.com/laverdet/node-fibers
+            Fiber(function () {
+                try {
+                    const instanceInfo = {
+                        'flow': owDoc.flow_id,
+                        'applicant': userId,
+                        'space': spaceId,
+                        'record_ids': [{
+                            'o': 'meeting_participants__c',
+                            'ids': [doc._id]
+                        }]
+                    };
+                    //审批王应用中公开了几个全局变量，比如uuflowManagerForInitApproval、uuflowManager，不需要import导入
+                    //create_instance函数用于创建一个申请单，只要传入基本信息即可成功创建并返回申请单id
+                    const insId = uuflowManagerForInitApproval.create_instance(instanceInfo, userInfo);
+                    //根据id取出申请单信息
+                    const instance = uuflowManager.getInstance(insId)
+                    //根据流程id取出流程信息
+                    const flow = uuflowManager.getFlow(instance.flow)
+                    //上面create_instance函数创建的申请单会自动流转到草稿箱作为第一个流程步骤
+                    //instance["traces"]中记录的是审批历史，每次在流程步骤之前流转都会生成对应的审批历史记录当时的审批数据
+                    //给getStep函数传入申请单数据，流程数据，步骤id即可获取流程步骤信息，这里取出流程的第一个步骤信息
+                    const step = uuflowManager.getStep(instance, flow, instance["traces"][0].step)
+                    //计算下一步骤选项，给getNextSteps函数传入申请单、流程和当前步骤信息可计算后续有哪些可选步骤
+                    //getNextSteps函数中最后一个参数表示要你什么类型的步骤，有三个可选项approved、rejected、submitted
+                    //分别表示找下一步骤为核准、驳回、其他的步骤，我们这里是草稿发到第一个步骤，所以传入submitted即可
+                    const nextSteps = uuflowManager.getNextSteps(instance, flow, step, "submitted")
+                    if (nextSteps.length < 1) {
+                        throw new Error('未找到下一步骤，请检查流程。')
+                    }
+                    if (nextSteps.length > 1) {
+                        //如果下一步骤不唯一，那么就没有办法自动发送到下一步骤，因为不知道发到哪个步骤上
+                        throw new Error('下一步骤不唯一，请检查流程。')
+                    }
+                    const next_step_id = nextSteps[0]
+                    // 计算下一步处理人选项，根据下一步骤id计算下一步骤处理人可选项
+                    const next_user_ids = getHandlersManager.getHandlers(insId, next_step_id) || []
+                    if (next_user_ids.length > 1) {
+                        //下一步处理人如果不唯一，那么就没有办法自动发送给处理人，因为不知道发给哪个处理人
+                        throw new Error('下一步处理人不唯一，请检查流程。')
+                    }
+                    //自动把instance中下一步骤及下一步处理人设置好
+                    instance["traces"][0]["approves"][0]["next_steps"] = [{ 'step': next_step_id, 'users': next_user_ids }]
+                    //提交申请单到下一步骤
+                    uuflowManager.submit_instance(instance, userInfo);
+                } catch (error) {
+                    console.error(error);
+                }
+            }).run()
+        }
+    }
+}
+```
+
+### 动态控制相关表数据的显示隐藏
+
+华炎魔方已经支持直接在对象上配置“页面布局”来设置对象在列表或记录详细页面要显示哪些内容，我们可以在会议对象的页面布局中配置会议记录详细界面要显示哪些子表。
+
+#### 会议对象设置界面设置页面布局
+
+我们可以直接在对象设置界面上设置页面布局，并设置要显示哪些子表，如下图所示我们支持直接在界面上设置某个相关子表的显示条件。
+
+ ![页面布局设置相关表显示条件](https://console.steedos.cn/api/files/images/hPa4aHWwqkNmWurpS)如果需要，可以在这里的显示条件中设置一个显示条件公式，比如`{{formData && formData.type__c === '领导会议'}}`表示该会议是“领导会议”时才显示相关子表。
+
+关于显示条件的语法详情，请参考文档 [显示条件公式](https://www.steedos.cn/docs/developer/visible_on)，以下是我们要给三个相关子表设置的显示条件公式：
+
+* 附件.所属记录：`{{formData && formData.type__c === '领导会议'}}`
+* 任务.相关项：`{{formData && formData.type__c === '领导会议'}}`
+* 会议评分.相关会议：`{{formData && formData.type__c === '领导会议'}}`
+
+可以看出我们给三个子表配置了显示条件公式，它们的公式表达式内容一样，都表示只有当前会议记录的会议类型为“领导会议”时才显示，否则不显示。
+
+ ![](https://console.steedos.cn/api/files/images/Zre6KNm4NAXfJcaoQ)
+
+
+:::info
+页面布局的相关子表中“子表名称”有一个点号分隔了两个名称，它们分别是“子表关联对象名称”和“子表关联对象上关联到当前对象的字段名称”。
+
+:::
+
+#### 把对象页面布局同步为代码并进一步用代码设置
+
+以上页面布局中相关子表的显示条件公式比较简单，可以直接在界面上配置，实际开发场景下，我们建议大家把界面配置都同步为代码，方便后续维护，而且如果上面配置的显示条件公式如果比较复杂的话，先同步为代码再在代码文件中写公式表达式也会方便得多。
+
+按如下截图所示，在vscode中点开Steedos插件面板，并找到Layouts节点，鼠标放到你想要同步为代码文件的页面布局文件上，就会显示下载图标，点击即可把页面布局同步为代码。
+
+ ![](https://console.steedos.cn/api/files/images/rLyion3sGqYmAw2Ap)所有对象的页面布局同步为代码后都保存在默认软件包文件夹`steedos-app/main/default`下的`layouts`文件夹中，比如上图所示的会议对象页面布局元数据同步为代码后保存在文件`steedos-app/main/default/layouts/meeting__c.meeting_all.layout.yml`中。
+
+\
+### 从会议台账发起会议审批
+
+上面提到我们已经把会议对象的“允许配置对象流程”、“允许查看申请单”开关打开了，并且配置好了对象流程映射，正常来说到此我们就已经可以在会议记录详细界面点击“提请审批”按钮来发起会议审批。
+
+但是此时我们“提请审批”发起的会议申请单只是停留在草稿状态，并没有自动发送到会议审批人，而是在发起会议申请后自动进入到[审批王](https://beta.steedos.cn/products/workflow)应用的草稿申请单中，需要会议发起人再次操作发送给审批人。
+
+在实际的会议审批需求中，我们会希望进一步优化这个操作过程，在点击“提请审批”按钮后，省略会议发起人在草稿申请单中做的多余操作，自动发送到下一步审批人。
+
+我们可以通过以下额外的开发工作来实现“自动发起会议审批到审批人”功能。
+
+#### 隐藏内置的“提请审批”按钮
+
+默认只要给对象开启了“允许配置对象流程”、“允许查看申请单”开关并配置好对象流程映射，就可以在对象记录详细界面右上角看到额外的“提请审批”按钮，我们准备自己重新开发该按钮功能，所以需要先隐藏原来内置的按钮。
+
+最简单直接的方式是通过给会议对象配置页面布局，并在页面布局的操作列表中不要包含“提请审批”按钮。
+
+ ![会议对象页面布局](https://console.steedos.cn/api/files/images/S53Wdu4JRb5JWNYHj)
+
+#### 代码实现操作按钮“会议审批”功能
+
+隐藏了内置的“提请审批”按钮后，我们需要另外新建一个按钮来实现自动提交审批功能，以下是该按钮的元数据代码，它们是建于文件夹`steedos-app/main/default/objects/meeting__c/buttons`下的两个文件：
+
+* `approve.button.yml`：
+
+```yaml
+name: approve
+is_enable: true
+label: 会议审批
+'on': record_only
+```
+
+* `approve.button.js`：
+
+```javascript
+module.exports = {
+    approve: function (object_name, record_id) {
+        $(document.body).addClass('loading');
+        let url = `api/meeting/approve`;
+        let options = {
+            type: 'post',
+            async: true,
+            data: JSON.stringify({ meetingId: record_id }),
+            success: function (data) {
+                toastr.success('已发起会议审批。');
+                FlowRouter.reload();
+                $(document.body).removeClass('loading');
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(t(XMLHttpRequest.responseJSON.message))
+                $(document.body).removeClass('loading');
+            }
+        };
+        Steedos.authRequest(url, options);
+    },
+    approveVisible: function (object_name, record_id, permissions, record) {
+        return !record.instance_state;
+    }
+}
+```
+
+上述`approveVisible`函数处理当前按钮是否显示逻辑，判断到当前记录`instance_state`属性值为空时表示还没有开始审批，返回true以显示审批按钮，反之函数返回false值不显示审批按钮。
+
+上述`approve`函数处理当前按钮点击事件，通过调用`Steedos.authRequest`函数来请求接口`api/meeting/approve`，自动发送审批功能将在接口中实现。
+
+接下来我们需要在服务端路由文件夹`routes`中新建文件\``meeting_approve.router.js`\`，并在其中实现一个自动发送审批功能的API接口，文件路径`steedos-app/main/default/routes/meeting_approve.router.js`，内容如下：
+
+```javascript
+"use strict";
+const express = require("express");
+const router = express.Router();
+const core = require('@steedos/core');
+const objectql = require('@steedos/objectql');
+const _ = require('lodash');
+const Fiber = require('fibers');
+
+/**
+ * 发起会议审批
+ * body {
+ *  meetingId 会议记录id
+ * }
+ */
+router.post('/api/meeting/approve', core.requireAuthentication, async function (req, res) {
+    try {
+        const userSession = req.user;
+        const spaceId = userSession.spaceId;
+        const userId = userSession.userId;
+        // const isSpaceAdmin = userSession.is_space_admin;
+        const { meetingId } = req.body;
+        const meetingObj = objectql.getObject('meeting__c');
+        const owObj = objectql.getObject('object_workflows');
+        const meetingDoc = await meetingObj.findOne(meetingId);
+        if (!meetingDoc) {
+            throw new Error('未能根据传入会议ID查找到会议记录，请检查。');
+        }
+        // 查找对象流程映射记录
+        const owDoc = (await owObj.find({ filters: [['space', '=', spaceId], ['object_name', '=', 'meeting__c']] }))[0];
+        if (!owDoc) {
+            throw new Error('请配置会议表对象流程映射。');
+        }
+
+        // 已经发起的不重复发起
+        if (meetingDoc.instance_state) {
+            throw new Error('已发起审批，无需重复发起。');
+        }
+        Fiber(function () {
+            try {
+                const instanceInfo = {
+                    'flow': owDoc.flow_id,//申请单所属流程，审批步骤是配置在流程中的，要创建的申请单所属流程为对象流程映射中配置的流程ID
+                    'applicant': userId,//申请人，当前用户发起的，标识为申请人
+                    'space': spaceId,//工作区ID，所有记录都需要标记属于哪个工作区，即华炎魔方ID
+                    'record_ids': [{
+                        'o': 'meeting__c',//申请单关联到的对象
+                        'ids': [meetingId]//申请单关联到的对象记录
+                    }]
+                };
+                //审批王应用中公开了几个全局变量，比如uuflowManagerForInitApproval、uuflowManager，不需要import导入
+                //create_instance函数用于创建一个申请单，只要传入基本信息即可成功创建并返回申请单id
+                const insId = uuflowManagerForInitApproval.create_instance(instanceInfo, userSession);
+                //根据id取出申请单信息
+                const instance = uuflowManager.getInstance(insId)
+                //根据流程id取出流程信息
+                const flow = uuflowManager.getFlow(instance.flow)
+                //上面create_instance函数创建的申请单会自动流转到草稿箱作为第一个流程步骤
+                //instance["traces"]中记录的是审批历史，每次在流程步骤之前流转都会生成对应的审批历史记录当时的审批数据
+                //给getStep函数传入申请单数据，流程数据，步骤id即可获取流程步骤信息，这里取出流程的第一个步骤信息
+                const step = uuflowManager.getStep(instance, flow, instance["traces"][0].step)
+                //计算下一步骤选项，给getNextSteps函数传入申请单、流程和当前步骤信息可计算后续有哪些可选步骤
+                //getNextSteps函数中最后一个参数表示要你什么类型的步骤，有三个可选项approved、rejected、submitted
+                //分别表示找下一步骤为核准、驳回、其他的步骤，我们这里是草稿发到第一个步骤，所以传入submitted即可
+                const nextSteps = uuflowManager.getNextSteps(instance, flow, step, "submitted")
+                if (nextSteps.length < 1) {
+                    throw new Error('未找到下一步骤，请检查流程。')
+                }
+                if (nextSteps.length > 1) {
+                    //如果下一步骤不唯一，那么就没有办法自动发送到下一步骤，因为不知道发到哪个步骤上
+                    throw new Error('下一步骤不唯一，请检查流程。')
+                }
+                const next_step_id = nextSteps[0]
+                // 计算下一步处理人选项，根据下一步骤id计算下一步骤处理人可选项
+                const next_user_ids = getHandlersManager.getHandlers(insId, next_step_id) || []
+                if (next_user_ids.length > 1) {
+                    //下一步处理人如果不唯一，那么就没有办法自动发送给处理人，因为不知道发给哪个处理人
+                    throw new Error('下一步处理人不唯一，请检查流程。')
+                }
+                //自动把instance中下一步骤及下一步处理人设置好
+                instance["traces"][0]["approves"][0]["next_steps"] = [{ 'step': next_step_id, 'users': next_user_ids }]
+                //提交申请单到下一步骤
+                uuflowManager.submit_instance(instance, userSession);
+                // 更新会议状态为 审批中，这里使用directUpdate，而不是update，因为不需要也不应该触发对象触发器
+                meetingObj.directUpdate(meetingId, { status__c: 'approve' });
+            } catch (error) {
+                console.error(error);
+            }
+        }).run()
+        res.status(200).send({ success: true, message: 'router ok' });
+    } catch (error) {
+        res.status(500).send({ success: false, message: error.message });
+    }
+});
+exports.default = router;
+```
+
+\
+以上接口接收传入的`meetingId`参数，并据此从数据库中抓取相关会议内容，并进一步实现自动发送会议审批到下一步骤的业务逻辑，如果成功则返回成功状态及相关消息，如果失败则返回失败状态及相关错误信息。
+
+### 会议审批通过后自动通知参会人员
+
+之前提到“对象流程映射配置”会在会议审批通过之后把会议对象的“会议状态”，即`status__c`字段值自动更新为“已审批”，即`reserve`；所以我们可以通过写触发器逻辑来监听会议对象的“会议状态”字段值变量，当该字段值为“已审批”时，给参会人员发起会议通知。
+
+需要给会议对象添加`afterUpdate`触发器，并在该触发器中调用“通知参会人员”相关逻辑，请在文件`steedos-app/main/default/triggers/meeting.trigger.js`中增加以下`afterUpdate`代码片段：
+
+```javascript
+const manager = require('../manager/meeting');
+const _ = require('lodash');
+module.exports = {
+    listenTo: 'meeting__c',
+
+    afterUpdate: async function () {
+        const id = this.doc._id;
+        // 会议状态变成“已审批”后通过为每个人创建日程进行会议通知
+        await manager.notifyUsers(id);
+    }
+}
+```
+
+为增强代码可读性及后续维护方便，我们把自动通知参会人员相关业务代码封装成`notifyUsers`函数并在之前提到的专门的会议业务逻辑文件中导出以供调用，以下是要添加到文件`steedos-app/main/default/manager/meeting.js中的`中的相关代码片段：
+
+```javascript
+const objectql = require("@steedos/objectql");
+
+/**
+ * 会议状态变成“已审批”后为每个人创建日程进行会议通知 #6
+ * @param {*} meetingId 
+ */
+async function notifyUsers(meetingId) {
+    const meetingObj = objectql.getObject('meeting__c');
+    const eventsObj = objectql.getObject('events');
+    const userObj = objectql.getObject('users');
+    const notiObj = objectql.getObject('notifications');
+    const doc = await meetingObj.findOne(meetingId);
+    const fromUserId = doc.owner;
+    const spaceId = doc.space;
+    if (doc.status__c == 'reserve') {
+        const baseInfo = {
+            space: spaceId,
+            company_id: doc.company_id,
+            created_by: doc.created_by,
+            created: new Date(),
+            name: doc.name,
+            start: doc.start__c,
+            end: doc.end__c,
+            related_to: {
+                "o": "meeting__c",
+                "ids": [meetingId]
+            }
+        };
+        const fromUser = await userObj.findOne(fromUserId);
+        for (const userId of (doc.staff__c || [])) {
+            // 如果已经创建则不重复创建
+            const eventsDocsCount = await eventsObj.count({ filters: [['space', '=', spaceId], ['owner', '=', userId], ['start', '=', doc.start__c], ['end', '=', doc.end__c], ['related_to.o', '=', 'meeting__c']] });
+            if (eventsDocsCount) {
+                continue;
+            }
+            const newEventId = await eventsObj._makeNewID();
+            const newDoc = {
+                ...baseInfo,
+                assignees: [userId],
+                _id: newEventId,
+                owner: userId,
+            }
+            //为每位内部参会人员新建日程，华炎魔方内核会监听“日程”对象记录新建/修改事件，自动通知每条“日程”记录的被分派人
+            //但是这里我们需要自己实现任务通知逻辑，所以使用directInsert而不使用insert函数以避免触发华炎魔方内置的通知事件
+            await eventsObj.directInsert(newDoc);
+            var notificationDoc = {
+                name: `${fromUser.name}为您安排了日程`,
+                body: doc.name,
+                related_to: {
+                    o: "events",
+                    ids: [newEventId]
+                },
+                related_name: doc.name,
+                from: fromUserId,
+                space: doc.space,
+                is_read: false,
+                owner: userId
+            };
+            //华炎魔方内核会监听“通知”对象记录新建事件，每新建一条“通知”记录，会自动给相关人员发送APP推送通知
+            await notiObj.insert(notificationDoc);
+        }
+    }
+}
+```
+
+### 自动为参会人员创建任务
+
+与上一小节通知参会人员实现方式类型，需要在会议审批通过之后立即为任务处理人创建会前任务，请在文件`steedos-app/main/default/triggers/meeting.trigger.js`中增加以下`afterUpdate`代码片段：
+
+```javascript
+const manager = require('../manager/meeting');
+const _ = require('lodash');
+module.exports = {
+    listenTo: 'meeting__c',
+
+    afterUpdate: async function () {
+        const id = this.doc._id;
+        // 会议状态变成“已审批”后通过为每个任务执行人创建任务
+        await manager.dispatchTask(id);
+    }
+}
+```
+
+\
+为增强代码可读性及后续维护方便，我们把自动为参会人员创建任务的相关业务代码封装成`dispatchTask`函数并在之前提到的专门的会议业务逻辑文件中导出以供调用，以下是要添加到文件`steedos-app/main/default/manager/meeting.js中的`中的相关代码片段：
+
+```javascript
+const objectql = require("@steedos/objectql");
+
+/**
+ * 会议状态变成“已审批”后通过为每个任务执行人创建任务 #10
+ * @param {*} meetingId 
+ */
+async function dispatchTask(meetingId) {
+    const meetingObj = objectql.getObject('meeting__c');
+    const userObj = objectql.getObject('users');
+    const notiObj = objectql.getObject('notifications');
+    const taskObj = objectql.getObject('tasks');
+    const doc = await meetingObj.findOne(meetingId);
+    const fromUserId = doc.owner;
+    const spaceId = doc.space;
+    if (doc.status__c == 'reserve') {
+        const baseInfo = {
+            space: spaceId,
+            company_id: doc.company_id,
+            created_by: doc.created_by,
+            created: new Date(),
+            name: doc.name,
+            state: 'not_started',
+            due_date: doc.end__c,
+            priority: 'high',
+            related_to: {
+                "o": "meeting__c",
+                "ids": [meetingId]
+            }
+        };
+        const fromUser = await userObj.findOne(fromUserId);
+        for (const userId of (doc.dining_executive__c || [])) {
+            // 如果已经创建则不重复创建
+            const taskDocsCount = await taskObj.count({ filters: [['space', '=', spaceId], ['owner', '=', userId], ['name', '=', doc.name], ['due_date', '=', doc.end__c], ['related_to.o', '=', 'meeting__c']] });
+            if (taskDocsCount) {
+                continue;
+            }
+            const newTaskId = await taskObj._makeNewID();
+            const newDoc = {
+                ...baseInfo,
+                assignees: [userId],
+                _id: newTaskId,
+                owner: userId,
+            }
+            await taskObj.directInsert(newDoc);
+            var notificationDoc = {
+                name: `${fromUser.name}为您分配了一个任务`,
+                body: doc.name,
+                related_to: {
+                    o: "tasks",
+                    ids: [newTaskId]
+                },
+                related_name: doc.name,
+                from: fromUserId,
+                space: doc.space,
+                is_read: false,
+                owner: userId
+            };
+            await notiObj.insert(notificationDoc);
+        }
+    }
+}
+```
+
+\
+会议管理相关源码请参考：[ https://gitlab.steedos.cn/steedos/steedos-project-meeting]( https://gitlab.steedos.cn/steedos/steedos-project-meeting)
+
+\
+\

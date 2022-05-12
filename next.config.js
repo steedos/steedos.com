@@ -45,10 +45,12 @@ const withMDX = require(`@next/mdx`)({
 })
 
 const fallbackLayouts = {
-  'src/pages/developer/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
+  'src/pages/developer/**/*': ['@/layouts/DeveloperLayout', 'DeveloperLayout'],
+  'src/pages/docs/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
 }
 
 const fallbackDefaultExports = {
+  'src/pages/docs/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
   'src/pages/developer/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
   'src/pages/blog/**/*': ['@/layouts/BlogPostLayout', 'BlogPostLayout'],
 }
@@ -174,7 +176,7 @@ module.exports =
         return `export default ${JSON.stringify(defaultConfig)}`
       }),
     })
-    
+
     let mdx = [
       {
         loader: '@mdx-js/loader',
