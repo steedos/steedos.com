@@ -122,7 +122,14 @@ export default function Post(props) {
         // canonical={canonicalUrl}
       />
 
-      <div className="pt-10 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden bg-gray-50">
+      <div className="pt-10 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden bottom-10 bg-bottom bg-no-repeat bg-slate-50 dark:bg-[#0B1120] beams">
+        {/* <div
+            className="absolute inset-0 bg-grid-slate-900/[0.04] bg-[bottom_1px_center] dark:bg-grid-slate-400/[0.05] dark:bg-bottom dark:border-b dark:border-slate-100/5"
+            style={{
+              maskImage: 'linear-gradient(to bottom, transparent, black)',
+              WebkitMaskImage: 'linear-gradient(to bottom, transparent, black)',
+            }}
+        /> */}
         <div className="mx-auto max-w-8xl lg:px-8">
           <div className="lg:grid lg:grid-cols-5 lg:gap-8">
             <div className="col-span-3 mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
