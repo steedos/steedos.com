@@ -18,22 +18,6 @@ export function a({ node, ...props }) {
   }
 }
 
-export function pre({ node, ...props }) {
-  return <div>{props.children}</div>
-}
-
-export function info({ node, ...props }) {
-  return <div className="block notice-block info"><div className="icon"><InformationCircleIcon></InformationCircleIcon></div><div className="content">{props.children}</div></div>
-}
-
-export function warning({ node, ...props }){
-  return <div className="block notice-block warning"><div className="icon"><ExclamationIcon></ExclamationIcon></div><div className="content">{props.children}</div></div>
-}
-
-export function tip({ node, ...props }){
-  return <div className="block notice-block tip"><div className="icon"><StarIcon></StarIcon></div><div className="content">{props.children}</div></div>
-}
-
 export function alert({ node, ...props }){
   if (props.type === 'warning') {
     return (
@@ -80,11 +64,7 @@ export function alert({ node, ...props }){
 export const mdxComponents = {
   Heading,
   a,
-  pre,
-  info,
-  warning,
   alert,
-  tip
 }
 
 export default mdxComponents;
