@@ -50,5 +50,11 @@ export const documentationNav = {
   ],
   '开发人员向导': [
     developer['getting-started'],
+    developer['objectql'],
+    developer['graphql-api'],
+    developer['package'],
+    developer['node-red'],
+    developer['jsreport'],
+    developer['deploy-gitpod'],
   ]
 }
