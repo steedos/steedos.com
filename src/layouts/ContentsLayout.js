@@ -7,7 +7,7 @@ import { SidebarLayout, SidebarContext } from '@/layouts/SidebarLayout'
 import { PageHeader } from '@/components/PageHeader'
 import clsx from 'clsx'
 import { Footer } from '@/components/Footer'
-import { Heading } from '@/components/Heading'
+import { mdxComponents } from '@/components/mdxComponents'
 import { MDXProvider } from '@mdx-js/react'
 
 export const ContentsContext = createContext()
@@ -191,7 +191,7 @@ export function ContentsLayout({ children, meta, classes, tableOfContents, secti
               id="content-wrapper"
               className="relative z-20 prose prose-slate mt-12 dark:prose-dark"
             >
-              <MDXProvider components={{ Heading }}>{children}</MDXProvider>
+              <MDXProvider components={mdxComponents}>{children}</MDXProvider>
             </div>
           </>
         ) : (
@@ -199,7 +199,7 @@ export function ContentsLayout({ children, meta, classes, tableOfContents, secti
             id="content-wrapper"
             className="relative z-20 prose prose-slate mt-8 dark:prose-dark"
           >
-            <MDXProvider components={{ Heading }}>{children}</MDXProvider>
+            <MDXProvider components={mdxComponents}>{children}</MDXProvider>
           </div>
         )}
       </ContentsContext.Provider>

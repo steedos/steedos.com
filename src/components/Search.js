@@ -11,7 +11,7 @@ const INDEX_NAME = 'steedos-com'
 const API_KEY = '115e0980e01f77c613b8677fcfa2588f'
 const APP_ID = 'XLH8R06L45'
 
-const SearchContext = createContext({})
+const SearchContext = createContext()
 
 export function SearchProvider({ children }) {
   const router = useRouter()
@@ -44,7 +44,7 @@ export function SearchProvider({ children }) {
   return (
     <>
       <Head>
-        <link rel="preconnect" href={`https://${APP_ID}-dsn.algolia.net`} crossOrigin="true" />
+        {/* <link rel="preconnect" href={`https://${APP_ID}-dsn.algolia.net`} crossOrigin="true" /> */}
       </Head>
       <SearchContext.Provider
         value={{
@@ -65,7 +65,7 @@ export function SearchProvider({ children }) {
               facetFilters: 'version:v3',
               distinct: 1,
             }}
-            placeholder="Search documentation"
+            placeholder="搜索文档"
             onClose={onClose}
             indexName={INDEX_NAME}
             apiKey={API_KEY}

@@ -8,11 +8,9 @@ import { DefaultLayout } from '@/layouts/DefaultLayout'
 import Router from 'next/router'
 import ProgressBar from '@badrap/bar-of-progress'
 import Head from 'next/head'
-import {MDXProvider} from '@mdx-js/react'
 import twitterLargeCard from '@/img/twitter-large-card.jpg'
 import { ResizeObserver } from '@juggle/resize-observer'
 import 'intersection-observer'
-import mdxComponents from '@/components/mdx';
 import {has, isArray} from 'lodash';
 import { saveAuthInfo } from '@/lib/auth.client';
 import { SearchProvider } from '@/components/Search'
@@ -83,16 +81,14 @@ export default function App({ Component, pageProps = {}, router }) {
   const showHeader = router.pathname !== '/'
   const meta = Component.layoutProps?.meta || pageProps?.meta || {}
   const description =
-    meta.metaDescription || meta.description || 'Documentation for the Tailwind CSS framework.'
+    meta.metaDescription || meta.description || '开源低代码 DevOps 平台'
 
   return (
     <>
       <SearchProvider>
-        <MDXProvider components={mdxComponents}>
           <Layout {...layoutProps}>
             <Component {...pageProps} />
           </Layout>
-        </MDXProvider>
       </SearchProvider>
     </>
   )

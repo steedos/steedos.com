@@ -6,6 +6,7 @@ const { withTableOfContents } = require('./remark/withTableOfContents')
 const { withSyntaxHighlighting } = require('./remark/withSyntaxHighlighting')
 const { withNextLinks } = require('./remark/withNextLinks')
 const { withLinkRoles } = require('./rehype/withLinkRoles')
+const withRemarkDirective = require('remark-directive')
 const minimatch = require('minimatch')
 
 // const withExamples = require('./remark/withExamples')
@@ -188,6 +189,7 @@ module.exports =
             withSyntaxHighlighting,
             // withNextLinks,
             withSmartQuotes,
+            withRemarkDirective,
           ],
           rehypePlugins: [withLinkRoles],
         },
