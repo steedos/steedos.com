@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: beta
     env:
+      ALGOLIA_APP_ID: XLH8R06L45
+      ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
       STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_SERVER_API_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -53,3 +55,17 @@ jobs:
 
       - name: Upload `.serverless` state to S3
         run: aws s3 sync .serverless s3://steedos-serverless-state-bucket/steedos.com.cn/beta/.serverless --delete  --region ap-east-1
+
+  build-algolia:
+    runs-on: ubuntu-latest
+    env:
+      ALGOLIA_APP_ID: XLH8R06L45
+      ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build algolia
+        uses: darrenjennings/algolia-docsearch-action@master
+        with:
+          algolia_application_id: 'XLH8R06L45'
+          algolia_api_key: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
+          file: 'docsearch-config.json'
