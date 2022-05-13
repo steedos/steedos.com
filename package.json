@@ -71,6 +71,7 @@
     "next-mdx-enhanced": "^5.0.0",
     "next-mdx-remote": "^3.0.4",
     "next-seo": "^4.26.0",
+    "next-sitemap": "^2.5.20",
     "next-transpile-modules": "^8.0.0",
     "node-loader": "^2.0.0",
     "photoswipe": "^4.1.3",

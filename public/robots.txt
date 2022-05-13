@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.steedos.cn
+
+# Sitemaps
+Sitemap: https://www.steedos.cn/sitemap.xml
