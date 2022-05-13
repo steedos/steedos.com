@@ -27,7 +27,7 @@ description: 本教程指导您如何使用华炎魔方，创建合同管理应�
 
 管理员，在设置》对象设置》对象，
 
-\
+
  ![](https://console.steedos.cn/api/files/images/CWdWpnQS5xyvfdmJY)
 
 点击新建按钮，输入合同对象的显示名、API名称等，点击保存按钮，即新建对象。
@@ -135,7 +135,7 @@ description: 本教程指导您如何使用华炎魔方，创建合同管理应�
 
 付款对象新建时，系统同样会自动新建2个列表视图。我们可以按先后顺序增加列表视图显示的列字段。
 
-\
+
  ![](https://console.steedos.cn/api/files/images/zBRGNaPFdpDwXx4Ef)
 
 预览对象
@@ -180,7 +180,7 @@ description: 本教程指导您如何使用华炎魔方，创建合同管理应�
 
 在界面配置好相应的对象及应用后，可以将这些元数据通过同步工具转换为代码，为后续的代码扩充作准备。
 
-\
+
 首先需要安装华炎魔方同步工具，安装方法和过程如下：
 
 ### 在VS Code中安装插件
@@ -195,14 +195,14 @@ description: 本教程指导您如何使用华炎魔方，创建合同管理应�
 
 修改根目录下的 .env，增加以下两个参数，来实现元数据同步功能，其中METADATA_SERVER 为系统的Root的URL，METADATA_APIKEY为[激活本地私有化华炎魔方](https://steedos.cn/docs/deploy/deploy-activate)自动生成的的API Key。
 
-\
+
 ```javascript
 [metadata]
 METADATA_SERVER=http://127.0.0.1:5000
 METADATA_APIKEY=-D0hUDsU0-_nhonh8TKZRukDZsqQQwiLCy
 ```
 
-\
+
 ### 重启服务
 
 修改配置文件后，需重启华炎魔方服务。
@@ -239,7 +239,7 @@ METADATA_APIKEY=-D0hUDsU0-_nhonh8TKZRukDZsqQQwiLCy
 
  ![](https://console.steedos.cn/api/files/images/YgXhGAckM9XGpyEpc)
 
-\
+
 即可将页面配置的应用转换为应用代码。
 
 ### 生成的应用代码
@@ -449,7 +449,7 @@ module.exports = {
 
 </alert>
 
-\
+
 ### 测试确认
 
 进入华炎魔方系统，在合同详情页，出现了“归档”按钮
@@ -546,7 +546,7 @@ module.exports = {
 
 重启服务后，即可在前台进行测试确认。
 
-\
+
 在尚未归档前，可以“新建”付款，正巧，这时别的用户已将此合同归档，所以提交后，后台检测到合同已归档，发出报错信息、本次新增操作未生效。
 
 ### 修改Trigger，增加afterUpdate触发器

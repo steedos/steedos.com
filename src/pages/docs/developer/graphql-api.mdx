@@ -5,7 +5,7 @@ description: 如何通过 API，查询操作华炎魔方中的数据
 
 如何通过 API，查询操作华炎魔方中的数据。
 
-\
+
 ## graphql 控制台
 
 可以在浏览器端访问 GraphQL 控制台，查询和操作华炎魔方中的数据。访问网址为:  ${服务器地址}/graphql
@@ -32,7 +32,7 @@ Authorization : Bearer apikey,${apikey}
 
 其中 ${apikey} 替换为获取到的 API Key
 
-\
+
 ## 查询数据
 
 ### 查询对象和字段
@@ -49,7 +49,7 @@ Authorization : Bearer apikey,${apikey}
 }
 ```
 
-\
+
 查询结果
 
 ```javascript
@@ -75,7 +75,7 @@ Authorization : Bearer apikey,${apikey}
 }
 ```
 
-\
+
 ### 查询参数：翻页
 
 您可以定义一个`skip`要跳过多少条记录，以及一个查询要返回多少条记录`top`。
@@ -91,7 +91,7 @@ query{
 }
 ```
 
-\
+
 ### 查询参数：排序
 
 您可以定义如何用`sort`对结果进行排序。
@@ -139,7 +139,7 @@ query{
 }
 ```
 
-\
+
 返回结果
 
 ```javascript
@@ -162,7 +162,7 @@ query{
 }
 ```
 
-\
+
 ### 返回格式化数据
 
 对于 boolean , select , date , datetime , lookup类型字段，使用 _display{ field_api_name } 语法，可以格式化查询到的数据。
@@ -207,7 +207,7 @@ query{
 }
 ```
 
-\
+
 返回结果
 
 ```javascript
@@ -247,19 +247,19 @@ query{
 }
 ```
 
-\
+
 ### 查询相关子表
 
 当其他表与当前表关联时，可以同时查询相关的子表信息。
 
-\
+
 查询语法
 
 ```javascript
 _related_${object_api_name}_${field_api_name}
 ```
 
-\
+
 例如以下查询可以查询当前分部中的人员清单，也就是人员对象（space_users）中，company_ids 字段与 company 绑定的记录信息。
 
 ```javascript
@@ -282,7 +282,7 @@ _related_${object_api_name}_${field_api_name}
 
 注意：为了提升返回结果的可读性，这里给返回结果起了一个别名： space_users
 
-\
+
 返回结果
 
 ```javascript
@@ -315,7 +315,7 @@ _related_${object_api_name}_${field_api_name}
 }
 ```
 
-\
+
 ## 修改数据
 
 ### 新增数据
@@ -350,7 +350,7 @@ mutation {
 }
 ```
 
-\
+
 ### 修改数据
 
 当调用 GraphQL API 修改数据时，系统会首先验证当前用户是否有对应的修改权限。
@@ -366,7 +366,7 @@ mutation {
 }
 ```
 
-\
+
 其中，`tasks`代表要编辑记录的对象名称，`_id`的值`5cb98489d09a343e14daae95`代表要编辑的记录的`_id`，`{name:"Task Important"}`代表要更新的JSON数据。
 
 关键字`__update`表示通过 GraphQL API 在 Steedos 上编辑一条记录。
@@ -384,7 +384,7 @@ mutation {
 }
 ```
 
-\
+
 ### 删除数据
 
 当调用 GraphQL API 删除数据时，系统会首先验证当前用户是否有对应的删除权限。
@@ -411,8 +411,8 @@ mutation {
 }
 ```
 
-\
-\
+
+
 ## 查询过滤条件详解
 
 华炎魔方使用数组格式定义过滤条件。
@@ -430,10 +430,10 @@ mutation {
 * "notcontains": 不包含...
 * "between": 范围
 
-\
+
 ### 数组类型字段
 
-\
+
 运算符为"="时，条件自动按"or"裂变连接成多个筛选条件，类似实现了"in"操作功能，所以下两种写法结果相同：
 
 ```javascript
@@ -442,7 +442,7 @@ mutation {
 [ [ "status", "=", "closed" ], "or", [ "status", "=", "open" ] ]
 ```
 
-\
+
 运算符为"!="时，条件自动按"and"裂变连接成多个筛选条件，所以下两种写法结果相同：
 
 ```javascript
@@ -451,7 +451,7 @@ mutation {
 [ [ "status", "!=", "closed" ], "and", [ "status", "!=", "open" ] ]
 ```
 
-\
+
 运算符为"between"时，条件自动转换成">="及"<="运算符对应的筛选条件，以下各组效果相同：
 
 ```javascript
@@ -464,7 +464,7 @@ mutation {
 
 > between只支持数值及日期时间类型，且过滤值必须是两个元素的数组格式
 
-\
+
 其他情况一律自动按"or"裂变连接成多个筛选条件
 
 ```javascript
@@ -510,5 +510,5 @@ mutation {
 }
 ```
 
-\
+
  \n 

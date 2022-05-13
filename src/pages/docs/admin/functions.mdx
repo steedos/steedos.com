@@ -37,7 +37,7 @@ Monday_Hours__c + Tuesday_Hours__c + Wednesday_Hours__c + Thursday_Hours__c + Fr
 Amount - Discount_Amount__c
 ```
 
-\
+
 此公式计算产品 Amount（金额）减去 Discount Amount（折扣金额）的差。请注意，Discount Amount（折扣金额）是一个自定义金额字段。
 
 ### \* 乘
@@ -52,7 +52,7 @@ Amount - Discount_Amount__c
 Consulting_Days__c * 1200
 ```
 
-\
+
 此公式计算咨询天数乘以 1200 的数值，假定此公式字段是货币数据类型且咨询按每天 1200 美元的价格收费。请注意，Consulting Days（咨询天数）是一个自定义字段。
 
 ### / 除
@@ -67,14 +67,14 @@ Consulting_Days__c * 1200
 AnnualRevenue/ NumberOfEmployees
 ```
 
-\
+
 此公式使用金额字段计算每个员工的收入金额。
 
 ```javascript
 IF(NumberOfOpportunities > 0,  NumberOfWonOpportunities / NumberOfOpportunities, null)
 ```
 
-\
+
 此公式计算市场活动中业务机会的客户赢得率。
 
 ### ^ 幂
@@ -89,10 +89,10 @@ IF(NumberOfOpportunities > 0,  NumberOfWonOpportunities / NumberOfOpportunities
 NumberOfEmployees^4
 ```
 
-\
+
 计算员工数的四次幂。
 
-\
+
 > 避免使用负整数
 
 ### () 括号
@@ -105,7 +105,7 @@ NumberOfEmployees^4
 (Unit_Value__c - Old_Value__c) / New_Value__c
 ```
 
-\
+
 计算旧值与新值的差值，并除以新值。
 
 ## 逻辑运算符
@@ -122,21 +122,21 @@ NumberOfEmployees^4
 ExpiringDate = CreatedDate + 5
 ```
 
-\
+
 如果到期日等于记录的创建日期与五天之和返回 true。
 
 ```javascript
 IF(Probability = 1, ROUND(Amount*0.02, 2), 0)
 ```
 
-\
+
 此公式计算佣金金额，具有 100% 可能性的业务机会按 2% 计算佣金。所有其他业务机会的佣金值为零。
 
 具有 90% Probability（可能性）的业务机将无法获得佣金。
 
 具有 100% Probability（可能性）和 100,000 美元 Amount（金额）的业务机会将获得 2,000 美元的佣金。
 
-\
+
 > 不要使用此函数进行空比较，如 MyDateTime__c == null。而应使用[ISBLANK](/docs/admin/functions#isblank)。
 
 ### `!=`（不等于）
@@ -151,10 +151,10 @@ IF(Probability = 1, ROUND(Amount*0.02, 2), 0)
 IF(Maint_Amount__c + Services_Amount__c `<>` Amount, "DISCOUNTED", "FULL PRICE")
 ```
 
-\
+
 如果产品的维护金额和服务金额之和不等于产品金额，此公式将在产品上显示“DISCOUNTED”（已折扣金额）。否则，显示“FULL PRICE”（全价）。请注意，本示例对 Maint Amount（维护金额）和 Services Amount（服务金额）使用两个自定义金额字段。
 
-\
+
 > 不要使用此函数进行空比较，如 MyDateTime__c != null。而应使用[ISBLANK](/docs/admin/functions#isblank)。
 
 ### （小于）
@@ -169,7 +169,7 @@ IF(Maint_Amount__c + Services_Amount__c `<>` Amount, "DISCOUNTED", "FULL PRICE"
 IF(AnnualRevenue < 1000000, 1, 2)
 ```
 
-\
+
 将值“1”赋予小于一百万的收入，将值“2”赋予大于一百万的收入。
 
 ### >（大于）
@@ -184,7 +184,7 @@ IF(AnnualRevenue < 1000000, 1, 2)
 IF(commission__c > 1000000, "High Net Worth", "General")
 ```
 
-\
+
 将“High Net Worth”（高资产净值）值赋予大于一百万的佣金。请注意，这是使用佣金自定义字段的文本公式字段。
 
 ### （小于或等于）
@@ -199,7 +199,7 @@ IF(commission__c > 1000000, "High Net Worth", "General")
 IF(AnnualRevenue <= 1000000, 1, 2)
 ```
 
-\
+
 将值“1”赋予小于等于一百万的收入，将值“2”赋予大于一百万的收入。
 
 ### >=（大于或等于）
@@ -214,7 +214,7 @@ IF(AnnualRevenue <= 1000000, 1, 2)
 IF(Commission__c >= 1000000, "YES", "NO")
 ```
 
-\
+
 将值“YES”（是）赋予大于或等于一百万的佣金。请注意，这是使用自定义货币字段 Commission（佣金）的文本公式字段。
 
 ### &&（与）
@@ -229,7 +229,7 @@ IF(Commission__c >= 1000000, "YES", "NO")
 IF((Price<100 && Quantity<5),“Small”, null)
 ```
 
-\
+
 如果价格小于 100 并且数量小于五，此公式显示 “Small”。否则此字段为空。
 
 ### ||（或）
@@ -244,14 +244,14 @@ IF((Price<100 && Quantity<5),“Small”, null)
 IF(Priority = "High" || Status = "New", ROUND(NOW()-CreatedDate, 0), null)
 ```
 
-\
+
 如果个案 Status（状态）为“New”（新建）或 Priority（优先级）为“High”（高），则此公式返回个案未被处理的天数。如果个案是今天打开的，则该字段显示零。
 
 ```javascript
 (Discount_Rate__c < 0) || (Discount_Rate__c > 0.40)
 ```
 
-\
+
 当自定义字段 Discount Rate（折扣率）的值不在 0 和 40% 之间时，此验证规则公式显示下面的错误消息：“Discount Rate cannot exceed 40%.”（折扣率不能超过 40%。)
 
 ## 文本运算符
@@ -268,7 +268,7 @@ IF(Priority = "High" || Status = "New", ROUND(NOW()-CreatedDate, 0), null)
 "Expense-" & Trip_Name__c & "-" & ExpenseNum__c
 ```
 
-\
+
 此公式在行程名称和支出编号前显示文本“Expense-”。这是使用支出编号自定义字段的文本公式字段。
 
 ## 日期和时间函数
@@ -290,10 +290,10 @@ IF(Priority = "High" || Status = "New", ROUND(NOW()-CreatedDate, 0), null)
 ADDMONTHS (StartDate, 5)
 ```
 
-\
+
 为开始日期添加 5 个月。例如，如果开始日期是 2017 年 9 月 20 日，结果日期是 2018 年 2 月 20 日；如果开始日期是 2017 年 9 月 30 日，结果日期是 2018 年 2 月 28 日。
 
-\
+
 
 <alert type="info">
 支持传入日期或日期时间类型的参数，但是返回值始终是日期类型，而不可能是日期时间类型。
@@ -318,10 +318,10 @@ ADDMONTHS (StartDate, 5)
 DATE(2005, 1, 2)
 ```
 
-\
+
 创建一个 2005 年 1 月 2 日的日期字段。
 
-\
+
 
 <alert type="info">
 参数个数只能是三个，也不支持传入`2005-01-01`这种字符串。
@@ -348,17 +348,17 @@ DATE(2005, 1, 2)
 DATEVALUE(ClosedDate)
 ```
 
-\
+
 基于结束日期时间字段值显示日期值，参数ClosedDate可以是日期、日期时间类型，也可以是日期、日期时间格式的字符串类型。
 
 ```javascript
 DATEVALUE("2005-1-15 12:30")
 ```
 
-\
+
 以日期值形式返回“2005-01-15”。
 
-\
+
 
 <alert type="info">
 ■ 如果该函数中所引用的字段不是有效的文本或日期时间字段，则该公式中的字段可能显示为异常字符串或错误信息，比如DATEVALUE("2005-111-15") 将返回NaN-NaN-NaN。
@@ -385,21 +385,21 @@ DATEVALUE("2005-1-15 12:30")
 DATETIMEVALUE(TEXT(ClosedDate))
 ```
 
-\
+
 基于结束日期字段值显示日期时间值，参数ClosedDate必须是日期类型，而不可以是日期时间类型， 因为如果ClosedDate是日期时间类型，TEXT(ClosedDate)返回的会是"2020-11-04 03:45:00Z"这种带Z的字符串。
 
 ```javascript
 DATETIMEVALUE(SUBSTITUTE(TEXT(ClosedDate), "Z", ""))
 ```
 
-\
+
 基于结束日期字段值显示日期时间值，参数ClosedDate可以是日期类型，也可以是时间类型，因为此示例中把最后的Z字符清除掉了。
 
 ```javascript
 DATETIMEVALUE("2005-11-15 17:00:00")
 ```
 
-\
+
 以日期和时间值形式返回“2005-11-15T17:00:00.000Z”（即utc时间2005 年 11 月 15 日17点整）。
 
 ### day
@@ -416,10 +416,10 @@ DATETIMEVALUE("2005-11-15 17:00:00")
 DAY(Code_Freeze__c)
 ```
 
-\
+
 返回您的自定义代码冻结日期中的日。请注意，这不适用于“日期时间”字段。
 
-\
+
 
 <alert type="info">
 只支持传入日期类型值，不支持“日期时间”类型值，也不支持字符串类型值。
@@ -440,14 +440,14 @@ DAY(Code_Freeze__c)
 HOUR(ClosedDate)
 ```
 
-\
+
 仅根据日期时间完结字段值显示其中的小时。
 
 ```javascript
 HOUR(DATETIMEVALUE('2018-12-12 18:06:08'))
 ```
 
-\
+
 返回18，而不是10。
 
 ### millisecond
@@ -464,14 +464,14 @@ HOUR(DATETIMEVALUE('2018-12-12 18:06:08'))
 MILLISECOND(DATETIMEVALUE(SUBSTITUTE(TEXT(ClosedDate), "Z", "")))
 ```
 
-\
+
 仅根据完结时间字段的值显示时间字段中的毫秒值。
 
 ```javascript
 MILLISECOND(NOW())
 ```
 
-\
+
 返回当前时间的毫秒值，比如125。
 
 ### minute
@@ -488,17 +488,17 @@ MILLISECOND(NOW())
 MINUTE(DATETIMEVALUE(SUBSTITUTE(TEXT(ClosedDate), "Z", "")))
 ```
 
-\
+
 仅根据完结时间字段的值显示时间字段中的分钟值。
 
 ```javascript
 MINUTE(NOW())
 ```
 
-\
+
 返回当前时间的分钟值，比如12。
 
-\
+
 
 <alert type="info">
 MINUTE函数只授受datetime类型作为参数，不支持time,date,text类型作为参数，可以先用DATETIMEVALUE函数进行类型转换后再调用该函数。
@@ -519,17 +519,17 @@ MINUTE函数只授受datetime类型作为参数，不支持time,date,text类型�
 MONTH(SLAExpirationDate__c)
 ```
 
-\
+
 返回您的服务级协议到期的月份。本示例使用名为 SLA Expiration Date（SLA 到期日期）的自定义日期字段。
 
 ```javascript
 MONTH(TODAY())
 ```
 
-\
+
 以数字格式返回当前月份。例如，对于月份“February”将返回值“2”。
 
-\
+
 
 <alert type="info">
 MONTH函数只授受date类型作为参数，不支持time,datetime,text类型作为参数，可以先用DATEVALUE函数进行类型转换后再调用该函数。
@@ -548,10 +548,10 @@ MONTH函数只授受date类型作为参数，不支持time,datetime,text类型�
 IF(Status = "Open", ROUND(NOW()-CreatedDate, 0), null)
 ```
 
-\
+
 此公式检查潜在客户是否未处理；如果是，则通过从当前日期和时间减去创建日期和时间来计算它未被处理的天数。结果是舍入为零小数位的未处理天数。如果潜在客户已处理，则此字段为空。
 
-\
+
 
 <alert type="info">
 ■ 请勿删除括号。
@@ -584,14 +584,14 @@ IF(Status = "Open", ROUND(NOW()-CreatedDate, 0), null)
 SECOND(ClosedDate)
 ```
 
-\
+
 仅根据完结时间字段的值显示其中的秒值。
 
 ```javascript
 SECOND(DATETIMEVALUE('2018-12-12 18:06:08'))
 ```
 
-\
+
 返回 8。
 
 ### timenow
@@ -606,10 +606,10 @@ SECOND(DATETIMEVALUE('2018-12-12 18:06:08'))
 IF(Rating="Hot", TEXT(TIMENOW()), TEXT(TIMEVALUE(CreatedDate)))
 ```
 
-\
+
 此公式会检查并了解潜在客户是否评级为“热门”；如果是，返回正确时间。否则，返回自某人创建潜在客户之后的时间。
 
-\
+
 
 <alert type="info">
 ■ 请勿删除括号。
@@ -638,10 +638,10 @@ IF(Rating="Hot", TEXT(TIMENOW()), TEXT(TIMEVALUE(CreatedDate)))
 TEXT(TIMEVALUE("17:30:45.125"))
 ```
 
-\
+
 返回 "17:30:45.125"。
 
-\
+
 
 <alert type="info">
 ■ 请勿对日期时间字段使用 TIMEVALUE。
@@ -662,17 +662,17 @@ TEXT(TIMEVALUE("17:30:45.125"))
 TODAY()-Sample_date_c
 ```
 
-\
+
 计算样本中还剩多少天。
 
 ```javascript
 SampleDate < TODAY()
 ```
 
-\
+
 本示例可确保用户无法将 Sample Date（采样日期）更改为过去的日期。
 
-\
+
 
 <alert type="info">
 ■ 请勿删除括号。
@@ -705,10 +705,10 @@ SampleDate < TODAY()
 WEEKDAY(customdate1__c)
 ```
 
-\
+
 使用 customdate1__c 返回指定日期的周数。
 
-\
+
 
 <alert type="info">
 ■ 该函数只支持日期类型值，不支持日期时间或字符串类型值作为参数。
@@ -731,10 +731,10 @@ WEEKDAY(customdate1__c)
 YEAR(TODAY() )- YEAR(Initial_Meeting__c )
 ```
 
-\
+
 返回自您与客户初次会面后的年数。本示例使用名为 Initial Meeting（初次会面）的自定义日期字段。
 
-\
+
 
 <alert type="info">
 ■ 该函数只支持日期类型值，不支持日期时间或字符串类型值作为参数。
@@ -763,7 +763,7 @@ YEAR(TODAY() )- YEAR(Initial_Meeting__c )
 IF(AND(Price<1,Quantity<1),"Small", null)
 ```
 
-\
+
 如果价格和数量小于 1，此公式将显示“Small”。如果资产有大于 1 的价格或数量，则此字段为空。
 
 ### blankvalue
@@ -783,14 +783,14 @@ IF(AND(Price<1,Quantity<1),"Small", null)
 BLANKVALUE(Department, "Undesignated")
 ```
 
-\
+
 如果部门字段包含值则此公式返回部门字段的值。如果部门字段为空，则此公式返回词语未指定。
 
 ```yaml
 BLANKVALUE(Payment_Due_Date__c, StartDate + 5)
 ```
 
-\
+
 此公式返回当 Payment Due Date（付款到期日期）为空时，合同开始日期之后第五天的日期。Payment Due Date（付款到期日期）是自定义日期字段。
 
 > * 如果字段包含字符、空白或零，则字段不为空。例如，如果字段包含使用空格键插入的空格，则该字段不为空。
@@ -801,7 +801,7 @@ BLANKVALUE(Payment_Due_Date__c, StartDate + 5)
 > * 如果您对数值字段判断空值，比如`BLANKVALUE(Amount, 100)`，则字段没有值且配置将空白字段处理为空白时，该公式才返回第二个参数中的指定的置换表达式值，如果字段没有值且配置将空白字段处理为0时，则按0值返回而不是返回第二个参数中的指定表达式值。
 > * 因为我们的空白字段处理方式默认值是“将空白字段视为零”，所以低代码中要小心，不配置这个属性时，默认为按0值处理。零代码配置时问题不大，因为空白字段处理属性是必填的，不存在默认值问题。
 
-\
+
 
 <alert type="info">
 ■ 该函数与[ISBLANK](/docs/admin/functions#isblank)很像，但是该函数会进一步返回字段值为空时的置换表达式对应的值，一般来说，如果您只是想判断字段值是否为空，应该使用后者而不是该函数。
@@ -839,7 +839,7 @@ BLANKVALUE(Payment_Due_Date__c, StartDate + 5)
 
 **返回值：** 与传入的最后一个参数一样的数据类型
 
-\
+
 ***公式字段示例：***
 
 ***1.个案未处理的天数***
@@ -850,14 +850,14 @@ BLANKVALUE(Payment_Due_Date__c, StartDate + 5)
 CASE(Days_Open__c, 3,  "Reassign", 2, "Assign Task", "Maintain")
 ```
 
-\
+
 显示下面的文本：
 
 * 为任何三天未处理的个案显示“Reassign”（重新指定）。
 * 为任何有两天未处理的个案显示“Assign Task”（分配任务）。
 * 为所有其他个案显示“Maintain”（维护）。
 
-\
+
 ***2.上次活动的月份***
 
 此公式字段显示上次活动的月份，如果没有活动，则显示“None”（无）。
@@ -879,7 +879,7 @@ CASE(MONTH(LastActivityDate),
 "None")
 ```
 
-\
+
 ***默认值示例：***
 
 ***1.折扣率***
@@ -890,7 +890,7 @@ CASE(MONTH(LastActivityDate),
 CASE(User.Department,​​ "IT", 0.25, "Field", 0.15, 0)
 ```
 
-\
+
 在本示例中，该公式在“IT”部门的用户所创建的所有业务机会上插入了 25% 的折扣率，或在“Field”部门的人员所创建的所有业务机会上插入了 15% 的折扣率。如果创建者不属于其中任何一个部门，则折扣率为零。这是业务机会中使用标准用户字段 Department（部门）的自定义百分比字段。
 
  \n ***2.产品语言***
@@ -901,7 +901,7 @@ CASE(User.Department,​​ "IT", 0.25, "Field", 0.15, 0)
 CASE($User.Country ,​​ "Japan", "Japanese", "US", "English","unknown")
 ```
 
-\
+
 
 <alert type="info">
 ■ 请确保您的`值1`、`值2`等表达式属于相同的数据类型，且必须与第一个参数值数据类型一致。
@@ -953,10 +953,10 @@ CASE($User.Country ,​​ "Japan", "Japanese", "US", "English","unknown")
 IF(AND(Payment_Due_Date__c < TODAY(),​​Payment_Status__c = "UNPAID") , "PAYMENT OVERDUE", ​null)
 ```
 
-\
+
 此公式确定付款到期日期是否已过，以及付款状态是否为“UNPAID”（未付）。如果是，则返回文本“PAYMENT OVERDUE”（付款逾期）；如果不是，则保持该字段为空。本示例使用名为 Payment Due Date（付款到期日期）的自定义日期字段和一个名为 Payment Status（付款状态）的自定义文本字段。
 
-\
+
 ***2.插入税率***
 
 使用该默认值公式可根据用户所在城市设置资产的税率。使用以下默认值创建自定义百分比字段：
@@ -965,7 +965,7 @@ IF(AND(Payment_Due_Date__c < TODAY(),​​Payment_Status__c = "UNPAID") , "PAYM
 IF($user.city = "Napa", 0.0750, IF($user.city = "Paso Robles", 0.0725,  IF($user.city = "Sutter Creek", 0.0725,   IF($user.city = "Los Olivos", 0.0750,    IF($user.city = "Livermore", 0.0875, null    )   )  ) ))
 ```
 
-\
+
 
 <alert type="info">
 * 请确保您的 value_if_true 和 value_if_false 表达式属于相同的数据类型，且不为布尔类型值。
@@ -987,10 +987,10 @@ IF($user.city = "Napa", 0.0750, IF($user.city = "Paso Robles", 0.0725,  IF($us
 (IF(ISBLANK(Maint_Amount__c), 0, 1) + ​ IF(ISBLANK(Services_Amount__c), 0,1) + ​  IF(ISBLANK(Discount_Percent__c), 0, 1) + ​   IF(ISBLANK(Amount), 0, 1) +​    IF(ISBLANK(Timeline__c), 0, 1)) / 5
 ```
 
-\
+
 此公式可提取一组字段，并计算人员所用的百分比。此公式字段检查五个字段以查看它们是否为空。如果为空，则该字段计数为 0。对于任何包含一个值的字段计数“1”，且该总和除以五（计算的字段数）。此公式需要您选中“空白字段处理”下面的将空白字段视为空白选项，否则公式中的ISBLANK会始终返回FALSE。
 
-\
+
 
 <alert type="info">
 ■ 请不要用`MyDateTime__c == null`这种表达式判断空值，而应该使用`ISBLANK(MyDateTime__c)`。
@@ -1035,7 +1035,7 @@ ISBLANK函数返回值为布尔类型，但是不支持参数值本身为布尔�
 IF(NOT(Status = "Closed"), ROUND(NOW()-CreatedDate, 0), null)
 ```
 
-\
+
 检查变量是否未处理；如果是，则通过从当前日期和时间减去创建日期和时间来计算它未被处理的天数。结果是舍入为零小数位的未处理天数。如果变量已处理，则此字段为空。
 
 ### or
@@ -1056,7 +1056,7 @@ IF(NOT(Status = "Closed"), ROUND(NOW()-CreatedDate, 0), null)
 IF(OR(Priority="High",Status="New"), ROUND(NOW()-CreatedDate, 0), null)
 ```
 
-\
+
 如果个案 Status（状态）为“New”（新建）或 Priority（优先级）为“High”（高），则此公式返回个案未被处理的天数。如果个案是今天打开的，则该字段显示零。
 
 ## 数学函数
@@ -1075,7 +1075,7 @@ IF(OR(Priority="High",Status="New"), ROUND(NOW()-CreatedDate, 0), null)
 ABS(ExpectedRevenue)
 ```
 
-\
+
 计算 Expected Revenue（预期收入）金额的正值，而无论其为正还是为负。
 
 ### ceiling
@@ -1092,7 +1092,7 @@ ABS(ExpectedRevenue)
 CEILING(2.3)
 ```
 
-\
+
 返回 3，即 2.3 向上舍入为最接近的整数。
 
 ```javascript
@@ -1115,14 +1115,14 @@ CEILING(-2.3)
 EXP(3)
 ```
 
-\
+
 此公式返回一个值，该值等于 e 的三次幂。
 
 ```javascript
 Principal__c  EXP(Rate__c  Years__c)
 ```
 
-\
+
 此公式基于本金的自定义货币字段、利率的自定义百分比字段和年份的自定义数字字段计算复利。
 
 ### floor
@@ -1139,14 +1139,14 @@ Principal__c  EXP(Rate__c  Years__c)
 FLOOR(2.5)
 ```
 
-\
+
 返回 2，即 2.5 向下舍入为最接近的整数。
 
 ```javascript
 FLOOR(-2.5)
 ```
 
-\
+
 会返回 -2，即 -2.5 舍入为 0 以上的负数。
 
 ### ln
@@ -1163,14 +1163,14 @@ FLOOR(-2.5)
 LN(10)
 ```
 
-\
+
 返回 10 的自然对数，即 2.30。
 
 ```javascript
 LN(Value__c)
 ```
 
-\
+
 返回名为 Value（值）的自定义数字字段的自然对数。
 
 ### log
@@ -1187,7 +1187,7 @@ LN(Value__c)
 LOG(Salary__c)
 ```
 
-\
+
 计算某人的工资的对数。
 
 在本示例中，Salary（工资）是自定义金额字段。
@@ -1214,7 +1214,7 @@ LOG(Salary__c)
 MAX(0.06 * Total_Cost__c , Min_Service_Charge__c)
 ```
 
-\
+
 ***2.书籍版税***
 
 本示例中的公式字段计算服务费，取总成本的 6% 与最低服务费之间的较大者。请注意，最低服务费是默认值为 $15 的自定义货币字段。但是，如果最低服务费并不总是为同一金额，则可以使该字段为公式字段。
@@ -1223,7 +1223,7 @@ MAX(0.06 * Total_Cost__c , Min_Service_Charge__c)
 MAX(0.10 * Pages__c, (Retail_Price__c * 0.07) * Total_Sold__c)
 ```
 
-\
+
 ***3.佣金***
 
 此公式确定要支付的书籍版税。它显示两个金额中的较大的一项：每卖一本书 0.07 美元或每页 0.10 美元。它假设您有名为 Pages（页数）和 Total Sold（销售总额）的自定义数字字段，以及名为 Retail Price（零售价格）的自定义货币字段。
@@ -1232,7 +1232,7 @@ MAX(0.10 * Pages__c, (Retail_Price__c * 0.07) * Total_Sold__c)
 MAX($user.Commission_Percent__c * Price, Price * Account_Discount__c, 100)
 ```
 
-\
+
 该示例确定要根据以下较大值为资产记录的佣金：用户的价格佣金百分比、价格乘以为金额存储的折扣百分比或 100 美元。本示例假设您有两个针对用户和资产的自定义百分比字段。
 
 ### mceiling
@@ -1249,17 +1249,17 @@ MAX($user.Commission_Percent__c * Price, Price * Account_Discount__c, 100)
 MCEILING(2.3)
 ```
 
-\
+
 返回 3，即 2.3 向上舍入为最接近的整数。
 
 ```javascript
 MCEILING(-2.3)
 ```
 
-\
+
 返回 -3，即对于负数，-2.3 向下舍入为最接近的负整数。
 
-\
+
 > MCEILING函数与CEILING在传入的参数是正数时用法一样，区别是参数为负数时后者是先按正数值向上舍入后再加上负号前缀。
 
 ### mfloor
@@ -1276,17 +1276,17 @@ MCEILING(-2.3)
 MFLOOR(2.3)
 ```
 
-\
+
 返回 2，即 2.3 向下舍入为最接近的整数。
 
 ```javascript
 MFLOOR(-2.3)
 ```
 
-\
+
 返回 -3，即对于负数，-2.3 向下舍入为最接近的负整数。
 
-\
+
 > MFLOOR函数与FLOOR在传入的参数是正数时用法一样，区别是参数为负数时后者是先按正数值向下舍入后再加上负号前缀。
 
 ### min
@@ -1307,14 +1307,14 @@ MFLOOR(-2.3)
 MIN(250, Contribution__c /2)
 ```
 
-\
+
 本示例中的公式根据一半员工的捐献或 250 美元（较小者为准）的匹配计划来确定在员工 401K 匹配中提供多少金额。它假设您有一个名为 Contribution（贡献）的自定义货币字段。
 
 ```javascript
 MIN(Gross__c * Bonus_Percent__c, ​  Performance__c / Number_of_Employees__c)
 ```
 
-\
+
 该示例确定了基于两个金额最小值的员工奖金金额：员工的总时间奖金百分比或在所有员工中平分公司的绩效奖金金额。它还假设您有一个名为 Number of Employees（职员数）的自定义数字字段，一个名为 Bonus Percent（奖金百分比）的自定义百分比字段，以及针对员工 Gross（毛利）和公司的 Performance（绩效）的自定义货币字段。
 
 ### mod
@@ -1328,14 +1328,14 @@ MIN(Gross__c * Bonus_Percent__c, ​  Performance__c / Number_of_Employees__c)
 * *数字:* `number` 您希望被除的字段或表达式。
 * *除数:* `number` 要用作除数的数字。
 
-\
+
 **返回值：** 数值
 
 ```javascript
 MOD(3, 3)MOD(4, 3)MOD(123, 100)
 ```
 
-\
+
 返回 0； 返回 1； 返回 23。
 
 您可能希望禁止用户将会议安排在星期六或星期日。使用下面的示例可以对名为 My Date（我的日期）的自定义日期字段应用验证规则。
@@ -1349,10 +1349,10 @@ CASE(MOD(My_Date__c - DATE(1900, 1, 7), 7),
 
  \n 当 My Date（我的日期）的值不在星期一至星期五范围内时，本示例返回下面的错误消息：“My Date is not a weekday.”（我的日期不是工作日）。
 
-\
+
 > 请不要使用0值作为除数传入。
 
-\
+
 ### round
 
 返回与所指定的数字最接近的一个数字，并通过指定的位数来约束新数字。
@@ -1370,15 +1370,15 @@ CASE(MOD(My_Date__c - DATE(1900, 1, 7), 7),
 ROUND (1.5, 0) = 2ROUND (1.2345, 0) = 1ROUND (-1.5, 0) = -2ROUND (225.49823, 2) = 225.50
 ```
 
-\
+
 ```javascript
 ROUND( Amount-Amount* Discount_Percent__c,2)
 ```
 
-\
+
 使用此公式可以计算舍入到两位数的业务机会折扣金额。本示例是业务机会的数字公式字段，使用名为 Discount Percent（折扣百分比）的自定义百分比字段。
 
-\
+
 > ■ 为数字位数输入零以将数值舍入为最接近的整数。
 >
 > ■ 该函数会根据您指定的小数位数自动舍入数字。例如，当您输入 1.49999 时，设置为两位小数的自定义数字字段存储为 1.50。
@@ -1389,7 +1389,7 @@ ROUND( Amount-Amount* Discount_Percent__c,2)
 >
 > ■ 第一个参数值为负数时，将按正数部分四舍五入后再加上负号前缀作为最终返回值，而不是像javascript编程语言Math.round函数一样按值进行四舍五入。
 
-\
+
 ### sqrt
 
 返回给定数字的正平方根。
@@ -1404,17 +1404,17 @@ ROUND( Amount-Amount* Discount_Percent__c,2)
 SQRT(25)
 ```
 
-\
+
 返回 25 的平方根（即 5）。
 
 ```javascript
 SQRT(Amplitude__c)
 ```
 
-\
+
 返回代表地震振幅的自定义数字字段的平方根。
 
-\
+
 > ■ 计算一个负数的平方根是不支持的，会返回错误信息。
 >
 > ■ 可通过包含 IF 函数来避免出现零除数，例如：IF( Amplitude__c >= 0, SQRT( Amplitude__c ), null)。
@@ -1438,10 +1438,10 @@ SQRT(Amplitude__c)
 IF(BEGINS (Product_type__c , “ICU”), “Medical”, “Technical”)
 ```
 
-\
+
 如果产品类型自定义文本字段中的文本以“ICU”开头，则此示例返回文本“Medical”（医疗）。对于所有其他产品显示“Technical”（技术）。
 
-\
+
 
 <alert type="info">
 ■ 此函数区分大小写，因此，请确保比较文本值的大小写正确无误。
@@ -1462,10 +1462,10 @@ IF(BEGINS (Product_type__c , “ICU”), “Medical”, “Technical”)
 CASE(ShippingCountry,"USA",  ShippingStreet & BR() &  ShippingCity & ",  " & ShippingState & " " &  ShippingPostalCode & BR()  & ShippingCountry,"France",  ShippingStreet & BR() &  ShippingPostalCode & " " &  ShippingCity & BR() &  ShippingCountry, "etc")
 ```
 
-\
+
 此公式字段以标准格式显示联系人的带格式邮寄地址，根据所在的国家/地区，可能会在该地址的适当位置中包含空格和换行符。
 
-\
+
 
 <alert type="info">
 ■ 请勿删除函数名称后面的括号。
@@ -1490,7 +1490,7 @@ CASE(ShippingCountry,"USA",  ShippingStreet & BR() &  ShippingCity & ",  " & 
 CASESAFEID (Id)
 ```
 
-\
+
 此公式将 15 个字符的 ID 替换为 18 个字符、区分大小写的 ID。 假设Id值为abcdefghijklmno，该公式将返回"abcdefghijklmnoAAA"。
 
 ### contains
@@ -1510,10 +1510,10 @@ CASESAFEID (Id)
 IF(CONTAINS(Product_Type__c, "part"), "Parts", "Service")
 ```
 
-\
+
 此公式检查自定义文本字段 Product_Type（产品类型）的内容，并针对任何包含单词“part”的产品返回“Parts”。否则，将返回“Service”。请注意，如果 Product_Type（产品类型）字段包含“Part”或“PART”文本，此公式将返回“Services”。
 
-\
+
 
 <alert type="info">
 ■ 此函数区分大小写，因此，请确保比较文本值的大小写正确无误。
@@ -1542,17 +1542,17 @@ IF(CONTAINS(Product_Type__c, "part"), "Parts", "Service")
 FIND(" ", Street)
 ```
 
-\
+
 返回 Street 字段中的第一个空格所在的字符位置。可以使用此数字来确定街道地址的长度，以便将地址字段中的街道地址与街道名称分开。
 
 ```javascript
 SUBSTITUTE(Email, LEFT(Email, FIND("@", Email)), "www.")
 ```
 
-\
+
 查找 @ 符号在个人电子邮件地址中的位置，以确定要用`“www.”`替换的文本长度，从而派生其网址。
 
-\
+
 
 <alert type="info">
 ■ 请确保在验证公式之前去掉其中的中括号、\[ 和 \]。
@@ -1593,17 +1593,17 @@ SUBSTITUTE(Email, LEFT(Email, FIND("@", Email)), "www.")
 HYPERLINK("/00U/e?retURL=%2F006x0000001T8Om&what_id="& Id,"Create Event")
 ```
 
-\
+
 添加一个名为“Create Event”（创建事件）的链接，当用户单击该链接时，系统会创建一个与当前的目标相关联的新事件。
 
 ```javascript
 HYPERLINK("http://servername/call?id=" & Id & "&phone=" & Phone, Phone)
 ```
 
-\
+
 创建一个可链接的电话号码字段，当用户单击该字段时，系统会自动拨打其中的电话号码。在本示例中，用您的拨号工具名称及其用来拨号的命令替换“servername”（服务器名）和“call”（呼叫）。并在合并字段 Id 中插入联系人、业务机会或客户记录的标识符。第一个 Phone（电话）合并字段通知拨号工具要拨打的号码，最后一个 Phone（电话）合并字段使用 Phone（电话）字段的值作为用户单击时拨号的可链接文本。
 
-\
+
 
 <alert type="info">
 ■ 超链接公式字段属于文本类型。
@@ -1645,10 +1645,10 @@ HYPERLINK("http://servername/call?id=" & Id & "&phone=" & Phone, Phone)
 INCLUDES(Hobbies__c, "Golf")
 ```
 
-\
+
 如果爱好自定义多选选项列表字段中选择的某个值是“高尔夫”，则 INCLUDES(Hobbies__c, "Golf") 将返回 TRUE（真）。
 
-\
+
 
 <alert type="info">
 ■ 该函数只支持多选的选项列表字段，要使用单选选项列表字段请使用 [ISPICKVAL](/docs/admin/functions#ispickval)。
@@ -1680,7 +1680,7 @@ INCLUDES(Hobbies__c, "Golf")
 IF(ISPICKVAL( Status , "Activated"), NOW()-ActivatedDate, null)
 ```
 
-\
+
 计算自合同被启用以来的天数。如果合同状态不是“Activated”，则此字段为空。
 
 ***2.佣金金额***
@@ -1689,10 +1689,10 @@ IF(ISPICKVAL( Status , "Activated"), NOW()-ActivatedDate, null)
 IF(ISPICKVAL(StageName, "Closed Won"),   ROUND(Amount *0.02, 2), 0)
 ```
 
-\
+
 本示例计算处于“Closed Won”（已结束并赢得客户）阶段的任何业务机会的佣金金额。该字段的值将是任何已结束／赢得客户的业务机会的金额乘以 0.02。对于未处理或已丢失的业务机会，佣金值为零。
 
-\
+
 
 <alert type="info">
 ■ 该函数只支持单选的选项列表字段，要使用多选选项列表字段请使用 [INCLUDES](/docs/admin/functions#includes)。
@@ -1720,10 +1720,10 @@ IF(ISPICKVAL(StageName, "Closed Won"),   ROUND(Amount *0.02, 2), 0)
 TRIM(LEFT(LastName, 5)) & “-” & TRIM(RIGHT(SSN__c, 4))
 ```
 
-\
+
 此公式显示名称的前五个字符和社会保险编号的后四个字符（由连字符分隔）。请注意，本示例使用了名为 SSN 的自定义文本字段。
 
-\
+
 
 <alert type="info">
 如果字符数值小于零，公式会用零替换该值。
@@ -1744,7 +1744,7 @@ TRIM(LEFT(LastName, 5)) & “-” & TRIM(RIGHT(SSN__c, 4))
 LEN(PartNumber__c)
 ```
 
-\
+
 此公式返回 Product Code（产品代码）字段中所含的字符数。
 
 ### lower
@@ -1761,14 +1761,14 @@ LEN(PartNumber__c)
 LOWER("MYCOMPANY.COM")
 ```
 
-\
+
 返回“mycompany.com.”。
 
 ```javascript
 LOWER( TickerSymbol )
 ```
 
-\
+
 以小写字符返回 Ticker Symbol 中的文本。
 
 ### lpad
@@ -1795,7 +1795,7 @@ LOWER( TickerSymbol )
 LPAD(Name, 20, "")
 ```
 
-\
+
 在 20 个字符后截断名称字段。例如，如果初始值为"mycompany.com"，则返回值为"mycompany.com"，如果初始值为"mycompany_is_good_in_china.com"，则返回值为"mycompany_is_good_in"。
 
 ***2.My_Company: 无更改***
@@ -1804,7 +1804,7 @@ LPAD(Name, 20, "")
 LPAD( 'my_company.com' , 14, 'z')
 ```
 
-\
+
 返回“my_company.com”而没有更改，因为它包含 14 个字符。
 
 ***3.使用 Z 填充的字段名***
@@ -1813,10 +1813,10 @@ LPAD( 'my_company.com' , 14, 'z')
 LPAD("my_company.com", 15, "z")
 ```
 
-\
+
 返回名称"zmy_company.com"。
 
-\
+
 
 <alert type="info">
 不会忽略前置空格。
@@ -1841,24 +1841,24 @@ LPAD("my_company.com", 15, "z")
 MID( Division , 3, 4)
 ```
 
-\
+
 返回 Division（分部）名称中从左数第三个字符开始的四个字符。对于用户记录，这代表部门代码。
 
 ```javascript
 MID("ABCDEFGH" , 3, 4)
 ```
 
-\
+
 返回"CDEF"。
 
 ```javascript
 MID("ABCDEFGH", 0, 10)
 ```
 
-\
+
 返回"H"，即起始位置是从0开始而非1，传入0值作为起始位置时公式将不能按预期返回值。
 
-\
+
 
 <alert type="info">
 请注意，文本中的第一个字符指定为 1（而非 0）。
@@ -1882,10 +1882,10 @@ MID("ABCDEFGH", 0, 10)
 TRIM(LEFT(LastName, 5))&"-"&TRIM(RIGHT(SSN__c, 4))
 ```
 
-\
+
 显示名字的前五个字符和社会保险编号的后四个字符（由连字符分隔）。请注意，本示例假定您拥有名为 SSN 的文本自定义字段。
 
-\
+
 
 <alert type="info">
 如果字符数值小于零，则公式会用零替换该值。
@@ -1914,7 +1914,7 @@ TRIM(LEFT(LastName, 5))&"-"&TRIM(RIGHT(SSN__c, 4))
 RPAD(Name, 20, "")
 ```
 
-\
+
 在 20 个字符后截断名称字段。例如，如果初始值为"mycompany.com"，则返回值为"mycompany.com"，如果初始值为"mycompany_is_good_in_china.com"，则返回值为"mycompany_is_good_in"。
 
 ***2.My_Company: 无更改***
@@ -1923,7 +1923,7 @@ RPAD(Name, 20, "")
 RPAD( 'my_company.com' , 14, 'z')
 ```
 
-\
+
 返回“my_company.com”而没有更改，因为它包含 14 个字符。
 
 ***3.使用 Z 填充的字段名***
@@ -1932,10 +1932,10 @@ RPAD( 'my_company.com' , 14, 'z')
 RPAD("my_company.com", 15, "z")
 ```
 
-\
+
 返回名称"my_company.comz"。
 
-\
+
 
 <alert type="info">
 ■ 不会忽略结尾空格。
@@ -1962,17 +1962,17 @@ RPAD("my_company.com", 15, "z")
 SUBSTITUTE(Name, "Coupon", "Discount")
 ```
 
-\
+
 返回包含术语“Coupon”（赠券）的业务机会的名称，返回名称时，将名称中的“Coupon”替换为“Discount”。
 
 ```javascript
 SUBSTITUTE(Email, LEFT(Email, FIND("@", Email)), "www.")
 ```
 
-\
+
 查找 @ 符号在个人电子邮件地址中的位置，以确定要用 `“www.”` 替换的文本长度，从而派生其网址，比如Email值为"`abc@steedos.cn`"的话运行公式将返回"[www.steedos.cn"。](https://www.steedos.cn)
 
-\
+
 
 <alert type="info">
 ■ 引号中的每个术语都区分大小写。
@@ -1995,17 +1995,17 @@ SUBSTITUTE(Email, LEFT(Email, FIND("@", Email)), "www.")
 TEXT(ExpectedRevenue)
 ```
 
-\
+
 以文本格式返回业务机会的预期收入金额。例如，如果市场活动的 Expected Revenue（预期收入）是200000，此公式的字段中将显示“200000”。
 
 ```javascript
 SerialNumber &"-"& TEXT(Quantity)
 ```
 
-\
+
 返回一个资产 ID 号，ID 号以序列号开头，以数量结尾，二者之间用连字符分隔。Serial Number（序列号）字段是文本字段，但 Quantity（数量）字段为数字字段，其前面需要使用 TEXT 函数。
 
-\
+
 
 <alert type="info">
 ■ `TEXT(null)`返回值为"NULL"而不是空字符串。
@@ -2040,7 +2040,7 @@ SerialNumber &"-"& TEXT(Quantity)
 TRIM(LEFT(LastName,5))& "-" & RIGHT(FirstName, 1)
 ```
 
-\
+
 为用户返回一个网络 ID，该 ID 用连字符分隔其姓氏的前五个字符和其名字的第一个字符。
 
 ### upper
@@ -2057,14 +2057,14 @@ TRIM(LEFT(LastName,5))& "-" & RIGHT(FirstName, 1)
 UPPER("mycompany.com")
 ```
 
-\
+
 返回“MYCOMPANY.COM.”。
 
 ```javascript
 UPPER("Mycompany.com 123")
 ```
 
-\
+
 返回“MYCOMPANY.COM 123.”。
 
 ### value
@@ -2085,7 +2085,7 @@ UPPER("Mycompany.com 123")
 VALUE( Lead_Number__c )
 ```
 
-\
+
 返回自动编号字段 Lead Number（潜在客户编号）中的文本值所对应的数字。如果您希望在计算中使用 Lead Number（潜在客户编号）字段，则这可能非常有用。请注意，自动编号字段实际上是文本字段，必须转换为数字字段才能进行数值计算。
 
 ***2.潜在客户循环分配***
@@ -2094,14 +2094,14 @@ VALUE( Lead_Number__c )
 MOD(VALUE(Lead_Number__c), 3)
 ```
 
-\
+
 该公式适用于名称为 Round_Robin_ID 的自定义公式字段，它为每个潜在客户分配 0、1 或 2。该公式使用名称为 Lead Number 的自定义自动数字字段，它为每个潜在客户分配从 1 开始的唯一号码。MOD 函数使用潜在客户数量除以可用潜在客户队列的数量（在本示例中为 3），然后返回剩余值 0、1 或 2。在您的潜在客户分配规则中使用该公式字段的值向不同的队列分配潜在客户记录。例如：
 
 * Round_Robin_ID = 0 分配到队列 A
 * Round_Robin_ID = 1 分配到队列 B
 * Round_Robin_ID = 2 分配到队列 C
 
-\
+
 
 <alert type="info">
 请确保 VALUE 函数中的文本不包含除小数点（句点）或负号（连字符）以外的任何特殊字符。例如，公式 VALUE(Text_field__c) 产生以下结果：
@@ -2139,7 +2139,7 @@ MOD(VALUE(Lead_Number__c), 3)
 NOT(REGEX(ID, "[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)"))
 ```
 
-\
+
 
 <alert type="info">
 ■ 正则表达式的语法基于Java Platform SE 6 语法。但是，转义字符 () 未被支持，更改为两个反斜杠 (\\)一样不支持，需要匹配特殊符号请用中括号包裹，比如要匹配符号点`.`可以写为`[.]`。
@@ -2154,4 +2154,4 @@ NOT(REGEX(ID, "[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][
 
 </alert>
 
-\
+

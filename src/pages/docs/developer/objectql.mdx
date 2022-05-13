@@ -439,7 +439,7 @@ const result = await objectql.getObject(objectApiName).toConfig();
 */
 ```
 
-\
+
 ## 查询过滤条件详解
 
 华炎魔方使用数组格式定义过滤条件。
@@ -487,7 +487,7 @@ const result = await objectql.getObject(objectApiName).toConfig();
 
 > between只支持数值及日期时间类型，且过滤值必须是两个元素的数组格式
 
-\
+
 其他情况一律自动按"or"裂变连接成多个筛选条件
 
 ```javascript
@@ -537,7 +537,7 @@ const result = await objectql.getObject(objectApiName).toConfig();
 * 以direct前缀命名：执行direct函数意味着直接操作数据库记录，并不会触发执行相关触发器函数，也不会触发执行任何工作流规则、公式字段或累计汇总字段重新计算等。
 * 不以direct前缀命名：相关操作`insert/update/find`等执行完成后，会进一步触发执行该对象上配置的相关触发器函数，比如beforeUpdate,afterUpdate等触发器函数；然后会进一步触发执行满足条件的工作流规则；接着还会进一步触发关联的公式字段及累计汇总字段重新计算。
 
-\
+
 触发器详细说明文档见：[触发器](https://www.steedos.cn/docs/developer/getting-started#%E8%A7%A6%E5%8F%91%E5%99%A8)
 
 ## 示例
@@ -573,7 +573,7 @@ module.exports = {
 }
 ```
 
-\
+
 ### Router中使用ObjectQL示例
 
 ```javascript
@@ -596,4 +596,4 @@ router.post('/api/contracts/locked/:id', core.requireAuthentication, async funct
 exports.default = router;
 ```
 
-\
+

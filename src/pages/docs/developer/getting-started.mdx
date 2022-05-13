@@ -45,7 +45,7 @@ METADATA_SERVER=#华炎魔方服务器URL
 METADATA_APIKEY=#华炎魔方 API Key
 ```
 
-\
+
 参数说明如下：
 
 * `METADATA_SERVER`: 元数据服务器的网址，如果是本地开发环境，可以配置为 http://IP地址:端口号 ；如果使用华炎魔方云服务，需配置 https 协议，例如 https://zhuangjianguo.steedos.cn/
@@ -212,7 +212,7 @@ module.exports = {
 * `afterUpdate`: 数据修改后执行, 选填
 * `afterDelete`: 数据删除后执行, 选填
 
-\
+
 #### 事件前触发
 
 事件前触发的触发器，可以用于校验用户录入的数据是否正确，如果有问题，可以抛错，错误信息会反馈到前端操作页面；还可以结合权限控制当前操作等。 [触发器&权限](/docs/admin/permission_set#%E8%A7%A6%E5%8F%91%E5%99%A8%E6%9D%83%E9%99%90)。
@@ -252,7 +252,7 @@ module.exports = {
 
 * 如果return的是false，则中断操作，如在before.insert里return false,则不执行insert操作。
 
-\
+
 ### 触发器示例
 
 ```javascript
@@ -267,7 +267,7 @@ beforeInsert: async function () {
 },
 ```
 
-\
+
 ### 创建触发器
 
 * 打开命令面板，在输入框中输入“Steedos:”,则会出现可选的命令列表，选择“Create Object Trigger”
@@ -296,7 +296,7 @@ beforeInsert: async function () {
   exports.default = router;
 ```
 
-\
+
 ### 创建服务端路由
 
 打开命令面板，在输入框中输入“Steedos:”,则会出现可选的命令列表，选择`Create Router`，按提示操作即可。
@@ -367,7 +367,7 @@ exports.default = router;
 
 要在对象设置界面配置自定义操作按钮，请点开设置应用并进入“对象设置→对象”选择一个对象，然后在对象详细页面中找到“操作按钮”子表并点击其右上角新建按钮即可新建一个自定义操作按钮。
 
-\
+
  ![](https://console.steedos.cn/api/files/images/maYxv5HaJrMjZArdj)其中执行的脚本需要按照以下格式要求填写脚本代码，所有脚本都应该写入一个 `function`函数体内。
 
 ```yaml
@@ -635,7 +635,7 @@ form:
       }
   ```
 
-\
+
 ### afterDelete
 
 * 删除记录成功后执行
@@ -720,7 +720,7 @@ form:
       }
   ```
 
-\
+
 ## 表单公式
 
 华炎魔方支持在前端定义表单公式来实现各种界面效果，比如配置字段显示隐藏规则，配置字段是否必填规则等。
@@ -754,7 +754,7 @@ form:
   }}
 ```
 
-\
+
 ### 字段显示公式
 
 我们可以在字段的`visible_on`属性中配置表单公式来实现字段的显示隐藏，当表达式返回 ture表示显示当前字段，否则隐藏当前字段。
@@ -1005,4 +1005,4 @@ filters: "{{
 
 该示例演示了用户在表单中选择记录的所属合同字段值后，填写记录的“收款方”时，我们在弹出的选项列表中只列出之前选中的合同的“业务伙伴”作为“收款方”供选择。
 
-\
+

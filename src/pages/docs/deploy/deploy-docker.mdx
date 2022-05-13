@@ -19,7 +19,7 @@ description: 我们推荐使用 docker 运行华炎魔方，生产环境推荐�
 
 由于镜像存在国外，可配置阿里云[官方镜像加速](https://help.aliyun.com/document_detail/60750.html)
 
-\
+
 ## 私有部署
 
 ### 创建文件 docker-compose.yml
@@ -30,7 +30,7 @@ description: 我们推荐使用 docker 运行华炎魔方，生产环境推荐�
 * redis 服务
 * mongodb 服务 以及 mongodb 集群初始化脚本
 
-\
+
 ```yaml
 version: "3"
 
@@ -95,7 +95,7 @@ services:
       - mongo
 ```
 
-\
+
 ### 选择 steedos 版本
 
 yml 文件中运行的是 steedos-project-template 项目，可以参考[docker hub](https://hub.docker.com/r/steedos/steedos-project-template/tags?page=1&ordering=last_updated)选择合适的版本号，通常建议运行最新版的 steedos 。
@@ -122,28 +122,28 @@ environment:
 docker-compose up -d
 ```
 
-\
+
 查看服务状态
 
 ```yaml
 docker ps
 ```
 
-\
+
 停止服务
 
 ```yaml
 docker-compose stop
 ```
 
-\
+
 停止并删除服务
 
 ```yaml
 docker-compose down
 ```
 
-\
+
 ## 激活华炎魔方
 
 华炎魔方私有部署版完全免费，可以参考以下教程为私有部署的华炎魔方配置华炎云账户，通过华炎云激活后，可解锁所有功能限制，并支持从应用市场下载和安装软件包，或是开发、发布自己的软件包。
@@ -156,7 +156,7 @@ docker-compose down
 
 在购买并开通华炎云服务后，您的华炎魔方默认只包含一个叫“办公”的应用。在华炎魔方的应用商城，则提供了更多的企业应用，包括众多合作伙伴发布的各类应用。您可以选择购买并开通这些应用。
 
-\
+
 点这里进入[华炎魔方应用商城](https://www.steedos.cn/collections/steedos-packages)。
 
 ### 购买应用
@@ -170,7 +170,7 @@ docker-compose down
 
 选购好所有的应用后，可以一键开通所有的应用。
 
-\
+
 * 登录进入您私有部署的华炎魔方，设置 - 软件包。
 * 点击“安装已购买应用”，系统开始安装所有的已购买、待安装应用。
 * 系统会在服务端自动安装已购买的软件包。
@@ -178,7 +178,7 @@ docker-compose down
 * 进入应用程序启动器，就可以看到已成功部署的应用，点击即可使用应用。
 * 刷新浏览器，可以查看应用
 
-\
+
 ## 常见问题解答
 
 ### 如何升级版本？
@@ -232,7 +232,7 @@ aws:
 * `cfs.aliyun`: 当配置附件存在阿里云时，需要购买阿里云服务并配置相关参数。
 * `cfs.aws`: 当配置附件存在AWS时，需要购买AWS云服务并配置相关参数。
 
-\
+
 ### 如何配置 mongodb 数据库验证？
 
 docker-compose中默认是以非账户验证的方式起的mongo数据库，当然这是一种不安全的服务模式，添加账户验证需要修改配置文件
@@ -243,7 +243,7 @@ docker-compose中默认是以非账户验证的方式起的mongo数据库，当�
 docker ps
 ```
 
-\
+
 连接mongo服务
 
 ```yaml
@@ -252,7 +252,7 @@ docker exec -it 83981540efb4 bash
 mongo
 ```
 
-\
+
 创建管理员用户和普通用户
 
 ```yaml
@@ -262,7 +262,7 @@ use steedos;
 db.createUser({user: "userUsername", pwd: "userPassword", roles: [ { role: "readWrite", db: "yourdbname" }, { role: "read", db: "local"} ] } );
 ```
 
-\
+
 查看已创建的用户
 
 ```yaml
@@ -270,7 +270,7 @@ use admin;
 db.system.users.find().pretty();
 ```
 
-\
+
 数据库用户创建好后，需要修改docker-compose.yml文件
 
 ```yaml
@@ -299,7 +299,7 @@ steedos:
       - "27018:27017"
 ```
 
-\
+
 删掉服务并重启
 
 ```yaml
@@ -307,4 +307,4 @@ docker-compose down
 docker-compose up -d
 ```
 
-\
+

@@ -132,7 +132,7 @@ description: 本教程以会议管理为例，指导您如何使用华炎魔方�
 | 3 | 创建人 | created_by | 相关表（内置对象：人员） |
 | 4 | 会议信息 | meeting | 主表/子表（会议） |
 
-\
+
 其中这两个对象的的“相关会议“这个字段，就实现了主子表之间的关联关系 。
 
 
@@ -173,7 +173,7 @@ description: 本教程以会议管理为例，指导您如何使用华炎魔方�
 
 表单至对象：审批王表单字段同步到华炎魔方对象字段的配置项，即审批单填写的车位信息回写到外部参会人员对象的车位信息字段中。
 
-\
+
 
 <alert type="tip">
 1、可能会出现对象搜索不到情况，需打开对象设置中的“**允许配置对象流程**”、“**允许查看申请单**”开关，来配置对象流程映射；
@@ -227,7 +227,7 @@ description: 本教程以会议管理为例，指导您如何使用华炎魔方�
 
 在界面配置好相应的对象及应用后，可以将这些元数据通过同步工具转换为代码，为后续的代码扩充作准备。
 
-\
+
 首先需要安装华炎魔方同步工具，安装方法和过程如下：
 
 ### 在VS Code中安装插件
@@ -240,7 +240,7 @@ description: 本教程以会议管理为例，指导您如何使用华炎魔方�
 
 修改根目录下的 .env，增加以下两个参数，来实现元数据同步功能，其中METADATA_SERVER 为系统的Root的URL，METADATA_APIKEY为[激活本地私有化华炎魔方](https://steedos.cn/docs/deploy/deploy-activate)自动生成的的API Key。
 
-\
+
 ```javascript
 [metadata]
 METADATA_SERVER=http://127.0.0.1:5000
@@ -304,7 +304,7 @@ METADATA_APIKEY=-D0hUDsU0-_nhonh8TKZRukDZsqQQwiLCy
 
 </alert>
 
-\
+
 以下是触发器代码内容，校验“会议开始时间必须早于结束时间”。
 
 ```javascript
@@ -383,7 +383,7 @@ async function validData(doc) {
 }
 ```
 
-\
+
 然后修改下之前的会议对象触发器文件，在里面调用这里导出的`validData`函数。
 
 ```javascript
@@ -477,7 +477,7 @@ options:
 
 </alert>
 
-\
+
 ### 动态控制表单字段的显示隐藏
 
 #### 根据参会人员中是否存在领导控制会议信息展示额外信息字段
@@ -520,7 +520,7 @@ router.post('/api/include/leader', core.requireAuthentication, async function (r
 exports.default = router;
 ```
 
-\
+
 以上接口接收传入的`users`参数，并返回以`include`变量标识是否传入的`users`中包括领导的结果。
 
 可以看到以上代码中把“过滤传入的用户id集合中为领导的id值”逻辑封装到之前提到的会议业务逻辑文件中了，增强代码可读性，方便后续单独维护，同时兼顾了该业务逻辑可能被多处调用的可能。
@@ -539,14 +539,14 @@ async function getLeaders(spaceId, users) {
 }
 ```
 
-\
+
 
 <alert type="info">
 注意路由文件`include_leader.router.js`名称后缀必须以`.router.js`结尾。
 
 </alert>
 
-\
+
 然后我们就可以在相关字段元数据文件中调用它了，下面是三个字段的元数据内容，其内都配置`visible_on`属性，并在其中使用函数`Steedos.authRequest`调用了上面提到的`/api/include/leader`接口，接口返回的`include`变量值为true时才显示该操作按钮。
 
 * 字段“用餐”：`steedos-app/main/default/objects/meeting__c/fields/dining__c.field.yml`：
@@ -562,7 +562,7 @@ visible_on: "{{
 }}"
 ```
 
-\
+
 * 字段“用餐服务执行人”：`steedos-app/main/default/objects/meeting__c/fields/dining_executive__c.field.yml`：
 
 ```javascript
@@ -579,7 +579,7 @@ visible_on: "{{
 }}"
 ```
 
-\
+
 * 字段“是否需视频终端支持”：`steedos-app/main/default/objects/meeting__c/fields/is_support__c.field.yml`：
 
 ```javascript
@@ -595,7 +595,7 @@ visible_on: "{{
 }}"
 ```
 
-\
+
 ### 动态控制按钮的显示隐藏
 
 #### 参会人员中有领导参加，显示会后评分按钮进行流程审批
@@ -614,7 +614,7 @@ label: 会议评分
 visible: true
 ```
 
-\
+
 ```javascript
 module.exports = {
     scoring: function (object_name, record_id) {
@@ -642,7 +642,7 @@ module.exports = {
 }
 ```
 
-\
+
 以上两个文件定义的按钮可用于发起评分审批，当评分完成后需要显示会后评分的“分数汇总”，该值保存在会议对象的`sum__c`字段中，不过我们需要在会议记录详细界面动态显示隐藏该字段，只在会议类型为“领导会议”时才显示该字段。
 
 要实现该需求，同样可以通过配置字段的“字段显示公式”即`visible_on`属性来实现，该字段元数据如下所示：
@@ -839,7 +839,7 @@ async function approveParticipants(meetingId) {
 
  ![](https://console.steedos.cn/api/files/images/rLyion3sGqYmAw2Ap)所有对象的页面布局同步为代码后都保存在默认软件包文件夹`steedos-app/main/default`下的`layouts`文件夹中，比如上图所示的会议对象页面布局元数据同步为代码后保存在文件`steedos-app/main/default/layouts/meeting__c.meeting_all.layout.yml`中。
 
-\
+
 ### 从会议台账发起会议审批
 
 上面提到我们已经把会议对象的“允许配置对象流程”、“允许查看申请单”开关打开了，并且配置好了对象流程映射，正常来说到此我们就已经可以在会议记录详细界面点击“提请审批”按钮来发起会议审批。
@@ -1002,7 +1002,7 @@ router.post('/api/meeting/approve', core.requireAuthentication, async function (
 exports.default = router;
 ```
 
-\
+
 以上接口接收传入的`meetingId`参数，并据此从数据库中抓取相关会议内容，并进一步实现自动发送会议审批到下一步骤的业务逻辑，如果成功则返回成功状态及相关消息，如果失败则返回失败状态及相关错误信息。
 
 ### 会议审批通过后自动通知参会人员
@@ -1111,7 +1111,7 @@ module.exports = {
 }
 ```
 
-\
+
 为增强代码可读性及后续维护方便，我们把自动为参会人员创建任务的相关业务代码封装成`dispatchTask`函数并在之前提到的专门的会议业务逻辑文件中导出以供调用，以下是要添加到文件`steedos-app/main/default/manager/meeting.js中的`中的相关代码片段：
 
 ```javascript
@@ -1178,8 +1178,8 @@ async function dispatchTask(meetingId) {
 }
 ```
 
-\
+
 会议管理相关源码请参考：[ https://gitlab.steedos.cn/steedos/steedos-project-meeting]( https://gitlab.steedos.cn/steedos/steedos-project-meeting)
 
-\
-\
+
+
