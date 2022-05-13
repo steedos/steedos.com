@@ -46,7 +46,7 @@ const withMDX = require(`@next/mdx`)({
 })
 
 const fallbackLayouts = {
-  'src/pages/developer/**/*': ['@/layouts/DeveloperLayout', 'DeveloperLayout'],
+  'src/pages/docs/protocol/*': ['@/layouts/ProtocolLayout', 'ProtocolLayout'],
   'src/pages/docs/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
 }
 

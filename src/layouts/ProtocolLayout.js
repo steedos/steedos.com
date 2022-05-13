@@ -3,15 +3,15 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 // import socialSquare from '@/img/social-square.jpg'
 import { Title } from '@/components/Title'
-import { developerNav } from '@/navs/developer'
+import { protocolNav } from '@/navs/protocol'
 import { Header } from '@/components/Header'
 
-export function DeveloperLayout(props) {
+export function ProtocolLayout(props) {
   let router = useRouter()
 
   return (
     <>
-      <Title suffix={router.pathname === '/' ? undefined : '华炎魔方开发者'}>
+      <Title suffix={router.pathname === '/' ? undefined : '低代码协议'}>
         {props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}
       </Title>
       <Head>
@@ -23,9 +23,9 @@ export function DeveloperLayout(props) {
         /> */}
       </Head>
       <Header/>
-      <SidebarLayout nav={developerNav} {...props} />
+      <SidebarLayout nav={protocolNav} {...props} />
     </>
   )
 }
 
-DeveloperLayout.nav = developerNav
+ProtocolLayout.nav = protocolNav

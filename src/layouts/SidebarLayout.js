@@ -286,7 +286,7 @@ function TopLevelNav({ mobile }) {
       </TopLevelLink>
       <TopLevelLink
         mobile={mobile}
-        href="/developer/overview?utm_source=steedos.com&utm_medium=navigation"
+        href="/docs/protocol/overview"
         className="mb-4"
         shadow="group-hover:shadow-indigo-200 dark:group-hover:bg-indigo-500"
         icon={
@@ -315,7 +315,7 @@ function TopLevelNav({ mobile }) {
           </>
         }
       >
-        开发人员
+        协议
       </TopLevelLink>
       <TopLevelLink
         mobile={mobile}
