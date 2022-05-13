@@ -7,9 +7,13 @@ import { DocSearchModal } from '@docsearch/react'
 import clsx from 'clsx'
 import { useActionKey } from '@/hooks/useActionKey'
 
-const INDEX_NAME = 'steedos-com'
-const API_KEY = '115e0980e01f77c613b8677fcfa2588f'
-const APP_ID = 'XLH8R06L45'
+const INDEX_NAME = 'docs'
+const API_KEY = process.env.NEXT_PUBLIC_ALGOLIA_API_KEY
+const APP_ID = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID
+
+// const INDEX_NAME = 'tailwindcss'
+// const API_KEY = '5fc87cef58bb80203d2207578309fab6'
+// const APP_ID = 'KNPXZI5B0M'
 
 const SearchContext = createContext()
 
@@ -44,7 +48,7 @@ export function SearchProvider({ children }) {
   return (
     <>
       <Head>
-        {/* <link rel="preconnect" href={`https://${APP_ID}-dsn.algolia.net`} crossOrigin="true" /> */}
+        <link rel="preconnect" href={`https://${APP_ID}-dsn.algolia.net`} crossOrigin="true" />
       </Head>
       <SearchContext.Provider
         value={{
@@ -61,19 +65,19 @@ export function SearchProvider({ children }) {
           <DocSearchModal
             initialQuery={initialQuery}
             initialScrollY={window.scrollY}
-            searchParameters={{
-              facetFilters: 'version:v3',
-              distinct: 1,
-            }}
-            placeholder="搜索文档"
+            // searchParameters={{
+            //   facetFilters: 'version:v3',
+            //   distinct: 1,
+            // }}
+            placeholder="Search documentation"
             onClose={onClose}
             indexName={INDEX_NAME}
             apiKey={API_KEY}
             appId={APP_ID}
             navigator={{
-              navigate({ suggestionUrl }) {
+              navigate({ itemUrl }) {
                 setIsOpen(false)
-                router.push(suggestionUrl)
+                router.push(itemUrl)
               },
             }}
             hitComponent={Hit}
@@ -88,6 +92,11 @@ export function SearchProvider({ children }) {
 
                 if (item.hierarchy?.lvl0) {
                   item.hierarchy.lvl0 = item.hierarchy.lvl0.replace(/&amp;/g, '&')
+                }
+
+                if (item._highlightResult?.hierarchy?.lvl0?.value) {
+                  item._highlightResult.hierarchy.lvl0.value =
+                    item._highlightResult.hierarchy.lvl0.value.replace(/&amp;/g, '&')
                 }
 
                 return {
