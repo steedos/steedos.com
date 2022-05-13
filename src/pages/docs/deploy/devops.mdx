@@ -1,111 +1,59 @@
 ---
 title: 开发环境部署 - DevOps 远程开发
+shortTitle: 快速向导
 description: 华炎魔方是 Salesforce Developer Experience (DX) 的开源替代方案，将低代码技术与 DevOps 工具结合 ，帮助企业以更快速度交付更高质量的软件，实现低代码敏捷开发的新高度。
 ---
 
-华炎魔方是 [Salesforce Developer Experience (DX)](https://developer.salesforce.com/developer-centers/developer-experience) 的开源替代方案，将低代码技术与 DevOps 工具结合 ，帮助企业以更快速度交付更高质量的软件，实现低代码敏捷开发的新高度。
-
-[查看视频简介 >](/embed/videos/devops)
-
 ## 直播课程
 
-[查看视频简介 >](/embed/videos/live-course-devops) \n 华炎魔方低代码学院直播课，低代码DevOps平台操作实战，带大家一起启动远程开发环境，实操演示整个华炎魔方低代码DevOps开发生命周期过程。
-
-## 启动远程开发环境
-
-[查看视频简介 >](/embed/videos/devops-launch)
-
-可以参考该视频快速启动一个远程开发环境来试用华炎魔方。
+[查看视频简介 >](/embed/videos/live-course-devops) 
 
 ### 注册DevOps账户
 
-请在 [华炎魔方DevOps平台](https://gitlab.steedos.cn/) 注册账户并使用浏览器登录该账户，注册成功后即可在该平台使用包含 GitLab DevOps 和 Gitpod 的远程开发服务，您可以免费试用一个月，商业用户请 [联系我们](https://www.steedos.cn/company/contact-us) 为您激活账户。
+请使用企业邮箱，在 [华炎魔方DevOps平台](https://gitlab.steedos.cn/) 注册账户并使用浏览器登录该账户，注册成功后即可在该平台使用包含 GitLab DevOps 和 Gitpod 的远程开发服务。
 
-### 一键启动
+### 启动远程开发环境
 
- ![](https://console.steedos.cn/api/files/images/vGYghkBqFNoy7NcLM)请先点击上述截图中红框按钮Fork，即“派生” GitLab中国区域云服务 上的 [华炎魔方模板项目](https://gitlab.steedos.cn/steedos/steedos-project-template)，后续我们就可以把开发后的代码提交到Git仓库。
+访问 [华炎魔方模板项目](https://gitlab.steedos.cn/steedos/steedos-project-template)，点击右上角`派生(Fork)`按钮，可以把项目复制到自己的账户下。
 
-项目Fork好后，点击上述截图红框位置的”Gitpod”按钮即可一键启动远程开发环境。
+项目`派生(Fork)`成功后，点击”Gitpod”按钮即可一键启动远程开发环境。 
 
- ![](https://console.steedos.cn/api/files/images/m59GEDNmorBfDfxPx)为了方便快速启动远程开发环境，我们在 [GitLab 中国区域云服务](https://gitlab.steedos.cn/) 集成了一键启用按钮，使用Chrome浏览器访问该云服务上任何一个Git仓库主页时都可以看到一个名为”Gitpod”的按钮，点击它即可一键启动远程开发环境。
-
-
-<alert type="info">
-我们在启动过程中偶尔会遇到界面一直不动，这是界面没有实时更新造成的，只要刷新浏览器即可。
-
-</alert>
-
+ ![](https://console.steedos.cn/api/files/images/m59GEDNmorBfDfxPx)
+ 
 启动远程开发环境后会自动执行以下操作，它可以节省开发人员大量时间：
 
-* 自动访问项目地址：[https://vscode.steedos.cn/#{之前Fork下来的Git仓库地址}](https://vscode.steedos.cn/#%7B%E4%B9%8B%E5%89%8DFork%E4%B8%8B%E6%9D%A5%E7%9A%84Git%E4%BB%93%E5%BA%93%E5%9C%B0%E5%9D%80%7D) 来启动远程开发环境，可以把`#`号后面的Git仓库地址换成您希望运行的任何华炎魔方项目的Git仓库地址来启动其远程开发环境。
-* 自动分配远程服务器资源创建一个新的Workspace。
-* 把#号后面的Git仓库地址中的项目克隆到Workspace中并重定向到Workspace访问地址。
+* 自动分配远程服务器资源。
 * 自动从网络下载并加载华炎魔方Docker镜像。
 * 自动安装和配置MongoDB数据库，并以集群模式启动数据库。
 * 自动安装、配置和启动Redis数据库。
 * 自动安装必要的VS Code插件，包括元数据同步、简体中文语言包等。
-* 自动执行 `yarn` 安装项目依赖的NPM包。
+* 自动安装项目依赖的NPM包。
 * 自动执行 `yarn start` 启动项目。
-
-在浏览器上运行Gitpod启用远程开发环境打开项目时，我们会遇到Gitpod自动打开新的浏览器窗口时被拦截，也会经常遇到需要拷贝本地文件到Gitpod项目中的情况，这些也都可以通过浏览器设置来实现，详情请参考当前文档底部的附录小节 [关于Gitpod](#%E5%85%B3%E4%BA%8Egitpod)。
-
-
-<alert type="info">
-由于VS Code插件安装是异步执行的，所以有可能会遇到未安装成功的情况，此时只要手动安装开发环境中推荐的VS Code插件即可。
-
-</alert>
-
-
-
-<alert type="warning">
-请注意，第一次启动远程开发环境后，如果想打开之前启动过的项目，应该 [打开历史工作区](#%E6%89%93%E5%BC%80%E5%8E%86%E5%8F%B2%E5%B7%A5%E4%BD%9C%E5%8C%BA)，而不是再次点击上面提到的Gitpod按钮来启动新的开发环境。
-
-</alert>
-
-### 运行项目
-
- ![](https://console.steedos.cn/api/files/images/sazPKv6DaPzXBBy8T)每次启动远程开发环境会自动运行项目，第一次启动项目，会显示激活华炎魔方的初始化界面，激活后就可以使用初始账户登录系统。
-
-### 激活华炎魔方
-
-请在 [华炎魔方客户门户](https://console.steedos.cn/) 注册账户，使用浏览器登录该账户后再分别新建我的魔方和私有部署记录。
-
- ![](https://console.steedos.cn/api/files/images/NfyTzYsEYjgN2JLBm)点击刚新建好的私有部署记录详细界面右上角的“复制激活参数”按钮可以把相关环境变量配置复制下来。
-
-在我的魔方中设置的初始密码就是初始化华炎魔方项目时自动创建的初始管理员账户的默认密码。
-
-#### 输入激活参数
-
-上面“复制激活参数”按钮复制的内容，已经包含了激活华炎魔方需要的相关环境变量，我们把它粘贴到之前运行项目时看到的初始化界面的输入框中，提交后即可激活华炎魔方了。
-
- ![](https://console.steedos.cn/api/files/images/g6tbcZSF5EQBfXQnQ)在激活过程中会自动执行以下操作：
-
-* 自动把包括用于激活华炎魔方、同步元数据等各种环境变量保存到`.env.local`文件中。
-* 连接 [华炎魔方客户门户](https://console.steedos.cn/) 服务激活本地的华炎魔方。
-* 自动下载不限制用户数、不限制访问时间的许可证。
-* 在本地魔方项目中自动创建管理员账户并设置其初始密码。
-* 获取当前魔方ID已购买的软件包并把它们自动安装到本地魔方项目中。
-* 自动跳转到登录界面。
-
-激活成功后，我们在登录界面输入之前在 [华炎魔方客户门户](https://console.steedos.cn/) 注册账户时填写的手机号和新建 我的魔方 时设置的初始密码即可进入系统主界面。
-
-
-<alert type="info">
-登录界面要输入的手机号和密码都是在 [华炎魔方客户门户](https://console.steedos.cn/) 填写的，不是 [华炎魔方DevOps平台](https://gitlab.steedos.cn/) 上注册的账户。
-
-</alert>
 
 ### 项目访问地址
 
- ![](https://console.steedos.cn/api/files/images/Qhh97XGesm3ipvjyg)如果项目运行完成后没有自动打开浏览器窗口访问项目的话，可以手动在浏览器中输入Gitpod-Workspaces访问地址并加上要访问的项目端口号作为前缀即可访问它。
+远程开发环境启动完成，会自动弹出浏览器，如果未弹出，可能被拦截。
 
-比如假设之前开启的远程开发环境打开的Workspaces访问地址为`https://gold-stingray-81a30kah.ws.vscode.steedos.cn/`，我们只要输入地址 `https://5000-gold-stingray-81a30kah.ws.vscode.steedos.cn/`即可访问刚运行起来的项目。
+可以手动在浏览器中输入访问地址，只需要在 Gitpod 网址前加上端口号即可。
 
-需要注意的是，默认情况下，使用Gitpod启动远程开发环境后，连续30分钟不移动鼠标操作其VS Code界面的话，远程服务会自动停止以释放相关资源，如果连续更长时间，比如数天甚至数周不访问的话，包括程序代码和数据库数据在内的所有资源都会被销毁，请参阅本文档底部的 “关于Gitpod - Pin” 小节了解如何锁定开发环境，避免数据丢失。
+比如Gitpod访问地址为`https://gold-stingray-81a30kah.ws.vscode.steedos.cn/`，我们只要输入地址 `https://5000-gold-stingray-81a30kah.ws.vscode.steedos.cn/`即可访问刚运行起来的项目。
+
+### 激活华炎魔方 
+
+第一次启动项目，会显示激活华炎魔方的初始化界面，激活后就可以使用初始账户登录系统。
+
+- [激活华炎魔方](./deploy-activate.mdx)
+
+ ![](https://console.steedos.cn/api/files/images/sazPKv6DaPzXBBy8T)
+
+
+### 登录信息
+
+第一次请使用 [华炎魔方客户门户](https://console.steedos.cn/) 中设置的手机号和默认密码登录。
 
 ## 软件包开发流程
 
-以下软件包开发流程，描述了在华炎魔方中软件包的开发生命周期，它是实现华炎魔方整个DevOps开发生命周期管理中最重要的环节之一。[                                                                                  ![软件包&元数据 示意图](https://console.steedos.cn/api/files/images/duh3tECd387Sz5i8J "软件包&元数据 示意图")](https://console.steedos.cn/api/files/images/duh3tECd387Sz5i8J)
+以下软件包开发流程，描述了在华炎魔方中软件包的开发生命周期，它是实现华炎魔方整个DevOps开发生命周期管理中最重要的环节之一。                                                                                 ![软件包&元数据 示意图](https://console.steedos.cn/api/files/images/duh3tECd387Sz5i8J "软件包&元数据 示意图")](https://console.steedos.cn/api/files/images/duh3tECd387Sz5i8J)
 
 ### 可视化开发
 
@@ -196,7 +144,7 @@ Gitpod启动远程开发环境打开华炎魔方模板项目时会自动安装�
 在业务需求很繁杂和庞大时，尤其是在大型软件开发项目中，我们推荐把业务人员和开发人员进行分组，每组成员各自负责其中某个功能模块的开发和测试，我们正好可以把每个功能模块按软件包来划分，一个软件包负责一个功能模块，并让它们分别管理自己的软件包开发周期，最后在测试环境和生产环境中分别安装这些软件包来测试和部署相应的模块。
 
 
-Debug模式调试
+### Debug模式调试
 
 使用Gitpod启动远程开发环境，在调试开发华炎魔方项目时，可以像在本地开发一样使用VS Code的Debug调试工具调试程序代码。
 
@@ -207,73 +155,3 @@ Debug模式调试
 ## 源代码版本管理
 
 使用Gitpod启动远程开发环境，在调试开发华炎魔方项目时，可以像在本地开发一样使用VS Code的源代码管理工具来更新、提交代码，或者查看代码提交历史等，只要启动Gitpod远程开发环境相关插件会在初始化时自动安装好，您可以直接使用它们，相关使用教程请参考 [Visual Studio Code 源代码管理官网教程](https://code.visualstudio.com/docs/editor/versioncontrol)。
-
-## 关于Gitpod
-
-Gitpod是一个在线IDE，点击任何 [GitLab 中国区域云服务](https://gitlab.steedos.cn/) 项目主页上的 Gitpod 按钮即可一键启动远程开发环境。
-
-在几秒钟之内，Gitpod就可以为您提供一个完整的开发环境，包括一个VS Code驱动的IDE和一个可以由项目定制化配置的云Linux容器。
-
-Gitpod旨在取代本地桌面开发，所以我们强烈推荐使用它来启动远程开发环境，以免去本地安装开发环境的繁琐过程，如果需要本地安装开发环境请参考文档：
-
-* [开发环境部署 - Windows](/docs/deploy/deploy-windows)
-* [开发环境部署 - Mac](/docs/deploy/deploy-mac)
-
-### 浏览器设置
-
-为了在使用Gitpod时获得最好的体验，我们建议您将 Gitpod 列入白名单，以获取您的浏览器上的以下权限：
-
-* 将内容从剪贴板粘贴到Gitpod工作区。
-* 弹出窗口，在一个新的浏览器选项卡访问您开发的服务。
-
-以下是在Chrome浏览器中的配置方法，[Gitpod官网](https://www.gitpod.io) 有详细说明，详情请参阅： <https://www.gitpod.io/docs/configure/browser-settings>。
-
-设置好后你甚至可以把本地文件拖动到Chrome浏览器上Gitpod工作区中相关文件夹内来复制上传文件，大大提高开发效率。
-
-#### 剪贴板
-
-1. 在chrome浏览器中输入地址 `chrome://settings/content/clipboard` 来打开“剪贴板”设置界面。
-2. 在右侧内容界面中找到“允许查看您的剪贴板”栏，点击其旁边的“添加”按钮。
-3. 在弹出的“添加网站”窗口中输入`[*.]vscode.steedos.cn` 然后点击添加按钮即可。
-
-#### 弹出式窗口和重定向
-
-1. 在chrome浏览器中输入地址 `chrome://settings/content/popups` 来打开“弹出式窗口和重定向”设置界面。
-2. 在右侧内容界面中找到“允许发送弹出式窗口并使用重定向”栏，点击其旁边的“添加”按钮。
-3. 在弹出的“添加网站”窗口中输入`[*.]vscode.steedos.cn` 然后点击添加按钮即可。
-
-### 使用本地VS Code
-
- ![](https://console.steedos.cn/api/files/images/wWCvfb5NQRjM3AE7m)默认情况下，使用Gitpod启用远程开发环境是打开浏览器运行的，我们可以访问 [Gitpod官网个人设置页面](https://vscode.steedos.cn/preferences) 勾选 `Open in Desktop IDE` 选项来开启使用本地VS Code打开远程Gitpod工作区的功能，该功能开启后，就可以使用本地VS Code打开Gitpod工作区了，使用浏览器还是本地VS Code主要看个人习惯，两种方式并没有太大区别。
-
-### Pin
-
-默认情况下，使用Gitpod启动远程开发环境后，连续30分钟不移动鼠标操作其VS Code界面的话，远程服务会自动停止以释放相关资源，但是会保留硬盘资源，如果连续更长时间，比如数天甚至数周不访问的话，该工作区内的所有硬盘资源都会被销毁，这意味着上次访问该工作区时未提交到Git仓库的所有代码以及数据库中数据都将丢失，而且无法再在工作区列表访问该工作区。
-
- ![](https://console.steedos.cn/api/files/images/LHBaya7fFaTP9pHBs)
-
-我们可以在 [Gitpod 中国区域云服务的Workspaces页面](https://vscode.steedos.cn/workspaces)  看到之前打开过的所有Gitpod工作区，在该列表上找到希望不自动释放资源的Workspace，点击右侧下拉菜单按钮，在展开的菜单中勾选“Pin”选项即可把该Gitpod工作区设置为不自动释放资源。
-
-Pin后的Gitpod工作区，不但会保留未提交到Git仓库的代码，而且在开发环境中安装过的依赖项以及数据库数据等都会持续留存于开发环境中，一般不用担心数据丢失问题，但是我们还是建议大家尽量及时把代码提交到Git仓库中。
-
-### 打开历史工作区
-
-我们可以在 [Gitpod 中国区域云服务的Workspaces页面](https://vscode.steedos.cn/workspaces)  看到之前打开过的所有Gitpod工作区，在该列表上找到希望再启动的工作区，点击右侧下拉菜单按钮，在展开的菜单中点击“Open”选项即可重新启动该工作区远程开发环境。因为第一次启动该工作区时已经部署好了开发环境，所以再次进入该工作区时启动服务速度要比新开工作区时快很多。
-
-### 下载
-
-我们可以在 [Gitpod 中国区域云服务的Workspaces页面](https://vscode.steedos.cn/workspaces) 看到之前打开过的所有Gitpod工作区列表，在该列表上找到想下载的Workspace，点击右侧下拉菜单按钮，在展开的菜单中点击“Download”选项即可把该Gitpod工作区下载到本地，然后把下载之后的文件重命名，在其后缀名加上 `.tar.gz` 就可以解压缩，解压缩后的文件是 `/workspace` 文件夹中的所有文件，其中也包括MongoDB数据库文件。
-
-### 访问MongoDB
-
-使用Gitpod远程启动华炎魔方模板工作区的开发环境中已经预先为VS Code安装了名为 [MongoDB for VS Code](https://github.com/mongodb-js/vscode) 的插件，可以使用该插件来访问华炎魔方工作区连接的MongoDB数据库，以便查看数据库中的数据调试程序。
-
-### 重启远程开发环境
-
-有时我们会因为某些原因希望重启整个远程开发环境而不希望开启全新的远程开发环境，比如端口被占用无法正常启动服务时可能重启整个开发环境服务是比较快捷的方式。
-
-要重启远程开发环境，请在 [Gitpod 中国区域云服务的Workspaces页面](https://vscode.steedos.cn/workspaces) 中浏览目前打开的所有Gitpod工作区，然后在列表上找到希望重启服务的那条记录，点击其右侧下拉菜单按钮，在展开的菜单中勾选“Stop”选项即可停止该Gitpod工作区，待停止成功后重新点击其中的“Open”选项即可重新打开该工作区。
-
-### 重启VS Code
-
-有时我们会因为某些原因希望重启VS Code，在浏览器上的Gitpod远程开发环境中，只需要刷新浏览器即可重启VS Code，而不需要重启整个Gitpod开发环境，非常方便快捷。

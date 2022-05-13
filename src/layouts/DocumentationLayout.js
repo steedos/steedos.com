@@ -11,7 +11,7 @@ export function DocumentationLayout(props) {
 
   return (
     <>
-      <Title suffix={router.pathname === '/' ? undefined : '华炎魔方文档'}>
+      <Title suffix={router.pathname === '/' ? undefined : '华炎魔方'}>
         {props.layoutProps.meta.metaTitle || props.layoutProps.meta.title}
       </Title>
       <Head>

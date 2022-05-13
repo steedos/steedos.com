@@ -58,7 +58,6 @@ module.exports.withSyntaxHighlighting = () => {
         ]
       }
 
-      console.log(node)
       return node
     })
     tree.children = [...preTree.children, ...tree.children]
