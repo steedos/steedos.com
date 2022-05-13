@@ -6,7 +6,7 @@ const { withTableOfContents } = require('./remark/withTableOfContents')
 const { withSyntaxHighlighting } = require('./remark/withSyntaxHighlighting')
 const { withNextLinks } = require('./remark/withNextLinks')
 const { withLinkRoles } = require('./rehype/withLinkRoles')
-const withRemarkDirective = require('remark-directive')
+const { withRemarkDirective } = require('./remark/withRemarkDirective')
 const minimatch = require('minimatch')
 
 // const withExamples = require('./remark/withExamples')
@@ -183,13 +183,13 @@ module.exports =
         loader: '@mdx-js/loader',
         options: {
           remarkPlugins: [
+            withRemarkDirective,
             // withPrevalInstructions,
             // withExamples,
             withTableOfContents,
             withSyntaxHighlighting,
             // withNextLinks,
             withSmartQuotes,
-            withRemarkDirective,
           ],
           rehypePlugins: [withLinkRoles],
         },

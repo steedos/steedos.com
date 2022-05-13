@@ -1,13 +1,13 @@
 var syntax = require('micromark-extension-directive')
 var fromMarkdown = require('mdast-util-directive/from-markdown')
 var toMarkdown = require('mdast-util-directive/to-markdown')
+var visit = require('unist-util-visit')
 
 var warningIssued
 
-module.exports = withRemarkDirective
-
-function withRemarkDirective() {
+module.exports.withRemarkDirective = function()  {
   var data = this.data()
+  console.log(data)
 
   /* istanbul ignore next - old remark. */
   if (
@@ -33,5 +33,22 @@ function withRemarkDirective() {
     /* istanbul ignore if - other extensions. */
     if (data[field]) data[field].push(value)
     else data[field] = [value]
+  }
+
+  return (tree) => {
+    visit(tree, (node) => {
+      console.log(node)
+      if (
+        node.type === 'textDirective' ||
+        node.type === 'leafDirective' ||
+        node.type === 'containerDirective'
+      ) {
+        const data = node.data || (node.data = {})
+        const hast = h(node.name, node.attributes)
+    
+        data.hName = hast.tagName
+        data.hProperties = hast.properties
+      }
+    })
   }
 }
