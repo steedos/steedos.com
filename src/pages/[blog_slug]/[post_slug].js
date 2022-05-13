@@ -122,7 +122,7 @@ export default function Post(props) {
         // canonical={canonicalUrl}
       />
 
-      <div className="pt-10 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden bg-blue-50">
+      <div className="pt-10 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden bg-gray-50">
         <div className="mx-auto max-w-8xl lg:px-8">
           <div className="lg:grid lg:grid-cols-5 lg:gap-8">
             <div className="col-span-3 mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">

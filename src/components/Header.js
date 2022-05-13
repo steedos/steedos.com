@@ -235,6 +235,27 @@ export function Header() {
         </div>
       </div> */}
 
+      <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+        <div className="w-[108rem] flex-none flex justify-end">
+          <picture>
+            <source srcSet={require('@/img/beams/docs@30.avif').default} type="image/avif" />
+            <img
+              src={require('@/img/beams/docs@tinypng.png').default}
+              alt=""
+              className="w-[71.75rem] flex-none max-w-none dark:hidden"
+            />
+          </picture>
+          <picture>
+            <source srcSet={require('@/img/beams/docs-dark@30.avif').default} type="image/avif" />
+            <img
+              src={require('@/img/beams/docs-dark@tinypng.png').default}
+              alt=""
+              className="w-[90rem] flex-none max-w-none hidden dark:block"
+            />
+          </picture>
+        </div>
+      </div>
+
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 flex z-40 lg:hidden" onClose={setOpen}>
@@ -373,7 +394,7 @@ export function Header() {
         </Dialog>
       </Transition.Root>
 
-      <header className="bg-opacity-90 backdrop-filter backdrop-blur-md backdrop-saturate-150 sticky z-20 lg:z-50 relative bg-white inset-0 flex-none text-sm font-medium ring-1 ring-gray-900 ring-opacity-5 shadow-sm">
+      <header className="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent">
        
         <nav aria-label="Top" className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="">
