@@ -295,10 +295,10 @@ ADDMONTHS (StartDate, 5)
 
 \
 
-:::info
+<alert type="info">
 支持传入日期或日期时间类型的参数，但是返回值始终是日期类型，而不可能是日期时间类型。
 
-:::
+</alert>
 
 ### date
 
@@ -323,16 +323,16 @@ DATE(2005, 1, 2)
 
 \
 
-:::info
+<alert type="info">
 参数个数只能是三个，也不支持传入`2005-01-01`这种字符串。
 
-:::
+</alert>
 
 
-:::info
+<alert type="info">
 当传入的函数参数格式正确但是数值不符合规范时，并不会报错，而是会返回一个可能错误的值，比如如非闰年的DATE(2021,2,29)将返回2021-03-01，DATE(2021,121,29)将返回2031-01-29。
 
-:::
+</alert>
 
 ### datevalue
 
@@ -360,7 +360,7 @@ DATEVALUE("2005-1-15 12:30")
 
 \
 
-:::info
+<alert type="info">
 ■ 如果该函数中所引用的字段不是有效的文本或日期时间字段，则该公式中的字段可能显示为异常字符串或错误信息，比如DATEVALUE("2005-111-15") 将返回NaN-NaN-NaN。
 
 ■ 当输入日期时，请将日期放在引号内，并使用如下格式：YYYY-MM-DD，即，四位数字年份、两位数字月份和两位数字日期。
@@ -369,7 +369,7 @@ DATEVALUE("2005-1-15 12:30")
 
 ■ 该公式始终会返回utc（协调世界时间）0点值，且除非传入的参数明确带了时区信息，否则将始终使用用户的时区计算，比如DATEVALUE('2018-12-12 06:06:06')返回的是2018-12-11，而DATEVALUE('2018-12-12T06:06:06Z')返回的是2018-12-12。
 
-:::
+</alert>
 
 ### datetimevalue
 
@@ -421,10 +421,10 @@ DAY(Code_Freeze__c)
 
 \
 
-:::info
+<alert type="info">
 只支持传入日期类型值，不支持“日期时间”类型值，也不支持字符串类型值。
 
-:::
+</alert>
 
 ### hour
 
@@ -500,10 +500,10 @@ MINUTE(NOW())
 
 \
 
-:::info
+<alert type="info">
 MINUTE函数只授受datetime类型作为参数，不支持time,date,text类型作为参数，可以先用DATETIMEVALUE函数进行类型转换后再调用该函数。
 
-:::
+</alert>
 
 ### month
 
@@ -531,10 +531,10 @@ MONTH(TODAY())
 
 \
 
-:::info
+<alert type="info">
 MONTH函数只授受date类型作为参数，不支持time,datetime,text类型作为参数，可以先用DATEVALUE函数进行类型转换后再调用该函数。
 
-:::
+</alert>
 
 ### now
 
@@ -553,7 +553,7 @@ IF(Status = "Open", ROUND(NOW()-CreatedDate, 0), null)
 
 \
 
-:::info
+<alert type="info">
 ■ 请勿删除括号。
 
 ■ 保留括号为空。括号中不能包含值。
@@ -568,7 +568,7 @@ IF(Status = "Open", ROUND(NOW()-CreatedDate, 0), null)
 
 ■ 与 NOW 函数和数字一起使用加和减运算符，以返回一个日期和时间。例如，NOW() +5 计算当前时间之前五天的日期和时间。在本示例中，公式字段数据类型为“日期时间”。
 
-:::
+</alert>
 
 ### second
 
@@ -611,7 +611,7 @@ IF(Rating="Hot", TEXT(TIMENOW()), TEXT(TIMEVALUE(CreatedDate)))
 
 \
 
-:::info
+<alert type="info">
 ■ 请勿删除括号。
 
 ■ 保留括号为空。括号中不能包含值。
@@ -622,7 +622,7 @@ IF(Rating="Hot", TEXT(TIMENOW()), TEXT(TIMEVALUE(CreatedDate)))
 
 ■ 因华炎魔方还未支持time类型字段，所以暂时只能用TEXT函数输出文本值。
 
-:::
+</alert>
 
 ### timevalue
 
@@ -643,12 +643,12 @@ TEXT(TIMEVALUE("17:30:45.125"))
 
 \
 
-:::info
+<alert type="info">
 ■ 请勿对日期时间字段使用 TIMEVALUE。
 
 ■ 因华炎魔方还未支持time类型字段，所以暂时只能用TEXT函数输出文本值。
 
-:::
+</alert>
 
 ### today
 
@@ -674,7 +674,7 @@ SampleDate < TODAY()
 
 \
 
-:::info
+<alert type="info">
 ■ 请勿删除括号。
 
 ■ 保留括号为空。括号中不能包含值。
@@ -689,7 +689,7 @@ SampleDate < TODAY()
 
 ■ 与 TODAY 函数和数字一起使用加和减运算符，以返回一个日期。例如，TODAY() +5 计算今天之前五天的日期。在本示例中，公式字段数据类型为日期。
 
-:::
+</alert>
 
 ### weekday
 
@@ -710,12 +710,12 @@ WEEKDAY(customdate1__c)
 
 \
 
-:::info
+<alert type="info">
 ■ 该函数只支持日期类型值，不支持日期时间或字符串类型值作为参数。
 
 ■ 该函数与javascript编程语言的Date.getDay函数有差异，后者用0表示周日，1表示周一，以些类推，6表示周六。
 
-:::
+</alert>
 
 ### year
 
@@ -736,12 +736,12 @@ YEAR(TODAY() )- YEAR(Initial_Meeting__c )
 
 \
 
-:::info
+<alert type="info">
 ■ 该函数只支持日期类型值，不支持日期时间或字符串类型值作为参数。
 
 ■ 该函数与javascript编程语言的Date.getYear函数表现一致。
 
-:::
+</alert>
 
 ## 逻辑函数
 
@@ -803,15 +803,15 @@ BLANKVALUE(Payment_Due_Date__c, StartDate + 5)
 
 \
 
-:::info
+<alert type="info">
 ■ 该函数与[ISBLANK](/docs/admin/functions#isblank)很像，但是该函数会进一步返回字段值为空时的置换表达式对应的值，一般来说，如果您只是想判断字段值是否为空，应该使用后者而不是该函数。
 
 ■ 该函数不支持传入select字段类型参数，但是如果字段是单选的，可以先用TEXT函数选把select类型转换为text类型，比如`BLANKVALUE(TEXT(Leave__c), "error")`，多选的select字段类型无法使用BLANKVALUE函数。
 
-:::
+</alert>
 
 
-:::info
+<alert type="info">
 * 字段类型为 `text` 时：`BLANKVALUE(FieldName, "替换值")`
 * 字段类型为 `select` 时：`IF(ISBLANK(FieldName), 替换值, FieldName)`
 * 字段类型为 `number/currency` 时： `BLANKVALUE(FieldName, "替换值")`
@@ -819,7 +819,7 @@ BLANKVALUE(Payment_Due_Date__c, StartDate + 5)
 * 字段类型为 `lookup/master_detail` 时： `BLANKVALUE(FieldName._id, "替换ID值")`
 * 字段类型为 `boolean` 时：`IF(FieldName, ValueA, ValueB)`
 
-:::
+</alert>
 
 ### case
 
@@ -903,7 +903,7 @@ CASE($User.Country ,​​ "Japan", "Japanese", "US", "English","unknown")
 
 \
 
-:::info
+<alert type="info">
 ■ 请确保您的`值1`、`值2`等表达式属于相同的数据类型，且必须与第一个参数值数据类型一致。
 
 ■ 请确保您的`结果1`、`结果2`等表达式以及最后的`其他结果`表达式属于相同的数据类型，但是不必与第一个参数值数据类型一致，且它们往往不一致。
@@ -922,14 +922,14 @@ CASE($User.Country ,​​ "Japan", "Japanese", "US", "English","unknown")
 
 ■ 使用 CASE 函数可以确定选项列表值是否等于特定的值。例如，当 Term（期限）为 12 时，`CASE(Term__c, "12", 12*Monthly_Commit__c, "24",​ 24 * Monthly_Commit__c, 0)` 公式将 Monthly Commit（每月提交量）乘以 12；当 Term（期限）为 24 时，该公式将 Monthly Commit（每月提交量）乘以 24。否则，结果为零。
 
-:::
+</alert>
 
 
-:::info
+<alert type="info">
 * CASE函数中的任何参数都不支持布尔类型值，这不只表示第一个参数及后续用于比较值的其他参数不能是布尔类型值，最后一个参数也一样不支持布尔类型值，也就是说整个函数的返回值不可能是布尔类型值，详情可参考：[使用布尔公式字段的提示](/docs/admin/field_type#%E4%BD%BF%E7%94%A8%E5%B8%83%E5%B0%94%E5%85%AC%E5%BC%8F%E5%AD%97%E6%AE%B5%E7%9A%84%E6%8F%90%E7%A4%BA)。
 * 表达式参数，即传入的第一个参数支持select字段，但是只支持单选的，如果传入多选的select将直接报错。
 
-:::
+</alert>
 
 ### if
 
@@ -967,11 +967,11 @@ IF($user.city = "Napa", 0.0750, IF($user.city = "Paso Robles", 0.0725,  IF($us
 
 \
 
-:::info
+<alert type="info">
 * 请确保您的 value_if_true 和 value_if_false 表达式属于相同的数据类型，且不为布尔类型值。
 * IF函数不支持返回值为布尔类型的情况，即第二个及第三个参数不能是布尔类型，详情可参考：[使用布尔公式字段的提示](/docs/admin/field_type#%E4%BD%BF%E7%94%A8%E5%B8%83%E5%B0%94%E5%85%AC%E5%BC%8F%E5%AD%97%E6%AE%B5%E7%9A%84%E6%8F%90%E7%A4%BA)。
 
-:::
+</alert>
 
 ### isblank
 
@@ -992,7 +992,7 @@ IF($user.city = "Napa", 0.0750, IF($user.city = "Paso Robles", 0.0725,  IF($us
 
 \
 
-:::info
+<alert type="info">
 ■ 请不要用`MyDateTime__c == null`这种表达式判断空值，而应该使用`ISBLANK(MyDateTime__c)`。
 
 ■ 如果字段包含字符、空白或零，则字段不为空。例如，如果字段包含使用空格键插入的空格，则该字段不为空。
@@ -1005,23 +1005,23 @@ IF($user.city = "Napa", 0.0750, IF($user.city = "Paso Robles", 0.0725,  IF($us
 
 ■ 对于select字段类型，单选多选语法是一样的，直接传入参数值即可。
 
-:::
+</alert>
 
 
-:::info
+<alert type="info">
 ISBLANK函数返回值为布尔类型，但是不支持参数值本身为布尔类型的情况。
 
-:::
+</alert>
 
 
-:::info
+<alert type="info">
 * 字段类型为 `text/select` 时：`ISBLANK(FieldName)`。
 * 字段类型为 `number/currency` 时： `ISBLANK(FieldName)`，但是只有配置将空白字段处理为空白时才有效，否则永远返回false。
 * 字段类型为 `date/datetime` 时： `ISBLANK(FieldName)`。
 * 字段类型为 `lookup/master_detail` 时： `ISBLANK(FieldName._id)`。
 * 字段类型为 `boolean` 时：`FieldName`。
 
-:::
+</alert>
 
 ### not
 
@@ -1443,12 +1443,12 @@ IF(BEGINS (Product_type__c , “ICU”), “Medical”, “Technical”)
 
 \
 
-:::info
+<alert type="info">
 ■ 此函数区分大小写，因此，请确保比较文本值的大小写正确无误。
 
 ■ 在验证规则或工作流规则中使用此函数时，留空的字段被视为有效。例如，如果您的验证规则要测试资产序列号是否以“3”开始，则序列号为空的所有资产都将视为有效。
 
-:::
+</alert>
 
 ### br
 
@@ -1467,14 +1467,14 @@ CASE(ShippingCountry,"USA",  ShippingStreet & BR() &  ShippingCity & ",  " & 
 
 \
 
-:::info
+<alert type="info">
 ■ 请勿删除函数名称后面的括号。
 
 ■ 保留括号为空。括号中不必包含值。
 
 ■ 请勿忘记在 BR() 两侧加上串联运算符：&。
 
-:::
+</alert>
 
 ### casesafeid
 
@@ -1515,14 +1515,14 @@ IF(CONTAINS(Product_Type__c, "part"), "Parts", "Service")
 
 \
 
-:::info
+<alert type="info">
 ■ 此函数区分大小写，因此，请确保比较文本值的大小写正确无误。
 
 ■ 在验证规则或工作流规则中使用此函数时，留空的字段被视为有效。例如，如果您的验证规则用来测试资产序列号是否包含“A”，那么，所有具有空序列号的资产将被视为有效。
 
 ■ CONTAINS 函数不支持多选选项列表。
 
-:::
+</alert>
 
 ### find
 
@@ -1554,7 +1554,7 @@ SUBSTITUTE(Email, LEFT(Email, FIND("@", Email)), "www.")
 
 \
 
-:::info
+<alert type="info">
 ■ 请确保在验证公式之前去掉其中的中括号、\[ 和 \]。
 
 ■ 如果文本参数中引用的字段为空，则该公式字段显示“0”。
@@ -1573,7 +1573,7 @@ SUBSTITUTE(Email, LEFT(Email, FIND("@", Email)), "www.")
 
 ■ 请注意，字符串中的第一个字符指定为 1（而非 0）。
 
-:::
+</alert>
 
 ### hyperlink
 
@@ -1605,7 +1605,7 @@ HYPERLINK("http://servername/call?id=" & Id & "&phone=" & Phone, Phone)
 
 \
 
-:::info
+<alert type="info">
 ■ 超链接公式字段属于文本类型。
 
 ■ 包含如 `HYPERLINK("http://www.cnet.com", "cnet")` 中引号内的协议和 URL。
@@ -1624,7 +1624,7 @@ HYPERLINK("http://servername/call?id=" & Id & "&phone=" & Phone, Phone)
 
 ■ 华炎魔方在界面上暂时不支持把该函数返回值显示为链接。
 
-:::
+</alert>
 
 ### includes
 
@@ -1650,14 +1650,14 @@ INCLUDES(Hobbies__c, "Golf")
 
 \
 
-:::info
+<alert type="info">
 ■ 该函数只支持多选的选项列表字段，要使用单选选项列表字段请使用 [ISPICKVAL](/docs/admin/functions#ispickval)。
 
 ■ 可以使用 [ISBLANK](/docs/admin/functions#isblank) 决定选项列表字段是否为空。
 
 ■ 关于选项列表字段支持哪些其他函数，请参考 [使用选项列表公式字段的提示](/docs/admin/field_type#%E4%BD%BF%E7%94%A8%E9%80%89%E9%A1%B9%E5%88%97%E8%A1%A8%E5%85%AC%E5%BC%8F%E5%AD%97%E6%AE%B5%E7%9A%84%E6%8F%90%E7%A4%BA)。
 
-:::
+</alert>
 
 ### ispickval
 
@@ -1694,14 +1694,14 @@ IF(ISPICKVAL(StageName, "Closed Won"),   ROUND(Amount *0.02, 2), 0)
 
 \
 
-:::info
+<alert type="info">
 ■ 该函数只支持单选的选项列表字段，要使用多选选项列表字段请使用 [INCLUDES](/docs/admin/functions#includes)。
 
 ■ 可以使用 [ISBLANK](/docs/admin/functions#isblank) 决定选项列表字段是否为空。
 
 ■ 关于选项列表字段支持哪些其他函数，请参考 [使用选项列表公式字段的提示](/docs/admin/field_type#%E4%BD%BF%E7%94%A8%E9%80%89%E9%A1%B9%E5%88%97%E8%A1%A8%E5%85%AC%E5%BC%8F%E5%AD%97%E6%AE%B5%E7%9A%84%E6%8F%90%E7%A4%BA)。
 
-:::
+</alert>
 
 ### left
 
@@ -1725,10 +1725,10 @@ TRIM(LEFT(LastName, 5)) & “-” & TRIM(RIGHT(SSN__c, 4))
 
 \
 
-:::info
+<alert type="info">
 如果字符数值小于零，公式会用零替换该值。
 
-:::
+</alert>
 
 ### len
 
@@ -1818,10 +1818,10 @@ LPAD("my_company.com", 15, "z")
 
 \
 
-:::info
+<alert type="info">
 不会忽略前置空格。
 
-:::
+</alert>
 
 ### mid
 
@@ -1860,10 +1860,10 @@ MID("ABCDEFGH", 0, 10)
 
 \
 
-:::info
+<alert type="info">
 请注意，文本中的第一个字符指定为 1（而非 0）。
 
-:::
+</alert>
 
 ### right
 
@@ -1887,10 +1887,10 @@ TRIM(LEFT(LastName, 5))&"-"&TRIM(RIGHT(SSN__c, 4))
 
 \
 
-:::info
+<alert type="info">
 如果字符数值小于零，则公式会用零替换该值。
 
-:::
+</alert>
 
 ### rpad
 
@@ -1937,12 +1937,12 @@ RPAD("my_company.com", 15, "z")
 
 \
 
-:::info
+<alert type="info">
 ■ 不会忽略结尾空格。
 
 ■ 在截断字符时与函数LPAD一样从右侧开始截断保留左侧部分，而不是相反。
 
-:::
+</alert>
 
 ### substitute
 
@@ -1974,12 +1974,12 @@ SUBSTITUTE(Email, LEFT(Email, FIND("@", Email)), "www.")
 
 \
 
-:::info
+<alert type="info">
 ■ 引号中的每个术语都区分大小写。
 
 ■ 如果旧文本出现多次，则所出现的每个“旧文本”都将用所提供的新文本值替换，即使这会导致重复项也是如此。
 
-:::
+</alert>
 
 ### text
 
@@ -2007,7 +2007,7 @@ SerialNumber &"-"& TEXT(Quantity)
 
 \
 
-:::info
+<alert type="info">
 ■ `TEXT(null)`返回值为"NULL"而不是空字符串。
 
 ■ `TEXT(FieldName)`参数为字段名的话，当字段值为空时，返回的是空字符串而不是"NULL"。
@@ -2024,7 +2024,7 @@ SerialNumber &"-"& TEXT(Quantity)
 
 ■ 只支持传入单选的select字段，不支持多选。
 
-:::
+</alert>
 
 ### trim
 
@@ -2103,7 +2103,7 @@ MOD(VALUE(Lead_Number__c), 3)
 
 \
 
-:::info
+<alert type="info">
 请确保 VALUE 函数中的文本不包含除小数点（句点）或负号（连字符）以外的任何特殊字符。例如，公式 VALUE(Text_field__c) 产生以下结果：
 
 ■ 如果文本字段为123，则结果为 123。
@@ -2114,7 +2114,7 @@ MOD(VALUE(Lead_Number__c), 3)
 
 ■ 如果文本字段为$123，则返回错误信息。
 
-:::
+</alert>
 
 ## 高级函数
 
@@ -2141,7 +2141,7 @@ NOT(REGEX(ID, "[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][
 
 \
 
-:::info
+<alert type="info">
 ■ 正则表达式的语法基于Java Platform SE 6 语法。但是，转义字符 () 未被支持，更改为两个反斜杠 (\\)一样不支持，需要匹配特殊符号请用中括号包裹，比如要匹配符号点`.`可以写为`[.]`。
 
 ■ 公式中正则表达式引擎匹配整个字符串，而不是在字符串内查找匹配。例如，如果您在搜索姓名 Marc Benioff，那么使用正则表达式.\*Marc Benioff.\*在如下字符串中找到匹配： `According to Marc Benioff, the social enterprise increases customer success.` 如果使用正则表达式 `Marc Benioff`，则它只会匹配到以下字符串： `Marc Benioff`
@@ -2152,6 +2152,6 @@ NOT(REGEX(ID, "[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][
 
 ■ 不支持\\w、\\d等表达试语法\[a-zA-Z0-9_\]、\[0-9\]代替。
 
-:::
+</alert>
 
 \

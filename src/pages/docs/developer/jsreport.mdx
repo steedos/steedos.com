@@ -22,10 +22,10 @@ JsReport一个用于设计和呈现各种报表的开源平台，使用它，只
 初始化JsReport项目工程过程中配置参数`jsreport.config.json`都使用默认参数即可。
 
 
-:::info
+<alert type="info">
 通过steedos cli命令行新建的华炎魔方项目会自带JsReport项目工程，您只要在命令行中运行`npx create-steedos-app my-app`即可生成一个带有初始化好的JsReport项目工程的华炎魔方项目，不需要手动新建`jsreport-app`文件夹来初始化JsReport项目工程。
 
-:::
+</alert>
 
 ### 运行
 
@@ -58,10 +58,10 @@ JsReport报表运行起来后，我们需要另外在华炎魔方根目录执行
 至此，JsReport报表就成功集成到华炎魔方项目中了，后面我们就可以开始开发JsReport报表并在华炎魔方中联调了。
 
 
-:::info
+<alert type="info">
 JsReport与华炎魔方从开发到部署都是两个独立的node项目，它们也都运行于各自独立的node进程中。
 
-:::
+</alert>
 
 ## 开发过程详解
 
@@ -209,10 +209,10 @@ query{
 这里我们新建文件夹`static`来存放可能用到的第三方资源文件以及需要共享的静态图片文件，并把`css/bootstrap.min.css`放入其中。
 
 
-:::info
+<alert type="info">
 注意所有的静态文件必须是`asset`文件，我们发现只能通过新建`asset`文件来添加。
 
-:::
+</alert>
 
 以下是我们本次需要新建的相关文件截图：
 
@@ -299,10 +299,10 @@ async function beforeRender(req, res) {
 ```
 
 
-:::info
+<alert type="info">
 上面`beforeRender`函数中用于调式的`authorization`变量值可以在chrome浏览器上访问华炎魔方，然后查询浏览器的network请求，比如`api/v4/users/validate`接口，该接口的请求标头中就可以看到名为`Authorization`的字段信息，复制其值即可；同样的`userId`变量值可以复制请求标头的`X-User-Id`字段值即可。
 
-:::
+</alert>
 
 #### 编写模板文件代码
 
@@ -581,10 +581,10 @@ exports.default = router;
 其中`objectql.getSteedosConfig`函数可获取魔方项目根目录下的配置文件`steedos-config.yml`中配置的参数值，`${config.public.webservices.jsreport.url}/api/report`值最终取值为`http://localhost:5488/api/report`，它是`jsreport`提供的报表接口URL，我们上面编写的路由代码只是接收参数中转了`jsreport`的接口请求并没有其他额外的业务逻辑。
 
 
-:::info
+<alert type="info">
 为什么要写代理接口来中转jsreport api接口而不直接在前端按钮点击事件中访问jsreport接口：因为jsreport只支持POST而不支持GET请求，而我们很难甚至无法做到打开一个浏览器新窗口来发送一个POST请求的URL地址。
 
-:::
+</alert>
 
 ### 环境变量配置
 

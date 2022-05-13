@@ -7,8 +7,6 @@ var warningIssued
 
 module.exports.withRemarkDirective = function()  {
   var data = this.data()
-  console.log(data)
-
   /* istanbul ignore next - old remark. */
   if (
     !warningIssued &&
@@ -37,7 +35,6 @@ module.exports.withRemarkDirective = function()  {
 
   return (tree) => {
     visit(tree, (node) => {
-      console.log(node)
       if (
         node.type === 'textDirective' ||
         node.type === 'leafDirective' ||

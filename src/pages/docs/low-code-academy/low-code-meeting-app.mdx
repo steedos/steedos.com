@@ -136,10 +136,10 @@ description: 本教程以会议管理为例，指导您如何使用华炎魔方�
 其中这两个对象的的“相关会议“这个字段，就实现了主子表之间的关联关系 。
 
 
-:::tip
+<alert type="tip">
 在子表对象（外部参会人员/会后评分）的详情页面上，点“新建”按钮新建主表/子表类型字段来关联会议主对象信息。
 
-:::
+</alert>
 
  ![](https://console.steedos.cn/api/files/images/Hkz5KfEtw5FSp5sbJ)对象字段添加完成后，可修改/新建列表视图，预览创建的对象。
 
@@ -175,12 +175,12 @@ description: 本教程以会议管理为例，指导您如何使用华炎魔方�
 
 \
 
-:::tip
+<alert type="tip">
 1、可能会出现对象搜索不到情况，需打开对象设置中的“**允许配置对象流程**”、“**允许查看申请单**”开关，来配置对象流程映射；
 
 2、主子对象字段都能选择的前提条件是子对象中关联的主对象字段必须为“**主子表**”字段类型。
 
-:::
+</alert>
 
 配置完成后，对象数据创建完就可以在详细页面点击“发起审批”的按钮，来发起审批流程。
 
@@ -299,10 +299,10 @@ METADATA_APIKEY=-D0hUDsU0-_nhonh8TKZRukDZsqQQwiLCy
  ![使用vscode中的steedos插件自动创建触发器文件](https://console.steedos.cn/api/files/images/jEv2ZLrpqopXG64Sd)
 
 
-:::info
+<alert type="info">
 文件路径`steedos-app/main/default`是默认应用文件夹，默认应用的元数据都应该放里面，触发器文件`meeting.trigger.js` 名称后缀必须以`.trigger.js`结尾。
 
-:::
+</alert>
 
 \
 以下是触发器代码内容，校验“会议开始时间必须早于结束时间”。
@@ -472,10 +472,10 @@ options:
 ```
 
 
-:::info
+<alert type="info">
 注意列表视图文件`calendar_view.listview.yml`名称后缀必须以`.listview.yml`结尾。
 
-:::
+</alert>
 
 \
 ### 动态控制表单字段的显示隐藏
@@ -541,10 +541,10 @@ async function getLeaders(spaceId, users) {
 
 \
 
-:::info
+<alert type="info">
 注意路由文件`include_leader.router.js`名称后缀必须以`.router.js`结尾。
 
-:::
+</alert>
 
 \
 然后我们就可以在相关字段元数据文件中调用它了，下面是三个字段的元数据内容，其内都配置`visible_on`属性，并在其中使用函数`Steedos.authRequest`调用了上面提到的`/api/include/leader`接口，接口返回的`include`变量值为true时才显示该操作按钮。
@@ -826,10 +826,10 @@ async function approveParticipants(meetingId) {
  ![](https://console.steedos.cn/api/files/images/Zre6KNm4NAXfJcaoQ)
 
 
-:::info
+<alert type="info">
 页面布局的相关子表中“子表名称”有一个点号分隔了两个名称，它们分别是“子表关联对象名称”和“子表关联对象上关联到当前对象的字段名称”。
 
-:::
+</alert>
 
 #### 把对象页面布局同步为代码并进一步用代码设置
 

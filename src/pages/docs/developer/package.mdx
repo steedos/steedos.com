@@ -156,10 +156,10 @@ DEFAULT_PACKAGE_PATH=steedos-packages/project #配置为相关软件包目录
 登录 [NPM官网](https://www.npmjs.com/) 注册账号。 注册完后请点击右上角头像图标，并选择菜单“Profile → Organization”来创建一个组织。
 
 
-:::info
+<alert type="info">
 组织名称将会在软件包名称中使用！
 
-:::
+</alert>
 
 ### 软件包名称
 
@@ -241,10 +241,10 @@ $ npm login --scope=@ylh --registry=https://registry.steedos.cn
 后续安装和升级软件包会依赖这两个文件中的内容，发布软件包时也会依赖执行`npm login`后在用户目录下生成的`.npmrc`文件。
 
 
-:::info
+<alert type="info">
 需要注意`.npmrc`文件中记录了登录密钥，所以不应该把它们提交到git仓库中，建议把这两个文件配置到`.gitignore`中以避免提交。
 
-:::
+</alert>
 
 ### 发布
 
