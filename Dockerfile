@@ -1,4 +1,4 @@
-FROM node:12.22.0
+FROM node:14
 
 # set timezone
 ENV TZ=Asia/Shanghai
