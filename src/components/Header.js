@@ -235,27 +235,6 @@ export function Header() {
         </div>
       </div> */}
 
-      <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
-        <div className="w-[108rem] flex-none flex justify-end">
-          <picture>
-            <source srcSet={require('@/img/beams/docs@30.avif').default} type="image/avif" />
-            <img
-              src={require('@/img/beams/docs@tinypng.png').default}
-              alt=""
-              className="w-[71.75rem] flex-none max-w-none dark:hidden"
-            />
-          </picture>
-          <picture>
-            <source srcSet={require('@/img/beams/docs-dark@30.avif').default} type="image/avif" />
-            <img
-              src={require('@/img/beams/docs-dark@tinypng.png').default}
-              alt=""
-              className="w-[90rem] flex-none max-w-none hidden dark:block"
-            />
-          </picture>
-        </div>
-      </div>
-
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 flex z-40 lg:hidden" onClose={setOpen}>
@@ -394,7 +373,7 @@ export function Header() {
         </Dialog>
       </Transition.Root>
 
-      <header className="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent">
+      <header className="bg-opacity-90 backdrop-filter backdrop-blur-md backdrop-saturate-150 sticky z-20 lg:z-50 relative bg-white inset-0 flex-none text-sm font-medium ring-1 ring-gray-900 ring-opacity-5 shadow-sm">
        
         <nav aria-label="Top" className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="">
@@ -599,6 +578,26 @@ export function Header() {
                   </a>
                 </div>
                 }
+
+
+                <div className="flex items-center border-l border-slate-200 ml-6  dark:border-slate-800">
+                  {/* <ThemeToggle panelClassName="mt-8" /> */}
+                  <a
+                    href="https://github.com/steedos/steedos-platform"
+                    target="_blank"
+                    className="ml-6 block text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
+                  >
+                    <span className="sr-only">Enterprise Low-Code Protocol on GitHub</span>
+                    <svg
+                      viewBox="0 0 16 16"
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>

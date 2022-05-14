@@ -155,6 +155,5 @@ export const headerNav = {
   ],
   pages: [
     { name: '视频', href: '/videos/' },
-    { name: 'Github', href: 'https://github.com/steedos/steedos-platform', target: '_blank' }
   ],
 }
