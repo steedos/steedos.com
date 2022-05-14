@@ -255,7 +255,7 @@ function TopLevelNav({ mobile }) {
       <TopLevelLink
         mobile={mobile}
         href="/docs/deploy/getting-started"
-        isActive={pathname.startsWith('/docs')}
+        isActive={pathname.startsWith('/docs/deploy')}
         className="mb-4"
         shadow="group-hover:shadow-sky-200 dark:group-hover:bg-sky-500"
         activeBackground="dark:bg-sky-500"
@@ -286,44 +286,12 @@ function TopLevelNav({ mobile }) {
           </>
         }
       >
-        文档
+        安装部署
       </TopLevelLink>
       <TopLevelLink
         mobile={mobile}
-        href="/docs/protocol/overview"
-        className="mb-4"
-        shadow="group-hover:shadow-indigo-200 dark:group-hover:bg-indigo-500"
-        icon={
-          <>
-            <path
-              d="m6 9 6-3 6 3v6l-6 3-6-3V9Z"
-              className={clsx(
-                'fill-indigo-100 group-hover:fill-indigo-200',
-                mobile ? 'dark:fill-slate-300' : 'dark:fill-slate-400'
-              )}
-            />
-            <path
-              d="m6 9 6 3v7l-6-3V9Z"
-              className={clsx(
-                'fill-indigo-300 group-hover:fill-indigo-400 dark:group-hover:fill-indigo-300',
-                mobile ? 'dark:fill-slate-400' : 'dark:fill-slate-500'
-              )}
-            />
-            <path
-              d="m18 9-6 3v7l6-3V9Z"
-              className={clsx(
-                'fill-indigo-400 group-hover:fill-indigo-500 dark:group-hover:fill-indigo-400',
-                mobile ? 'dark:fill-slate-500' : 'dark:fill-slate-600'
-              )}
-            />
-          </>
-        }
-      >
-        协议
-      </TopLevelLink>
-      <TopLevelLink
-        mobile={mobile}
-        href="/videos"
+        href="/docs/developer/getting-started"
+        isActive={pathname.startsWith('/docs/developer')}
         className="mb-4"
         shadow="group-hover:shadow-pink-200 dark:group-hover:bg-pink-500"
         icon={
@@ -347,11 +315,12 @@ function TopLevelNav({ mobile }) {
           </>
         }
       >
-        视频
+        开发人员
       </TopLevelLink>
-      {/* <TopLevelLink
+      <TopLevelLink
         mobile={mobile}
-        href="https://play.tailwindcss.com"
+        href="/docs/admin/getting-started"
+        isActive={pathname.startsWith('/docs/admin')}
         className="mb-4"
         shadow="group-hover:shadow-blue-200 dark:group-hover:bg-blue-500"
         icon={
@@ -386,8 +355,42 @@ function TopLevelNav({ mobile }) {
           </>
         }
       >
-        Playground
-      </TopLevelLink> */}
+        系统管理员
+      </TopLevelLink>
+      <TopLevelLink
+        mobile={mobile}
+        href="/docs/protocol/overview"
+        isActive={pathname.startsWith('/docs/protocol')}
+        className="mb-4"
+        shadow="group-hover:shadow-indigo-200 dark:group-hover:bg-indigo-500"
+        icon={
+          <>
+            <path
+              d="m6 9 6-3 6 3v6l-6 3-6-3V9Z"
+              className={clsx(
+                'fill-indigo-100 group-hover:fill-indigo-200',
+                mobile ? 'dark:fill-slate-300' : 'dark:fill-slate-400'
+              )}
+            />
+            <path
+              d="m6 9 6 3v7l-6-3V9Z"
+              className={clsx(
+                'fill-indigo-300 group-hover:fill-indigo-400 dark:group-hover:fill-indigo-300',
+                mobile ? 'dark:fill-slate-400' : 'dark:fill-slate-500'
+              )}
+            />
+            <path
+              d="m18 9-6 3v7l6-3V9Z"
+              className={clsx(
+                'fill-indigo-400 group-hover:fill-indigo-500 dark:group-hover:fill-indigo-400',
+                mobile ? 'dark:fill-slate-500' : 'dark:fill-slate-600'
+              )}
+            />
+          </>
+        }
+      >
+        低代码协议
+      </TopLevelLink>
       {/* <TopLevelLink
         mobile={mobile}
         href="/resources"
