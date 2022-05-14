@@ -96,7 +96,6 @@ export const headerNav = {
           items: [
             { name: '安装部署', href: '/docs/deploy' },
             { name: '管理员向导', href: '/docs/admin' },
-            { name: '开发人员向导', href: '/docs/developer' },
             { name: '用户向导', href: '/docs/user' },
           ],
         },
@@ -105,7 +104,7 @@ export const headerNav = {
           name: '开发人员向导',
           href: '/docs/developer',
           items: [
-            { name: '开发人员快速向导', href: '/docs/developer/getting-started' },
+            { name: '快速向导', href: '/docs/developer/getting-started' },
             { name: '元数据类型概览', href: '/docs/developer/meta-types' },
             { name: '软件包发布与安装', href: '/docs/developer/package' },
           ],
@@ -155,5 +154,6 @@ export const headerNav = {
   ],
   pages: [
     { name: '视频', href: '/videos/' },
+    { name: '应用市场', href: '/collections/steedos-packages' },
   ],
 }
