@@ -3,7 +3,7 @@ export const headerNav = {
   categories: [
     {
       id: 'platform',
-      name: '产品',
+      name: '平台',
       featured: [
         {
           name: '华炎魔方助力大众共用实施数字化转型',
