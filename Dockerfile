@@ -6,7 +6,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ARG API_TOKEN
 WORKDIR /app
 
-COPY ./packages /app/packages
 COPY ./public /app/public
 COPY ./rehype /app/rehype
 COPY ./remark /app/remark
