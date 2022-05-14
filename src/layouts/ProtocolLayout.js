@@ -22,7 +22,6 @@ export function ProtocolLayout(props) {
           content={`https://tailwindcss.com${socialSquare}`}
         /> */}
       </Head>
-      <Header/>
       <SidebarLayout nav={protocolNav} {...props} />
     </>
   )

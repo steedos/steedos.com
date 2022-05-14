@@ -139,7 +139,6 @@ export default function Document(props) {
           ],
         }}
       />
-      <Header/>      
 <div className="relative flex w-full bg-white lg:bg-gray-50">
   <div className="hidden lg:block absolute top-0 bottom-0 right-0 left-1/2 bg-white"></div>
   <div className="relative flex w-full max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">

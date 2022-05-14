@@ -13,7 +13,6 @@ export const Main = ({children}) => {
 export const DefaultLayout = ({children}) => {
   return (
     <>
-      <Header/>
       <Main>
         {children}
       </Main>

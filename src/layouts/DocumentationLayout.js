@@ -22,7 +22,6 @@ export function DocumentationLayout(props) {
           content={`https://tailwindcss.com${socialSquare}`}
         /> */}
       </Head>
-      <Header/>
       <SidebarLayout nav={documentationNav} {...props} />
     </>
   )

@@ -92,6 +92,15 @@ export default function App({ Component, pageProps = {}, router }) {
   return (
     <>
       <SearchProvider>
+        {showHeader && (
+          <Header
+            hasNav={Boolean(Component.layoutProps?.Layout?.nav)}
+            navIsOpen={navIsOpen}
+            onNavToggle={(isOpen) => setNavIsOpen(isOpen)}
+            title={meta.title}
+            section={section}
+          />
+        )}
           <Layout {...layoutProps}>
             <Component section={section} {...pageProps} />
           </Layout>
