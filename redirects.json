@@ -10,5 +10,8 @@
   { "source": "/customers", "destination": "/customer-success-stories", "permanent": true },
   { "source": "/help", "destination": "/docs/", "permanent": true },
   { "source": "/help/download", "destination": "/docs/user/getting-started", "permanent": false },
-  { "source": "/developer", "destination": "/developer/overview", "permanent": false }
+  { "source": "/docs/deploy", "destination": "/docs/deploy/getting-started", "permanent": false },
+  { "source": "/docs/developer", "destination": "/docs/developer/getting-started", "permanent": false },
+  { "source": "/docs/admin", "destination": "/docs/admin/getting-started", "permanent": false },
+  { "source": "/docs/user", "destination": "/docs/user/getting-started", "permanent": false }
 ]

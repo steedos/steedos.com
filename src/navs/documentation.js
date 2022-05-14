@@ -19,6 +19,7 @@ const developer = createPageList(
 
 export const documentationNav = {
   '安装部署': [
+    deploy['getting-started'],
     deploy['devops'],
     deploy['deploy-docker'],
     deploy['deploy-cloud'],
@@ -32,12 +33,14 @@ export const documentationNav = {
     user['workflow'],
   ],
   '管理员向导': [
+    admin['getting-started'],
     admin['organization'],
     admin['create_object'],
     admin['permission_set'],
     admin['import'],
     admin['field_type'],
     admin['auto_process'],
+    admin['formula'],
     admin['functions'],
     admin['no-code-extend'],
     admin['workflow-admin'],

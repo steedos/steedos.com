@@ -1,28 +1,25 @@
 ---
 title: GraphQL API 向导
-description: 如何通过 API，查询操作华炎魔方中的数据
+description: 如何通过 GraphQL API，查询和操作系统中的数据。
 ---
 
-如何通过 API，查询操作华炎魔方中的数据。
+## GraphQL 控制台
 
+可以在浏览器端访问 GraphQL 控制台，查询和操作系统中的数据。访问网址为:  ${服务器地址}/graphql
 
-## graphql 控制台
-
-可以在浏览器端访问 GraphQL 控制台，查询和操作华炎魔方中的数据。访问网址为:  ${服务器地址}/graphql
-
-GraphQL接口内置权限控制，执行查询前必须先登录华炎魔方，当前查询的访问权限为当前登录的账户。
+GraphQL接口内置权限控制，执行查询前必须先登录系统，当前查询的访问权限为当前登录的账户。
 
  ![](https://console.steedos.cn/api/files/images/BTmifmnQCm98HdZ7L)
 
 ## 接口验证
 
-调用接口前，首先需要先进行接口的身份验证。华炎魔方采用API Key来作为 Token，可以使您更加方便地进行接口调用。不仅如此，您还可以实现单点登录、验证登录状态以及注销等功能，让您的使用更加地灵活与便捷。
+调用接口前，首先需要先进行接口的身份验证。采用API Key来作为 Token，可以更加方便地进行接口调用。不仅如此，还可以实现单点登录、验证登录状态以及注销等功能，这将使得接口调用更加灵活与便捷。
 
-### 获取 api key
+### 获取 API Key
 
 由于接口验证是以 API Key 作为 Token 进行验证，因此需要先获取 API Key。可以在设置-高级设置-API Key菜单下，获取用户的API Key。
 
-### 设置 header
+### 设置 Header
 
 获取到 API Key 之后设置在请求头 Header 当中就可以进行接口调用了。
 
@@ -34,6 +31,8 @@ Authorization : Bearer apikey,${apikey}
 
 
 ## 查询数据
+
+可以在使用GraphQL查询数据时设置要查询的对象、字段、翻页、排序及过滤条件等，所有查询都基于当前登录用户被授权查看的数据范围。
 
 ### 查询对象和字段
 
@@ -234,8 +233,8 @@ query{
           "email_verified": "",
           "mobile_verified": "",
           "is_supplier": "√",
-          "organization": "教育部门/部门1-1-1/部门1-1-1-1",
-          "organizations_parents": "教育部门,教育部门/部门1-1-1,教育部门/部门1-1-1/部门1-1-1-1,星陨阁",
+          "organization": "教育部门/部门1/部门1-1",
+          "organizations_parents": "教育部门,教育部门/部门1,教育部门/部门1/部门1-1,星陨阁",
           "locale": "简体中文",
           "sort_no": 1,
           "last_logon": "2021-10-12",
@@ -272,7 +271,7 @@ _related_${object_api_name}_${field_api_name}
       name
       mobile
     }
-    space_users: _related_space_users_company_ids {
+    space_users: _related_space_users_company_ids(filters: ["job_number","=","10"]) {
       name
       mobile
     }
@@ -301,11 +300,7 @@ _related_${object_api_name}_${field_api_name}
         ],
         "space_users": [
           {
-            "name": "人员1",
-            "mobile": "18600000000"
-          },
-          {
-            "name": "人员2",
+            "name": "小明",
             "mobile": "18600000000"
           }
         ]
@@ -316,13 +311,17 @@ _related_${object_api_name}_${field_api_name}
 ```
 
 
-## 修改数据
+## 操作数据
+
+可以使用GraphQL对数据执行增、删、改操作，所有数据处理操作都基于当前登录用户被授权的数据范围。
 
 ### 新增数据
 
 当调用 GraphQL API 新增数据时，系统会首先验证当前用户是否有对应的新增权限。
 
-新增数据使用 `mutation`  语法
+#### 新增单条数据
+
+使用 `mutation.{object_api_name}__insert` 语法，传入 `doc` 参数值。
 
 ```javascript
 mutation {
@@ -333,9 +332,9 @@ mutation {
 }
 ```
 
-其中，`tasks`代表要插入记录的对象名称，`{name:"Task One", assignees: ["61e8c77201a2bd02d8dd46ee"]}`代表要插入的JSON数据
+其中，`tasks` 代表要插入记录的对象名称，`{name:"Task One", assignees: []}` 代表要插入的JSON数据。
 
-关键字`__insert`表示通过 GraphQL API 在 Steedos 上插入一条记录。
+关键字 `__insert` 表示通过 GraphQL API 在系统中插入一条记录。
 
 结果如下：
 
@@ -350,12 +349,43 @@ mutation {
 }
 ```
 
+#### 新增多条数据
+
+使用 `mutation.{object_api_name}__insert_many` 语法，传入 `docs` 参数值。
+
+```javascript
+mutation {
+  tasks__insert_many(docs:[{name:"Task One", assignees: []}]) {
+    name
+    _id
+  }
+}
+```
+
+其中， `tasks` 代表要插入记录的对象名称，`[{name:"Task One", assignees: []}]` 代表要插入的JSON数据。
+
+关键字 `__insert_many` 表示通过 GraphQL API 在系统中插入多条记录。
+
+结果如下：
+
+```javascript
+{
+  "data": {
+    "tasks__insert_many": [{
+      "name": "Task One",
+      "_id": "5cb98489d09a343e14daae95"
+    }]
+  }
+}
+```
 
 ### 修改数据
 
 当调用 GraphQL API 修改数据时，系统会首先验证当前用户是否有对应的修改权限。
 
-示例：
+#### 修改单条数据
+
+使用 `mutation.{object_api_name}__update` 语法，传入 `_id` 和 `doc` 参数值。
 
 ```javascript
 mutation {
@@ -366,10 +396,9 @@ mutation {
 }
 ```
 
+其中，`tasks`代表要修改记录的对象名称，`_id` 的值 `5cb98489d09a343e14daae95` 代表要修改的记录的 `_id`，`{name:"Task Important"}` 代表要更新的JSON数据。
 
-其中，`tasks`代表要编辑记录的对象名称，`_id`的值`5cb98489d09a343e14daae95`代表要编辑的记录的`_id`，`{name:"Task Important"}`代表要更新的JSON数据。
-
-关键字`__update`表示通过 GraphQL API 在 Steedos 上编辑一条记录。
+关键字`__update`表示通过 GraphQL API 在系统中修改一条记录。
 
 结果如下：
 
@@ -384,12 +413,45 @@ mutation {
 }
 ```
 
+#### 修改多条数据
+
+使用 `mutation.{object_api_name}__update_many` 语法，传入 `filters` 和 `doc` 参数值。
+
+```javascript
+mutation {
+  tasks__update_many(filters: ["name","contains","Important"], doc:{important: true}) {
+    name
+    _id
+    important
+  }
+}
+```
+
+其中，`tasks` 代表要修改记录的对象名称，`filters` 的值代表要修改的数据范围的过滤条件，`{important: true}` 代表要更新的JSON数据。
+
+关键字 `__update_many` 表示通过 GraphQL API 在系统中修改多条记录。
+
+结果如下：
+
+```javascript
+{
+  "data": {
+    "tasks__update_many": [{
+      "name": "Task Important",
+      "_id": "5cb98489d09a343e14daae95",
+      "important": true
+    }]
+  }
+}
+```
 
 ### 删除数据
 
 当调用 GraphQL API 删除数据时，系统会首先验证当前用户是否有对应的删除权限。
 
-示例：
+#### 删除单条数据
+
+使用 `mutation.{object_api_name}__delete` 语法，传入 `_id` 参数值。
 
 ```javascript
 mutation {
@@ -397,9 +459,9 @@ mutation {
 }
 ```
 
- \n 其中，`tasks`代表要删除记录的对象名，`_id`的值`5cb98489d09a343e14daae95`代表要删除的记录的`_id`
+其中，`tasks` 代表要删除记录的对象名，`_id` 的值 `5cb98489d09a343e14daae95` 代表要删除的记录的`_id`
 
-关键字`__delete`表示通过 GraphQL API 在 Steedos 上删除一条记录。
+关键字`__delete`表示通过 GraphQL API 在系统中删除一条记录。
 
 结果如下：
 
@@ -411,104 +473,30 @@ mutation {
 }
 ```
 
+#### 删除多条数据
 
-
-## 查询过滤条件详解
-
-华炎魔方使用数组格式定义过滤条件。
-
-### 基本运算符
-
-* "=": 等于
-* "!=": 不等于
-* ">": 大于
-* ">=": 大于等于
-* "<": 小于
-* "<=": 小于等于
-* "startswith": 以...开始
-* "contains": 包含...
-* "notcontains": 不包含...
-* "between": 范围
-
-
-### 数组类型字段
-
-
-运算符为"="时，条件自动按"or"裂变连接成多个筛选条件，类似实现了"in"操作功能，所以下两种写法结果相同：
+使用 `mutation.{object_api_name}__delete_many` 语法，传入 `filters` 参数值。
 
 ```javascript
-[["status", "in", ["closed","open"]]]
-
-[ [ "status", "=", "closed" ], "or", [ "status", "=", "open" ] ]
-```
-
-
-运算符为"!="时，条件自动按"and"裂变连接成多个筛选条件，所以下两种写法结果相同：
-
-```javascript
-[["status", "not in", ["closed","open"]]]
-
-[ [ "status", "!=", "closed" ], "and", [ "status", "!=", "open" ] ]
-```
-
-
-运算符为"between"时，条件自动转换成">="及"<="运算符对应的筛选条件，以下各组效果相同：
-
-```javascript
-[["age", "between", [20,30]]] 等效于 [ [ "age", ">=", 20 ], "and", [ "age", "<=", 30 ] ]
-
-[["age", "between", [null,30]]] 等效于 [ [ "age", "<=", 30 ] ]
-
-[["age", "between", [20,null]]] 等效于 [ [ "age", ">=", 20 ] ]
-```
-
-> between只支持数值及日期时间类型，且过滤值必须是两个元素的数组格式
-
-
-其他情况一律自动按"or"裂变连接成多个筛选条件
-
-```javascript
-[["tag", "contains", ["start","end"]]] 等效于 [ [ "tag", "contains", "start" ], "or", [ "tag", "contains", "end" ] ]
-```
-
-### “非”(not)操作
-
-可以在当前筛选条件的基础上取反，例如：
-
-```javascript
-["not", ["value", "=", 3]]
-```
-
-### “与(and)”、“或(or)”操作
-
-多个过滤器可以通过“与(and)”、“或(or)”操作进行组合，例如：
-
-```javascript
-[ [ "value", ">", 3 ], "and", [ "value", "<", 7 ] ]
-
-[ [ "value", ">", 7 ], "or", [ "value", "<", 3 ] ]
-```
-
-如果不指定“与(and)”、“或(or)”操作，系统默认按照“与(and)”操作执行过滤。所以下两种写法结果相同：
-
-```javascript
-[ [ "value", ">", 3 ], "and", [ "value", "<", 7 ] ]
-
-[ [ "value", ">", 3 ], [ "value", "<", 7 ] ]
-```
-
-### 示例
-
-查询分部名称包含 ‘华炎’ 的记录
-
-```javascript
-{
-  company(filters: ["name","contains","华炎"]){
-    _id,
-    name,
-  } 
+mutation {
+  tasks__delete_many(filters: ["name","contains","Important"]) 
 }
 ```
 
+其中，`tasks`代表要删除记录的对象名称，`filters` 的值代表要删除的数据范围的过滤条件。
 
- \n 
+关键字 `__delete_many` 表示通过 GraphQL API 在系统中删除多条记录。
+
+结果如下：
+
+```javascript
+{
+  "data": {
+    "tasks__delete_many": 1
+  }
+}
+```
+
+> 返回值 `1` 表示成功删除的数据条数。
+
+参考：[GraphQL](https://graphql.org/)

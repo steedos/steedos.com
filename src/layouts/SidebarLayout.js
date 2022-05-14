@@ -145,7 +145,7 @@ function Nav({ nav, children, fallbackHref, mobile = false }) {
         {nav &&
           Object.keys(nav)
             .map((category) => {
-              let publishedItems = nav[category].filter((item) => item.published !== false)
+              let publishedItems = nav[category].filter((item) => item?.published !== false)
               if (publishedItems.length === 0 && !fallbackHref) return null
               return (
                 <li key={category} className="mt-12 lg:mt-8">
@@ -164,6 +164,10 @@ function Nav({ nav, children, fallbackHref, mobile = false }) {
                     )}
                   >
                     {(fallbackHref ? nav[category] : publishedItems).map((item, i) => {
+                      if (!item) {
+                        console.log(i)
+                        return null
+                      }
                       let isActive = item.match
                         ? item.match.test(router.pathname)
                         : item.href === router.pathname
@@ -250,7 +254,7 @@ function TopLevelNav({ mobile }) {
     <>
       <TopLevelLink
         mobile={mobile}
-        href="/docs/deploy/devops"
+        href="/docs/deploy/getting-started"
         isActive={pathname.startsWith('/docs')}
         className="mb-4"
         shadow="group-hover:shadow-sky-200 dark:group-hover:bg-sky-500"

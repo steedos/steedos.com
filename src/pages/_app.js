@@ -83,11 +83,17 @@ export default function App({ Component, pageProps = {}, router }) {
   const description =
     meta.metaDescription || meta.description || '开源低代码 DevOps 平台'
 
+  let section =
+  meta.section ||
+  Object.entries(Component.layoutProps?.Layout?.nav ?? {}).find(([, items]) =>
+    items.find(({ href }) => href === router.pathname)
+  )?.[0]
+
   return (
     <>
       <SearchProvider>
           <Layout {...layoutProps}>
-            <Component {...pageProps} />
+            <Component section={section} {...pageProps} />
           </Layout>
       </SearchProvider>
     </>
