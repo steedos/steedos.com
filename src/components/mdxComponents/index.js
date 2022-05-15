@@ -13,7 +13,7 @@ export function a({ node, ...props }) {
       />
     }
 
-    const target = "_blank" //props.href.match(/https:\/\//i) || props.href.match(/http:\/\//i) ? "_blank": "_self";
+    const target = props.href.match(/https:\/\//i) || props.href.match(/http:\/\//i) ? "_blank": "_self";
     return <a href={props.href} target={target}>{props.children}</a>
   }
 }

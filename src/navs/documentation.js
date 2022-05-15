@@ -20,9 +20,11 @@ const developer = createPageList(
 export const documentationNav = {
   '安装部署': [
     deploy['getting-started'],
-    deploy['devops'],
     deploy['deploy-docker'],
     deploy['deploy-cloud'],
+    deploy['devops'],
+    deploy['deploy-windows'],
+    deploy['deploy-mac'],
     deploy['deploy-activate'],
     deploy['steedos-config'],
     deploy['upgrade'],
