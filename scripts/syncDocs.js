@@ -52,7 +52,7 @@ async function getCollections(siteId){
           slug,
           name,
           description,
-    			documents: _related_documents_collection(sort: "sort_no", filters:["status","=","published"]){
+    			documents: _related_documents_collection(sort: "sort_no"){
             _id,
             slug,
             name,

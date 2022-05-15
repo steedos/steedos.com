@@ -1,0 +1,159 @@
+---
+title: 显示条件公式
+description: null
+---
+
+可以在华炎魔方中给字段配置显示公式脚本，来实现字段的动态显示规则。
+
+## 语法说明
+
+**公式格式**
+
+`{{ javascript语法的表达式 }}`
+
+表达式如果返回 ture, 则表示显示当前字段，否则隐藏当前字段。必须以 ‘{{‘ 开头，以 ’}}’ 结尾。
+
+**支持变量**
+
+* formData : `Dictionary<any>`  当前表单数据；例如：表单中有个下拉框字段“性别”，其对应的API名称是“sex”,  formData.sex 就能获取到该字段选中项的值。
+* global: `Dictionary<any>`  当前用户信息。
+
+```javascript
+{
+  now: Tue Oct 26 2021 14:14:55 GMT+0800 (中国标准时间),
+  spaceId: "M6x6ddKvpj9ddcYYm",
+  user:{
+    authToken: "87abc38cd77f7a7613e76672dcfc5fd7ff2c21016e4202b131af579e7416c292787d198ffe45fb6674d8a3"
+    companies: [{_id: '43t84iMQTbsqvE25z', name: '分部1', organization: '3bJaD7L8jjbYW4vY8'}]
+    company: {_id: '43t84iMQTbsqvE25z', name: '分部1', organization: '3bJaD7L8jjbYW4vY8'}
+    company_id: "43t84iMQTbsqvE25z"
+    company_ids: ['43t84iMQTbsqvE25z']
+    email: "2291335xxx@qq.com"
+    is_space_admin: true
+    language: "zh-CN"
+    locale: "zh-cn"
+    mobile: "1347960xxxx"
+    name: "ldx_test_app1"
+    organization: {_id: 'EzrZricSyxyJARRut', name: '部门1-1-1', company_id: '43t84iMQTbsqvE25z', fullname: '部门1-1/部门1-1-1'}
+    organizations: [{_id: 'EzrZricSyxyJARRut', name: '部门1-1-1', company_id: '43t84iMQTbsqvE25z', fullname: '部门1-1/部门1-1-1'}]
+    password_expired: false
+    permission_shares: []
+    profile: "admin"
+    roles: ['admin']
+    space: {_id: 'M6x6ddKvpj9ddcYYm', name: '部门1', admins: ['606d7baa3393516019dbfb39', 'FCK84wXMAd9qcL27N']}
+    spaceId: "M6x6ddKvpj9ddcYYm"
+    spaces: [{_id: 'M6x6ddKvpj9ddcYYm', name: '部门1'}]
+    steedos_id: "606d7baa3393516019dbfb39"
+    userId: "606d7baa3393516019dbfb39"
+    utcOffset: 8
+  },
+  userId: "606d7baa3393516019dbfb39",
+}
+```
+
+**global属性：**
+
+| 属性名 | 值类型 | 属性含义 |
+|----|----|----|
+| now | date | 当前时间 |
+| spaceId | string | 当前工作区id |
+| user | **object** | 当前用户信息 |
+| userId | string | 当前用户id |
+
+**global属性下user属性：**
+
+| 属性名 | 值类型 | 属性含义 |
+|----|----|----|
+| authToken | string | 登录信息 |
+| companies | array | 所属分部 |
+| company | object | 主分部 |
+| company_id | string | 主分部id |
+| company_ids | array | 所属分部id |
+| email | string | 邮箱 |
+| is_space_admin | boolean | 是否是工作区管理员 |
+| language | string | 语言 |
+| locale | string | 本地语言 |
+| mobile | string | 手机号 |
+| name | string | 用户名 |
+| organization | object | 主部门 |
+| organizations | array | 所属部门 |
+| password_expired | boolean | 登录密码过期 |
+| permission_shares | array | 共享规则 |
+| profile | string | 简档 |
+| roles | array | 用户角色 |
+| space | object | 当前工作区 |
+| spaceId | string | 当前工作区id |
+| spaces | array | 工作区 |
+| steedos_id | string | 用户id |
+| userId | string | 用户id |
+| utcOffset | number | 国际化UTC时间偏差；北京时间时该值为 8。 |
+
+**单行表达式**
+
+```javascript
+{{ formData.sex === 'male' ? true : false }}
+```
+
+**多行表达式（即描述带function关键字的复杂脚本）**
+
+```javascript
+{{
+  (function(){
+    if(['male'].indexOf(formData.sex) > -1){
+      return true;
+    }else{
+      return false;
+    }
+  })()
+}}
+```
+
+## 适用范围
+
+例子：表单中有个下拉框字段“性别”, 其对应的API名称是“sex”，对应的选项是 \[{label: '男', value: 'male'}, {label: '女', value: 'female'}\]。
+
+当”性别“字段选中”男“， 则表达式返回true， 否则返回false。
+
+**对象字段yml文件中配置**visible_on（**显示条件公式）属性** `steedos-app/main/default/objects/space_users/fields/personality.field.yml`：
+
+```javascript
+name: personality
+type: text
+label: personality
+# 单行表达式：
+# visible_on: "{{ formData.sex === 'male' ? true: false }}"
+# 多行表达式：
+visible_on: "{{
+    (function(){
+      if(['male'].indexOf(formData.sex) > -1){
+        return true;
+      }else{
+        return false;
+      }
+    })()
+  }}"
+```
+
+**页面对象字段上配置字段显示公式  和  页面布局上给字段和相关子表配置显示条件**
+
+ ![字段显示公式](https://console.steedos.cn/api/files/images/bxZZNsf7Ajmo5QeRq)
+
+ ![显示条件](https://console.steedos.cn/api/files/images/cjJRy8vAkapdiGQeo)
+
+```javascript
+// 单行表达式：
+{{formData.sex === 'male' ? true: false }}
+
+// 多行表达式：
+{{
+  (function(){
+    if(['male'].indexOf(formData.sex) > -1){
+      return true;
+    }else{
+      return false;
+    }
+  })()
+}}
+```
+
+\
