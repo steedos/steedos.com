@@ -1,0 +1,167 @@
+---
+title: 表单公式
+description: 华炎魔方支持在前端定义表单公式来实现各种界面效果，比如配置字段显示隐藏规则，配置字段是否必填规则等。
+---
+
+
+## 表单公式语法说明
+
+**公式格式**
+
+`{{ javascript语法的表达式 }}`
+
+必须以 ‘`{{`‘ 开头，以 ’`}}`’ 结尾。
+
+**支持变量**
+
+* formData : `Dictionary<any>`  当前表单数据；例如：表单中有个下拉框字段“性别”，其对应的API名称是“sex”,  formData.sex 就能获取到该字段选中项的值。
+* global: `Dictionary<any>`  全局变量，目前支持的全局变量清单详情请查阅后续的“全局变量附录“小节。比如公式表达式`global.now`会输出当前时间值。
+
+比如给某个字段的`visible_on`属性配置公式 `{{ formData.sex === 'male' ? true: false }}` 表示当表单中`sex`字段值为“male”时才显示该字段。
+
+表达式只要求用双层大括号中的脚本是合法的javascript语句就行，对于形式没有任何限制，比如上面的公式也可以写成如下所示的多行脚本公式：
+
+```javascript
+{{
+    (function(){
+      if(['male'].indexOf(formData.sex) > -1){
+        return true;
+      }else{
+        return false;
+      }
+    })()
+  }}
+```
+
+
+### 字段显示公式
+
+我们可以在字段的`visible_on`属性中配置表单公式来实现字段的显示隐藏，当表达式返回 ture表示显示当前字段，否则隐藏当前字段。
+
+如果`visible_on` 属性值中依赖了某个字段，且存在其它字段的 `visible_on` 属性值中依赖了当前字段，请添加 `depend_on` 属性一起使用。
+
+假设合同对象上有一个“已收票金额”字段，需要在合同是“付款合同”时才显示此字段，我们只要按以下代码配置该字段的`visible_on`属性即可：
+
+```javascript
+name: received_invoice_amount
+type: summary
+label: 已收票金额
+# depend_on:
+#   - payment
+visible_on: "{{ formData.payment === true ? true: false }}"
+```
+
+上面是把字段显示公式写在低代码对象字段配置文件中，我们也可以在对象字段设置界面配置“字段显示公式”属性来实现一样的动态显示字段逻辑。
+
+ ![](https://console.steedos.cn/api/files/images/EwBLwQEMciHdEwjC5)另外还可以给对象配置“页面布局”，在页面布局上有“操作”按钮、“字段”、“相关子表”属性，这些属性上也是可以配置显示条件公式的，当公式表达式执行结果返回`true`表示显示对应的“操作”按钮、“字段”及“相关子表”，反之则表示隐藏它们。
+
+ ![](https://console.steedos.cn/api/files/images/nyvgQvXWkBzo59EPS)
+
+### 字段必填公式
+
+我们可以在字段的`required`属性中配置表单公式来实现字段的动态必填规则，当表达式返回 ture表示当前字段必填，否则当前字段不是必填。
+
+假设合同对象上有一个“结束日期”`(end_date)`字段，需要在合同的“合同状态”`(contract_fulfillment_state)`为“结束”`(fullfill)`时必填，我们只要按以下代码配置该字段的`required`属性即可：
+
+```javascript
+name: end_date
+type: date
+label: 合同结束日期
+required: "{{ formData.contract_fulfillment_state === 'fullfill' ? true: false }}"
+```
+
+字段必填公式目前只能写在低代码对象字段配置文件中，无法在对象设置界面配置该公式表达式。
+
+### 过滤条件公式
+
+我们可以给相关表`(lookup)`字段或主表子表字段配置`filters`属性来让该字段只列出一部分过滤后的选项而不是列出所有选项供用户选择。
+
+有时我们需要根据表单中某个字段的值来过滤相关表或主表子表字段的选项范围，这时我们可以把相关表或主表子表字段的`filters`中配置为表单公式即可实现相关需求。
+
+假设我们要给合同对象配置一个相关任务字段，在用户填写该字段值时，我们希望只列出任务标题中包含“合同标签”字段值的任务供用户选择，只要按以下代码配置该字段的`filters`属性即可：
+
+```javascript
+label: '相关任务'
+type: lookup
+reference_to: tasks
+depend_on:
+  - tag
+filters: '{{[["name","contains",formData.tag]]}}'
+```
+
+注意公式表达式中引用的变量会根据变量本身的数据类型自动补全引号，也就是说上面的表达式中`formData.tag`变量是字符串类型，所以该公式执行后会自动为该变量值补全引号，比如当用户在表单中输入的“合同标签”`(tag)`字段值为“软件”时，该公式表达式执行结果为`[["name","contains",”软件”]]`。
+
+## 全局变量附录
+
+在表单公式中可以通过`global`来引用全局变量，目前支持的全局变量如下所示：
+
+| 属性名 | 值类型 | 属性含义 |
+|----|----|----|
+| mode | string | 当前表单状态（read / edit） |
+| now | date | 当前时间 |
+| spaceId | string | 当前工作区id |
+| user | object | 当前用户信息 |
+| userId | string | 当前用户id |
+
+下面是一份全局变量及其值示例：
+
+```javascript
+{
+  mode: 'read',   // read: 只读;  edit: 编辑。
+  now: Tue Oct 26 2021 14:14:55 GMT+0800 (中国标准时间),
+  spaceId: "M6x6ddKvpj9ddcYYm",
+  user:{
+    authToken: "87abc38cd77f7a7613e76672dcfc5fd7ff2c21016e4202b131af579e7416c292787d198ffe45fb6674d8a3"
+    companies: [{_id: '43t84iMQTbsqvE25z', name: '分部1', organization: '3bJaD7L8jjbYW4vY8'}]
+    company: {_id: '43t84iMQTbsqvE25z', name: '分部1', organization: '3bJaD7L8jjbYW4vY8'}
+    company_id: "43t84iMQTbsqvE25z"
+    company_ids: ['43t84iMQTbsqvE25z']
+    email: "2291335xxx@qq.com"
+    is_space_admin: true
+    language: "zh-CN"
+    locale: "zh-cn"
+    mobile: "1347960xxxx"
+    name: "ldx_test_app1"
+    organization: {_id: 'EzrZricSyxyJARRut', name: '部门1-1-1', company_id: '43t84iMQTbsqvE25z', fullname: '部门1-1/部门1-1-1'}
+    organizations: [{_id: 'EzrZricSyxyJARRut', name: '部门1-1-1', company_id: '43t84iMQTbsqvE25z', fullname: '部门1-1/部门1-1-1'}]
+    password_expired: false
+    permission_shares: []
+    profile: "admin"
+    roles: ['admin']
+    space: {_id: 'M6x6ddKvpj9ddcYYm', name: '部门1', admins: ['606d7baa3393516019dbfb39', 'FCK84wXMAd9qcL27N']}
+    spaceId: "M6x6ddKvpj9ddcYYm"
+    spaces: [{_id: 'M6x6ddKvpj9ddcYYm', name: '部门1'}]
+    steedos_id: "606d7baa3393516019dbfb39"
+    userId: "606d7baa3393516019dbfb39"
+    utcOffset: 8
+  },
+  userId: "606d7baa3393516019dbfb39",
+}
+```
+
+其中`global.user`返回的是当前登录用户信息，下面列出了其主要变量清单：
+
+| 属性名 | 值类型 | 属性含义 |
+|----|----|----|
+| authToken | string | 登录信息 |
+| companies | array | 所属分部 |
+| company | object | 主分部 |
+| company_id | string | 主分部id |
+| company_ids | array | 所属分部id |
+| email | string | 邮箱 |
+| is_space_admin | boolean | 是否是工作区管理员 |
+| language | string | 语言 |
+| locale | string | 本地语言 |
+| mobile | string | 手机号 |
+| name | string | 用户名 |
+| organization | object | 主部门 |
+| organizations | array | 所属部门 |
+| password_expired | boolean | 登录密码过期 |
+| permission_shares | array | 共享规则 |
+| profile | string | 简档 |
+| roles | array | 用户角色 |
+| space | object | 当前工作区 |
+| spaceId | string | 当前工作区id |
+| spaces | array | 用户所属工作区集合 |
+| userId | string | 用户id |
+| utcOffset | number | 国际化UTC时间偏差；北京时间时该值为 8。 |

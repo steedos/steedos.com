@@ -436,6 +436,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                     {/* <ThemeToggle panelClassName="mt-8" /> */}
                     <a
                       href="https://github.com/steedos/steedos-platform"
+                      target="_blank"
                       className="ml-6 block text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
                     >
                       <span className="sr-only">Enterprise Low-Code Platform on GitHub</span>
