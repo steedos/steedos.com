@@ -41,13 +41,16 @@ export const documentationNav = {
     admin['import'],
     admin['integration'],
   ],
-  '自定义应用': [
-    admin['create_object'],
+  '无代码开发': [
+    admin['object'],
     admin['field_type'],
+    admin['listview'],
+    admin['page-layout'],
     admin['formula'],
     admin['functions'],
     admin['no-code-extend'],
     admin['datasource'],
+    admin['app'],
   ],
   '统计分析': [
     admin['record_report'],
@@ -55,10 +58,11 @@ export const documentationNav = {
     admin['stimulsoft'],
     admin['reports'],
   ],
-  '流程自动化': [
+  '自动执行业务流程': [
     admin['auto_process'],
     admin['workflow-rules'],
     admin['approval-process'],
+    admin['automated-action'],
     admin['workflow-admin'],
   ],
   '开发人员向导': [
