@@ -377,10 +377,6 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                   <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800" onClick={goLogin}>
                     登录
                   </a>
-                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800" onClick={goSignup}>
-                    创建账户
-                  </a>
                 </div>}
 
                 {userInfo.name && <Menu as="div" className="relative inline-block text-left">
