@@ -51,6 +51,7 @@ export const documentationNav = {
     admin['no-code-extend'],
     admin['datasource'],
     admin['app'],
+    admin['tab'],
   ],
   '统计分析': [
     admin['record_report'],
@@ -64,14 +65,27 @@ export const documentationNav = {
     admin['approval-process'],
     admin['automated-action'],
     admin['workflow-admin'],
+    developer['flow-trigger']
   ],
-  '开发人员向导': [
+  '服务端开发': [
     developer['getting-started'],
+    developer['sync-metadata'],
+    developer['trigger'],
+    developer['router'],
     developer['objectql'],
-    developer['graphql-api'],
     developer['package'],
+    developer['deploy-gitpod'],
+  ],
+  '前端开发': [
+    developer['graphql-api'],
+    developer['button'],
+    developer['form-event'],
+    developer['form-formula'],
+    developer['steedosui'],
+    developer['client'],
+  ],
+  '插件': [
     developer['node-red'],
     developer['jsreport'],
-    developer['deploy-gitpod'],
   ]
 }

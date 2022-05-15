@@ -1,9 +1,8 @@
 ---
-title: 软件包发布与安装
-description: null
+title: 软件包
+description: 在华炎魔方中通过定义软件包，可以将复杂的项目需求拆分成多个子模块分别由不同的团队开发，对于开发好的软件包，可以发布成npm包以便在项目中引用。
 ---
 
-在华炎魔方中通过定义软件包，可以将复杂的项目需求拆分成多个子模块分别由不同的团队开发，对于开发好的软件包，可以发布成npm包以便在项目中引用。
 
 软件包发布后还可以选择在华炎魔方应用市场售卖，无论是华炎云上还是私有部署的魔方项目，要安装您发布到应用市场中的软件包都必须按您规定的价格来购买才能安装和使用。
 
@@ -147,9 +146,9 @@ DEFAULT_PACKAGE_PATH=steedos-packages/project #配置为相关软件包目录
 
  ![](https://console.steedos.cn/api/files/images/bgkMpmQjv4Xj7mkmW)在软件包发布前，您可以随意在软件包`steedos-packages/project`文件夹中进行华炎魔方低代码开发，软件包发布后的内容会包括该文件夹内的所有文件，而不是只包括我们刚刚同步下来的从界面上配置的元数据文件，华炎魔方低代码开发请参考 [开发人员快速向导](/docs/developer/getting-started)。
 
-## 公开软件包发布
+## 软件包发布
 
-公开软件包是发布到 NPM官网，即 <https://www.npmjs.com/> 仓库。下面我们来简单介绍下如何发布一个公开软件包。
+公开软件包是发布到 NPM官网，即 <https://www.npmjs.com/> 仓库。下面我们来简单介绍下如何发布一个软件包。
 
 ### 注册账号
 
@@ -193,7 +192,7 @@ $ npm login
 如果软件包已经发布过需要重新发布，需要修改软件包文件夹中 `package.json` 文件中的“version”为下一个版本来发布新版本的软件包。
 
 发布成功后您可以回到 [NPM官网](https://www.npmjs.com/)，在搜索栏中搜索软件包名称来查看刚发布的软件包。
-
+<!-- 
 ## 私有软件包发布
 
 华炎魔方申请了独立的私有npm仓库，并且自动为所有华炎云账户在该仓库注册好了账户，地址为：<https://registry.steedos.cn/> ，大家输入华炎云账户绑定的手机号作为账户，私有部署的魔方API Key作为密码即可登录使用，下面我们将描述如何把上面开发好的`steedos-packages/project`文件夹中的软件包发布到该仓库中。
@@ -258,7 +257,7 @@ $ npm publish
 
 软件包发布成功后，我们可以访问华炎云平台，进入”开发人员“应用，进入“NPM 作用域”详细页面查看。我们还可以访问华炎魔方NPM仓库，即 <https://registry.steedos.cn/>，点击右上角的登录链接，然后输入华炎云账户绑定的手机号作为账户，并输入私有部署的魔方API Key作为密码来登录该仓库查看。
 
- ![](https://console.steedos.cn/api/files/images/sS9oiGJ4otDSGXvgN)
+ ![](https://console.steedos.cn/api/files/images/sS9oiGJ4otDSGXvgN) -->
 
 ## 软件包安装
 

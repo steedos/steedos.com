@@ -1,0 +1,238 @@
+---
+title: 表单事件
+description: 通过定义表单事件，可以在数据增删改查时自动触发一段前端脚本做校验。
+---
+
+## 表单事件
+
+### initialValues
+
+表单初始化数据时执行。
+
+initialValues 可以定义为同步函数或是异步函数。
+
+```javascript
+# xxx.object.yml
+form:
+  initialValues: !!js/function |
+    function(){
+      return {
+          name: "Hello World",
+          code: "hello_world"
+      }
+    }
+```
+
+### onValuesChange
+
+* 修改记录时执行
+* 一个参数，参数内容如下：
+
+  ```javascript
+  {
+    changedValues: {...},  // 正在被修改的字段信息
+    values: {...}, // 表单所有字段的信息
+    form: {...}   // 表单中的一些函数
+  }
+  ```
+* 示例，根据”每月开销（元）“自动判断属于”低、中、高“哪个消费”层次”。代码如下：
+
+  ```javascript
+  # xxx.object.yml
+  form:
+    onValuesChange: !!js/function |
+      function(args){
+        const money = args.changedValues.money;
+        if(money < 1000){
+          args.form.setFieldsValue({type: '低'});
+        }else if(money>=1000 && money<=2000){
+          args.form.setFieldsValue({type: '中'});
+        }else{
+          args.form.setFieldsValue({type: '高'});
+        }
+      }
+  ```
+
+### beforeDelete
+
+* 删除记录之前执行
+* 无参函数，所属数据可从this中获取:
+
+  ```javascript
+  { 
+    doc: 当前记录, 
+    id: 记录ID,
+    object_name: 当前对象名称, 
+    spaceId: 当前工作区唯一标识, 
+    userId: 当前用户唯一标识, 
+  }
+  ```
+* 返回值：
+  * `return false`: 终止提交
+  * `return {字段名1: 错误原因1, 字段名2: 错误原因2}`: 终止提交，根据字段名将错误原因显示在编辑窗口的字段下
+  * `throw new Error('需要显示的错误信息')`: 终止提交，并自动在页面右上角报错信息
+* 示例：
+
+  ```javascript
+  # xxx.object.yml
+  form:
+    beforeDelete: !!js/function |
+      function () {
+        ...
+        throw new Error('禁止删除');
+      }
+  ```
+
+
+### afterDelete
+
+* 删除记录成功后执行
+* 无参函数，所属数据可从this中获取:
+
+  ```javascript
+  { 
+    doc: 当前记录, 
+    id: 记录ID,
+    object_name: 当前对象名称, 
+    previousDoc: 删除前的完整记录,
+    spaceId: 当前工作区唯一标识, 
+    userId: 当前用户唯一标识, 
+  }
+  ```
+* 示例：
+
+  ```javascript
+  # xxx.object.yml
+  form:
+    afterDelete: !!js/function |
+      function () {
+        ...
+        window.open('xxx');
+      }
+  ```
+
+### beforeView
+
+* 记录详细页面：记录显示前执行
+* 无参函数，所属数据可从this中获取:
+
+  ```javascript
+  { 
+    doc: 要显示的记录, 
+    id: 记录ID,
+    object_name: 当前对象名称, 
+    schema: Schema,
+    spaceId: 当前工作区唯一标识, 
+    userId: 当前用户唯一标识, 
+  }
+  ```
+* 示例：
+
+  ```javascript
+  # xxx.object.yml
+  form:
+    beforeView: !!js/function |
+      function () {
+        if(this.doc.is_trial){
+          this.doc.name = this.doc.name + "(试用)";
+        }
+      }
+  ```
+
+### afterView
+
+* 记录详细页面：记录显示之后执行
+* 无参函数，所属数据可从this中获取:
+
+  ```javascript
+  { 
+    doc: 要显示的记录, 
+    id: 记录ID,
+    object_name: 当前对象名称, 
+    schema: Schema,
+    spaceId: 当前工作区唯一标识, 
+    userId: 当前用户唯一标识, 
+  }
+  ```
+* 示例：
+
+  ```javascript
+  # xxx.object.yml
+  form:
+    afterView: !!js/function |
+      function () {
+        //如果当前记录的is_trial为true，则修改详细页面header背景颜色、字体颜色
+        if(this.doc.is_trial){
+          $(".slds-page-header_bleed").css('background-color', '#4CAF50').css('color', '#ffffff');
+        }
+      }
+  ```
+
+
+## 表单级联
+
+在项目开发中，我们经常会需要在表单上实现多个字段之间的级联效果，比如常见的省市选项级联等，下面我们描述下如果在华炎魔方中实现类似需求。
+
+### 下拉级联
+
+当需要实现选项固定的字段的下拉级联效果时，我们推荐把字段配置为`select`类型，并在`optionsFunction`属性中编写级联逻辑代码，以下是一个简单的省市级联效果字段配置示例。
+
+`select`类型即是选择框字段类型，该字段类型说明请参考文档 [字段类型索引](/docs/admin/field_type) 中的 [选择框字段类型](/docs/admin/field_type#%E9%80%89%E6%8B%A9%E6%A1%86%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B)。
+
+需要注意`city`字段需要配置`depend_on`属性指向`province`，表示当`province`字段值变更时级联触发`city`字段选项重新计算并且会清除`city`字段值。
+
+```yaml
+province:
+    type: select
+    label: 省
+    group: 省市级联
+    options:
+      - label: 北京
+          value: 'bj'
+      - label: 上海
+          value: 'sh'
+      - label: 江苏
+          value: 'js'
+city:
+  type: select
+  label: 市
+  group: 省市级联
+  depend_on:
+    - province
+  optionsFunction: !<tag:yaml.org,2002:js/function> |-
+    function (values){
+      const cityData = {
+        bj: [{ label: '东城区', value: 'bj-1' }, { label: '西城区', value: 'bj-2' }],
+        sh: [{ label: '松江', value: 'sh-1' }, { label: '浦东', value: 'sh-2' }],
+        js: [{ label: '南京', value: 'js-1' }, { label: '杭州', value: 'js-2' }]
+      };
+      return cityData[values.province];
+    }
+```
+
+### 选项过滤
+
+很多情况下字段选项并不是固定的，而是需要请求后台接口来列出相关选项的，这时我们会把字段类型配置为 “相关表” 或 “主表子表”，其使用说明请参考 [字段类型索引](/docs/admin/field_type)。
+
+在华炎魔方中可以为这两种类型的字段配置`filters`或`filtersFunction`属性来限定选项的过滤条件，在这两个属性中配置业务代码都可以实现多个字段间选项级联效果。
+
+#### 过滤函数
+
+假设有一个产品对象，我们希望新建产品记录时，用户在选择了产品类别后，可以在选择所属品牌时，只列出之前选好的产品类别下的品牌供用户选择，我们只要按下面的代码来配置产品类别和品牌字段即可：
+
+```yaml
+category:
+  label: 产品类别
+  type: lookup
+  reference_to: categories
+brand:
+  label: 品牌
+  type: lookup
+  reference_to: brands
+  depend_on:
+    - category
+  filtersFunction: !<tag:yaml.org,2002:js/function> |-
+    function (filters, values){
+      return [["category","=",values.category]]
+    }
+```
