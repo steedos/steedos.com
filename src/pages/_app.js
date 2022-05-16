@@ -73,12 +73,12 @@ export default function App({ Component, pageProps = {}, router }) {
     }
   }, [navIsOpen])
 
-  const Layout = Component.layoutProps?.Layout || DefaultLayout
+  const Layout = Component.layoutProps?.Layout || Fragment
 
   const layoutProps = Component.layoutProps?.Layout
     ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen }
-    : {}
-  const showHeader = router.pathname !== '/'
+    : { }
+  const showHeader = router.pathname !== '/' && !router.pathname.startsWith('./embed')
   const meta = Component.layoutProps?.meta || pageProps?.meta || {}
   const description =
     meta.metaDescription || meta.description || '开源低代码 DevOps 平台'

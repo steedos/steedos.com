@@ -20,7 +20,6 @@ import { Markdown } from '@/components/Markdown'
 import {fromMarkdown} from 'mdast-util-from-markdown';
 
 import BananaSlug from 'github-slugger'
-import EmptyLayout from '@/layouts/EmptyLayout'
 import { Header } from '@/components/Header'
 
 const slugs = new BananaSlug()
@@ -198,5 +197,4 @@ export default function Document(props) {
 
 
 Document.layoutProps = {
-  Layout: EmptyLayout
 }

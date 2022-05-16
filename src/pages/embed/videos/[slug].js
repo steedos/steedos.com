@@ -25,7 +25,6 @@ import { Heading } from '@/components/Heading';
 import { Markdown } from '@/components/Markdown'
 import Link from 'next/link'
 import { Player } from '@/components/player'
-import EmptyLayout from '@/layouts/EmptyLayout'
 
 const components = {
     Heading,
@@ -128,5 +127,4 @@ export default function VideoEmbed(props) {
 }
 
 VideoEmbed.layoutProps = {
-    Layout: EmptyLayout
 }
