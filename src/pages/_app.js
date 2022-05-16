@@ -78,8 +78,8 @@ export default function App({ Component, pageProps = {}, router }) {
   const layoutProps = Component.layoutProps?.Layout
     ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen }
     : { }
-  const showHeader = router.pathname !== '/' && !router.pathname.startsWith('./embed')
-  const showFooter = !router.pathname.startsWith('./docs') && !router.pathname.startsWith('./embed')
+  const showHeader = router.pathname !== '/' && !router.pathname.startsWith('/embed')
+  const showFooter = !router.pathname.startsWith('/docs') && !router.pathname.startsWith('/embed')
   const meta = Component.layoutProps?.meta || pageProps?.meta || {}
   const description =
     meta.metaDescription || meta.description || '开源低代码 DevOps 平台'
