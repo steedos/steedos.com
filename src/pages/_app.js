@@ -3,8 +3,8 @@ import '../css/main.css'
 import 'focus-visible'
 import { useState, useEffect, Fragment } from 'react'
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer';
 import { Title } from '@/components/Title'
-import { DefaultLayout } from '@/layouts/DefaultLayout'
 import Router from 'next/router'
 import ProgressBar from '@badrap/bar-of-progress'
 import Head from 'next/head'
@@ -79,6 +79,7 @@ export default function App({ Component, pageProps = {}, router }) {
     ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen }
     : { }
   const showHeader = router.pathname !== '/' && !router.pathname.startsWith('./embed')
+  const showFooter = !router.pathname.startsWith('./docs') && !router.pathname.startsWith('./embed')
   const meta = Component.layoutProps?.meta || pageProps?.meta || {}
   const description =
     meta.metaDescription || meta.description || '开源低代码 DevOps 平台'
@@ -104,6 +105,9 @@ export default function App({ Component, pageProps = {}, router }) {
           <Layout {...layoutProps}>
             <Component section={section} {...pageProps} />
           </Layout>
+        {showFooter && (
+          <Footer/>
+        )}
       </SearchProvider>
     </>
   )
