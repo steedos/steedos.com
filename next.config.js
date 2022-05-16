@@ -70,7 +70,6 @@ module.exports =
     withTM
   ], 
   {
-  target: 'serverless',
   env: {
     STEEDOS_SERVER_API_KEY: process.env.STEEDOS_SERVER_API_KEY,
     NEXT_STATIC_PROPS_REVALIDATE: process.env.NEXT_STATIC_PROPS_REVALIDATE,
@@ -146,13 +145,7 @@ module.exports =
       test: /\.svg$/,
       use: [
         { loader: '@svgr/webpack', options: { svgoConfig: { plugins: { removeViewBox: false } } } },
-        {
-          loader: 'file-loader',
-          options: {
-            publicPath: '/_next',
-            name: 'static/media/[name].[hash].[ext]',
-          },
-        },
+        'url-loader',
       ],
     })
 
