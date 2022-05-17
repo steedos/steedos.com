@@ -64,7 +64,7 @@ export default function ProductDetail({ product, vid }) {
   }
   return (
     <>
-      <main className="max-w-8xl mx-auto sm:pt-8 sm:px-6 lg:px-8 w-full">
+      <main className="max-w-8xl mx-auto pt-4 sm:pt-8 px-4 sm:px-6 lg:px-8 w-full">
 
 
         <div className="max-w-3xl mx-auto lg:max-w-none">
@@ -99,7 +99,7 @@ export default function ProductDetail({ product, vid }) {
           <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.name}</h1>
 
           {/* Product */}
-          <div className="mt-6 lg:grid lg:grid-cols-5 lg:gap-x-8 lg:items-start">
+          <div className="mt-6 lg:grid lg:grid-cols-5 lg:gap-x-10 lg:items-start">
             {/* Image gallery */}
             <div className="col-span-3 w-full max-h-full">
               <ImageSwiper images={getMedia(product)}/>
@@ -107,9 +107,9 @@ export default function ProductDetail({ product, vid }) {
            
 
             {/* Product info */}
-            <div className="col-span-2 mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
+            <div className="col-span-2 mt-6 lg:mt-0">
 
-              <div className="mt-3">
+              <div className="">
                 <h2 className="sr-only">Product information</h2>
                 <p className="text-3xl text-gray-900">
                   <Price price={getPrice(productVariant)}></Price>
