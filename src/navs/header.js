@@ -136,7 +136,7 @@ export const headerNav = {
           items: [
             { name: '建华建材', href: '/customer-success-stories/jianhuabm' },
             { name: '大众公用', href: '/customer-success-stories/dzug' },
-            { name: '河北港口集团', href: '/customer-success-stories/porthebei' },
+            { name: '新冠抗疫平台', href: '/customer-success-stories/COVID-19' },
           ],
         },
         {
