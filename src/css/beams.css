@@ -7,3 +7,15 @@
   background-image: url('../img/beams/hero-dark@90.jpg');
   background-size: 86.125rem;
 }
+
+/* article .prose hr {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 300px;
+  z-index: -1;
+  background-image: url('../img/beams/7.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-top: -2rem;
+} */

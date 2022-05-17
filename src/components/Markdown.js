@@ -94,7 +94,15 @@ export function img({ node, ...props }) {
   //     quality={100}
   //     className="rounded-lg" />)
   // } else {
-    return <img className="rounded-lg" {...props} />
+    return (
+      <div className="relative pt-10 mt-10">
+        <div className="absolute top-0 inset-x-0 bg-top bg-no-repeat beams top-0"></div>
+        <div className="absolute top-0 inset-x-0 h-[37.5rem] bg-grid-slate-900/[0.04] bg-top [mask-image:linear-gradient(0deg,transparent,black)] dark:bg-grid-slate-100/[0.03] dark:bg-[center_top_-1px] dark:border-t dark:border-slate-100/5 top-0 xl:top-8"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <img className="rounded-lg" {...props} />
+        </div>
+      </div>
+    )
   // }
 }
 

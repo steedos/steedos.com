@@ -171,18 +171,18 @@ module.exports =
       }),
     })
 
-    let mdx = [
+    let mdx = (plugins = []) => [
       {
         loader: '@mdx-js/loader',
         options: {
           remarkPlugins: [
-            withRemarkDirective,
             // withPrevalInstructions,
             // withExamples,
             withTableOfContents,
             withSyntaxHighlighting,
             // withNextLinks,
             withSmartQuotes,
+            ...plugins,
           ],
           rehypePlugins: [withLinkRoles],
         },
@@ -198,6 +198,51 @@ module.exports =
     ]
 
     config.module.rules.push({
+      test: { and: [/\.mdx$/, /snippets/] },
+      resourceQuery: { not: [/rss/, /preview/] },
+      use: [
+        options.defaultLoaders.babel,
+        {
+          loader: '@mdx-js/loader',
+          options: {
+            remarkPlugins: [withSyntaxHighlighting],
+          },
+        },
+      ],
+    })
+
+    config.module.rules.push({
+      test: /\.mdx$/,
+      resourceQuery: /rss/,
+      use: [options.defaultLoaders.babel, ...mdx()],
+    })
+
+    config.module.rules.push({
+      test: /\.mdx$/,
+      resourceQuery: /preview/,
+      use: [
+        options.defaultLoaders.babel,
+        createLoader(function (src) {
+          const [preview] = src.split('<!--/excerpt-->')
+          return preview.replace('<!--excerpt-->', '')
+        }),
+        ...mdx([
+          () => (tree) => {
+            let firstParagraphIndex = tree.children.findIndex((child) => child.type === 'paragraph')
+            if (firstParagraphIndex > -1) {
+              tree.children = tree.children.filter((child, index) => {
+                if (child.type === 'import' || child.type === 'export') {
+                  return true
+                }
+                return index <= firstParagraphIndex
+              })
+            }
+          },
+        ]),
+      ],
+    })
+
+    config.module.rules.push({
       test: { and: [/\.mdx$/], not: [/snippets/] },
       resourceQuery: { not: [/rss/, /preview/] },
       use: [
@@ -211,7 +256,7 @@ module.exports =
             source.replace(/export const/gs, 'const') + `\nMDXContent.layoutProps = layoutProps\n`
           )
         }),
-        ...mdx,
+        ...mdx(),
         createLoader(function (source) {
           let fields = new URLSearchParams(this.resourceQuery.substr(1)).get('meta') ?? undefined
           let { attributes: meta, body } = frontMatter(source)

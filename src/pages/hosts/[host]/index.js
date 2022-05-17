@@ -11,7 +11,7 @@
 // import { EditorTools } from '@/components/home/EditorTools'
 // import { ReadyMadeComponents } from '@/components/home/ReadyMadeComponents'
 // import { Search } from '@/components/Search'
-import { Hero } from '@/components/home/Hero'
+// import { Hero } from '@/components/home/Hero'
 import { BigText, InlineCode, Link, Paragraph, Widont } from '@/components/home/common'
 // import { useEffect, useState } from 'react'
 // import { Logo } from '@/components/Logo'
