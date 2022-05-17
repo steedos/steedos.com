@@ -45,7 +45,7 @@ function VariantRadio({ productVariant, onChange, defValue }) {
                     }
                 }} className="mt-2">
                     <RadioGroup.Label className="sr-only">{productVariant.name}</RadioGroup.Label>
-                    <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+                    <div className="grid grid-cols-3 gap-3 sm:grid-cols-3">
                         {productVariant.options.map((option) => (
                             <RadioGroup.Option
                                 key={option}

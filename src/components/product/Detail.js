@@ -2,7 +2,6 @@ import Head from 'next/head'
 import tinytime from 'tinytime'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
-import { Dialog, Disclosure, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
 import {
   HeartIcon,
   MenuIcon,
@@ -17,23 +16,14 @@ import { StarIcon } from '@heroicons/react/solid'
 import VariantRadios from '@/components/product/VariantRadios'
 import ReviewStars from '@/components/product/ReviewStars'
 import Price from '@/components/product/Price'
-import 'photoswipe/dist/photoswipe.css'
-import 'photoswipe/dist/default-skin/default-skin.css'
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectFlip, Navigation, Pagination } from "swiper";
-import 'swiper/css';
-import "swiper/css/effect-flip";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 
-import { Gallery, Item } from 'react-photoswipe-gallery'
 import { getPrice } from '@/lib/product.client';
 import { getMedia } from '@/lib/product.client'
-import { find, each } from 'lodash'
+import { find, each, conformsTo } from 'lodash'
 import BuyNow from '@/components/product/BuyNow'
 import AddToCart from '@/components/product/AddToCart'
 import { Markdown } from '@/components/Markdown'
-// const {rehypePlugins} = require('rehype')
+import { ImageSwiper } from '@/components/ImageSwiper'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -42,102 +32,13 @@ function classNames(...classes) {
 const postDateTemplate = tinytime('{YYYY}-{Mo}-{DD}')
 
 
-const PreviewImages = function({product}) {
-
-  let [isOpen, setIsOpen] = useState(false)
-
-  function closeModal() {
-    setIsOpen(false)
-  }
-
-  function openModal() {
-    setIsOpen(true)
-  }
-
-  return (
-    <>
-      <Swiper
-        spaceBetween={30}
-        effect={"flip"}
-        navigation={true}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[EffectFlip, Navigation, Pagination]}
-        className="bg-black shadow-md shadow-gray-700 border-black aspect-[4/3] justify-center"
-        >
-        {getMedia(product).map((image) => (
-          <SwiperSlide className="overflow-hidden h-full">
-            <img className="mx-auto h-full max-w-full object-contain self-center" src={image.src} onClick={openModal}/>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="fixed inset-0 z-50" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex h-full w-full items-center justify-center text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full h-full transform overflow-hidden bg-black text-left align-middle shadow-xl transition-all">
-                  <div className="z-50 hidden sm:block absolute top-0 right-0 pt-4 pr-4">
-                    <button
-                      type="button"
-                      className="bg-gray-900 rounded-md text-gray-400 hover:text-gray-500 focus:outline-none"
-                      onClick={closeModal}
-                    >
-                      <span className="sr-only">Close</span>
-                      <XIcon className="h-10 w-10" aria-hidden="true" />
-                    </button>
-                  </div>
-                  <div className="h-full">
-                      <Swiper
-                        spaceBetween={30}
-                        effect={"flip"}
-                        navigation={true}
-                        pagination={{
-                          clickable: true,
-                        }}
-                        modules={[EffectFlip, Navigation, Pagination]}
-                        className="h-full justify-center"
-                        >
-                        {getMedia(product).map((image) => (
-                          <SwiperSlide className="h-full">
-                            <img className="mx-auto object-contain h-full max-w-full self-center" src={image.src} />
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
-                  </div>
-
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-    </>
-  )
-}
 
 export default function ProductDetail({ product, vid }) {
+
+  const breadcrumbs = [
+    // { id: 1, name: '商城', href: '#' },
+    { id: 2, name: product.product_collection__expand[0].name, href: `/collections/${product.product_collection__expand[0].slug}` },
+  ];
   let variant = null;
   if(vid){
     variant = find(product.product_variants, (v)=>{
@@ -163,22 +64,50 @@ export default function ProductDetail({ product, vid }) {
   }
   return (
     <>
-      <main className="max-w-7xl mx-auto sm:pt-10 sm:px-6 lg:px-8 w-full">
+      <main className="max-w-8xl mx-auto sm:pt-8 sm:px-6 lg:px-8 w-full">
 
 
-        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.name}</h1>
+        <div className="max-w-3xl mx-auto lg:max-w-none">
 
-        <div className="mt-6 max-w-2xl mx-auto lg:max-w-none">
+          <nav aria-label="Breadcrumb">
+            <ol role="list" className="mb-3 flex items-center space-x-2">
+              {breadcrumbs.map((breadcrumb, breadcrumbIdx) => (
+                <li key={breadcrumb.id}>
+                  <div className="flex items-center">
+                    <a href={breadcrumb.href} className="mr-2 text-sm font-medium text-sky-600">
+                      {breadcrumb.name}
+                    </a>
+                    {breadcrumbIdx !== breadcrumbs.length - 1 ? (
+                    <svg
+                      width={16}
+                      height={20}
+                      viewBox="0 0 16 20"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                      className="w-4 h-5 text-gray-300"
+                    >
+                      <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+                    </svg>
+                    ):null}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </nav>
+
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.name}</h1>
+
           {/* Product */}
-          <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
+          <div className="mt-6 lg:grid lg:grid-cols-5 lg:gap-x-8 lg:items-start">
             {/* Image gallery */}
-            <div className="w-full max-h-full">
-              <PreviewImages product={product}/>
+            <div className="col-span-3 w-full max-h-full">
+              <ImageSwiper images={getMedia(product)}/>
             </div>
            
 
             {/* Product info */}
-            <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
+            <div className="col-span-2 mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
 
               <div className="mt-3">
                 <h2 className="sr-only">Product information</h2>
@@ -201,10 +130,7 @@ export default function ProductDetail({ product, vid }) {
               <div className="mt-6">
                 <h3 className="sr-only">Description</h3>
 
-                <div
-                  className="text-base text-gray-700 space-y-6"
-                  dangerouslySetInnerHTML={{ __html: product.description }}
-                />
+                <Markdown body={product.description}></Markdown>
               </div>
 
               <VariantRadios product={product} onChange={onVariantRadiosChange} productVariant={productVariant}></VariantRadios>
@@ -262,11 +188,11 @@ export default function ProductDetail({ product, vid }) {
               </section> */}
             </div>
           </div>
-          {product.html && <section aria-labelledby="related-heading" className="mt-10 border-t border-gray-200 py-8 px-4 sm:px-0">
-            <div className="max-w-none pb-8">
+          {product.html && (<section aria-labelledby="related-heading" className="max-w-3xl mt-6 border-gray-200 py-8 px-4 sm:px-0">
+            <div className="pb-8">
               <Markdown body={product.html}></Markdown>
             </div>
-          </section>}
+          </section>)}
 
           {product.reviews && product.reviews.length > 0 && (
             <section aria-labelledby="related-heading" className="mt-10 border-t border-gray-200 py-8 px-4 sm:px-0">
