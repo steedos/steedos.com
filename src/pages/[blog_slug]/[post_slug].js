@@ -187,10 +187,9 @@ export default function Post(props) {
         </nav>
         )} */}
         <div id="content-wrapper" className="lg:px-8 min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible">
-          <article className="mx-auto max-w-3xl lg:mt-14 md:mt-8 mt-6 mb-16">
-            
-            <main className="py-8">
-              <Markdown body={body} className="prose sm:prose-lg"></Markdown>
+          <article className="pt-16 relative z-10 max-w-screen-lg mx-auto">
+            <main className="px-4 sm:px-6 md:px-8 py-8">
+              <Markdown body={body} className="prose sm:prose-lg lg:prose-xl"></Markdown>
             </main>
           </article>
         </div>

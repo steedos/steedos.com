@@ -144,7 +144,7 @@ export function Markdown(props) {
     className = 'prose dark:prose-dark'
   } = props
 
-  const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkDirective, customPlugin, remarkGfm]
+  const __remarkPlugins = [...remarkPlugins, remarkDirective, customPlugin, remarkGfm]
   const markdownBody = body ? body.replace(new RegExp('\\\\n', 'g'), '<br/>\n\n').replace(new RegExp('\\\\\n', 'g'), '<br/>\n\n') : ""
   return (
     <>

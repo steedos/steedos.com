@@ -61,7 +61,7 @@ export default function Home(props) {
   const backgroundImageUrl = '/img/header-background-ellipse.png'
   const imageUrl = homepage.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${homepage.image}` : null
   return (
-    <div className="text-center overflow-hidden">
+    <div className="overflow-hidden">
       <Head>
         <meta
           key="twitter:title"
@@ -201,7 +201,7 @@ export default function Home(props) {
         </div>
       </section> */}
       {/* <Testimonials /> */}
-      <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
+      {/* <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44"> */}
         {/* <ConstraintBased />
         <BuildAnything />
         <Performance />
@@ -213,7 +213,7 @@ export default function Home(props) {
         <ModernFeatures />
         <EditorTools />
         <ReadyMadeComponents /> */}
-      </div>
+      {/* </div> */}
       {/* <Footer /> */}
     </div>
   )
