@@ -145,10 +145,10 @@ export function Markdown(props) {
   } = props
 
   const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkDirective, customPlugin, remarkGfm]
-  console.log(body)
+  //console.log(body)
 
-  body = body.replace(/\\\n/g, '<br/>\n\n') 
-  console.log(body)
+  body = body ? body.replace(/\\\n/g, '<br/>\n\n') : null
+  //console.log(body)
   return (
     <>
       {body && (
