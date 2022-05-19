@@ -10,6 +10,7 @@ import Frame from '@/components/Frame'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import {atomDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkDirective from 'remark-directive'
+import remarkBreaks from 'remark-breaks'
 import hastscript from 'hastscript'
 import rehypeRaw from 'rehype-raw'
 const visit = require('unist-util-visit')
@@ -144,11 +145,18 @@ export function Markdown(props) {
     className = 'prose dark:prose-dark'
   } = props
 
-  const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkDirective, customPlugin, remarkGfm]
-  //console.log(body)
+  const __remarkPlugins = [...remarkPlugins, 
+    [imgLinks, {absolutePath: ROOT_URL}], 
+    // remarkBreaks,
+    remarkDirective, 
+    customPlugin, 
+    remarkGfm
+  ]
+  console.log(body)
 
-  body = body ? body.replace(/\\\n/g, '<br/>\n\n') : null
-  //console.log(body)
+  body = body ? body.replace(/\\\n/g, '\n') : null
+  body = body ? body.replace(/\\n/g, '\n') : null
+  console.log(body)
   return (
     <>
       {body && (
