@@ -58,6 +58,7 @@ jobs:
 
   build-algolia:
     runs-on: ubuntu-latest
+    needs: deploy-staging
     env:
       ALGOLIA_APP_ID: XLH8R06L45
       ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}

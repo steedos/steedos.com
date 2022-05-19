@@ -59,6 +59,7 @@ type Props = {
   width?: string,
   height?: string,
   forwardedRef: any,
+  className?: any,
   theme?:any
 };
 
