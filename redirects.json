@@ -9,9 +9,10 @@
   { "source": "/pricing/platform-cloud", "destination": "/platform/pricing", "permanent": true },
   { "source": "/customers", "destination": "/customer-success-stories", "permanent": true },
   { "source": "/help", "destination": "/docs/", "permanent": true },
-  { "source": "/help/download", "destination": "/docs/user/getting-started", "permanent": false },
-  { "source": "/docs/deploy", "destination": "/docs/deploy/getting-started", "permanent": false },
-  { "source": "/docs/developer", "destination": "/docs/developer/getting-started", "permanent": false },
-  { "source": "/docs/admin", "destination": "/docs/admin/getting-started", "permanent": false },
-  { "source": "/docs/user", "destination": "/docs/user/getting-started", "permanent": false }
+  { "source": "/help/download", "destination": "/docs/user/getting-started", "permanent": true },
+  { "source": "/docs/deploy", "destination": "/docs/deploy/getting-started", "permanent": true },
+  { "source": "/docs/developer", "destination": "/docs/developer/getting-started", "permanent": true },
+  { "source": "/docs/admin", "destination": "/docs/admin/getting-started", "permanent": true },
+  { "source": "/docs/user", "destination": "/docs/user/getting-started", "permanent": true },
+  { "source": "/docs", "destination": "/docs/deploy/getting-started", "permanent": true}
 ]

@@ -18,9 +18,9 @@ const SiteVideos: React.FC = (props: any) => {
   const { videos } = props;
   const name = '视频中心';
   return (
-    <div className="text-black mx-auto max-w-3xl lg:max-w-7xl lg:pt-24 pt-10  px-4 sm:px-6 lg:px-8">
+    <div className="text-black mx-auto max-w-3xl lg:max-w-7xl lg:pt-16 pt-10 px-4 sm:px-6 lg:px-8">
       <div className="text-center">
-        <h2 className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+        <h2 className="mt-1 text-3xl font-extrabold text-gray-900 sm:text-4xl sm:tracking-tight lg:text-5xl">
         {name}
         </h2>
         {/* <p className="prose max-w-xl mt-5 mx-auto text-xl text-gray-500">
@@ -30,8 +30,8 @@ const SiteVideos: React.FC = (props: any) => {
       <div className="text-black mx-auto w-full lg:py-16 py-6 px-1">
       {videos && videos.map((video_collection: any) => {
         return (
-          <div className="pt-4">
-          <h2 className="text-2xl font-bold tracking-tight">
+          <div className="pt-4" key={video_collection._id}>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
             {video_collection.name}
           </h2>
           {/* <div className="text-gray-500 py-2">
@@ -40,7 +40,7 @@ const SiteVideos: React.FC = (props: any) => {
           <div className="py-6 grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
             {video_collection && video_collection.videos.map((video: any) => {
               return (
-                <div key={`/videos/${video.slug}`} className="flex flex-col border border-solid  rounded-lg border-slate-100">
+                <div key={`${video.slug}`} className="flex flex-col border border-solid  rounded-lg border-slate-100">
                   {video.thumb_image ? (
                     <div className="md:mb-2 mb-2">
                       <Link href={`/videos/${video.slug}`}>
