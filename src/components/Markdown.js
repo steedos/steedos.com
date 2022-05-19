@@ -112,6 +112,7 @@ export function a({ node, ...props }) {
     if (result) {
       // const src = props.href.replace('/videos/', '/embed/videos/')
       return <Frame
+        className="aspect-video"
         src={props.href}
       />
     }

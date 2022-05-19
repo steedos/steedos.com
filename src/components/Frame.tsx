@@ -18,7 +18,8 @@ class Iframe extends React.Component {
       // documentElement.offsetHeight,
       // documentElement.scrollHeight
     );
-    if (contentHeight !== this.state.contentHeight) this.setState({ contentHeight });
+    if (contentHeight > 0)
+      if (contentHeight !== this.state.contentHeight) this.setState({ contentHeight });
   };
   
   onLoad = () => {
@@ -41,7 +42,7 @@ class Iframe extends React.Component {
         onLoad={this.onLoad}
         ref={(container) => { this.container = container; }}
         scrolling="no"
-        style={{ width: '100%', height: `${contentHeight}px` }}
+        // style={{ width: '100%', height: `${contentHeight}px` }}
         title="EmbedAuthSize"
       />
     );
@@ -73,6 +74,7 @@ class Frame extends React.Component<Props> {
       title,
       canonicalUrl,
       isSelected,
+      className,
       theme,
       src,
     } = this.props;
@@ -98,6 +100,7 @@ class Frame extends React.Component<Props> {
             // title="embed"
             loading="lazy"
             src={src}
+            className={className}
             allowFullScreen
           />
       </Rounded>
