@@ -23,6 +23,85 @@ form:
     }
 ```
 
+### onRendered
+
+* 表单加载完成后执行
+* 一般用于给表单字段绑定原生事件，比如点击某个字段时触发执行相关业务逻辑，也可用于给表单赋初始值。
+* 一个参数，参数内容如下：
+
+  ```javascript
+  {
+    formId: "default",  // 表单唯一标识，默认为default
+    form: {...},   // Ant Design FormInstance，用于调用ant表单的一些基础操作函数
+    record: {...}, //编辑记录时表单从接口中获取到的记录内容，新建记录时为空
+    bindFormEvent: function(type, callBack){}, //一个事件函数，用于给表单绑定原生事件，比如点击表单事件
+    bindFieldEvent: function(type, fields, callBack){}, //一个事件函数，用于给表单上特定字段绑定原生事件，比如点击某个字段时弹出窗口
+  }
+  ```
+  * formId属性是表单唯一标识，它也是每个表单生成的`<form>`标签中的id属性值。
+  * form属性详情请参阅 [Ant Design FormInstance](https://ant.design/components/form-cn/#FormInstance)。
+  * bindFormEvent属性是一个函数，当需要给表单绑定原生事件时可以调用它，详请请参考下面的 [绑定原生事件](#绑定原生事件)。
+  * bindFieldEvent属性是一个函数，当需要给表单中的字段绑定原生事件时可以调用它，详请请参考下面的 [绑定原生事件](#绑定原生事件)。
+
+* 示例1，点击整个表单任意位置时弹出新窗口，在表单的编辑和只读状态新窗口分别跳转到不同的网址。代码如下：
+
+  ```yml
+  # xxx.object.yml
+  form:
+    onRendered: !!js/function |
+      function(args){
+        args.bindFormEvent("click", function(e, {form, mode, field, record}){
+          let url = mode === "read" ? "http://www.xxx.com" : "http://www.yyy.com";
+          window.open(url);
+        });
+      }
+  ```
+
+* 示例2，当表单加载完成后，根据任务优先级请求第三方API接口获取到期日期默认值。代码如下：
+  ```yml
+  # tasks.object.yml
+  form:
+    onRendered: !!js/function |
+      function(args){
+        if(args.record){
+          /*编辑记录时不执行下面的默认值逻辑*/
+          return;
+        }
+        let priority = args.form.getFieldValue("priority");
+        let defaultDueDate = ... //请求第三方API接口，传入priority参数值获取到期日期默认值
+        args.form.setFieldsValue({due_date: defaultDueDate});
+      }
+  ```
+
+### onDestroy
+
+* 表单销毁时执行
+
+* 一般用于解除在onRendered函数中绑定的特殊事件，比如window的message事件。
+
+* 一个参数，参数内容与onRendered函数一致。
+
+* 需要注意的是onRendered函数中通过bindFormEvent/bindFieldEvent绑定的事件会在表单销毁时自动解除绑定，不需要再手动写代码来解除相关事件的绑定。
+
+* 示例，以下代码演示了onRendered函数绑定了message事件时，如何在onDestroy函数中解除绑定：
+
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      if(!window.MyApp){
+        window.MyApp = {};
+      }
+      MyApp.onMessage = function(e){...};
+      window.addEventListener("message", MyApp.onMessage);
+    }
+  onDestroy: !!js/function |
+    function(args){
+      window.removeEventListener("message", MyApp.onMessage);
+    }
+```
+
 ### onValuesChange
 
 * 修改记录时执行
@@ -168,6 +247,107 @@ form:
       }
   ```
 
+
+## 绑定原生事件
+
+### bindFormEvent
+
+▸ bindFormEvent(type: keyof HTMLElementEventMap, callBack: [callBack](#callBack)): void
+
+调用该函数可以给整个表单绑定原生事件，比如点击表单事件。
+
+参数列表：
+
+| 名称 | 类型 | 描述 |
+|----|----|----|
+| type	| keyof HTMLElementEventMap |	事件类型 |
+| callBack	| [callBack](#callBack) |	事件回调函数 |
+
+参数`type`表示的事件类型是浏览器原生事件类型，比如click,change等。
+
+### bindFieldEvent
+
+▸ bindFieldEvent(type: keyof HTMLElementEventMap, fields: string[] | string, callBack: [callBack](#callBack)): void
+
+调用该函数可以给表单上特定字段绑定原生事件，比如点击某个字段时弹出窗口，或者某个字段的change事件等。
+
+参数列表：
+
+| 名称 | 类型 | 描述 |
+|----|----|----|
+| type	| keyof HTMLElementEventMap |	事件类型 |
+| fields	| string/string[] |	字段 |
+| callBack	| [callBack](#callBack) |	事件回调函数 |
+
+参数`type`表示的事件类型是浏览器原生事件类型，比如click,change等。
+
+参数`fields`表示的是要把事件绑定到哪个字段或哪些字段上，只有触发了该参数指定的字段的相关事件时才会调用事件回调函数。
+
+### callBack
+
+▸ callBack(event: Event, options: [CallBackOptions](#CallBackOptions)): void
+
+调用 bindFormEvent 或 bindFieldEvent 绑定原生事件时回调函数。
+
+参数列表：
+
+| 名称 | 类型 | 描述 |
+|----|----|----|
+| event	| Event | 原生事件 |
+| options	| object |	[CallBackOptions](#CallBackOptions) |
+
+### CallBackOptions
+
+Ƭ CallBackOptions: object
+
+调用 bindFormEvent 或 bindFieldEvent 绑定原生事件时回调函数所带的参数。
+
+| 属性名称 | 类型 | 描述 |
+|----|----|----|
+| form	| object |	[Ant Design FormInstance](https://ant.design/components/form-cn/#FormInstance) |
+| mode	| string |	read/edit |
+| field	| object |	字段Schema |
+| record	| object |	记录内容 |
+
+field属性在bindFormEvent 或 bindFieldEvent函数中都表示触发事件时点击的字段Schema，不过bindFormEvent因为响应的是整个表单的事件，所以该属性值可能为空，而后者因为事件是直接绑定到字段上，所以肯定有值。
+
+record表示修改记录时从接口中抓取到的记录内容，新建记录时该属性值为空。
+
+### 绑定多个事件
+
+### 解除绑定
+
+### 示例
+
+点击表单中编辑状态下的名为code的字段时弹出一个代码编辑器窗口。代码如下：
+
+  ```yml
+  # xxx.object.yml
+  form:
+    onRendered: !!js/function |
+      function(args){
+        args.bindFormEvent("click", function(e, {form, mode, field, record}){
+          if(mode === "read" || !field || field.readonly || field.name !== "code"){
+            return;
+          }
+          window.open("http://www.somecodeeidtor.com");
+        });
+      }
+  ```
+  或
+  ```yml
+  # xxx.object.yml
+  form:
+    onRendered: !!js/function |
+      function(args){
+        args.bindFieldEvent("click", ["code"], function(e, {form, mode, field, record}){
+          if(mode === "read" || field.readonly){
+            return;
+          }
+          window.open("http://www.somecodeeidtor.com");
+        });
+      }
+  ```
 
 ## 表单级联
 
