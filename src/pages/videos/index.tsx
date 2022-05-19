@@ -18,26 +18,26 @@ const SiteVideos: React.FC = (props: any) => {
   const { videos } = props;
   const name = '视频中心';
   return (
-    <div className="text-black mx-auto max-w-screen-lg lg:pt-24 pt-10  px-4 sm:px-6 lg:px-8">
+    <div className="text-black mx-auto max-w-3xl lg:max-w-7xl lg:pt-24 pt-10  px-4 sm:px-6 lg:px-8">
       <div className="text-center">
         <h2 className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
         {name}
         </h2>
-        <p className="prose max-w-xl mt-5 mx-auto text-xl text-gray-500">
-        欢迎使用华炎魔方低代码平台，您可以免费访问这里的视频。我们为商业用户提供VIP支持服务，<a href="/collections/services" target="_blank">了解更多</a>。
-        </p>
+        {/* <p className="prose max-w-xl mt-5 mx-auto text-xl text-gray-500">
+        欢迎使用华炎魔方低代码平台，您可以免费访问这里的视频。
+        </p> */}
       </div>
-      <div className="text-black mx-auto max-w-screen-lg w-full lg:py-16 py-6 px-1">
+      <div className="text-black mx-auto w-full lg:py-16 py-6 px-1">
       {videos && videos.map((video_collection: any) => {
         return (
-          <div className="py-12">
-          <h2 className="text-3xl font-bold tracking-tight">
+          <div className="pt-4">
+          <h2 className="text-2xl font-bold tracking-tight">
             {video_collection.name}
           </h2>
-          <div className="text-gray-500 py-2">
+          {/* <div className="text-gray-500 py-2">
             {video_collection.description}
-          </div>
-          <div className="grid md:grid-cols-3 grid-cols-1 md:gap-6 gap-2">
+          </div> */}
+          <div className="py-6 grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
             {video_collection && video_collection.videos.map((video: any) => {
               return (
                 <div key={`/videos/${video.slug}`} className="flex flex-col border border-solid  rounded-lg border-slate-100">
@@ -68,13 +68,13 @@ const SiteVideos: React.FC = (props: any) => {
                   )}
                   <Link href={`/videos/${video.slug}`}>
                     <a className="px-4 py-2">
-                      <b className=" hover:text-blue-600 dark:hover:text-blue-300">
+                      <b className="text-lg font-medium text-gray-900">
                         {video.name}
                       </b>
                     </a>
                   </Link>
                   {video.summary && (
-                    <div className="dark:prose-dark text-gray-700 text-xs dark:text-white  p-4 pt-0">
+                    <div className="dark:prose-dark text-sm text-gray-500 dark:text-white  p-4 pt-0">
                       {video.summary}
                     </div>
                   )}
