@@ -106,19 +106,19 @@ export function img({ node, ...props }) {
   // }
 }
 
-export function a({ node, ...props }) {
-  if (props.href && isString(props.href)) {
-    const result = props.href.match(/\/embed\/videos\//i);
+export function a({ node, href, ...props }) {
+  if (href && isString(href)) {
+    const result = href.match(/\/embed\/videos\//i);
     if (result) {
-      // const src = props.href.replace('/videos/', '/embed/videos/')
       return <Frame
         className="aspect-video"
-        src={props.href}
+        src={href}
+        {...props}
       />
     }
 
     const target = "_blank" //props.href.match(/https:\/\//i) || props.href.match(/http:\/\//i) ? "_blank": "_self";
-    return <a href={props.href} target={target}>{props.children}</a>
+    return <a href={props.href} target={target} {...props}>{props.children}</a>
   }
 }
 
@@ -139,29 +139,30 @@ export function tip({ node, ...props }){
 }
 
 export function Markdown(props) {
-  const { 
+  let { 
     body = "", 
     className = 'prose dark:prose-dark'
   } = props
 
-  const __remarkPlugins = [...remarkPlugins, remarkDirective, customPlugin, remarkGfm]
-  const markdownBody = body ? body.replace(new RegExp('\\\\n', 'g'), '<br/>\n\n').replace(new RegExp('\\\\\n', 'g'), '<br/>\n\n') : ""
+  const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkDirective, customPlugin, remarkGfm]
+  console.log(body)
+
+  body = body.replace(/\\\n/g, '<br/>\n\n') 
+  console.log(body)
   return (
     <>
-      {markdownBody && (
+      {body && (
         <ReactMarkdown 
-          children={markdownBody} 
+          children={body} 
           remarkPlugins={__remarkPlugins} 
           rehypePlugins={[rehypeRaw]} 
           className={className}
           skipHtml={false}
           components={{
             code,
-            // img, 
             a,
             info,
             warning,
-            pre,
             tip
           }}
         >

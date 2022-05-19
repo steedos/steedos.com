@@ -55,9 +55,9 @@ function VariantRadio({ productVariant, onChange, defValue }) {
                                         ? 'ring-2 ring-offset-2 ring-indigo-500'
                                         : ''
                                     }
-                    ${checked ? 'bg-indigo-600 border-transparent text-white hover:bg-indigo-700' : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50'
+                    ${checked ? 'bg-white text-indigo-600 hover:bg-gray-50' : 'bg-white text-gray-900 hover:bg-gray-50'
                                     }
-                                    border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1`
+                                    border-gray-200 border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1`
                                 }
                             >
                                 <RadioGroup.Label as="p">{option}</RadioGroup.Label>
