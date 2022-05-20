@@ -83,6 +83,8 @@ form:
 
 * 需要注意的是onRendered函数中通过bindFormEvent/bindFieldEvent绑定的事件会在表单销毁时自动解除绑定，不需要再手动写代码来解除相关事件的绑定。
 
+* 如果在可视化界面配置onRendered函数时需要注意通过原生的addEventListener函数绑定事件时应该把事件函数设置到全局变量中，以便可以在onDestroy函数中通过removeEventListener来解除事件绑定。
+
 * 示例，以下代码演示了onRendered函数绑定了message事件时，如何在onDestroy函数中解除绑定：
 
 ```yml
@@ -265,6 +267,10 @@ form:
 
 参数`type`表示的事件类型是浏览器原生事件类型，比如click,change等。
 
+虽然该函数是给整个表单绑定原生事件，但是可以在callBack函数中很方便的判断当前触发事件的是表单上的哪个字段，详情请参阅后续 [callBack field option](#field) 小节。
+
+可以在一个`onRendered`函数中多次调用bindFormEvent为表单绑定多个事件函数，当相关事件被触发时，所有的事件函数都会按绑定次序依次执行，详情请参阅后续 [绑定多个函数](#绑定多个函数) 小节。
+
 ### bindFieldEvent
 
 ▸ bindFieldEvent(type: keyof HTMLElementEventMap, fields: string[] | string, callBack: [callBack](#callBack)): void
@@ -282,6 +288,8 @@ form:
 参数`type`表示的事件类型是浏览器原生事件类型，比如click,change等。
 
 参数`fields`表示的是要把事件绑定到哪个字段或哪些字段上，只有触发了该参数指定的字段的相关事件时才会调用事件回调函数。
+
+可以在一个`onRendered`函数中多次调用bindFieldEvent为不同表单字段绑定事件函数，也可以为同一个字段绑定多个事件函数，当相关事件被触发时，所有的事件函数都会按绑定次序依次执行，详情请参阅后续 [绑定多个函数](#绑定多个函数) 小节。
 
 ### callBack
 
@@ -396,7 +404,7 @@ record表示修改记录时从接口中抓取到的记录内容，新建记录�
 以下代码描述了如何判断表单是新建还是编辑状态：
 
 ```yml
-# tasks.object.yml
+# xxx.object.yml
 form:
   onRendered: !!js/function |
     function(args){
@@ -408,7 +416,7 @@ form:
     }
 ```
 
-### 绑定多个事件
+### 绑定多个函数
 
 ### 解除绑定
 
