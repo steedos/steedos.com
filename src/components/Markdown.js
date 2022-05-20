@@ -119,7 +119,7 @@ export function a({ node, href, ...props }) {
     }
 
     const target = "_blank" //props.href.match(/https:\/\//i) || props.href.match(/http:\/\//i) ? "_blank": "_self";
-    return <a href={props.href} target={target} {...props}>{props.children}</a>
+    return <a href={href} target={target} {...props}>{props.children}</a>
   }
 }
 
