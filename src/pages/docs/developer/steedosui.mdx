@@ -24,7 +24,7 @@ SteedosUI.showModal(component,componentParams,modalParams, provideProps)
 * modalParams：弹窗所需参数。
 * provideProps：函数内 withModalWrap 函数所需参数。
 
-\
+
 **示例1**：在合同对象记录详细页右上角添加“新建任务”按钮所需函数代码。
 
 ```yaml
@@ -70,7 +70,6 @@ SteedosUI.showModal(stores.ComponentRegistry.components.ObjectTable,{
 })
 ```
 
-\
 * stores.ComponentRegistry.components ： 组件集合对象及函数。
   * ChartDesignModal
   * ObjectExpandTable
@@ -750,7 +749,6 @@ Creator.getCollection(objectApiName)
 * Creator.getCollection(objectApiName).update()
 * Creator.getCollection(objectApiName).upsert()
 
-\
 ### Creator.getObjectUrl()
 
 获取对象记录相对URL。
@@ -906,7 +904,6 @@ Creator.isSpaceAdmin()
 * SpaceUsers
 * SpaceUsersModal
 
-\
 ### ObjectForm
 
 表单组件。
@@ -931,7 +928,6 @@ form?: any,             // 经 Form.useForm() 创建的 form 控制实例，不�
 onFinish:  Function,    // 提交表单且数据验证成功后回调事件
 ```
 
-\
 ### ObjectTable
 
 表格组件。
@@ -949,5 +945,3 @@ listSchema: object,     // 显示的列字段
 multiple: boolean,      // 多选
 onFinish:  Function,    // 提交表单且数据验证成功后回调事件
 ```
-
-\
