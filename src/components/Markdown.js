@@ -152,11 +152,11 @@ export function Markdown(props) {
     customPlugin, 
     remarkGfm
   ]
-  console.log(body)
+  // console.log(body)
 
   body = body ? body.replace(/\\\n/g, '\n') : null
   body = body ? body.replace(/\\n/g, '\n') : null
-  console.log(body)
+  // console.log(body)
   return (
     <>
       {body && (
