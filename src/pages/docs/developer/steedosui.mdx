@@ -7,7 +7,7 @@ description: null
 
 您可以在浏览器控制台输入SteedosUI, 然后按回车键查看所有能调用的方法。
 
-### SteedosUI.showModal()
+### showModal
 
 弹出表单、表格等。
 
@@ -88,7 +88,7 @@ SteedosUI.showModal(stores.ComponentRegistry.components.ObjectTable,{
   * SpaceUsers
   * SpaceUsersModal
 
-### SteedosUI.reloadRecord()
+### reloadRecord
 
 刷新记录页面。
 
@@ -103,7 +103,7 @@ SteedosUI.showModal(stores.ComponentRegistry.components.ObjectTable,{
 * objectApiName： 对象API名称。
 * recordId：记录ID。
 
-### SteedosUI.reloadObject()
+### reloadObject
 
 此函数不直接发送请求，只给object上添加过期标记，每次getObject时 ，如果已标记为过期，则重新获取，获取后清理过期标记。用于解决db中的对象发生变化时的请求过多问题，也可解决编辑对象record时，如果对象变化编辑窗口重新渲染导致数据丢失问题。
 
@@ -117,7 +117,7 @@ SteedosUI.reloadObject(objectApiName)
 
 * objectApiName： 对象API名称。
 
-### SteedosUI.getTableSelectedRows()
+### getTableSelectedRows
 
 获取列表中选中项记录。
 
@@ -145,7 +145,7 @@ SteedosUI.getTableSelectedRows('listview_tasks_all')
 SteedosUI.getTableSelectedRows('related_listview_tasks_cms_files_parent')
 ```
 
-### SteedosUI.clearTableSelectedRows()
+### clearTableSelectedRows
 
 清除列表中选中项。
 
@@ -161,7 +161,7 @@ SteedosUI.clearTableSelectedRows(id)
   * 主列表时 id ："listview_#{object_name}_#{list_view_id}"
   * 相关表时 id："related_listview_#{object_name}_*#{related_object_name}*_#{related_field_name}"
 
-### SteedosUI.render()
+### render
 
 加载一个React组件到指定 HTMLElement 内。
 
@@ -190,7 +190,7 @@ let newRelatedList = $(".related-object-tabular").last().after($("<div class='re
 SteedosUI.render(stores.ComponentRegistry.components.RecordDetailRelatedList, { objectApiName: "accounts", recordId:'gyvcDFmut4Xcr5ZBt',relatedObjectApiName:"contacts"  }, newRelatedList[0]);
 ```
 
-## refreshGrid()
+## refreshGrid
 
 刷新列表。
 
