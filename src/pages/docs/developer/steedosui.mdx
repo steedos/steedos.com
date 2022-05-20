@@ -501,7 +501,7 @@ Steedos.openWindow(url)
 
 您可以在浏览器控制台输入Creator, 然后按回车键查看所有能调用的方法。
 
-### Creator.getObject()
+### getObject
 
 获取对象的Schema定义。
 
@@ -515,7 +515,7 @@ Creator.getObject(objectApiName)
 
 * objectApiName：对象API名称。
 
-### Creator.getApp()
+### getApp
 
 获取指定应用程序属性。
 
@@ -529,7 +529,7 @@ Creator.getApp(app_id)
 
 * app_id：应用程序ID。
 
-### Creator.getAppLabel()
+### getAppLabel
 
 获取当前应用程序名称。
 
@@ -539,7 +539,7 @@ Creator.getApp(app_id)
 Creator.getAppLabel()
 ```
 
-### Creator.getAppMenus()
+### getAppMenus
 
 获取当前应用程序下所有菜单。
 
@@ -549,7 +549,7 @@ Creator.getAppLabel()
 Creator.getAppMenus()
 ```
 
-### Creator.getObjectRecord()
+### getObjectRecord
 
 获取对象记录信息。
 
@@ -566,7 +566,7 @@ Creator.getObjectRecord(objectApiName, record_id, select_fields, expand)
 * select_fields ： 选择显示的字段。
 * expand：拓展属性(需要补充描述)。
 
-### Creator.getPermissions()
+### getPermissions
 
 获取当前用户某个对象权限计算结果。
 
@@ -580,7 +580,7 @@ Creator.getObjectSchema(object_name)
 
 * object_name：对象API名称。
 
-### Creator.getObjectUrl()
+### getObjectUrl
 
 获取对象记录相对URL。
 
@@ -595,7 +595,7 @@ Creator.getObjectUrl(objectApiName, recordId, "-")
 * objectApiName：对象API名称。
 * recordId：记录ID。
 
-### Creator.getObjectAbsoluteUrl()
+### getObjectAbsoluteUrl
 
 获取对象记录绝对URL。
 
@@ -610,7 +610,7 @@ Creator.getObjectAbsoluteUrl(objectApiName, recordId, "-")
 * objectApiName：对象API名称。
 * recordId：记录ID。
 
-### Creator.getListView()
+### getListView
 
 获取当前用户有权限看到某个对象下哪些视图。
 
@@ -626,7 +626,7 @@ Creator.getListView(objectApiName, list_view_id, exac)
 * list_view_id：列表视图ID。
 * exac：为true时，需要强制按list_view_id精确查找，不默认返回第一个视图。
 
-### Creator.getRelatedObjects()
+### getRelatedObjects
 
 获取当前用户有权限看到某个对象下的相关对象集合，返回结果为键值队对象元素的数组。
 
@@ -640,7 +640,7 @@ Creator.getRelatedObjects(objectApiName)
 
 * objectApiName：对象API名称。
 
-### Creator.getRelatedObjectNames()
+### getRelatedObjectNames
 
 获取当前用户有权限看到某个对象下的相关对象名称集合，返回结果为字符串数组。
 
@@ -654,7 +654,7 @@ Creator.getRelatedObjectNames(objectApiName)
 
 * objectApiName：对象API名称。
 
-### Creator.getObjectRelateds()
+### getObjectRelateds
 
 获取某个对象的相关对象信息集合，与用户权限无关，返回结果为键值队对象元素的数组。
 
@@ -668,7 +668,7 @@ Creator.getObjectRelateds(objectApiName)
 
 * objectApiName：对象API名称。
 
-### Creator.getVisibleApps()
+### getVisibleApps
 
 获取当前用户在当前工作区中要权限访问的应用集合。
 
