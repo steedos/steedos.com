@@ -43,7 +43,7 @@ form:
   * bindFormEvent属性是一个函数，当需要给表单绑定原生事件时可以调用它，详请请参考下面的 [绑定原生事件](#绑定原生事件)。
   * bindFieldEvent属性是一个函数，当需要给表单中的字段绑定原生事件时可以调用它，详请请参考下面的 [绑定原生事件](#绑定原生事件)。
 
-* 示例1，点击整个表单任意位置时弹出新窗口，在表单的编辑和只读状态新窗口分别跳转到不同的网址。代码如下：
+* 示例1，点击整个表单任意位置时弹出新窗口，在表单的编辑和只读状态新窗口分别跳转到不同的网址。
 
   ```yml
   # xxx.object.yml
@@ -57,7 +57,7 @@ form:
       }
   ```
 
-* 示例2，当表单加载完成后，根据任务优先级请求第三方API接口获取到期日期默认值。代码如下：
+* 示例2，当表单加载完成后，根据任务优先级请求第三方API接口获取到期日期并设置为默认值。
   ```yml
   # tasks.object.yml
   form:
@@ -287,7 +287,7 @@ form:
 
 ▸ callBack(event: Event, options: [CallBackOptions](#CallBackOptions)): void
 
-调用 bindFormEvent 或 bindFieldEvent 绑定原生事件时回调函数。
+调用 bindFormEvent 或 bindFieldEvent 绑定原生事件时的回调函数。
 
 参数列表：
 
@@ -300,7 +300,7 @@ form:
 
 Ƭ CallBackOptions: object
 
-调用 bindFormEvent 或 bindFieldEvent 绑定原生事件时回调函数所带的参数。
+调用 bindFormEvent 或 bindFieldEvent 绑定原生事件时回调函数所带的额外参数。
 
 | 属性名称 | 类型 | 描述 |
 |----|----|----|
@@ -309,9 +309,104 @@ form:
 | field	| object |	字段Schema |
 | record	| object |	记录内容 |
 
-field属性在bindFormEvent 或 bindFieldEvent函数中都表示触发事件时点击的字段Schema，不过bindFormEvent因为响应的是整个表单的事件，所以该属性值可能为空，而后者因为事件是直接绑定到字段上，所以肯定有值。
+#### form
 
-record表示修改记录时从接口中抓取到的记录内容，新建记录时该属性值为空。
+该属性指向一个 [Ant Design FormInstance](https://ant.design/components/form-cn/#FormInstance)，用于调用ant表单的一些基础操作函数。
+
+以下代码描述了如何通过form属性获取和设置表单字段值：
+
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      let name = args.form.getFieldValue("name");
+      args.form.setFieldsValue({due_date: new Date()});
+    }
+```
+
+#### mode
+
+mode属性是表单的编辑状态，在bindFormEvent 或 bindFieldEvent函数中意思是一样的，即在绑定表单字段事件时该参数值依然是表单的mode状态而不是字段的mode状态值。
+
+要判断字段的编辑状态需要结合field属性，请参阅后续 [field](#field) 属性说明。
+
+以下代码描述了如何判断表单是否编辑状态：
+
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      args.bindFormEvent("click", function(e, {form, mode, field, record}){
+        if(mode === "read"){
+          /*只读状态不响应相关逻辑代码*/
+          return;
+        }
+        ...
+      });
+    }
+```
+
+#### field
+
+field属性在bindFormEvent 或 bindFieldEvent函数中都表示触发的是哪个字段上的相关事件，它返回的是字段的Schema，比如`field.readonly`表示字段是否只读。
+
+不过bindFormEvent因为响应的是整个表单的事件，所以该属性值可能为空，而bindFieldEvent因为事件是直接绑定到字段上，所以肯定有值。
+
+比如通过bindFormEvent给表单绑定点击事件时，如果点击的正好是某个字段范围，那么field属性值就会传入该字段的Schema，否则会传入空值。
+
+以下代码描述了如何判断字段是否编辑状态：
+
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      args.bindFormEvent("click", function(e, {form, mode, field, record}){
+        if(mode === "read" || !field || field.readonly || field.name !== "code"){
+          return;
+        }
+        /*只有触发了编辑状态的code字段的点击事件才会继续执行后面的代码*/
+        ...
+      });
+    }
+```
+或
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      args.bindFieldEvent("click", ["code"], function(e, {form, mode, field, record}){
+        if(mode === "read" || field.readonly){
+          return;
+        }
+        /*只有触发了编辑状态的code字段的点击事件才会继续执行后面的代码*/
+        ...
+      });
+    }
+```
+
+
+#### record
+
+record表示修改记录时从接口中抓取到的记录内容，新建记录时该属性值为空，可以根据该属性值是否为空来判断是新建还是编辑记录。
+
+以下代码描述了如何判断表单是新建还是编辑状态：
+
+```yml
+# tasks.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      if(args.record){
+        return;
+      }
+      /*以下代码只会在新建记录的表单中执行，编辑记录时会跳过*/
+      ...
+    }
+```
 
 ### 绑定多个事件
 
@@ -321,33 +416,33 @@ record表示修改记录时从接口中抓取到的记录内容，新建记录�
 
 点击表单中编辑状态下的名为code的字段时弹出一个代码编辑器窗口。代码如下：
 
-  ```yml
-  # xxx.object.yml
-  form:
-    onRendered: !!js/function |
-      function(args){
-        args.bindFormEvent("click", function(e, {form, mode, field, record}){
-          if(mode === "read" || !field || field.readonly || field.name !== "code"){
-            return;
-          }
-          window.open("http://www.somecodeeidtor.com");
-        });
-      }
-  ```
-  或
-  ```yml
-  # xxx.object.yml
-  form:
-    onRendered: !!js/function |
-      function(args){
-        args.bindFieldEvent("click", ["code"], function(e, {form, mode, field, record}){
-          if(mode === "read" || field.readonly){
-            return;
-          }
-          window.open("http://www.somecodeeidtor.com");
-        });
-      }
-  ```
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      args.bindFormEvent("click", function(e, {form, mode, field, record}){
+        if(mode === "read" || !field || field.readonly || field.name !== "code"){
+          return;
+        }
+        window.open("http://www.somecodeeidtor.com");
+      });
+    }
+```
+或
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      args.bindFieldEvent("click", ["code"], function(e, {form, mode, field, record}){
+        if(mode === "read" || field.readonly){
+          return;
+        }
+        window.open("http://www.somecodeeidtor.com");
+      });
+    }
+```
 
 ## 表单级联
 
