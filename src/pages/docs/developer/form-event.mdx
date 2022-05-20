@@ -524,7 +524,7 @@ form:
 
 ### 示例
 
-点击表单中编辑状态下的名为code的字段时弹出一个代码编辑器窗口。代码如下：
+示例1，以下示例代码实现了点击表单中编辑状态下的名为code的字段时弹出一个代码编辑器窗口。
 
 ```yml
 # xxx.object.yml
@@ -553,6 +553,148 @@ form:
       });
     }
 ```
+
+示例2，以下示例代码模拟实现了点击表单中编辑状态下的名为经度或纬度的字段时弹出一个iframe窗口，显示地图应用用于选择经纬度并把选中值回传到表单的经度和纬度字段中。
+
+```
+# lbs.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      if(!window.LBSClient){
+          window.LBSClient = {};
+      }
+      LBSClient.positionValue = {};
+      /*lbsRootUrl指向的是启动一个远程开发环境模拟实现的地图应用地址*/
+      let lbsRootUrl = "https://5000-steedos-steedosprojectt-b0e4nt9jhwg.ws-us45.gitpod.io";
+      LBSClient.onMessage = function(e){
+          let positionValue = LBSClient.positionValue;
+          if (e.origin !== lbsRootUrl){
+              return;
+          }
+          if(e.data && e.data.tag === "positionChanged"){
+              positionValue.long = e.data.long;
+              positionValue.lat = e.data.lat;
+          }
+      }
+      LBSClient.fieldClickHandler = function(e, {form, mode, field}){
+          // 点击经纬度字段的编辑框时弹出iframe获取经纬度值
+          // iframe指向的地址需要执行 parent.postMessage({long, lat, tag:"positionChanged"},"http://www.xxx.com") 发送message到当前窗口
+          // postMessage只认域名或ip地址，不认localhost，如果本地开发环境使用域名需要先在host中作好域名映射 127.0.0.1  www.xxx.com
+          if(mode === "read" || field.readonly){
+              return;
+          }
+          let positionValue = LBSClient.positionValue;
+          delete positionValue.long;
+          delete positionValue.lat;
+          window.removeEventListener("message", LBSClient.onMessage);
+          window.addEventListener("message", LBSClient.onMessage);
+          let longFieldValue = form.getFieldValue("long__c");
+          let latFieldValue = form.getFieldValue("lat__c");
+          window.SteedosUI.showModal(stores.ComponentRegistry.components.Iframe,{
+              name: "frame_lbs", 
+              title: `LBS位置`,
+              src: lbsRootUrl + "/api/lbs?long=" + longFieldValue + "&lat=" + latFieldValue,
+              onFinish: ()=>{
+                  let positionValue = LBSClient.positionValue;
+                  if(positionValue && positionValue.long && positionValue.lat){
+                      form.setFieldsValue({long__c: positionValue.long, lat__c: positionValue.lat});
+                      return true;
+                  }
+                  else{
+                      window.alert("请先输入经纬度值！");
+                  }
+                  return false;
+              },
+              modalProps:{
+                  onCancel: ()=>{
+                      window.removeEventListener("message", LBSClient.onMessage);
+                  }
+              }
+          });
+      }
+      args.bindFieldEvent("click", ["long__c", "lat__c"], LBSClient.fieldClickHandler);
+    }
+  onDestroy: !!js/function |
+    function(args){
+      window.removeEventListener("message", LBSClient.onMessage);
+    }
+```
+
+上面的示例需要在弹出的iframe指向的地图应用程序中增加 `postMessage` 逻辑在用户选择好地图位置后回传经纬度值到父窗口，以下是模拟实现该过程的示例代码。
+
+`main/default/routes/lbs.router.js`：
+
+```
+const express = require("express");
+const router = express.Router();
+
+router.get('/api/lbs', async function (req, res) {
+    let long = req.query.long;
+    let lat = req.query.lat;
+    res.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+    res.write(
+        `<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+                <title>Steedos</title>
+                <link rel="stylesheet" type="text/css" href="/assets/styles/steedos-tailwind.min.css">
+                <script type="text/javascript" src="/lib/jquery/jquery-1.11.2.min.js"></script>
+                <script type="text/javascript">
+                    const inputValueChangeHandler = function(e){
+                        let long = $("input[name=long]").val();
+                        let lat = $("input[name=lat]").val();
+                        if(long && lat && parent){
+                            let rootUrl = "http://192.168.2.192:5700";//这是上面lbs.object.yml文件定义的对象所在的rootURL地址。
+                            parent.postMessage({long, lat, tag:"positionChanged"}, rootUrl);
+                        }
+                    }
+                    $(function(){
+                        let long = "${long}";
+                        let lat = "${lat}";
+                        if(long){
+                            $("input[name=long]").val(long);
+                        }
+                        if(lat){
+                            $("input[name=lat]").val(lat);
+                        }
+                        $("input[name=long],input[name=lat]").on("change", inputValueChangeHandler);
+                    });
+                </script>
+            </head>
+            <body class="p-8">
+                <table class="table-auto">
+                    <thead>
+                        <tr>
+                            <th>经度</th>
+                            <th>纬度</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" name="long" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" placeholder="请输入经度" />
+                            </td>
+                            <td>
+                                <input type="text" name="lat" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" placeholder="请输入纬度" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </body>
+        </html>
+        `
+    );
+    return res.end();
+});
+exports.default = router;
+```
+
+以上地图应用示例代码会运行在上面示例2中onRendered函数中定义的lbsRootUrl变量指向的地址中，我们可以启动一个远程开发环境并把上述代码复制过去来模拟实现一个地图应用。
 
 ## 表单级联
 
