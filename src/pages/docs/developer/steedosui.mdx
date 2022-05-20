@@ -162,25 +162,35 @@ SteedosUI.clearTableSelectedRows(id)
   * 主列表时 id ："listview_#{object_name}_#{list_view_id}"
   * 相关表时 id："related_listview_#{object_name}_*#{related_object_name}*_#{related_field_name}"
 
-\
-### SteedosUI.render()（不熟悉此函数）
+### SteedosUI.render()
 
-描述。
+加载一个React组件到指定 HTMLElement 内。
 
 **语法**
 
 ```bash
-SteedosUI.render( a, b, c, d)
+SteedosUI.render(component: React.FunctionComponent, componentProps: object, container: HTMLElement)
 ```
 
 **参数**
 
-* a：描述。
-* b
-* c
-* d
+* component： 要加载的React组件
+* componentProps：要加载的React组件的属性
+* container：希望以哪个HTMLElement作为容器，把Reacdt组件加载到里面。
 
-\
+**示例1**：以自定义页面组件替换对象列表主界面。
+
+```javascript
+SteedosUI.render(stores.ComponentRegistry.components.Page, { pageId: "test_page" }, $(".slds-template__container")[0]);
+```
+
+**示例2**：在记录详细界面添加一个子表
+
+```javascript
+let newRelatedList = $(".related-object-tabular").last().after($("<div class='related-object-tabular'></div>"));
+SteedosUI.render(stores.ComponentRegistry.components.RecordDetailRelatedList, { objectApiName: "accounts", recordId:'gyvcDFmut4Xcr5ZBt',relatedObjectApiName:"contacts"  }, newRelatedList[0]);
+```
+
 ## refreshGrid()
 
 刷新列表。
