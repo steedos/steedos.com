@@ -269,7 +269,7 @@ form:
 
 虽然该函数是给整个表单绑定原生事件，但是可以在callBack函数中很方便的判断当前触发事件的是表单上的哪个字段，详情请参阅后续 [callBack field option](#field) 小节。
 
-可以在一个`onRendered`函数中多次调用bindFormEvent为表单绑定多个事件函数，当相关事件被触发时，所有的事件函数都会按绑定次序依次执行，详情请参阅后续 [绑定多个函数](#绑定多个函数) 小节。
+可以在一个`onRendered`函数中多次调用`bindFormEvent`为表单绑定多个事件函数，当相关事件被触发时，所有的事件函数都会按绑定次序依次执行，详情请参阅后续 [绑定多个函数](#绑定多个函数) 小节。
 
 ### bindFieldEvent
 
@@ -295,7 +295,7 @@ form:
 
 ▸ callBack(event: Event, options: [CallBackOptions](#CallBackOptions)): void
 
-调用 bindFormEvent 或 bindFieldEvent 绑定原生事件时的回调函数。
+调用 `bindFormEvent` 或 `bindFieldEvent` 绑定原生事件时的回调函数。
 
 参数列表：
 
@@ -308,7 +308,7 @@ form:
 
 Ƭ CallBackOptions: object
 
-调用 bindFormEvent 或 bindFieldEvent 绑定原生事件时回调函数所带的额外参数。
+调用 `bindFormEvent` 或 `bindFieldEvent` 绑定原生事件时回调函数所带的额外参数。
 
 | 属性名称 | 类型 | 描述 |
 |----|----|----|
@@ -335,7 +335,7 @@ form:
 
 #### mode
 
-mode属性是表单的编辑状态，在bindFormEvent 或 bindFieldEvent函数中意思是一样的，即在绑定表单字段事件时该参数值依然是表单的mode状态而不是字段的mode状态值。
+mode属性是表单的编辑状态，在 `bindFormEvent` 或 `bindFieldEvent` 函数中意思是一样的，即在绑定表单字段事件时该参数值依然是表单的mode状态而不是字段的mode状态值。
 
 要判断字段的编辑状态需要结合field属性，请参阅后续 [field](#field) 属性说明。
 
@@ -358,11 +358,11 @@ form:
 
 #### field
 
-field属性在bindFormEvent 或 bindFieldEvent函数中都表示触发的是哪个字段上的相关事件，它返回的是字段的Schema，比如`field.readonly`表示字段是否只读。
+field属性在 `bindFormEvent` 或 `bindFieldEvent` 函数中都表示触发的是哪个字段上的相关事件，它返回的是字段的Schema，比如`field.readonly`表示字段是否只读。
 
-不过bindFormEvent因为响应的是整个表单的事件，所以该属性值可能为空，而bindFieldEvent因为事件是直接绑定到字段上，所以肯定有值。
+不过 `bindFormEvent` 因为响应的是整个表单的事件，所以该属性值可能为空，而 `bindFieldEvent` 因为事件是直接绑定到字段上，所以肯定有值。
 
-比如通过bindFormEvent给表单绑定点击事件时，如果点击的正好是某个字段范围，那么field属性值就会传入该字段的Schema，否则会传入空值。
+比如通过 `bindFormEvent` 给表单绑定点击事件时，如果点击的正好是某个字段范围，那么field属性值就会传入该字段的Schema，否则会传入空值。
 
 以下代码描述了如何判断字段是否编辑状态：
 
@@ -418,7 +418,109 @@ form:
 
 ### 绑定多个函数
 
+可以在一个 `onRendered` 函数中多次调用 `bindFormEvent` 或 `bindFieldEvent` 函数同时为表单或字段绑定多个事件函数，当相关事件被触发时，所有的事件函数都会按绑定次序依次执行。
+
+#### 绑定多个事件
+
+以下示例代码为表单以及名称字段绑定了 `click` 和 `change` 两种事件函数，当相关事件被触发时，它们都会被执行。
+
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      args.bindFormEvent("click", function(e, {form, mode, field, record}){
+        args.bindFormEvent("click", function(e, {form, mode, field, record}){
+          console.log("bindFormEvent click",form, mode, field, record);
+        });
+        args.bindFormEvent("change", function(e, {form, mode, field, record}){
+          console.log("bindFormEvent change",form, mode, field, record);
+        });
+        args.bindFieldEvent("click", ["name"], function(e, {form, mode, field, record}){
+          console.log("bindFieldEvent click",form, mode, field, record);
+        });
+        args.bindFieldEvent("change", ["name"], function(e, {form, mode, field, record}){
+          console.log("bindFieldEvent change",form, mode, field, record);
+        });
+      });
+    }
+```
+
+当点击名称字段时，会依次输出日志 `bindFieldEvent click`、`bindFormEvent click` 日志，这是因为使用 `bindFieldEvent` 绑定的事件函数会先于使用 `bindFormEvent` 绑定的事件函数执行，详细请参阅后续 [事件函数执行次序](#事件函数执行次序) 小节。
+
+
+#### 同一个事件绑定多个函数
+
+以下示例代码为表单以及名称字段都绑定了两个 `click` 事件函数，当事件被触发时，它们都会被执行。
+
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      args.bindFormEvent("click", function(e, {form, mode, field, record}){
+        args.bindFormEvent("click", function(e, {form, mode, field, record}){
+          console.log("bindFormEvent click1",form, mode, field, record);
+        });
+        args.bindFormEvent("click", function(e, {form, mode, field, record}){
+          console.log("bindFormEvent click2",form, mode, field, record);
+        });
+        args.bindFieldEvent("click", ["name"], function(e, {form, mode, field, record}){
+          console.log("bindFieldEvent click1",form, mode, field, record);
+        });
+        args.bindFieldEvent("click", ["name"], function(e, {form, mode, field, record}){
+          console.log("bindFieldEvent click2",form, mode, field, record);
+        });
+      });
+    }
+```
+
+当点击名称字段时，会依次输出日志`bindFieldEvent click1`、`bindFieldEvent click2`、`bindFormEvent click1`、`bindFormEvent click2`。
+
+以下两段示例代码都实现了为经度和纬度两个字段绑定点击事件函数，它们的效果是一样的。
+
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      args.bindFormEvent("click", function(e, {form, mode, field, record}){
+        args.bindFieldEvent("click", ["long__c", "lat__c"], function(e, {form, mode, field, record}){
+          console.log("bindFieldEvent click1", field.name);
+        });
+      });
+    }
+```
+或
+```yml
+# xxx.object.yml
+form:
+  onRendered: !!js/function |
+    function(args){
+      args.bindFormEvent("click", function(e, {form, mode, field, record}){
+        args.bindFieldEvent("click", "long__c", function(e, {form, mode, field, record}){
+          console.log("bindFieldEvent click2", field.name);
+        });
+        args.bindFieldEvent("click", "lat__c", function(e, {form, mode, field, record}){
+          console.log("bindFieldEvent click3", field.name);
+        });
+      });
+    }
+```
+
+#### 事件函数执行次序
+
+一般来说事件函数执行次序是依照调用 `bindFormEvent` 或 `bindFieldEvent` 函数为表单或字段绑定事件函数的先后顺序来的。
+
+但是当同时为表单和字段绑定了事件函数时，会优先按事件绑定次序执行所有的字段级事件函数，再按事件绑定次序执行所有的表单级事件函数，也就是说使用 `bindFieldEvent` 绑定的事件函数会先于使用 `bindFormEvent` 绑定的事件函数执行。
+
 ### 解除绑定
+
+理论上所有的事件绑定在组件销毁时都应该被解除绑定以避免事件函数被重复执行或造成内存泄漏。
+
+调用 `bindFormEvent` 或 `bindFieldEvent` 函数绑定的所有事件会在组件销毁时自行解除相关事件绑定，不需要再在 `onDestroy` 函数中写代码解绑。
+
+但是在 `onRendered` 函数中通过其他方式绑定的事件函数，比如window.addEventListener，还是需要写代码手动解绑的，详情请参阅前面的 [onDestroy](#onDestroy) 小节。
 
 ### 示例
 
