@@ -224,7 +224,7 @@ refreshGrid('related_listview_tasks_cms_files_parent')
 
 您可以在浏览器控制台输入Steedos, 然后按回车键查看所有能调用的方法。
 
-### Steedos.absoluteUrl()
+### absoluteUrl
 
 返回绝对IP地址，一般用于发送请求时的URL。
 
@@ -244,7 +244,7 @@ Steedos.absoluteUrl(url)
 Steedos.absoluteUrl("/api/v4/" + _object_name)
 ```
 
-### Steedos.authRequest()
+### authRequest
 
 授权请求，返回请求结果。
 
@@ -267,7 +267,7 @@ Steedos.authRequest(url, options)
 Steedos.authRequest(`/api/v4/tasks/5HzsGM8jPNDbNai4p`, { type: 'put', async: false, data: JSON.stringify({description:'该任务由张三和李四共同完成'}) })
 ```
 
-### Steedos.isLoading()
+### isLoading
 
 是否还在加载中。
 
@@ -279,7 +279,7 @@ Steedos.isLoading()
 
 **返回值：** true /  false 。
 
-### Steedos.isAndroidApp()
+### isAndroidApp
 
 是否是安卓应用。
 
@@ -291,7 +291,7 @@ Steedos.isAndroidApp()
 
 **返回值**:  true /  false 。
 
-### Steedos.isAndroidOrIOS()
+### isAndroidOrIOS
 
 当前操作系统是否是安卓或IOS操作系统。
 
@@ -301,7 +301,7 @@ Steedos.isAndroidApp()
 Steedos.isAndroidOrIOS()
 ```
 
-### Steedos.isCordova()
+### isCordova
 
 用于判断是否是手机APP。
 
@@ -313,7 +313,7 @@ Steedos.isCordova()
 
 **返回值**:  true /  false 。
 
-### Steedos.isMobile()
+### isMobile
 
 根据屏幕宽度判断是否是手机模式，包括手机浏览器。
 
@@ -325,7 +325,7 @@ Steedos.isMobile()
 
 **返回值**:  true /  false 。
 
-### Steedos.isPad()
+### isPad
 
 根据屏幕宽度判断是否是PAD模式，包括PAD浏览器。
 
@@ -337,7 +337,7 @@ Steedos.isPad()
 
 **返回值**：true /  false 。
 
-### Steedos.isIE()
+### isIE
 
 当前浏览器是否是IE浏览器。
 
@@ -349,7 +349,7 @@ Steedos.isIE()
 
 **返回值**：true /  false 。
 
-### Steedos.isMac()
+### isMac
 
 当前系统是否是Mac系统。
 
@@ -361,7 +361,7 @@ Steedos.isMac()
 
 **返回值**：true /  false 。
 
-### Steedos.isOrgAdmin()
+### isOrgAdmin
 
 当前用户是否是组织管理员。
 
@@ -373,7 +373,7 @@ Steedos.isOrgAdmin()
 
 **返回值**：true /  false 。
 
-### Steedos.isSpaceAdmin()
+### isSpaceAdmin
 
 当前用户是否是工作区管理员。
 
@@ -385,7 +385,7 @@ Steedos.isSpaceAdmin()
 
 **返回值**：true /  false 。
 
-### Steedos.isSpaceOwner()
+### isSpaceOwner
 
 当前用户是否是工作区拥有者。
 
@@ -397,7 +397,7 @@ Steedos.isSpaceOwner()
 
 **返回值**：true /  false 。
 
-### Steedos.getSpaceId()
+### getSpaceId
 
 获取当前工作区ID。
 
@@ -407,7 +407,7 @@ Steedos.isSpaceOwner()
 Steedos.getSpaceId()
 ```
 
-### Steedos.userId()
+### userId
 
 获取当前用户ID。
 
@@ -417,7 +417,7 @@ Steedos.getSpaceId()
 Steedos.userId() /  Steedos.getUserId()
 ```
 
-### Steedos.userName()
+### userName
 
 获取当前用户名称。
 
@@ -427,7 +427,7 @@ Steedos.userId() /  Steedos.getUserId()
 Steedos.userName()
 ```
 <!-- 
-### Steedos.getUserCompanyId()
+### getUserCompanyId
 
 获取当前用户所属主分部ID。
 
@@ -437,7 +437,7 @@ Steedos.userName()
 Steedos.getUserCompanyId()
 ```
 
-### Steedos.getUserCompanyIds()
+### getUserCompanyIds
 
 获取当前用户所属分部ID，可能是多个。
 
@@ -447,7 +447,7 @@ Steedos.getUserCompanyId()
 Steedos.getUserCompanyIds()
 ```
 
-### Steedos.getUserCompanyOrganizationId()
+### getUserCompanyOrganizationId
 
 获取当前用户所属主分部关联组织Id。
 
@@ -457,7 +457,7 @@ Steedos.getUserCompanyIds()
 Steedos.getUserCompanyOrganizationId()
 ```
 
-### Steedos.getUserCompanyOrganizationIds()
+### getUserCompanyOrganizationIds
 
 获取当前用户所属分部关联组织Id，可能是多个。
 
@@ -467,7 +467,7 @@ Steedos.getUserCompanyOrganizationId()
 Steedos.getUserCompanyOrganizationIds() / Steedos.getUserOrganizations()
 ``` -->
 
-### Steedos.getLocale()
+### getLocale
 
 获取当前用户语言。
 
@@ -477,7 +477,7 @@ Steedos.getUserCompanyOrganizationIds() / Steedos.getUserOrganizations()
 Steedos.getLocale()
 ```
 
-### Steedos.logout()
+### logout
 
 退出系统，退回到登录界面。
 
@@ -487,7 +487,7 @@ Steedos.getLocale()
 Steedos.logout()
 ```
 
-### Steedos.openWindow()
+### openWindow
 
 新窗口打开指定URL。
 
