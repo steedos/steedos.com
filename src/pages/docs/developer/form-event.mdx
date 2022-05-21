@@ -34,8 +34,8 @@ form:
     formId: "default",  // 表单唯一标识，默认为default
     form: {...},   // Ant Design FormInstance，用于调用ant表单的一些基础操作函数
     record: {...}, //编辑记录时表单从接口中获取到的记录内容，新建记录时为空
-    bindFormEvent: function(type, callBack){}, //一个事件函数，用于给表单绑定原生事件，比如点击表单事件
-    bindFieldEvent: function(type, fields, callBack){}, //一个事件函数，用于给表单上特定字段绑定原生事件，比如点击某个字段时弹出窗口
+    bindFormEvent: function(type, eventHandler){}, //一个事件函数，用于给表单绑定原生事件，比如点击表单事件
+    bindFieldEvent: function(type, fields, eventHandler){}, //一个事件函数，用于给表单上特定字段绑定原生事件，比如点击某个字段时弹出窗口
   }
   ```
   * formId属性是表单唯一标识，它也是每个表单生成的`<form>`标签中的id属性值。
@@ -254,7 +254,7 @@ form:
 
 ### bindFormEvent
 
-▸ bindFormEvent(type: keyof HTMLElementEventMap, callBack: [callBack](#callBack)): void
+▸ bindFormEvent(type: keyof HTMLElementEventMap, eventHandler: [eventHandler](#eventHandler)): void
 
 调用该函数可以给整个表单绑定原生事件，比如点击表单事件。
 
@@ -263,17 +263,17 @@ form:
 | 名称 | 类型 | 描述 |
 |----|----|----|
 | type	| keyof HTMLElementEventMap |	事件类型 |
-| callBack	| [callBack](#callBack) |	事件回调函数 |
+| eventHandler	| [eventHandler](#eventHandler) |	事件回调函数 |
 
 参数`type`表示的事件类型是浏览器原生事件类型，比如click,change等。
 
-虽然该函数是给整个表单绑定原生事件，但是可以在callBack函数中很方便的判断当前触发事件的是表单上的哪个字段，详情请参阅后续 [callBack field option](#field) 小节。
+虽然该函数是给整个表单绑定原生事件，但是可以在callBack函数中很方便的判断当前触发事件的是表单上的哪个字段，详情请参阅后续 [eventHandler field option](#field) 小节。
 
 可以在一个`onRendered`函数中多次调用`bindFormEvent`为表单绑定多个事件函数，当相关事件被触发时，所有的事件函数都会按绑定次序依次执行，详情请参阅后续 [绑定多个函数](#绑定多个函数) 小节。
 
 ### bindFieldEvent
 
-▸ bindFieldEvent(type: keyof HTMLElementEventMap, fields: string[] | string, callBack: [callBack](#callBack)): void
+▸ bindFieldEvent(type: keyof HTMLElementEventMap, fields: string[] | string, eventHandler: [eventHandler](#eventHandler)): void
 
 调用该函数可以给表单上特定字段绑定原生事件，比如点击某个字段时弹出窗口，或者某个字段的change事件等。
 
@@ -283,7 +283,7 @@ form:
 |----|----|----|
 | type	| keyof HTMLElementEventMap |	事件类型 |
 | fields	| string/string[] |	字段 |
-| callBack	| [callBack](#callBack) |	事件回调函数 |
+| eventHandler	| [eventHandler](#eventHandler) |	事件回调函数 |
 
 参数`type`表示的事件类型是浏览器原生事件类型，比如click,change等。
 
@@ -291,9 +291,9 @@ form:
 
 可以在一个`onRendered`函数中多次调用bindFieldEvent为不同表单字段绑定事件函数，也可以为同一个字段绑定多个事件函数，当相关事件被触发时，所有的事件函数都会按绑定次序依次执行，详情请参阅后续 [绑定多个函数](#绑定多个函数) 小节。
 
-### callBack
+### eventHandler
 
-▸ callBack(event: Event, options: [CallBackOptions](#CallBackOptions)): void
+▸ eventHandler(event: Event, options: [CallBackOptions](#CallBackOptions)): void
 
 调用 `bindFormEvent` 或 `bindFieldEvent` 绑定原生事件时的回调函数。
 
