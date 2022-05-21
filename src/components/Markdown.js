@@ -13,9 +13,8 @@ import remarkDirective from 'remark-directive'
 import remarkBreaks from 'remark-breaks'
 import hastscript from 'hastscript'
 import rehypeRaw from 'rehype-raw'
+import remarkUnwrapImages from 'remark-unwrap-images'
 const visit = require('unist-util-visit')
-const { remarkPlugins } = require('remark');
-const imgLinks = require("@pondorasti/remark-img-links")
 
 
 // const { serverRuntimeConfig } = getConfig();
@@ -85,6 +84,8 @@ export function code({node, inline, className, children, ...props}) {
 }
 
 export function img({ node, ...props }) {
+  console.log(node)
+  console.log(props)
   if (!props.src) {
     return <></>
   }
@@ -140,39 +141,42 @@ export function tip({ node, ...props }){
 }
 
 export function Markdown(props) {
-  let { 
-    body = "", 
+  const { 
+    body, 
     className = 'prose dark:prose-dark'
   } = props
 
-  const __remarkPlugins = [...remarkPlugins, 
-    [imgLinks, {absolutePath: ROOT_URL}], 
+  const remarkPlugins = [
     // remarkBreaks,
     remarkDirective, 
     customPlugin, 
-    remarkGfm
+    remarkGfm,
+    remarkUnwrapImages,
   ]
-  // console.log(body)
-
-  body = body ? body.replace(/\\\n/g, '\n') : null
-  body = body ? body.replace(/\\n/g, '\n') : null
-  // console.log(body)
+  
+  let fixedBody = body? body: ""
+  fixedBody = fixedBody.replace(/\\\n/g, '\n') 
+  fixedBody = fixedBody.replace(/\\n/g, '\n') 
+  fixedBody = fixedBody.replace(/\n \!\[\]/g, '\n\!\[\]') 
+  // console.log(fixedBody)
   return (
     <>
-      {body && (
+      {fixedBody && (
         <ReactMarkdown 
-          children={body} 
-          remarkPlugins={__remarkPlugins} 
+          children={fixedBody} 
+          remarkPlugins={remarkPlugins} 
           rehypePlugins={[rehypeRaw]} 
           className={className}
           skipHtml={false}
           components={{
-            code,
             a,
+            code,
             info,
             warning,
-            tip
+            tip,
+            // img
           }}
+          transformImageUri={null}
         >
         </ReactMarkdown>
       )}

@@ -93,8 +93,8 @@ export default function Home(props) {
                   <ChevronRightIcon className="ml-2 w-5 h-5 text-gray-500" aria-hidden="true" />
                 </a> */}
                 <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
-                  <span className="block">赋能企业，</span>
-                  <span className="block text-indigo-400">打造数字驱动型组织</span>
+                  <span className="block">使用低代码技术，</span>
+                  <span className="block text-indigo-400">快速构建个性化应用</span>
                 </h1>
                 <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                 {homepage.summary}
