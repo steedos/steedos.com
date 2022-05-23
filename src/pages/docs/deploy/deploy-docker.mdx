@@ -40,7 +40,7 @@ services:
       - "3000:3000"
     volumes:
       - "./docker-volumes/steedos/storage:/app/storage"
-      - "./docker-volumes/steedos/.steedos:/app/.steedos"
+      # - "./docker-volumes/steedos/.steedos:/app/.steedos" 如需持久化软件包，放开注释
     environment:
       - STEEDOS_CLOUD_SPACE_ID=#在此填入私有部署记录中的魔方ID
       - STEEDOS_CLOUD_API_KEY=#在此填入私有部署记录中的API Key
@@ -305,4 +305,24 @@ docker-compose down
 docker-compose up -d
 ```
 
+### 如何持久化软件包？
 
+首先需要将template项目的初始软件包代码下载到本地服务器上，访问 https://github.com/steedos/steedos-project-template
+
+拷贝 .steedos 文件夹到本地服务器，例如拷贝到 ./docker-volumes/steedos 中，修改docker-compose.yml，放开注释
+
+```yaml
+...
+volumes:
+  - "./docker-volumes/steedos/storage:/app/storage"
+  - "./docker-volumes/steedos/.steedos:/app/.steedos" # 映射软件包路径到本地
+environment:
+...
+```
+
+删掉服务并重启
+
+```yaml
+docker-compose down
+docker-compose up -d
+```
