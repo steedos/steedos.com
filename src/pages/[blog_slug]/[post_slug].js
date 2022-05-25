@@ -398,14 +398,17 @@ export default function Post(props) {
             
               <PageHeader
                 title={name}
-                description={summary}
+                // description={summary}
                 section={section}
               />
               
               <div
                 id="content-wrapper"
-                className="relative z-20 prose prose-slate mt-12 dark:prose-dark"
+                className="relative z-20 prose prose-slate dark:prose-dark"
               >
+                <div className="my-10 text-lg text-slate-700 dark:text-slate-400">
+                  <Markdown body={summary} className="prose prose-lg lg:prose-xl"></Markdown>
+                </div>
                 <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
                   <Markdown body={body} className="prose lg:prose-lg"></Markdown>
                 </ContentsContext.Provider>
