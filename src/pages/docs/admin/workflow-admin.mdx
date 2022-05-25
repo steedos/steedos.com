@@ -318,11 +318,11 @@ CoreForm.custom_numToCny({total});
    \
 2. 系统会弹出新窗口，在表单分类中选择某一类别的表单（也可直接点击“新增分类”来新建流程表单分类），再在该类别的在流程列表页中，单击选择已建立好的表单分类，如“财务 流程”，流程列表中会显示表单分类下对应的所有流程；点击右上角的新建流程，填写流程名称“日常费用报销”。
 
-   \
+   
     ![](https://console.steedos.cn/api/files/images/PiYxgJKiJaRnFcJeJ)
 3. 点击新建完成的流程，在流程界面中，选中“开始”，右侧的面板中有流程信息、画图、属性、权限三个选项。
 
-   \
+   
     ![](https://console.steedos.cn/api/files/images/fg2mPCvndho5v2XTv)
    * 流程信息中可填写流程名称，如将流程命名为“日常费用报销”；
    * 设置流程权限：可设置流程的发起、查看、监控权限；
@@ -338,7 +338,7 @@ CoreForm.custom_numToCny({total});
    * “开始”步骤，默认所有字段都可以编辑（已定义了公式的字段除外）；“非开始”步骤，默认所有字段都为只读。可按实际需要设置。
    * 批量审批，默认不勾选，“审批”、“会签”和“填写”节点都支持该属性，可按实际需要进行设置。注：后续是单一路径，并且指定了处理人，才支持批量审核。该功能只支持企业版并且@steedos/[steedos-plugin-workflow@2.0.9](mailto:steedos-plugin-workflow@2.0.9)以上版本支持。
 
-   \
+   
     ![](https://console.steedos.cn/api/files/images/p8uB9P3w5ihvQXNtY)
 6. 保存流程，关闭返回流程列表界面，启用新建的流程，完成流程的新建。
    * 流程新增并设计后，需要启用才可以让用户提交申请。
@@ -509,11 +509,11 @@ CoreForm.custom_numToCny({total});
 
 1. 打开流程设计器，在需要自动生成编号的字段配置好的公式：auto_number(预算外指标调整)。
 
-   \
+   
     ![](https://console.steedos.cn/api/files/images/dcniDRAafNmsnJ6pG)
 2. 进入“审批王”，选择“流程编号”。
 
-   \
+   
    点击进入到编号设置规则界面后，点击“新建”来新建流程编号规则。
    * 名称：即流程编号字段默认值auto_number方法中的名称，即“预算外指标调整”。
    * 年份：流程编号中涉及到年份需设置好编号开始年份。
@@ -521,7 +521,7 @@ CoreForm.custom_numToCny({total});
    * 序号：流程当前在系统中待编号的序号，默认为0，调整默认值为1，新建流程单后该序号会实时变化。
    * 编号规则：需要配置好的公式会根据此规则格式来进行自动编号，建议开头加上字母或中文以区分不同的流程编号。
 
-   \
+   
    以OB\[{YYYY}\]{NUMBER}为例，简要说明当前编号规则情况:
    * OB：代表该流程名的英文缩写off budget。
    * \[{YYYY}\]：代表自动生成的年份。即取值“年份”。
@@ -728,10 +728,10 @@ CoreForm.custom_numToCny({total});
 
 * 设置界面中，点击“审批王”后，点击“图片签名”。
 
-  \
+  
 * 点击右上角的“新建”按钮后弹出新建图片签名的弹出框，点击“用户”选人弹窗中选择需加图片签名的人员后，再点击“签名”的“选择文件”按钮，选中对应人员的图片签名，点击“保存”按钮，完成图片签名的新增。
 
-  \
+  
 
  ![](https://console.steedos.cn/api/files/images/nZMuFxgJjkhX3TGm3)
 

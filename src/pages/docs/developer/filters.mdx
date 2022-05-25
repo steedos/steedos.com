@@ -11,7 +11,7 @@ filters: [["status", "=", ["closed","open"]]]
 filters: [["age", "between", [20,30]]]
 ```
 
-\
+
 ## 运算符 operation
 
 * "=": 等于
@@ -35,7 +35,7 @@ filters: [["age", "between", [20,30]]]
 ["not", ["value", "=", 3]]
 ```
 
-\
+
 ### “与(and)”、“或(or)”操作
 
 多个过滤器可以通过“与(and)”、“或(or)”操作进行组合，例如：
@@ -66,7 +66,7 @@ filters: [["age", "between", [20,30]]]
 * \[\["age", "between", \[null,30\]\]\] 等效于 \[ \[ "age", "<=", 30 \] \]
 * \[\["age", "between", \[20,null\]\]\] 等效于 \[ \[ "age", ">=", 20 \] \]
 
-\
+
 
 :::info
 between只支持数值及日期时间类型，且过滤值必须是两个元素的数组格式
@@ -114,7 +114,7 @@ filters: [["object_name", "=", ()->    return "project_issues"]]
 filters: [{    "field": "object_name"    "operation": "="    "value": ()->        return "project_issues"}]
 ```
 
-\
+
 ## 日期、时间字段与时区
 
 日期和时间类型的字段，在数据库中保存的都是UTC时间。其中日期类型字段对应的是00:00:00。
@@ -127,4 +127,4 @@ filters: [{    "field": "object_name"    "operation": "="    "value": ()->      
 [["created","<=","2019-08-06T07:00:00Z"]]
 ```
 
-\
+
