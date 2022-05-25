@@ -1,0 +1,943 @@
+---
+title: 前端函数索引
+description: null
+---
+
+## SteedosUI
+
+您可以在系统界面进入浏览器控制台输入Steedos, 然后按回车键查看所有能调用的方法。
+
+### SteedosUI.showModal()
+
+弹出表单、表格等。
+
+**语法**
+
+```bash
+SteedosUI.showModal(component,componentParams,modalParams, provideProps)
+```
+
+**参数**
+
+* component ：弹窗中所需组件。
+* componentParams：组件所需参数。
+* modalParams：弹窗所需参数。
+* provideProps：函数内 withModalWrap 函数所需参数。
+
+\
+**示例1**：在合同对象记录详细页右上角添加“新建任务”按钮所需函数代码。
+
+```yaml
+SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm, {
+    name: `standard_new_form`,      // 表单名称
+    objectApiName: 'tasks',         // 所属对象
+    title: '新建任务',               // 弹窗标题
+    initialValues: { name: "TEST" } // 初始数据
+}, null, {
+    iconPath: '/assets/icons'
+});
+```
+
+**示例2**：弹出新建客户的表单。
+
+```yaml
+SteedosUI.showModal(stores.ComponentRegistry.components.ObjectForm,{
+    objectApiName: "accounts",
+    layout: 'horizontal',
+    title: `新建客户`,
+    initialValues: {name:"张三"},
+    onFinish: async (values)=>{
+      return true;
+    }
+})
+```
+
+**示例3**：弹出选择任务的表格。
+
+```yaml
+SteedosUI.showModal(stores.ComponentRegistry.components.ObjectTable,{
+    title: “选择 任务”,
+    objectApiName: "tasks",
+    sort:[{field_name: "state",order: "desc"}],
+    multiple: true,
+    onFinish: async (values)=>{
+      return true;
+    },
+    listSchema: {
+      columns: ["name", "state"]
+    },
+    filters: ['name','contains','w']
+})
+```
+
+\
+* stores.ComponentRegistry.components ： 组件集合对象及函数。
+  * ChartDesignModal
+  * ObjectExpandTable
+  * ObjectForm
+  * ObjectList
+  * ObjectListView
+  * ObjectModal
+  * ObjectProTable
+  * ObjectTable
+  * ObjectTree
+  * Organizations
+  * OrganizationsModal
+  * Page
+  * PublicPage
+  * QuerySource
+  * SpaceUsers
+  * SpaceUsersModal
+
+### SteedosUI.reloadRecord()
+
+刷新记录页面。
+
+**语法**
+
+```bash
+ SteedosUI.reloadRecord(objectApiName,recordId)
+```
+
+**参数**
+
+* objectApiName： 对象API名称。
+* recordId：记录ID。
+
+### SteedosUI.reloadObject()
+
+此函数不直接发送请求，只给object上添加过期标记，每次getObject时 ，如果已标记为过期，则重新获取，获取后清理过期标记。用于解决db中的对象发生变化时的请求过多问题，也可解决编辑对象record时，如果对象变化编辑窗口重新渲染导致数据丢失问题。
+
+**语法**
+
+```bash
+SteedosUI.reloadObject(objectApiName)
+```
+
+**参数**
+
+* objectApiName： 对象API名称。
+
+### SteedosUI.getTableSelectedRows()
+
+获取列表中选中项记录。
+
+**语法**
+
+```bash
+SteedosUI.getTableSelectedRows(id)
+```
+
+**参数**
+
+* id： 列表视图ID。
+  * 主列表时 id ："listview_#{object_name}_#{list_view_id}"
+  * 相关表时 id："related_listview_#{object_name}_*#{related_object_name}*_#{related_field_name}"
+
+**示例1**：获取“任务”对象在“所有任务”列表视图下的选中项。
+
+```bash
+SteedosUI.getTableSelectedRows('listview_tasks_all')
+```
+
+**示例2**：获取“任务”对象附件子表下的选中项。
+
+```bash
+SteedosUI.getTableSelectedRows('related_listview_tasks_cms_files_parent')
+```
+
+### SteedosUI.clearTableSelectedRows()
+
+清除列表中选中项。
+
+**语法**
+
+```bash
+SteedosUI.clearTableSelectedRows(id)
+```
+
+**参数**
+
+* id： 列表视图ID。
+  * 主列表时 id ："listview_#{object_name}_#{list_view_id}"
+  * 相关表时 id："related_listview_#{object_name}_*#{related_object_name}*_#{related_field_name}"
+
+\
+### SteedosUI.render()（不熟悉此函数）
+
+描述。
+
+**语法**
+
+```bash
+SteedosUI.render( a, b, c, d)
+```
+
+**参数**
+
+* a：描述。
+* b
+* c
+* d
+
+\
+## refreshGrid()
+
+刷新列表。
+
+**语法**
+
+```bash
+refreshGrid(name)
+```
+
+**参数**
+
+* name： 列表视图名称。
+  * 主列表时 name ："listview_#{object_name}_#{list_view_id}"
+  * 相关表时 name："related_listview_#{object_name}_*#{related_object_name}*_#{related_field_name}"
+
+**注**：如果代码书写位置作用于当前列表下，参数name可以忽略不写。
+
+**示例1**：刷新“任务”对象在“所有任务”列表视图下的列表。
+
+```bash
+refreshGrid('listview_tasks_all')
+```
+
+**示例2**：刷新“任务”对象附件子表列表。
+
+```bash
+refreshGrid('related_listview_tasks_cms_files_parent')
+```
+
+## Steedos
+
+您可以在系统界面进入浏览器控制台输入Steedos, 然后按回车键查看所有能调用的方法。
+
+### Steedos.absoluteUrl()
+
+返回绝对IP地址，一般用于发送请求时的URL。
+
+**语法**
+
+```bash
+Steedos.absoluteUrl(url)
+```
+
+**参数**
+
+* url   : 相对地址。
+
+**示例**
+
+```bash
+Steedos.absoluteUrl("/api/v4/" + _object_name)
+```
+
+### Steedos.authRequest()
+
+授权请求，返回请求结果。
+
+**语法**
+
+```bash
+Steedos.authRequest(url, options)
+```
+
+**参数**
+
+* url   : 相对地址。
+* options : 发送请求的相关属性参数。
+
+**示例**
+
+修改任务对象中记录ID为 “5HzsGM8jPNDbNai4p” 这条记录的“描述”字段为 “该任务由张三和李四共同完成” 。
+
+```javascript
+Steedos.authRequest(`/api/v4/tasks/5HzsGM8jPNDbNai4p`, { type: 'put', async: false, data: JSON.stringify({description:'该任务由张三和李四共同完成'}) })
+```
+
+### Steedos.isLoading()
+
+是否还在加载中。
+
+**语法**
+
+```javascript
+Steedos.isLoading()
+```
+
+**返回值：** true /  false 。
+
+### Steedos.isAndroidApp()
+
+是否是安卓应用。
+
+**语法**
+
+```bash
+Steedos.isAndroidApp()
+```
+
+**返回值**:  true /  false 。
+
+### Steedos.isAndroidOrIOS()
+
+当前操作系统是否是安卓或IOS操作系统。
+
+**语法**
+
+```bash
+Steedos.isAndroidOrIOS()
+```
+
+**返回值**:  true /  false 。
+
+### Steedos.isAppActive()  （需要补充描述）
+
+待补充描述。
+
+**语法**
+
+```bash
+Steedos.isAppActive()
+```
+
+**返回值**:  true /  false 。
+
+### Steedos.isCloudAdmin()
+
+是否是云管理员。
+
+**语法**
+
+```bash
+Steedos.isCloudAdmin()
+```
+
+**返回值**:  true /  false 。
+
+### Steedos.isCordova()
+
+是否是Cordova。
+
+**语法**
+
+```bash
+Steedos.isCordova()
+```
+
+**返回值**:  true /  false 。
+
+### Steedos.isMobile()
+
+当前设备是否是手机。
+
+**语法**
+
+```bash
+Steedos.isMobile()
+```
+
+**返回值**:  true /  false 。
+
+### Steedos.isPad()
+
+当前设备是否是Pad。
+
+**语法**
+
+```bash
+Steedos.isPad()
+```
+
+**返回值**：true /  false 。
+
+### Steedos.isIE()
+
+当前浏览器是否是IE浏览器。
+
+**语法**
+
+```bash
+Steedos.isIE()
+```
+
+**返回值**：true /  false 。
+
+### Steedos.isMac()
+
+当前系统是否是Mac系统。
+
+**语法**
+
+```bash
+Steedos.isMac()
+```
+
+**返回值**：true /  false 。
+
+### Steedos.isOrgAdmin()
+
+是否是组织管理员。
+
+**语法**
+
+```bash
+Steedos.isOrgAdmin()
+```
+
+**返回值**：true /  false 。
+
+### Steedos.isSpaceAdmin()
+
+是否是工作区管理员。
+
+**语法**
+
+```bash
+Steedos.isSpaceAdmin()
+```
+
+**返回值**：true /  false 。
+
+### Steedos.isSpaceOwner()
+
+是否是工作区拥有者。
+
+**语法**
+
+```bash
+Steedos.isSpaceOwner()
+```
+
+**返回值**：true /  false 。
+
+### Steedos.getSpaceId()
+
+获取工作区ID。
+
+**语法**
+
+```bash
+Steedos.getSpaceId()
+```
+
+### Steedos.userId()
+
+获取用户ID。
+
+**语法**
+
+```bash
+Steedos.userId() /  Steedos.getUserId()
+```
+
+### Steedos.userName()
+
+获取用户名称。
+
+**语法**
+
+```bash
+Steedos.userName()
+```
+
+### Steedos.getUserCompanyId()
+
+获取用户分部ID。
+
+**语法**
+
+```bash
+Steedos.getUserCompanyId()
+```
+
+### Steedos.getUserCompanyIds()
+
+获取用户当前分部ID及上级分部ID。
+
+**语法**
+
+```bash
+Steedos.getUserCompanyIds()
+```
+
+### Steedos.getUserCompanyOrganizationId()
+
+获取用户部门ID。
+
+**语法**
+
+```bash
+Steedos.getUserCompanyOrganizationId()
+```
+
+### Steedos.getUserCompanyOrganizationIds()
+
+获取用户当前部门ID及上级部门ID。
+
+**语法**
+
+```bash
+Steedos.getUserCompanyOrganizationIds() / Steedos.getUserOrganizations()
+```
+
+### Steedos.getLocale()
+
+获取当前语言类型。
+
+**语法**
+
+```bash
+Steedos.getLocale()
+```
+
+### Steedos.getObjectsOptions()
+
+获取当前所有对象， 只获取对象的label、value、icon三个属性。
+
+**语法**
+
+```bash
+Steedos.getOpenWindowScript()
+```
+
+### Steedos.getUserRouter()
+
+获取用户router。
+
+**语法**
+
+```javascript
+Steedos.getUserRouter()
+// '/app/admin/space_users/view/p3dftuTdZzjRvmm3Q?ref=users'
+```
+
+### Steedos.goResetPassword()
+
+重置密码，跳转到重置密码界面。
+
+**语法**
+
+```javascript
+Steedos.goResetPassword()
+```
+
+### Steedos.logout()
+
+退出系统，退回到登录界面。
+
+**语法**
+
+```javascript
+Steedos.logout()
+```
+
+### Steedos.openWindow()
+
+新窗口打开指定URL。
+
+**语法**
+
+```javascript
+Steedos.openWindow(url)
+```
+
+### Steedos.openUrlWithIE()
+
+IE浏览器打开指定URL。
+
+**语法**
+
+```javascript
+Steedos.openUrlWithIE(url)
+```
+
+### Steedos.ProcessManager
+
+提供批准方法。
+
+**语法**
+
+```javascript
+Steedos.ProcessManager.showProcessApprovalForm(action, fields, formId, doc, onConfirm, title)
+Steedos.ProcessManager.allowApprover(object_name, record_id)
+Steedos.ProcessManager.allowRecall(object_name, record_id)
+Steedos.ProcessManager.allowSubmit(object_name, record_id)
+Steedos.ProcessManager.submit(object_name, record_id, options)
+Steedos.ProcessManager.recall(object_name, record_id)
+Steedos.ProcessManager.approve(object_name, record_id, options)
+Steedos.ProcessManager.reject(object_name, record_id)
+Steedos.ProcessManager.reassign(object_name, record_id)
+```
+
+参数
+
+* object_name:  对象API名称。
+* record_id: 对象记录ID。
+* action: 操作行为（批准、驳回等）。
+* fields：字段。
+* doc：内容。
+
+## Creator
+
+Creator是一个功能非常强大函数，可以获取当前系统的应用程序信息、当前对象详细记录信息等。您可以在系统界面进入浏览器控制台输入Creator, 然后按回车键查看所有能调用的方法。
+
+### Creator.baseObject
+
+获取 base 对象的所有属性，包括对象字段、对象权限等。
+
+**语法**
+
+```bash
+Creator.baseObject
+```
+
+### Creator.formatFileSize()
+
+返回文件大小。
+
+**语法**
+
+```bash
+Creator.formatFileSize(filesize)
+/* 返回结果示例
+1.00KB
+1.00MB
+1.00GB
+*/
+```
+
+### Creator.getObject()
+
+获取对象的所有属性，包括字段、列表视图、按钮等。
+
+**语法**
+
+```bash
+Creator.getObject(objectApiName)
+```
+
+**参数**
+
+* objectApiName：对象API名称。
+
+### Creator.getActions()
+
+获取所有操作按钮属性。
+
+**语法**
+
+```bash
+Creator.getActions()
+```
+
+### Creator.getApp()
+
+获取指定应用程序属性。
+
+**语法**
+
+```bash
+Creator.getApp(app_id)
+```
+
+**参数**
+
+* app_id：应用程序ID。
+
+### Creator.getAppLabel()
+
+获取当前应用程序名称。
+
+**语法**
+
+```bash
+Creator.getAppLabel()
+```
+
+### Creator.getAppMenus()
+
+获取当前应用程序下所有对象。
+
+**语法**
+
+```bash
+Creator.getAppMenus()
+```
+
+### Creator.getObjectRecord()
+
+获取对象记录信息。
+
+**语法**
+
+```bash
+Creator.getObjectRecord(objectApiName, record_id, select_fields, expand)
+```
+
+**参数**
+
+* objectApiName：对象API名称。
+* record_id ： 记录ID。
+* select_fields ： 选择显示的字段。
+* expand：拓展属性(需要补充描述)。
+
+### Creator.getObjectSchema()
+
+返回对象的schema。
+
+**语法**
+
+```bash
+Creator.getObjectSchema(schema)
+```
+
+**参数**
+
+* schema：{}  ,  包含字段等属性。
+
+### Creator.getPermissions()
+
+获取当前用户某个对象权限计算结果，包括前面提到的所有权限规则属性值。
+
+**语法**
+
+```bash
+Creator.getObjectSchema(object_name)
+```
+
+**参数**
+
+* object_name：对象API名称。
+
+### Creator.getCollection()
+
+获取对象方法。
+
+**语法**
+
+```bash
+Creator.getCollection(objectApiName)
+```
+
+**参数**
+
+* objectApiName：对象API名称。
+
+具体方法函数：
+
+* Creator.getCollection(objectApiName).after{ find: f(t,e),  findOne: f(t,e), insert: f(t,e), remove: f(t,e), update: f(t,e), upsert: f(t,e) }
+* Creator.getCollection(objectApiName).before{ find: f(t,e),  findOne: f(t,e), insert: f(t,e), remove: f(t,e), update: f(t,e), upsert: f(t,e) }
+* Creator.getCollection(objectApiName).direct{ find: f(t,e),  findOne: f(t,e), insert: f(t,e), remove: f(t,e), update: f(t,e), upsert: f(t,e) }
+* Creator.getCollection(objectApiName).find()
+* Creator.getCollection(objectApiName).findOne()
+* Creator.getCollection(objectApiName).hookOptions{  all:{}, find:{},  findOne: {}, insert: {}, remove:{}, update: {} }
+* Creator.getCollection(objectApiName).insert()
+* Creator.getCollection(objectApiName).remove()
+* Creator.getCollection(objectApiName).update()
+* Creator.getCollection(objectApiName).upsert()
+
+\
+### Creator.getObjectUrl()
+
+获取对象记录相对URL。
+
+**语法**
+
+```bash
+Creator.getObjectUrl(objectApiName, recordId, "-")
+```
+
+**参数**
+
+* objectApiName：对象API名称。
+* recordId：记录ID。
+
+### Creator.getObjectAbsoluteUrl()
+
+获取对象记录绝对URL。
+
+**语法**
+
+```bash
+Creator.getObjectAbsoluteUrl(objectApiName, recordId, "-")
+```
+
+**参数**
+
+* objectApiName：对象API名称。
+* recordId：记录ID。
+
+### Creator.getListView()
+
+获取当前用户有权限看到某个对象下哪些视图。
+
+**语法**
+
+```bash
+Creator.getListView(objectApiName, list_view_id, exac)
+```
+
+**参数**
+
+* objectApiName：对象API名称。
+* list_view_id：列表视图ID。
+* exac：为true时，需要强制按list_view_id精确查找，不默认返回第一个视图。
+
+### Creator.getActions()
+
+获取当前用户有权限看到某个对象下哪些操作按钮，返回结果为数组。
+
+**语法**
+
+```bash
+Creator.getActions(objectApiName)
+```
+
+**参数**
+
+* objectApiName：对象API名称。
+
+### Creator.getRelatedObjects()
+
+获取当前用户有权限看到某个对象下的相关对象集合，返回结果为键值队对象元素的数组。
+
+**语法**
+
+```bash
+Creator.getRelatedObjects(objectApiName)
+```
+
+**参数**
+
+* objectApiName：对象API名称。
+
+### Creator.getRelatedObjectNames()
+
+获取当前用户有权限看到某个对象下的相关对象名称集合，返回结果为字符串数组。
+
+**语法**
+
+```bash
+Creator.getRelatedObjectNames(objectApiName)
+```
+
+**参数**
+
+* objectApiName：对象API名称。
+
+### Creator.getObjectRelateds()
+
+获取某个对象的相关对象信息集合，与用户权限无关，返回结果为键值队对象元素的数组。
+
+**语法**
+
+```bash
+Creator.getObjectRelateds(objectApiName)
+```
+
+**参数**
+
+* objectApiName：对象API名称。
+
+### Creator.getVisibleApps()
+
+获取当前用户在当前工作区中要权限访问的应用集合。
+
+**语法**
+
+```bash
+Creator.getVisibleApps()
+```
+
+### Creator.isloading()
+
+是否正在加载中。
+
+**语法**
+
+```bash
+Creator.isloading()
+```
+
+**返回值**： true /  false
+
+### Creator.isSpaceAdmin()
+
+是否是工作区管理员。
+
+**语法**
+
+```bash
+Creator.isSpaceAdmin()
+```
+
+**返回值**：true /  false 。
+
+## 组件
+
+* ChartDesignModal
+* ObjectExpandTable
+* ObjectForm
+* ObjectList
+* ObjectListView
+* ObjectModal
+* ObjectProTable
+* ObjectTable
+* ObjectTree
+* Organizations
+* OrganizationsModal
+* Page
+* PublicPage
+* QuerySource
+* SpaceUsers
+* SpaceUsersModal
+
+\
+### ObjectForm
+
+表单组件。
+
+**属性**
+
+```bash
+objectApiName?: string, // 对象API名称
+fields?: [string],      // 字段
+objectSchema?: any,     // 对象schema属性，包括字段等。
+initialValues?: any,    // 初始数据
+recordId?: string       // 记录ID
+submitter?: any,     
+isModalForm?: boolean,
+isDrawerForm?: boolean,
+trigger?: any           // 触发器
+afterUpdate?: Function, // 记录更新后执行的函数
+afterInsert?: Function, // 记录新建后执行的函数
+visible?: boolean,      // 是否显示
+layout?: string,        // 表单布局
+form?: any,             // 经 Form.useForm() 创建的 form 控制实例，不提供时会自动创建
+onFinish:  Function,    // 提交表单且数据验证成功后回调事件
+```
+
+\
+### ObjectTable
+
+表格组件。
+
+**属性**
+
+```javascript
+title: string,          // 弹窗标题
+objectApiName: string,  // 对象API名称
+listName: string,       // 列表视图名称
+sort: array,            // 排序
+columnFields: array,    // 显示的列字段
+filters: string / array,// 过滤条件
+listSchema: object,     // 显示的列字段
+multiple: boolean,      // 多选
+onFinish:  Function,    // 提交表单且数据验证成功后回调事件
+```
+
+\

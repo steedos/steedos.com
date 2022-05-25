@@ -1,0 +1,352 @@
+---
+title: 使用低代码扩展标准对象
+description: null
+---
+
+> 您可以为内置的标准对象新增字段，也可以隐藏系统字段。
+
+在华炎魔方里，已经有很多的标准对象，在具体使用时，可能希望对对象的字段等进行一些调整，这些调整需求具体如何实现，请参考下表：
+
+| 调整的需求 | 是否允许/建议 | 实现/变相实现的方法 |
+|----|----|----|
+| 修改标准字段属性 | 不建议 | 直接修改属性值（字段类型等部分属性不允许修改） |
+| 删除标准字段 | 不允许 | 字段hidden属性设置为true |
+| 增加字段 | 允许 | 在fields文件夹下添加 fieldName.field.yml 文件 |
+| 修改标准的列表视图 | 不建议 | all视图可以修改 |
+| 删除标准的列表视图 | 不允许 |    |
+| 增加列表视图 | 允许 | 在listviews文件夹下添加 listviewName.listview.yml 文件 |
+| 修改对象翻译内容 | 允许 | 在objectTranslations文件夹下添加对应的文件夹和文件 |
+| 修改全局变量翻译内容 | 允许 | 在translations文件夹下添加 en.translation.yml 、 zh-CN.translation.yml 文件 |
+
+示例图：
+
+ ![](https://console.steedos.cn/api/files/images/sXvXXFCk2RTnxTbnw)
+
+\
+拓展标准对象可以在默认的steedos-app 、steedos-packages文件下创建相关文件夹。
+
+```yaml
+├── steedos-app
+    ├── main
+        ├── default
+          ├── layouts
+          ├── objects
+              ├── 对象名
+                  ├── buttons
+                  ├── fields
+                  ├── listviews
+                  ├── permissions
+                  ├── 对象名.object.yml
+          ├── objectTranslations
+              ├── 对象名.en
+                  ├──对象名.en.objectTranslation.yml
+              ├── 对象名.zh-CN
+                  ├──对象名.zh-CN.objectTranslation.yml
+├── steedos-packages
+    ├── my-package
+        ├── main
+            ├── default
+```
+
+## 拓展对象-必要条件（这块写得不好，得改！）
+
+示例：`steedos-app/main/default/objects/space_users/space_users.object.yml`
+
+```yaml
+name: space_users
+extend: space_users
+```
+
+添加 `extend: space_users`  属性意味着此对象继承了 `space_users` 标准对象。 这一步不可缺少！
+
+## 拓展字段
+
+### 增加字段
+
+先在对象元数据文件夹中新建 `fields` 文件夹，然后创建 `字段名.field.yml` 文件，最后补充属性内容。
+
+以下示例描述了给标准对象-人员新增一个`married`字段。
+
+文件相对路径：`steedos-app/main/default/objects/space_users/fields/married.field.yml`
+
+```yaml
+name: married
+label: 已婚
+required: true
+sort_no: 15
+type: boolean
+```
+
+### 修改字段
+
+在 `fields` 文件夹下创建 `字段名.field.yml` 文件，最后补充属性内容。
+
+以下示例描述了给标准对象-人员修改一个`email`字段，修改其显示名称、排序号。
+
+文件相对路径：`steedos-app/main/default/objects/space_users/fields/email.field.yml`
+
+```yaml
+name: email
+label: 邮箱
+required: false
+sort_no: 10
+type: text
+hidden: false
+```
+
+\
+
+:::info
+不能修改type属性。
+
+:::
+
+## 拓展列表视图
+
+### 增加列表视图
+
+先在对象元数据文件夹中新建 `listviews` 文件夹，然后创建 `列表视图名.listview.yml` 文件，最后补充属性内容。
+
+以下示例描述了给标准对象-人员新增一个`all_people`列表视图。
+
+文件相对路径：`steedos-app/main/default/objects/space_users/listviews/all_people.listview.yml`
+
+```yaml
+name: all_people
+columns:
+  - field: name
+    wrap: false
+  - field: married
+    wrap: false
+  - field: profile
+    width: '280'
+filter_scope: space
+label: 所有人员
+shared: true
+show_count: false
+# filters: [["important_tasks","=",true]]
+# filters: !<tag:yaml.org,2002:js/function> |-
+#   function (){
+#       return [["important","=",true]];
+#   }
+sort:
+  - field_name: 'due_date'
+    order: desc
+```
+
+### 修改列表视图
+
+在 `listviews` 文件夹下创建 `列表视图名.listview.yml` 文件，最后补充属性内容。
+
+以下示例描述了给标准对象-人员修改一个`all`列表视图。
+
+文件相对路径：`steedos-app/main/default/objects/space_users/listviews/all.listview.yml`
+
+```yaml
+name: all
+columns:
+  - field: name
+    wrap: false
+  - field: married
+    wrap: false
+  - field: phone
+    wrap: false
+  - field: address
+    wrap: false
+    width: '280'
+filter_scope: space
+label: 有效人员
+shared: true
+show_count: false
+```
+
+## 拓展按钮
+
+* **当按钮显示记录详细页**：可以调用 `this.record` 、`Creator.getObjectRecord()` 获取当前记录信息。
+* **当按钮显示在列表上**：可以调用 `gridRef.current.api.getSelectedRows()` 获取当前选中的记录。
+
+### 增加按钮 - (该示例需要调整)
+
+先在对象元数据文件夹中新建 `buttons` 文件夹，然后创建 `按钮名.button.yml` 和 `按钮名.button.js`文件，最后补充属性内容。
+
+以下示例描述了给标准对象-人员在记录详细页新增一个`tasks`按钮。
+
+yml文件相对路径：`steedos-app/main/default/objects/space_users/buttons/tasks.button.yml`
+
+```yaml
+name: tasks
+is_enable: true
+label: 相关任务
+'on': record_only
+visible: true
+```
+
+js文件相对路径：`steedos-app/main/default/objects/space_users/buttons/tasks.button.js`
+
+```yaml
+module.exports = {
+    tasks: function(object_name, record_id) {
+        // 点击按钮触发的事件
+    },
+    tasksVisible: function(object_name, record_id, permissions, record) {
+        return true;
+    }
+}
+```
+
+* object_name  : 对象名
+* record_id    : 记录ID
+* permissions  : 当前对象权限
+* record       : 当前记录信息
+
+### 修改按钮
+
+在 `buttons` 文件夹下创建 `按钮名.button.yml` 和 `按钮名.button.js`文件，最后补充属性内容。
+
+以下示例描述了给标准对象-人员在记录详细页修改一个`standard_new`按钮，让其隐藏。
+
+yml文件相对路径：`steedos-app/main/default/objects/space_users/buttons/standard_new.button.yml`
+
+```yaml
+name: standard_new
+is_enable: true
+label: 新建
+'on': list
+visible: true
+```
+
+js文件相对路径：`steedos-app/main/default/objects/space_users/buttons/standard_new.button.js`
+
+```yaml
+module.exports = {
+    standard_new: function() {
+        // 重写按钮事件，如果不想重写按钮事件请隐藏此函数或忽略此函数。
+    },
+    standard_newVisible: function() {
+        return false;
+    }
+}
+```
+
+## 拓展权限
+
+### 增加权限
+
+先在对象元数据文件夹中新建 `permissions` 文件夹，然后创建 `权限名.permission.yml` 文件，最后补充属性内容。
+
+以下示例描述了给标准对象-人员新增一个`master_admin`权限。
+
+yml文件相对路径：`steedos-app/main/default/objects/space_users/permissions/master_admin.permission.yml`
+
+```yaml
+name: 主数据管理员
+allowCreate: true
+allowCreateFiles: true
+allowDelete: true
+allowDeleteFiles: true
+allowEdit: true
+allowEditFiles: true
+allowRead: true
+allowReadFiles: true
+modifyAllFiles: true
+modifyAllRecords: true
+permission_set_id: master_admin
+viewAllFiles: true
+viewAllRecords: true
+```
+
+### 修改权限
+
+同增加权限中步骤一致。
+
+## 修改对象翻译内容
+
+在项目的 /node_modules/@steedos/standard-objects/objectTranslations下可以查找对象翻译内容。
+
+在 `steedos-app/main/default/objectTranslations` 文件夹下创建如下文件夹及文件。`space_users.en` 文件夹下的文件是英文翻译文件，`space_users.zh-CN` 文件夹下的文件是中文翻译文件。
+
+```yaml
+├── objectTranslations
+    ├── space_users.en
+        ├──space_users.en.objectTranslation.yml
+    ├── space_users.zh-CN
+        ├──space_users.zh-CN.objectTranslation.yml
+```
+
+本次示例我们将 name 字段的中文翻译名称 “姓名” 改为 “姓名全称”，具体代码如下：
+
+```yaml
+name: space_users
+label: 人员
+fields:
+  name:
+    label: 姓名全称
+```
+
+## 修改全局变量翻译内容
+
+在项目的 /node_modules/@steedos/i18n/translations 下可以查找全局变量翻译内容。
+
+在 `steedos-app/main/default/translations` 文件夹下创建 `en.translation.yml` 、 `zh-CN.translation.yml` 文件。前者是英文翻译文件，后者是中文翻译文件。
+
+```yaml
+├── translations
+    ├── en.translation.yml
+    ├── zh-CN.translation.yml
+```
+
+本次示例我们将点击九宫格后弹出的应用程序窗口中的标题  ”应用程序启动器“ 改为 “应用程序启动页面”，具体代码如下：
+
+```yaml
+CustomLabels:
+  # creator_app_launcher: 应用程序启动器
+  creator_app_launcher: 应用程序启动页面
+```
+
+## 拓展触发器
+
+在 `steedos-app/main/default/triggers` 文件夹下创建 `space_users.trigger.js` 触发器文件。
+
+```yaml
+const objectql = require('@steedos/objectql');
+module.exports = {
+    listenTo: 'space_users',
+    beforeInsert: async function () {
+        // 新增记录前执行的代码
+        //console.log('beforeInsert==>',this)
+    },
+    beforeUpdate: async function(){
+        //记录更新后执行的代码
+        console.log('beforeUpdate==>',this)
+    },
+    ....
+}
+```
+
+\
+## 拓展页面布局
+
+先在 `steedos-app/main/default` 文件下创建 `layouts` 文件夹，然后创建 `对象名.页面布局名.layout.yml` 文件，最后补充属性内容。
+
+以下示例描述了给标准对象-人员新增一个`admin`页面布局。
+
+yml文件相对路径：`steedos-app/main/default/layouts/space_users.admin.layout.yml`
+
+```yaml
+name: admin
+buttons:
+  - button_name: standard_new
+  - button_name: standard_edit
+  - button_name: standard_delete
+fields:
+  - field_name: name
+    is_required: true
+  - field_name: married
+label: 管理员页面布局
+object_name: space_users
+profiles:
+  - admin
+type: record
+```
+
+\

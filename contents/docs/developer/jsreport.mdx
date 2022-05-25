@@ -1,0 +1,643 @@
+---
+title: JsReport报表开发向导
+description: null
+---
+
+使用华炎魔方，一般可以借助内置的报表、仪表盘或Stimulsoft报表来分析您的数据，这里我们将介绍的是如何在华炎魔方内集成JsReport报表以实现复杂的个性化报表需求。
+
+在开始开发JsReport报表前，请先评估您的需求，我们推荐优先使用华炎魔方内置的分析数据工具来实现相关报表功能，详情请参阅：[分析您的数据](/docs/admin/reports)。
+
+## JsReport简介
+
+JsReport一个用于设计和呈现各种报表的开源平台，使用它，只要基于javascript开发出相应的模板，就可以很方便地把模板内容生成网页、PDF、Excel等文件，详情请查阅其官网 <https://jsreport.net/>。
+
+## 集成JsReport
+
+要想使用JsReport开发报表，首先需要把JsReport报表开发工具集成到华炎魔方项目中。
+
+### 初始化
+
+要集成JsReport到华炎魔方项目，我们首先需要一个单独的文件夹来存放JsReport项目，如下图所示，我们可以在华炎魔方项目根目录新建一个名为`jsreport-app`的文件夹，然后按[JsReport安装教程](https://jsreport.net/on-prem)在该文件夹内初始化JsReport项目工程。
+
+初始化JsReport项目工程过程中配置参数`jsreport.config.json`都使用默认参数即可。
+
+
+:::info
+通过steedos cli命令行新建的华炎魔方项目会自带JsReport项目工程，您只要在命令行中运行`npx create-steedos-app my-app`即可生成一个带有初始化好的JsReport项目工程的华炎魔方项目，不需要手动新建`jsreport-app`文件夹来初始化JsReport项目工程。
+
+:::
+
+### 运行
+
+初始化完成后在`jsreport-app`的文件夹内可以看到`package.json`文件，这是一个独立的NPM项目，我们接下来`cd`到`jsreport-app`文件夹，执行`yarn`安装该项目依赖包，最后执行`yarn start`即可运行该JsReport项目。
+
+ ![](https://console.steedos.cn/api/files/images/mZdixDMJ3bMTiyjuH)
+
+### 报表设计器
+
+JsReport项目运行起来之后，我们就可以用浏览器访问`http://localhost:5488/`看到设计器了，如下图所示。
+
+按默认配置，会自带一些示例项目，我们可以展开`samples`文件夹查看示例源码，也可以点击“Run图标”来运行这些示例查看对应的报表运行效果。
+
+我们推荐后续报表相关功能直接在这个设计器中开发，这里也可以实时看到当前开发的运行效果。
+
+ ![](https://console.steedos.cn/api/files/images/ZRfd6pc2AXyvG7xcC)报表设计器中开发的内容会自动保存到报表项目的`data`文件夹中，我们这次集成后对应的是华炎魔方项目的`jsreport-app/data`文件夹，自带的示例报表都在\`samples\`文件夹，其内每个子文件夹正好各自对应一个报表。
+
+在实际开发中，我们可以添加一个与示例文件夹`samples`同级的文件夹来存放我们自己的报表文件，保存后可以在vscode中看到`data`文件夹下会多出我们添加的各种文件。
+
+ ![](https://console.steedos.cn/api/files/images/HfkkqTbBp4srtZnKv)
+
+ ![](https://console.steedos.cn/api/files/images/P2fib4y37k68Fb6p3)
+
+### 集成联调
+
+JsReport报表是一个独立的NPM项目，可独立运行和部署，但其本身并不自带数据源；华炎魔方内置的Graphql接口恰好完美适配JsReport报表数据源，可以很轻松愉快地集成联调并开发出各种实用创意报表。
+
+JsReport报表运行起来后，我们需要另外在华炎魔方根目录执行`yarn start`来运行华炎魔方项目，这样就可以让华炎魔方提供的Graphql接口成为JsReport项目的数据源。
+
+至此，JsReport报表就成功集成到华炎魔方项目中了，后面我们就可以开始开发JsReport报表并在华炎魔方中联调了。
+
+
+:::info
+JsReport与华炎魔方从开发到部署都是两个独立的node项目，它们也都运行于各自独立的node进程中。
+
+:::
+
+## 开发过程详解
+
+上面我们把JsReport作为单独的node项目集成到我们华炎魔方项目了，下面我们基于教程 [开发集团会议管理系统，实现会议全生命周期管理](https://beta.steedos.cn/docs/low-code-academy/low-code-meeting-app) 中开发的华炎魔方项目作为数据源，开始讲解在华炎魔方项目中开发JsReport报表的详细过程。
+
+### 示例需求
+
+以下示例步骤实现在人员详细界面增加一个“本周会议”按钮，点击后在新窗口生成可打印的PDF文件，展示该用户本周的会议日程，并显示以下信息：
+
+* 会议主题、会议室名称、会议开始结束时间等基本信息。
+* 会议参会人员名单，职务等信息。
+* 会议外部参会人员名称，公司等信息。
+
+### 运行会议示例项目
+
+因为下面我们要基于华炎魔方示例项目中的会议软件包来实现上述示例需求，所以我们要先克隆好[示例项目](https://github.com/steedos/steedos-examples)，克隆好后，打开命令行窗口`cd`到项目文件夹，然后在命令行窗口中执行`yarn`来安装相关依赖包，再执行`yarn start`来运行该项目，项目运行起来后，我们录入一些会议数据用于后续开发和测试。
+
+下面的开发过程是假设本地已安装和运行了示例项目，其访问地址为\`<http://localhost:5000/>\`。
+
+ ![](https://console.steedos.cn/api/files/images/4e47MNr5BWjrkqrPE)
+
+### GrqphQL接口调式
+
+要开发报表实现上述需求，我们首先要调式GraphQL接口以提供能满足上述实际需求的数据源。
+
+我们可以输入网址`http://localhost:5000/graphql`来访问华炎魔方GraphQL控制台，在该控制台左侧输入查询语句，点击运行按钮右侧会输出对应的查询结果。
+
+ ![](https://console.steedos.cn/api/files/images/85rKbQiX6rPya6XzZ)按上述需求，我们最终整理出来的GraphQL语句为：
+
+```json
+query{
+  meeting__c(filters:[["staff__c", "=", "9kBGn8ojZ6jnRPTix"], ["start__c", "between", "this_week"]]){
+    name
+    type__c
+    meeting_room__c__expand{
+      name
+    }
+    _display{
+      start__c
+      end__c
+    }
+    staff__c__expand{
+      name
+      spaceuser: _related_space_users_user{
+        position
+      }
+    }
+    _related_meeting_participants__c_meeting__c{
+      name
+      company__c
+    }
+  }
+}
+```
+
+其对应的输出结果如下所示：
+
+```json
+{
+  "data": {
+    "meeting__c": [
+      {
+        "name": "二号设备市场研讨专会",
+        "type__c": "一般会议",
+        "meeting_room__c__expand": {
+          "name": "#6多媒体会议室"
+        },
+        "_display": {
+          "start__c": "2021-11-24 13:20",
+          "end__c": "2021-11-24 15:20"
+        },
+        "staff__c__expand": [
+          {
+            "name": "王总",
+            "spaceuser": [
+              {
+                "position": "总经理"
+              }
+            ]
+          },
+          {
+            "name": "张总",
+            "spaceuser": [
+              {
+                "position": "副总裁"
+              }
+            ]
+          },
+          {
+            "name": "廖平之",
+            "spaceuser": [
+              {
+                "position": "工程师"
+              }
+            ]
+          },
+          {
+            "name": "王冰",
+            "spaceuser": [
+              {
+                "position": "总经理"
+              }
+            ]
+          }
+        ],
+        "_related_meeting_participants__c_meeting__c": [
+          {
+            "name": "田总",
+            "company__c": "北京机电协会理事长"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+以上查询语句中开头的`query`表示查询操作，紧接着的`meeting__c`为要查询的对象API名称，`filters:[["staff__c", "=", "9kBGn8ojZ6jnRPTix"], ["start__c", "between", "this_week"]]`则表示本次查询的过滤条件，它将只查询”会议参会人员”名单中包含某个用户，并且开始时间在本周范围内的会议清单。
+
+在上面查询语句的最后一大段大括号包裹的是希望查询结果返回要查询的会议对象的哪些字段及其关联对象的信息：
+
+* `meeting_room__c__expand` 扩展查询出每条会议记录对应的所属会议室信息，该节点后面可以配置希望返回结果中包含关联会议室记录的哪些字段信息。关联字段API名称后接`__expand`即可扩展查询关联对象信息。
+* `_display`希望返回结果输出格式化后的字段值，该节点后面可以配置希望返回结果中格式化输出哪些字段。
+* `staff__c__expand` 扩展查询出每条会议记录对应的参会人信息，该节点后面可以配置希望返回结果中包含关联人员的哪些字段信息。关联字段API名称后接`__expand`即可扩展查询关联对象信息。
+* `spaceuser: _related_space_users_user`参会人对应的对象是用户，即[users](https://github.com/steedos/steedos-platform/blob/2.1/packages/standard-objects/users.object.yml)，而该对象中并没有人员职务信息，所以我们需要进一步扩展查询出其对象的人员对象，即[space_users](https://github.com/steedos/steedos-platform/blob/2.1/packages/standard-objects/space_users.object.yml)对象的职务字段值。以`_related_`前缀后接子表对象API名称，再用下划线继续拼接子表对象上的关联字段API名称即可扩展查询对应的子表记录，该节点后面可以配置希望返回结果中包含子表对象的哪些字段信息；其中`spaceuser:` 前缀表示为该子表查询取一个简短的别名，不是必须的，但是指定别名时查询结果更好理解。
+* `_related_meeting_participants__c_meeting__c` 扩展查询外部参会人员清单，因为外部参会人员是会议对象的子表对象，所以这里也需要用查询子表记录的语法，即以`_related_`前缀后接子表对象API名称，再用下划线继续拼接子表对象上的关联字段API名称来表示要查询子表对象信息，在该节点后面配置的是希望返回结果中包含子表对象的哪些字段信息；这里并没有为子表查询配置别名，所以返回结果也会是比较沉长的节点名称。
+
+如果想了解更多关于华炎魔方GraphQL接口语法，请查看 [GraphQL API 向导](https://www.steedos.cn/docs/developer/graphql-api) 。
+
+### 开发JsReport报表
+
+#### 新建相关文件
+
+在报表设计器中我们首先新建一个名为`meeting`的项目文件夹，然后在其内新建一个名为`week` 的文件夹，用于存放上述提到的本周会议日程报表相关文件。
+
+接下来我们就可以在`week`文件夹中新建相关报表代码文件来实现报表功能了：
+
+* main：通过新建一个tempate文件来实现，可以随意命名，这里我们命名为main。
+* script：通过新建一个script文件来实现，可以随意命名，这里我们命名为script
+* helpers.js：通过新建一个asset文件来实现，可以随意命名，这里我们命名为helpers.js，注意需要以.js后缀
+* styles.css：通过新建一个asset文件来实现，可以随意命名，这里我们命名为styles.css，注意需要以.css后缀
+
+有时我们需要引用第三方库js或css资源文件，比如jquery.js、bootstrap.min.css、qrcode.js等，这些资源文件是所有报表共享的，我们可以单独放入某个文件夹中。
+
+这里我们新建文件夹`static`来存放可能用到的第三方资源文件以及需要共享的静态图片文件，并把`css/bootstrap.min.css`放入其中。
+
+
+:::info
+注意所有的静态文件必须是`asset`文件，我们发现只能通过新建`asset`文件来添加。
+
+:::
+
+以下是我们本次需要新建的相关文件截图：
+
+ ![](https://console.steedos.cn/api/files/images/FcgmEg9nA39jwbYju)以上文件新建好后，我们需要把文件之间的关联关系等属性配置好，否则它们无法正常工作，接下来我们来配置这些文件属性。
+
+要配置文件属性，请在报表设计器中选中该文件，然后就可以在底下”Properties”栏配置该文件属性了。
+
+#### 配置文件属性
+
+main文件是报表模板文件，在这里我们编写html代码以展示报表内容及样式。
+
+* engine：选择模板引擎，`jsreport`默认使用`handlebars`作为模板引擎，也支持其他模板引擎比如`jsrender`，其语法请参考各自官网，我们这里使用`handlebars`，语法请参考 <https://handlebarsjs.com/>。
+* recipe：这里可以选择报表运行后最终输出什么文件格式，默认为`chrome-pdf`会输出为pdf文件，可以选择输出其他格式比如docx、pptx、html、image等，详情请参考 <https://jsreport.net/learn/recipes>。
+* script：模板文件只能编写输出内容及样式，其本身并不自带数据源，必须在这里配置好模板文件需要引用的脚本文件，我们可以在脚本文件中编写请求华炎魔方接口抓取数据的逻辑来为模板文件提供所需数据。
+* main文件的其他属性一般不需要配置，使用默认配置即可。
+
+其他文件比如`script、helpers.js`都有各自可配置的属性，一般也不需要配置，如需配置请移步jsreport官网查看详细说明。
+
+ ![](https://console.steedos.cn/api/files/images/5tctcEpHphtjNEbkb)
+
+#### 编写脚本文件代码
+
+以下是实现示例需求需要在脚本文件`meeting/week/script`中编写的代码。
+
+通过定义`beforeRender`函数，在该函数中重写或扩展参数`req.data`值即可根据实际需求为模板文件提供特定业务逻辑的数据源。我们在该函数中调用华炎魔方的GraphQL接口，一次性查询出会议相关的所有关联数据供报表打印。
+
+为了可以直接在报表设计器中运行看效果，以下代码把需要传入的参数默认值配置为可用于调式运行的参数值了，包括华炎魔方ROOT_URL地址，用于校验当前登录用户的token等。
+
+```javascript
+const axios = require('axios');
+
+function getQuery(userId) {
+    return JSON.stringify({
+        query: `query{
+            meeting__c(filters:[["staff__c", "=", "${userId}"], ["start__c", "between", "this_week"]]){
+                name
+                type__c
+                meeting_room__c__expand{
+                    name
+                }
+                _display{
+                    start__c
+                    end__c
+                }
+                staff__c__expand{
+                    name
+                    spaceuser: _related_space_users_user{
+                        position
+                    }
+                }
+                _related_meeting_participants__c_meeting__c{
+                    name
+                    company__c
+                }
+            }
+        }`
+    });
+}
+
+function getConfig(graphql_url, authorization, userId) {
+    return {
+        method: 'post',
+        url: graphql_url,
+        headers: {
+            'Authorization': authorization,
+            'Content-Type': 'application/json'
+        },
+        data: getQuery(userId)
+    };
+}
+
+
+
+// add jsreport hook which modifies the report input data
+async function beforeRender(req, res) {
+    const graphql_url = req.data.graphql_url || "http://localhost:5000/graphql";
+    const authorization = req.data.authorization || "Bearer KCBjAEGRNQbfMBSpu,24ff204195b4b675aa1f42c33d2a76ee63a8dceb4f0c0a4a00e27a1b58645f1db442cb658e1af1fa72cb77";
+    const userId = req.data.userId || "9kBGn8ojZ6jnRPTix";
+    const userName = decodeURIComponent(req.data.userName || '王总');
+    const config = getConfig(graphql_url, authorization, userId);
+    const resData = await axios(config);
+    req.data.data = Object.assign({} ,resData.data.data,{userName: userName});
+}
+```
+
+
+:::info
+上面`beforeRender`函数中用于调式的`authorization`变量值可以在chrome浏览器上访问华炎魔方，然后查询浏览器的network请求，比如`api/v4/users/validate`接口，该接口的请求标头中就可以看到名为`Authorization`的字段信息，复制其值即可；同样的`userId`变量值可以复制请求标头的`X-User-Id`字段值即可。
+
+:::
+
+#### 编写模板文件代码
+
+以下是实现示例需求需要在模板文件`meeting/week/main`中编写的代码。
+
+通过在`<head>`中通过`#asset`可以引入第三方静态资源及当前报表的样式文件。
+
+模板中`#each` 是handlebarsjs中提供的内置Helper函数，用于循环数组，详情请考 <https://handlebarsjs.com/guide/builtin-helpers.html#each>。
+
+模板中要引用变量，包括引用Helper函数，都需要用两层大括号包裹。
+
+`data.meeting__c`是之前脚本文件中输出的华炎魔方GraphQL接口返回的会议列表数据。
+
+```yaml
+<html lang="zh-CN" >
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        {#asset /meeting/static/css/bootstrap.min.css @encoding=utf8}
+        {#asset styles.css  @encoding=utf8}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">
+            {{#if data.meeting__c.length }}
+            <h3>{{data.userName}}的本周会议日程</h3>
+            {{else}}
+            <h3>本周无会议</h3>
+            {{/if}}
+        </div>
+        {{#each data.meeting__c}}
+        <div class="box">
+            <table class="table table-bordered">
+                <tr>
+                    <th style="width: 20%" class="text-align">会议主题</th>
+                    <td colspan="2">{{name}}</td>
+                </tr>
+                <tr>
+                    <th class="text-align">会议室名称</th>
+                    <td colspan="2">{{meeting_room__c__expand.name}}</td>
+                </tr>
+                <tr>
+                    <th class="text-align">开始时间</th>
+                    <td colspan="2">{{_display.start__c}}</td>
+                </tr>
+                <tr>
+                    <th class="text-align">结束时间</th>
+                    <td colspan="2">{{_display.end__c}}</td>
+                </tr>
+                <tr>
+                    <th rowspan={{rowspanAddOne staff__c__expand.length}} class="text-align middle">内部参会人员</th>
+                    <th style="width: 40%">姓名</th>
+                    <th style="width: 40%">职务</th>
+                </tr>
+                {{#if staff__c__expand.length }}
+                {{#each staff__c__expand}}
+                <tr>
+                    <td >{{name}}</td>
+                    <td >{{position spaceuser}}</td>
+                </tr>
+                {{/each}}
+                {{else}}
+                <tr>
+                    <td >&ensp;</td>
+                    <td >&ensp;</td>
+                </tr>
+                {{/if}}
+
+                <tr>
+                    <th rowspan={{rowspanAddOne _related_meeting_participants__c_meeting__c.length}} class="text-align middle">外部参会人员</th>
+                    <th>姓名</th>
+                    <th>单位</th>
+                </tr>
+                {{#if _related_meeting_participants__c_meeting__c.length }}
+                {{#each _related_meeting_participants__c_meeting__c}}
+                <tr>
+                    <td >{{name}}</td>
+                    <td >{{company__c}}</td>
+                </tr>
+                {{/each}}
+                {{else}}
+                <tr>
+                    <td >&ensp;</td>
+                    <td >&ensp;</td>
+                </tr>
+                {{/if}}
+            </table>
+        </div>
+        {{/each}}
+    </div>
+</body>
+</html>
+```
+
+#### 编写Helper函数代码
+
+在上述模板文件中我们用到了内置Helper函数`#each` ,其他内置函数还有`#if,#with`等，详情请参考文档 <https://handlebarsjs.com/guide/builtin-helpers.html>。
+
+内置函数都是以符号`#`前缀命令的，我们也可以编写自定义Helper函数，编写的自定义函数可以直接在模板中引用，不需要加`#`前缀。
+
+我们在文件`meeting/week/helpers.js`中编写的代码，增加一个调式函数，用于直接打印出`data`数据方便确认返回值是否正常，其他函数是上面模板文件中实际用到的功能函数。
+
+```javascript
+function jsonStringify (data) {
+  return JSON.stringify(data);
+}
+// 参会人员 纵向合并单元格所需数值
+function rowspanAddOne(num){
+    return num ? ++num : 2;
+}
+// 职务 
+function position(spaceuser){
+    return spaceuser[0].position;
+}
+```
+
+要想上面定义的Helper函数`jsonStringify`在模板文件`meeting/week/main`中正常引用，需要先选中该模板文件，并在文件底部的输入框中增加`#asset`语句`{#asset helpers.js @encoding=utf8}`来引入该Helper文件。
+
+然后我们就可以模板文件中输入`{{jsonStringify data}}`来调用该函数并最终输出data参数的文本格式。
+
+ ![](https://console.steedos.cn/api/files/images/nefcbyqStnX99fQP9)
+
+#### 编写样式文件代码
+
+以下是实现示例需求需要在样式文件`meeting/week/styles.css`中编写的代码。
+
+在该文件中可以按实际需求编写报表需要打印出的样式。
+
+```css
+.text-align{
+    text-align: center;
+}
+.table-bordered tr .middle{
+    vertical-align:middle;
+}
+/* 分屏所需代码，还需调整main中的相关内容。
+.box{
+    border: 1px solid white;
+    height: 1056px;
+    padding: 20px;
+}
+*/
+```
+
+注意该样式文件要想生效，必须在模板文件的`<head>`中通过`{#asset styles.css  @encoding=utf8}`来引用。
+
+#### 运行测试报表效果
+
+以上开发jsreport报表过程中，可以随时点击报表设计器中的“Run”按钮来测试开发效果，经过上述描述的开发过程，我们点击“Run”按钮应该能看到报表设计器右侧正常显示出一个PDF表格报表，其内展示了id值为`9kBGn8ojZ6jnRPTix`的用户本周会议日程，否则就是有代码编写有误，需要调式和修正相关代码。
+
+### 用户操作按钮开发
+
+经过上面的开发步骤，我们已经按需求把报表功能开发出来了，接下来我们需要在华炎魔方人员详细记录界面上增加一个“本周会议”按钮，让用户可以通过点击该按钮来打开我们上面开发好的报表。
+
+ ![](https://console.steedos.cn/api/files/images/sCQfgyAbwRSN5kBJg)
+
+要想给人员对象记录详细界面添加按钮，需要在人员` space_users`对象文件夹下建一个`buttons`文件夹，并新建两个文件 `week.button.yml` 和 `week.button.js`，它们分别是按钮的配置文件和脚本文件，不过我们推荐使用VSCODE编辑器，找到刚新建的`buttons`文件夹，鼠标右键点击菜单`Steedos:Create Object Button`来自动创建这两个文件，并把它们改为以下内容：
+
+ ![](https://console.steedos.cn/api/files/images/z9iYsb2GtZZggiQ7B)
+
+`steedos-packages/meeting-examples/main/default/objects/space_users/buttons/week.button.yml`：
+
+```javascript
+name: week
+is_enable: true
+label: 本周会议
+'on': record_only
+sort: 0
+visible: true
+```
+
+该文件中的 `'on'` 表示按钮显示在界面什么位置上， `sort`表示按钮排列的先后位置。
+
+其中`on`属性可选参数有：
+
+* list: 只显示在列表右上角;
+* record: 显示在记录查看页右上角，以及列表视图中每项的下拉菜单中;
+* record_more: 显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中;
+* list_item: 只显示在列表视图中每项的下拉菜单中;
+* record_only: 只显示在记录查看页右上角;
+* record_only_more: 只显示在记录查看页右上角的“更多”下拉菜单中"
+
+\
+`steedos-packages/meeting-examples/main/default/objects/space_users/buttons/week.button.js`：
+
+```javascript
+module.exports = {
+    week: function (object_name, record_id) {
+        var currentRecord = Creator.getObjectRecord();
+        var userId = currentRecord.user._id;
+        var userName = currentRecord.name;
+        const moment = require('moment')
+        moment.locale('zh-cn');
+        const time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+        const fileName = `本周会议-${userName}-${time}.pdf`;
+        Steedos.JSReport.preview(fileName,{ "name" : "/meeting/week/main"  }, {userId: userId, userName: encodeURIComponent(userName)})
+    },
+    weekVisible: function () {
+        // 返回 true，显示按钮； 返回 false， 隐藏按钮。
+        return true;
+    }
+}
+```
+
+该文件中的`Creator.getObjectRecord`函数用于获取当前记录信息，您可以在运行华炎魔方项目后进入某条记录详细页面，然后打开浏览器控制台，在其中输入并执行该函数即可查看该函数的运行结果。
+
+我们注意到上面把“在新窗口中打开对应的报表”逻辑封装成了一个全局函数`Steedos.JSReport.preview`，后续有其他需求要增加按钮并打开相关报表也可以调用该函数。
+
+华炎魔方元数据包文件夹中的所有`.client.js`后缀的文件都会自动加载，我们在会议软件包`meeting-examples`的元数据文件夹下增加一个client文件夹用于存放客户端脚本文件，并在其中新建一个`jsreport.client.js` 文件用于编写与jsreport报表相关的业务逻辑 。
+
+`steedos-packages/meeting-examples/main/default/client/jsreport.client.js` ：
+
+```javascript
+Steedos.JSReport = {};
+
+Steedos.JSReport.preview = function(filename, template, data, options){
+    var userSession = Creator.USER_CONTEXT;
+    var spaceId = userSession.spaceId;
+    var authToken = userSession.authToken ? userSession.authToken : userSession.user.authToken;
+    let authorization = "Bearer " + spaceId + "," + authToken;
+    const url = Steedos.absoluteUrl(`/api/report/${encodeURIComponent(filename)}`);
+    window.open(`${url}?q=` + window.btoa(JSON.stringify({
+        "template": template,
+        "data" : Object.assign({authorization: authorization}, data),
+        "options": options
+    })))
+}
+```
+
+该文件中调用了全局变量`Creator.USER_CONTEXT` 这是目前华炎魔方内置的保存当前登录用户信息的全局变量，我们看到`Steedos.JSReport.preview`函数封装了新窗口中打开报表功能，默认传入了登录验证信息，也支持给报表传入额外的参数。
+
+### 报表代理接口开发
+
+上面`Steedos.JSReport.preview`函数实现了新窗口中打开链接`/api/report/`，但是这个链接并没有内置到华炎魔方，我们需要手动创建一个路由来实现该接口功能。
+
+请在会议软件包`meeting-examples`的元数据文件夹下新建路由文件`routes/report.router.js`。
+
+你也可以通过VSCODE编辑器通过菜单”查看→命令面板”来打开命令面板，然后点击\`Steedos:Creator Router\`来创建一个路由文件。
+
+ ![](https://console.steedos.cn/api/files/images/98pqWbX84Q9iK5iM6)
+
+`steedos-packages/meeting-examples/main/default/routes/report.router.js`  :
+
+```javascript
+const express = require("express");
+const router = express.Router();
+const http = require('http');
+const objectql = require('@steedos/objectql');
+
+router.get('/api/report/:filename', async function (req, res) {
+    const query = req.query;
+    const bodyStr = Buffer.from(query.q, 'base64').toString('utf-8');
+    const body = JSON.parse(bodyStr);
+    const config = objectql.getSteedosConfig();
+    body.data.graphql_url = Steedos.absoluteUrl('/graphql');
+    body.data.root_url = Steedos.absoluteUrl();
+    const url = `${config.public.webservices.jsreport.url}/api/report`;
+    const proxyReq = http.request(url, {
+        method:'POST', 
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    } ,remoteRes => remoteRes.pipe(res));
+    proxyReq.write(JSON.stringify(body));
+    proxyReq.end();
+});
+exports.default = router;
+```
+
+以上路由文件定义了一个接收`filename`参数的API接口，在该接口中通过`http`请求代理中转了`jsreport`的报表接口。
+
+其中`objectql.getSteedosConfig`函数可获取魔方项目根目录下的配置文件`steedos-config.yml`中配置的参数值，`${config.public.webservices.jsreport.url}/api/report`值最终取值为`http://localhost:5488/api/report`，它是`jsreport`提供的报表接口URL，我们上面编写的路由代码只是接收参数中转了`jsreport`的接口请求并没有其他额外的业务逻辑。
+
+
+:::info
+为什么要写代理接口来中转jsreport api接口而不直接在前端按钮点击事件中访问jsreport接口：因为jsreport只支持POST而不支持GET请求，而我们很难甚至无法做到打开一个浏览器新窗口来发送一个POST请求的URL地址。
+
+:::
+
+### 环境变量配置
+
+上一节华炎魔方报表代理接口中用到了系统参数`public.webservices.jsreport.url`，其值指向了环境变量`JSREPORT_URL`，所以我们需要在环境变量中额外多配置下该变量值，其值为jsreport报表访问地址。
+
+```
+#jsreport报表
+JSREPORT_URL=http://localhost:5488
+```
+
+### 运行示例报表
+
+经过上述开发及配置步骤，我们就已经完整实现了示例需求，现在我们只要在示例的华炎魔方项目中，打开新的命令行窗口并`cd`到报表项目文件夹，即`jsreport-app`文件夹，然后运行`yarn start`即可运行示例报表项目。
+
+因为最后我们在示例华炎魔方项目中改了代码来增加“本周会议”按钮，所以我们还需要在之前华炎魔方命令行窗口停掉之前跑起来的华炎魔方项目，并在其目录中再次运行`yarn start`来重启华炎魔方项目。
+
+最后，我们在浏览器中输入地址\`<http://localhost:5000/>\`来访问重启后的华方魔方项目，进入“办公”应用，点击“人员”导航栏，并进一步点击进入某个人员记录详细界面，在其右上角找到“本周会议”按钮，点击它即可打开一个展示了该人员本周会议日程的PDF文件，并且可以点击该PDF文件窗口右上角的打印按钮来打印出这份日程报表。
+
+ ![](https://console.steedos.cn/api/files/images/qRdhtNyNdFQNKQuEi)
+
+### 关于报表数据权限
+
+以上示例在jsreport中调用华炎魔方GraphQL接口来抓取数据，而GraphQL能识别当前登录用户信息并只返回该用户有权限查看的数据，所以您不需要额外做任何开发或配置，按上述示例一样开发就已经默认实现了数据权限相关控制。
+
+## 示例源码
+
+上述开发过程中提到的示例我们已整理成源码放入到我们的 [开源示例仓库](https://github.com/steedos/steedos-examples) 中了，需要的话可以前往克隆并在本地运行。
+
+## 案例简示
+
+以下列举了部分案例效果图：
+
+**进度统计**
+
+如下图所示，使用javascript开发出项目实时进度表格，通过JsReport可以把该表格集成到华炎魔方，并使表格中显现出来源于华炎魔方Graphql接口中的真实数据。
+
+\
+ ![](https://console.steedos.cn/api/files/images/XoRS8pCAaPPpZaLHv)
+
+\
+**合同汇总**
+
+如下图所示，使用javascript开发出合同在各种状态下的汇总数据表格，通过JsReport可以把该表格集成到华炎魔方，并使表格中显现出来源于华炎魔方Graphql接口中的真实数据。
+
+\
+ ![](https://console.steedos.cn/api/files/images/eSmaxE4tZSmEcSvQs)
+
+\
+**单据打印**
+
+如下图所示，使用javascript开发出各种样式的单据界面，通过JsReport可以把该单据集成到华炎魔方，并使单据中显现出来源于华炎魔方Graphql接口中的真实数据。                                                                                                     ![](https://console.steedos.cn/api/files/images/2fhkvoPLxWxb6C8sA)                                                                                                      ![](https://console.steedos.cn/api/files/images/ire7DiAZ6s2uZxq5u)
+
+ ![](https://console.steedos.cn/api/files/images/T223vGbuRSjgeg8nC)                                                                                                         ![](https://console.steedos.cn/api/files/images/cNpEHnyQYnCyqf4Rb)
+
+\
+\

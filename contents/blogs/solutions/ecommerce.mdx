@@ -1,0 +1,128 @@
+---
+title: 在线商城解决方案
+description: 华炎魔方电子商务解决方案基于最新的云原生技术架构，为企业提供品牌建立及商城管理，通过华炎魔方一站式电商 SaaS 平台，让您的线上业务拓展更高效精准。
+---
+
+## 解决方案概览
+
+华炎魔方电子商务解决方案为企业提供品牌建立及商城管理，通过华炎魔方一站式电商 SaaS 平台，让您的线上业务拓展更高效精准。
+
+ ![](https://console.steedos.cn/api/files/images/SS49ZhhQNaXDEkvrz)
+
+* 商城后端使用华炎魔方搭建，基于nodejs语言运行，使用mongodb数据库。
+* 商城前端基于 nextjs，使用react开发页面，并可使用 serverless 技术无服务部署。
+
+系统商城后台基于华炎魔方设计，可以实现灵活的自定义，并可在商城管理的基础上，进一步扩展CRM、采购管理、仓库管理、财务管理等功能。
+
+### Next.js 服务端渲染
+
+Next.js 是一个用于 生产环境的 React 框架，为您提供生产环境所需的所有功能以及最佳的开发体验：包括静态及服务器端融合渲染、 支持 TypeScript、智能化打包、 路由预取等功能 无需任何配置。
+
+* 直观的、 [基于页面](https://www.nextjs.cn/docs/basic-features/pages) 的路由系统（并支持 [动态路由](https://www.nextjs.cn/docs/routing/dynamic-routes)）
+* [预渲染](https://www.nextjs.cn/docs/basic-features/pages#pre-rendering)。支持在页面级的 [静态生成](https://www.nextjs.cn/docs/basic-features/pages#static-generation-recommended) (SSG) 和 [服务器端渲染](https://www.nextjs.cn/docs/basic-features/pages#server-side-rendering) (SSR)
+* 自动代码拆分，提升页面加载速度
+* 具有经过优化的预取功能的 [客户端路由](https://www.nextjs.cn/docs/routing/introduction#linking-between-pages)
+* [内置 CSS](https://www.nextjs.cn/docs/basic-features/built-in-css-support) 和 [Sass 的支持](https://www.nextjs.cn/docs/basic-features/built-in-css-support#sass-support)，并支持任何 [CSS-in-JS](https://www.nextjs.cn/docs/basic-features/built-in-css-support#css-in-js) 库
+* 开发环境支持 [快速刷新](https://www.nextjs.cn/docs/basic-features/fast-refresh)
+* 利用 Serverless Functions 及 [API 路由](https://www.nextjs.cn/docs/api-routes/introduction) 构建 API 功能
+* 完全可扩展
+
+### Serverless 无服务架构
+
+> 今天大多数公司在开发应用程序并将其部署在服务器上的时候，无论是选择公有云还是私有的数据中心，都需要提前了解究竟需要多少台服务器、多大容量的存储和数据库的功能等。并需要部署运行应用程序和依赖的软件到基础设施之上。假设我们不想在这些细节上花费精力，是否有一种简单的架构模型能够满足我们这种想法？这个答案已经存在，这就是今天软件架构世界中新鲜但是很热门的一个话题——Serverless（无服务器）架构。
+
+Serverless（无服务器架构）指的是由开发者实现的服务端逻辑运行在无状态的计算容器中，它由事件触发， 完全被第三方管理，其业务层面的状态则被开发者使用的数据库和存储资源所记录。
+
+Serverless 是云原生技术发展的高级阶段，使开发者更聚焦在业务逻辑，而减少对基础架构的关注。
+
+华炎魔方商城基于Serverless（无服务器架构）构建，只需按使用的计算时间付费，因此您永远不会为过度预置的基础设施付费。按代码执行时间 （以每毫秒为单位）和代码触发次数收费。
+
+* **免运维**：不需要管理服务器主机或者服务器进程。
+* **弹性伸缩**：根据负载进行自动规模伸缩与自动配置。伸缩范围零到无穷大。
+* **按需付费**：根据使用情况决定实际成本。
+* **高可用**：具备隐含的高可用性。
+
+## 商城后端
+
+使用华炎魔方开发的商城后端，内核基于元数据驱动，可以轻松实现个性化定制。
+
+### 网站管理
+
+管理网站的基本信息、域名、菜单。
+
+* **站点**：管理员可以动态创建网站，设定站点名称、Logo等信息。
+* **域名**：可以为站点配置多个域名，对应生产环境、测试环境、开发环境。
+* **菜单**：可设置网站的顶部导航菜单和底部导航菜单，菜单支持多级。
+
+ ![](https://console.steedos.cn/api/files/images/zJEHTfT3Pn9KDtoh4)
+
+### 内容管理
+
+管理网站的页面、图片、视频、新闻等信息。提供所见即所得的页面，编辑网站内容。
+
+* **频道**：可以为站点设置频道，设置频道子菜单。
+* **文章**：使用所见即所得的界面编辑页面，页面可以发布到指定频道中。
+* **图片**：图片可以上传到文章中，也可以粘贴到编辑器中，系统会自动上传并保存为图片。
+* **视频**：管理站点中播放的视频，视频标题、封面图片等信息。可以在文章中引用视频。
+
+ ![](https://console.steedos.cn/api/files/images/pjSvsLqvuR4yYtR8K)
+
+\
+### 产品管理
+
+管理和维护产品信息。
+
+* **产品**：设置产品名称、描述、轮播图、视频、摘要等信息，配置产品的多属性（例如颜色、尺码等）。
+* **产品变量**：根据产品的多属性，配置具体的产品变量，管理SKU、价格、条形码、库存等信息。对于订阅类产品，维护订阅时长，用户数限制。
+* **产品分类**：将产品划分到不同的分类分别展示，每个产品属于一个分类。
+* **产品系列**：将产品划分到不同的系列分别展示，每个产品可以属于多个产品系列。
+* **产品评价与评分**：浏览并审核网站用户对产品的评价与评分。
+
+\
+ ![](https://console.steedos.cn/api/files/images/HgkLgdiefbiqjjq7g)
+
+### 订单管理
+
+管理和维护订单信息。
+
+* **客户**：查看客户信息，查看客户历史订单。
+* **订单**：查看商城提交的订单、订单明细。查看订单号、订单金额、订单状态、付款状态。
+* **订阅订单**：对于订阅类产品，查看相关的订阅订单，包括订阅的用户数和到期日期。
+* **调整订单价格**：管理员可以在后端调整订单价格。
+* **订单审核**：可以配置批准过程，对于符合条件的订单自动执行审核流程。
+
+ ![](https://console.steedos.cn/api/files/images/Xdo8vsoWWx565JRNJ)
+
+## 商城前端
+
+商城前端基于 React 开发，通过GraphQL接口与华炎魔方服务端交互数据。可以实现 100% 的个性化定义。
+
+### 注册/登录
+
+用户可以用手机号注册商城账户，使用手机验证码登录。
+
+ ![](https://console.steedos.cn/api/files/images/dyZH3ysdiyNkXmJxm)
+
+### 商城首页
+
+根据商城后端配置的内容，系统自动生成商城首页，包括顶部公告、主菜单、首页正文和底部菜单。
+
+* **顶部公告**：如果配置了顶部公告，在商城顶部显示。
+* **主菜单**：根据后台配置的菜单，显示主导航菜单。
+* **首页内容**：可根据服务端配置的内容展示，也可以自定义代码展示。
+
+ ![](https://console.steedos.cn/api/files/images/ihdBQvWWjrCyxo292)
+
+### 产品购买
+
+按分类、按产品集合浏览产品，查看产品详情并下单。
+
+* 按产品分类浏览
+* 按产品集合浏览
+* 查看产品详情，选择产品变量（例如颜色、尺码）
+* 添加到购物车
+* 购买并支付（微信支付、支付宝）
+
+ ![](https://console.steedos.cn/api/files/images/Pa5EhspzqELg7cFAJ)
+
+\

@@ -43,16 +43,15 @@ async function fetchGraphql(query) {
     return json
 }
 
-async function getCollections(siteId){
+async function getBlogs(siteId){
   //TODO：按站点获取数据 , filters:["site","=","${siteId}"]
   const query = `
   {
-      document_collections(sort: "sort_no"){
+      site_blogs {
           _id,
           slug,
           name,
-          description,
-    			documents: _related_documents_collection(sort: "sort_no"){
+    			posts: _related_site_posts_blog{
             _id,
             slug,
             name,
@@ -65,23 +64,23 @@ async function getCollections(siteId){
   `
   const result = await fetchGraphql(query);
 
-  let collections = null;
+  let site_blogs = null;
 
-  if(result.data && result.data.document_collections){
-    collections = result.data.document_collections;
+  if(result.data && result.data.site_blogs){
+    site_blogs = result.data.site_blogs;
   }
 
-  return collections;
+  return site_blogs;
 }
 
 async function sync(){
-  const collections = await getCollections();
-  console.log(collections)
-  collections.forEach(collection => {
-    const dirname = path.join(process.cwd(), 'contents', 'docs', collection.slug)
+  const site_blogs = await getBlogs();
+  console.log(site_blogs)
+  site_blogs.forEach(blog => {
+    const dirname = path.join(process.cwd(), 'contents', 'blogs', blog.slug)
     if (!fs.statSync(dirname, {throwIfNoEntry:false}))
       fs.mkdirSync(dirname)
-    collection.documents.forEach(doc => {
+    blog.posts.forEach(doc => {
       const filename = path.join(dirname, doc.slug + '.mdx')
       const content = 
 `---

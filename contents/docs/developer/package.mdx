@@ -1,0 +1,321 @@
+---
+title: 软件包发布与安装
+description: null
+---
+
+在华炎魔方中通过定义软件包，可以将复杂的项目需求拆分成多个子模块分别由不同的团队开发，对于开发好的软件包，可以发布成npm包以便在项目中引用。
+
+软件包发布后还可以选择在华炎魔方应用市场售卖，无论是华炎云上还是私有部署的魔方项目，要安装您发布到应用市场中的软件包都必须按您规定的价格来购买才能安装和使用。
+
+## 关于软件包
+
+华炎魔方基于 nodejs 标准的 npm 规范定义软件包，元数据可以在可视化界面中进行修改，然后使用Steeods VS Code插件同步到软件包，实现版本管理，并进一步编写代码、调试、测试、打包、部署。
+
+[                    ![软件包&元数据 示意图](https://console.steedos.cn/api/files/images/duh3tECd387Sz5i8J "软件包&元数据 示意图")](https://console.steedos.cn/api/files/images/duh3tECd387Sz5i8J)
+
+### 软件包目录结构
+
+每个软件包至少包含以下内容：
+
+* `package.json`：基于 npmjs 标准规范，定义软件包的信息， 用于描述软件包名称、版本、依赖的软件包信息。具体参考 <https://docs.npmjs.com/cli/v7/configuring-npm/package-json>
+* `package.service.js`：软件包微服务，是一个遵循 Moleculer 规范的微服务定义文件，可以编写代码，控制软件包加载时、启动、停止时执行的操作。具体参考： <https://moleculer.services/docs/0.14/services.html>
+* `main/default`文件夹：包含软件包中具体的内容，包括元数据、触发器、服务端路由、自定义脚本等等。
+
+### 多软件包模式
+
+华炎魔方项目根目录有一个文件夹`steedos-app`，这个文件夹中定义了一个名为`steedos-app-default`的默认软件包。
+
+一个华炎魔方项目是可以定义多个软件包的，在文件夹`steedos-packages`中的每个子文件夹就是一个软件包，多软件包模式的魔方项目软件包文件目录结构为：
+
+```bash
+my-app
+├── steedos-app
+├── steedos-packages
+    ├── package1
+    ├── package2
+    └── package3
+```
+
+我们推荐使用多软件包的方式开发华炎魔方项目。
+
+### 创建软件包
+
+可以把项目根目录的 `steedos-app` 文件夹复制下来并粘贴到 `steedos-packages` 文件夹中，并执行以下操作来创建一个新的软件包。
+
+* 修改软件包文件夹名称
+* 修改软件包名称，即软件包文件夹中 `package.json` 文件中的“name”属性。
+
+### 切换默认软件包
+
+如需要切换当前开发的软件包，需要先在 `.env.local` 或 `.env`文件中配置以下环境变量来变更默认软件包的位置，或者您也可以使用VSCODE编辑器的“查看→命令面板”中的`set Default Package Path`命令来自动创建相关环境变量：
+
+```json
+[package] 
+DEFAULT_PACKAGE_PATH=steedos-packages/project #配置为相关软件包目录
+```
+
+### 软件包配置文件
+
+项目根目录有个 `.steedos` 文件夹，该文件夹是一个独立的 NPM 项目，在该项目中可以定义要在华炎魔方项目中引用哪些软件包。
+
+* **.steedos/package.json**：这是 NPM 项目的配置文件，可以在`dependencies`中定义要安装哪些软件包到本地。
+* **.steedos/steedos-packages.yml**：在该文件中可以配置当前华炎魔方项目要引用哪些软件包，包括之前在`package.json`文件依赖项中定义的软件包也需要在这里引用才能生效。
+
+  每个软件包可以定义的属性说明如下：
+
+  ```javascript
+  '@steedos-labs/oa': # 软件包名称
+    enable: true #是否启用该软件包
+    version: 2.1.20 # 软件包版本号
+    description: '' # 软件包备注
+    local: false # 是否是本地项目下的软件包，只要不是安装到`.steedos/node_modules`文件夹下的软件包都应该设置为true
+    path: .steedos/node_modules/@steedos-labs/oa #软件包所在文件目录，所有软件包都必须在这里填写软件包所在硬盘目录
+  ```
+
+### 重新加载软件包
+
+通常来说我们会在以下情况下需要重新加载软件包：
+
+* 在开发过程中为软件包编写了代码需要测试相关开发成果。
+* 通过Git源码管理工具更新了其他团队成员提交到Git仓库中的代码后，在不重启项目的情况下让更新到的代码生效。
+* 软件包安装或升级后加载异常。
+
+请在“设置”应用中进入“应用程序→软件包”界面，在软件包列表找到要重新加载的软件包，然后点击其右侧下拉菜单并在展开的菜单中点击“重新加载”菜单来重新加载软件包。
+
+## 软件包开发
+
+下面我们简单描述下软件包的开发过程，以下描述均假设我们已经按教程 [开通华炎魔方云服务](/docs/deploy/deploy-cloud) 注册好了云服务账户，然后按教程 [开发环境部署 - Windows](/docs/deploy/deploy-windows) 或 [开发环境部署 - Mac](/docs/deploy/deploy-mac) 安装好了华炎魔方开发环境。
+
+### 创建魔方项目
+
+让我们先使用命令行`npx create-steedos-app test-package`创建一个空的魔方项目并使用VSCODE编辑器打开该项目。
+
+### 创建软件包
+
+这里假设我们需要开发一个名为`project`的项目管理的软件包，可以把项目根目录的 `steedos-app` 文件夹复制下来并粘贴到 `steedos-packages` 文件夹中，并执行以下操作来创建一个新的软件包。
+
+* 修改软件包文件夹名称为`project`。
+* 修改软件包名称，即软件包文件夹中 `package.json` 文件中的“name”属性值为`project`。
+
+因为华炎魔方是基于 nodejs 标准的 [npm](https://www.npmjs.com/) 规范来定义软件包的，所以我们也可以在软件包文件夹`steedos-packages`中新建一个子文件夹`project`，然后`cd`到该文件夹，并执行命令`npm init`来初始化项目的方式来创建一个软件包，不过我们依然需要从默认软件包文件夹`steedos-app`中把名为`package.service.js`的微服务配置文件复制该文件夹中。
+
+### 运行项目
+
+在运行项目前，我们需要在项目根目录执行`yarn`安装项目依赖包，并把云服务上注册好的魔方ID和私有部署ApiKey配置到`.env.local` 或 `.env`文件中：
+
+```bash
+STEEDOS_CLOUD_SPACE_ID=#在此填入华炎云上新建的私有部署记录中的魔方ID
+STEEDOS_CLOUD_API_KEY=#在此填入华炎云上新建的私有部署记录中的API Key
+```
+
+然后我们命令行执行`yarn start`，在跑起服务后就可以在浏览器上访问该魔方项目了。
+
+### 需求开发
+
+为方便演示，我们在“对象设置→对象”界面上简单新建一个名为“项目”的对象，为其配置好相关字段后，在“应用程序→选项卡”界面新建一个选项卡指向该对象，最后在“应用程序→应用程序”界面新建一个应用配置上该选项卡用于展示该对象数据。
+
+ ![](https://console.steedos.cn/api/files/images/unt7trJ2YdwHyZtGa)
+
+### 同步为代码
+
+软件包需求开完完成后，只能同步为代码才能发布，要同步为代码，我们需要打开VSCODE编辑器中的Steedos插件面板，并点击右上角的刷新按钮来浏览界面上的元数据。
+
+ ![](https://console.steedos.cn/api/files/images/i5hMDcDrKNNGs2qhi)
+
+如果未配置元数据同步相关的环境变量的话，点击右上角的刷新按钮会报错`Please run command, steedos source:config`，我们只要在`.env.local` 或 `.env`文件中把以下相关环境变量配置上，或者在项目命令行上运行指令`steedos source:config`在向导中配置相关环境变量即可。
+
+```bash
+[metadata]
+METADATA_SERVER=http://localhost:5000 #配置为访问华炎魔方的URL
+METADATA_APIKEY=#在此填入华炎云上新建的私有部署记录中的API Key
+```
+
+接下来我们在Steedos插件面板上找到刚在界面上新建的应用、对象和选项卡元数据，点击其右侧的下载按钮即可把代码同步到项目本地文件夹。
+
+需要注意的是我们这里需要把界面上配置的元数据同步到`steedos-packages/project`这个软件包目录中，而上面的操作会把代码同步到默认软件包`steedos-app`目录中并不是我们要的效果。
+
+所以我们需要先配置下以下环境变量来变更默认软件包的位置，或者您也可以使用VSCODE编辑器的“查看→命令面板”中的`setDefaultPackagePath`命令来自动创建相关环境变量：
+
+```bash
+[package]
+DEFAULT_PACKAGE_PATH=steedos-packages/project #配置为相关软件包目录
+```
+
+在配置该环境变量后，再点击Steedos插件面板上相关元数据右侧的下载按钮即可把代码同步到`project`这个软件包的目录下，而不是同步到默认软件包目录下。
+
+以下就是我们同步成功后的软件包文件目录，接下来我们需要发布的软件包内容也正是这个目录中的文件。
+
+ ![](https://console.steedos.cn/api/files/images/bgkMpmQjv4Xj7mkmW)在软件包发布前，您可以随意在软件包`steedos-packages/project`文件夹中进行华炎魔方低代码开发，软件包发布后的内容会包括该文件夹内的所有文件，而不是只包括我们刚刚同步下来的从界面上配置的元数据文件，华炎魔方低代码开发请参考 [开发人员快速向导](/docs/developer/getting-started)。
+
+## 公开软件包发布
+
+公开软件包是发布到 NPM官网，即 <https://www.npmjs.com/> 仓库。下面我们来简单介绍下如何发布一个公开软件包。
+
+### 注册账号
+
+登录 [NPM官网](https://www.npmjs.com/) 注册账号。 注册完后请点击右上角头像图标，并选择菜单“Profile → Organization”来创建一个组织。
+
+
+:::info
+组织名称将会在软件包名称中使用！
+
+:::
+
+### 软件包名称
+
+要发布的公开软件包必须用组织名称作为前缀来命名。
+
+例如：现有一个名为 test-oa-ldx 的软件包和一个名为 liaodx 的组织。 那么软件包内的`package.json`文件中把软件包名称从`test-oa-ldx`改为`@liaodx/test-oa-ldx`。
+
+修改软件包名称的同时请检查是否有以下属性内容，若无请添加。
+
+```yaml
+"publishConfig": {
+    "access": "public"
+}
+```
+
+### 登录NPM
+
+先执行命令 cd 到软件包根目录，然后执行 `npm login` 命令：
+
+```javascript
+$ npm login
+> Username: #npm账号 
+> Password: #npm密码
+> Email: # PUBLIC-EMAIL-ADDRESS，输入有效邮件地址即可
+```
+
+### 发布
+
+执行 `npm publish` 进行发布软件包。
+
+如果软件包已经发布过需要重新发布，需要修改软件包文件夹中 `package.json` 文件中的“version”为下一个版本来发布新版本的软件包。
+
+发布成功后您可以回到 [NPM官网](https://www.npmjs.com/)，在搜索栏中搜索软件包名称来查看刚发布的软件包。
+
+## 私有软件包发布
+
+华炎魔方申请了独立的私有npm仓库，并且自动为所有华炎云账户在该仓库注册好了账户，地址为：<https://registry.steedos.cn/> ，大家输入华炎云账户绑定的手机号作为账户，私有部署的魔方API Key作为密码即可登录使用，下面我们将描述如何把上面开发好的`steedos-packages/project`文件夹中的软件包发布到该仓库中。
+
+### NPM作用域
+
+请按教程 [开通华炎魔方云服务](/docs/deploy/deploy-cloud) 注册好云服务账户后，进入“开发人员”应用，并新建一个“NPM 作用域”：
+
+* Api 名称：NPM作用域名称，该域下的软件包都必须以该名称为前缀，比如`@steedos/app-project`就是steedos作用域下的一个软件包。
+* 类型：公开/私有，公开的软件包所有华炎云账户下的魔方项目都可以安装，私有的软件包只有创建该NPM作用域的华炎云账户下的魔方项目才可以安装。
+
+NPM作用域创建成功后，默认会把创建该作用域的账户设置为其具有“Publish”权限的成员，我们可以在详细界面“NPM 作用域成员”子表中看到，当前账户已被设置为该NPM作用域下具有“Publish”权限的成员了。
+
+我们可以在“NPM 作用域成员”子表中新建其他成员并分配其在该作用域下的权限，作用域授权规则如下：
+
+* 无论是公有还是私有类型的NPM作用域，只有被其授予“Publish”权限的成员才能在该域下发布软件包；
+* 对于公开类型的NPM作用域，该域下发布的软件包，所有华炎云账户下的魔方项目都可以安装；
+* 对于私有类型的NPM作用域，至少需要被其授予“Read-only”的成员账户才能安装该域下发布的软件包；
+
+假设我们这次配置的NPM作用域名称为`ylh`，下面我们将用该域名登录到NPM仓库来发布软件包。
+
+### 软件包名称
+
+由于软件包是需要使用域账户登录到NPM仓库后才能发包，所以要发布的软件包必须以之前配置过的NPM作用域为前缀来命名。
+
+因为之前我们在华炎云上配置的NPM作用域为`ylh`，所以我们这里在上面开发好的软件包文件夹内的`package.json`文件中把软件包名称从`project`改为`@ylh/project`。
+
+### 登录NPM
+
+与发布普通NPM包一样，发布华炎魔方软件包也需要先用`login`命令登录NPM仓库，不过我们这里是要发布到华炎魔方私有的NPM仓库中，所以需要在登录命令中额外加上NPM作用域参数和要登录到的仓库地址参数：
+
+```bash
+$ npm login --scope=@ylh --registry=https://registry.steedos.cn
+
+> Username: #华炎云账户绑定的手机号
+> Password: #华炎云上新建的私有部署记录中的API Key
+> Email: # PUBLIC-EMAIL-ADDRESS，输入有效邮件地址即可
+```
+
+登录成功后，`.steedos`文件夹中会自动创建两个配置文件`.npmrc`和`.yarnrc`，这两个文件中保存了刚执行`login`命令时使用的参数信息：
+
+* `.npmrc`文件：存储了`STEEDOS_CLOUD_API_KEY`关联账户的`steedos registry token`。
+* `.yarnrc`文件：存储了`STEEDOS_CLOUD_API_KEY`关联账户的`steedos registry`中可用的NPM作用域列表。
+
+后续安装和升级软件包会依赖这两个文件中的内容，发布软件包时也会依赖执行`npm login`后在用户目录下生成的`.npmrc`文件。
+
+
+:::info
+需要注意`.npmrc`文件中记录了登录密钥，所以不应该把它们提交到git仓库中，建议把这两个文件配置到`.gitignore`中以避免提交。
+
+:::
+
+### 发布
+
+与发布普通NPM包一样，发布华炎魔方软件包也是执行`publish`命令来发布到NPM仓库。
+
+```bash
+$ npm publish
+```
+
+如果软件包已经发布过需要重新发布，需要修改软件包文件夹中 `package.json` 文件中的“version”为下一个版本来发布新版本的软件包。
+
+软件包发布成功后，我们可以访问华炎云平台，进入”开发人员“应用，进入“NPM 作用域”详细页面查看。我们还可以访问华炎魔方NPM仓库，即 <https://registry.steedos.cn/>，点击右上角的登录链接，然后输入华炎云账户绑定的手机号作为账户，并输入私有部署的魔方API Key作为密码来登录该仓库查看。
+
+ ![](https://console.steedos.cn/api/files/images/sS9oiGJ4otDSGXvgN)
+
+## 软件包安装
+
+软件包发布成功后，我们只要在华炎魔方项目中安装上就可以使用了。
+
+### 安装前准备
+
+如果要安装的是发布到 NPM官网，即 <https://www.npmjs.com/> 仓库中的软件包，请跳过本小节描述的安装前准备，直接参阅后面的安装小节来安装软件包即可。
+
+在运行项目前，我们需要在项目根目录执行`yarn`安装项目依赖包，并把云服务上注册好的魔方ID和私有部署ApiKey配置到`.env.local` 或 `.env`文件中：
+
+```bash
+STEEDOS_CLOUD_SPACE_ID=#在此填入华炎云上新建的私有部署记录中的魔方ID
+STEEDOS_CLOUD_API_KEY=#在此填入华炎云上新建的私有部署记录中的API Key
+```
+
+以上两个环境变量是所有魔方项目都必须配置的，根据之前软件包发布中“NPM作用域”小节中提到的授权规则，这里配置的`STEEDOS_CLOUD_API_KEY`所属的华炎云账户必须符合要安装的软件包所属的NPM作用域的授权规则，即每个魔方项目只能安装符合其NPM作用域授权规则的软件包。
+
+在执行`yarn start`运行魔方项目过程中，华炎魔方会根据上面配置的环境变量`STEEDOS_CLOUD_API_KEY`值，登录到华炎魔方NPM仓库，即 <https://registry.steedos.cn/> ，并自动下载授权给它的NPM域配置到本地，当项目运行起来后，我们可以在项目根目录的`.steedos`文件夹下看到名为`.npmrc`和`.yarnrc`的文件：
+
+* `.npmrc`文件：存储了`STEEDOS_CLOUD_API_KEY`关联账户的`steedos registry token`。
+* `.yarnrc`文件：存储了`STEEDOS_CLOUD_API_KEY`关联账户的`steedos registry`中可用的NPM作用域列表。
+
+其中`.yarnrc`中列出的是当前魔方项目可以安装的发布到华炎魔方NPM仓库，即 <https://registry.steedos.cn/> 中的软件包所属的NPM作用域清单，当该清单为空时，只表示无法安装华炎魔方NPM仓库中包括公开和私有类型的NPM作用域下的任何软件包，但是可以安装NPM仓库，即 <https://www.npmjs.com/> 中公开的软件包，比如`@steedos-labs/stimulsoft-reports`，`@steedos-labs/project`等。
+
+基于上面描述的NPM作用域授权规则，要在魔方项目中安装我们之前发布的入`@ylh/project `这个软件包，我们只有两种方案：
+
+* 在魔方项目中把环境变量`STEEDOS_CLOUD_SPACE_ID` 和 `STEEDOS_CLOUD_API_KEY`设置为要安装的软件包在发布时使用的环境变量值一样，这样就会使用已授权的NPM账户自动登录到华炎魔方NPM仓库中。
+* 上面两个环境变量与软件包在发布时不一样，但是使用与软件包在发布时一样的`npm login`参数执行一次`npm login`命令登录到华炎魔方NPM仓库。
+
+第一种方式可以安装已授权的NPM账户下的公开和私有域下任何软件包，但是第二种方式只能安装公开类型的NPM作用域下发布的软件包。
+
+### 安装
+
+请在“设置”应用中进入“应用程序→软件包”界面并点击右上角的“手动安装软件包”按钮来安装软件包：
+
+* 软件包名称：可以输入发布到华炎魔方NPM仓库，即 <https://registry.steedos.cn/> 中的软件包名称，比如输入`@ylh/project`表示要安装我们上面刚发布的软件包，也可以输入发布到NPM仓库，即 <https://www.npmjs.com/> 中的公开软件包，比如`@steedos-labs/stimulsoft-reports`，`@steedos-labs/project`等。
+* 版本号：可以输入希望具体安装哪个版本的软件包，不填写该项时表示安装最新版本。
+
+点击提交即可把软件包安装到当前魔方项目中。
+
+软件包安装成功后可以在软件包列表看到刚安装的软件包，如果该软件包状态显示为“已启用”则表示安装成功。
+
+ ![](https://console.steedos.cn/api/files/images/XXuCtxqdmz9pfTm9X)
+
+在软件包列表界面点击进入`@ylh/project`这个软件包详细页面，可以看到该软件包中包含哪些元数据，比如可以看到我们之前在软件包开发小节中创建的对象、选项卡和应用。
+
+另外还可以在项目根目录下的 `.steedos/steedos-packages.yml`文件中查看已安装的软件包。
+
+### 升级
+
+在安装软件包时可以选择要安装的软件包版本号，软件包安装成功后，还可以按以下操作步骤来手动升级软件包的版本，而不用重新安装软件包。
+
+* 请在“设置”应用中进入“应用程序→软件包”界面。
+* 找到要升级的软件包并点击软件包名称进入详情界面。
+* 在界面右上角点击升级按钮。
+* 在弹出的升级窗口中选择要安装软件包版本，可以选择高版本来升级软件包，也可以选择低版本软件包以安装早期版本的软件包。
+* 点击确认按钮等待升级完成。
+
+\
