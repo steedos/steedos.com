@@ -294,12 +294,13 @@ export default function Post(props) {
     // mdxSource,
   } = props
 
+  const toc = getTOC(body)
+  const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(toc)
+
   if (errorCode) {
     return <Error statusCode={errorCode} />
   }
 
-  const toc = getTOC(body)
-  const { currentSection, registerHeading, unregisterHeading } = useTableOfContents(toc)
 
   let seo_title_calc = seo_title ? seo_title : name;
   if (blog && blog.name){
