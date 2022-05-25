@@ -14,6 +14,12 @@ import remarkBreaks from 'remark-breaks'
 import hastscript from 'hastscript'
 import rehypeRaw from 'rehype-raw'
 import remarkUnwrapImages from 'remark-unwrap-images'
+import BananaSlug from 'github-slugger'
+import { Heading } from '@/components/Heading'
+const imgLinks = require("@pondorasti/remark-img-links")
+
+const slugs = new BananaSlug()
+
 const visit = require('unist-util-visit')
 
 
@@ -84,8 +90,6 @@ export function code({node, inline, className, children, ...props}) {
 }
 
 export function img({ node, ...props }) {
-  console.log(node)
-  console.log(props)
   if (!props.src) {
     return <></>
   }
@@ -140,6 +144,19 @@ export function tip({ node, ...props }){
   return <div className="block notice-block tip"><div className="icon"><StarIcon></StarIcon></div><div className="content">{props.children}</div></div>
 }
 
+export function heading({ node, ...props }) {
+  let title = node.children
+    .filter(
+      (n, i, a) =>
+        n.type === 'text'
+    )
+    .map((n) => n.value)
+    .join('')
+  slugs.reset()
+  const id = slugs.slug(title, true) 
+  return <Heading id={id} {...props}/>
+}
+
 export function Markdown(props) {
   const { 
     body, 
@@ -152,6 +169,7 @@ export function Markdown(props) {
     customPlugin, 
     remarkGfm,
     remarkUnwrapImages,
+    [imgLinks, {absolutePath: ROOT_URL}],
   ]
   
   let fixedBody = body? body: ""
@@ -175,6 +193,9 @@ export function Markdown(props) {
             warning,
             tip,
             // img
+            h1: heading,
+            h2: heading,
+            h3: heading,
           }}
           transformImageUri={null}
         >
