@@ -2,9 +2,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "yarn syncBlogs && yarn syncDocs && next build",
+    "build": "next build",
     "postbuild": "next-sitemap",
     "algolia": "npx ts-node --skip-project ./scripts/algoliaDocs.mjs",
+    "sync": "yarn syncBlogs && yarn syncDocs",
     "syncBlogs": "npx ts-node --skip-project ./scripts/syncBlogs.js",
     "syncDocs": "npx ts-node --skip-project ./scripts/syncBlogs.js",
     "start": "next start",
