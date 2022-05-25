@@ -180,6 +180,42 @@ module.exports = {
             },
           },
         },
+        lg: {
+          css: {
+            h1: {
+              marginTop: '2em',
+            },
+            h2: {
+              marginTop: '2em',
+            },
+            ul: {
+              listStyleType: 'none',
+              paddingLeft: 0,
+            },
+            'ul > li': {
+              position: 'relative',
+              paddingLeft: '1.75em',
+            },
+          }
+        },
+        xl: {
+          css: {
+            h1: {
+              marginTop: '2em',
+            },
+            h2: {
+              marginTop: '2em',
+            },
+            ul: {
+              listStyleType: 'none',
+              paddingLeft: 0,
+            },
+            'ul > li': {
+              position: 'relative',
+              paddingLeft: '1.75em',
+            },
+          }
+        },
         dark: {
           css: {
             color: theme('colors.slate.400'),

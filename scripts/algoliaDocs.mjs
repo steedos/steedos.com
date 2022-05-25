@@ -8,9 +8,10 @@ import algoliasearch from 'algoliasearch';
 dotenv.config(process.cwd());
 
 const pages = await globby([
-  path.join(process.cwd(), 'src', 'pages', 'developer', '*.mdx')
+  path.join(process.cwd(), 'src', 'pages', 'docs', '**/*.mdx')
 ]);
 
+console.log(pages)
 const objects = pages.map(page => {
   const fileContents = fs.readFileSync(page, 'utf8')
   const {data, content} = matter(fileContents)
@@ -30,10 +31,11 @@ const objects = pages.map(page => {
 console.log(objects)
 
 const client = algoliasearch(
-  process.env.ALGOLIA_APP_ID,
-  process.env.ALGOLIA_ADMIN_API_KEY,
+  'TL0K9Y2YIH',
+  '4112cbe8b5affd27883cf29b1df73ad4',
 );
-const index = client.initIndex("steedos-com")
-index.saveObjects(objects, {
+const index = client.initIndex("steedos")
+const result = await index.saveObjects(objects, {
   autoGenerateObjectIDIfNotExist: true
 });
+console.log(result)

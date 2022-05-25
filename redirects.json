@@ -14,5 +14,6 @@
   { "source": "/docs/developer", "destination": "/docs/developer/getting-started", "permanent": true },
   { "source": "/docs/admin", "destination": "/docs/admin/getting-started", "permanent": true },
   { "source": "/docs/user", "destination": "/docs/user/getting-started", "permanent": true },
-  { "source": "/docs", "destination": "/docs/deploy/getting-started", "permanent": true}
+  { "source": "/docs", "destination": "/docs/deploy/getting-started", "permanent": true},
+  { "source": "/cn/steedos/privacy", "destination": "/company/privacy", "permanent": true }
 ]
