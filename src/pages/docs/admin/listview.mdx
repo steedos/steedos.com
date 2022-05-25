@@ -137,3 +137,159 @@ filters: [["start__c", "between", "this_month"]]
 ```
 
 过滤条件语法规范及完整文档请参考 [过滤条件规范](/docs/protocol/api-records-filters)。
+
+## 日历视图
+
+列表视图支持以日历的形式展示，只要在元数据代码中把它的 `type` 属性定义为 `calendar` 即可被识别为“日历视图”。
+
+### 基本功能
+
+以下是一个基本功能的日历视图元数据定义：
+
+```yml
+name: calendar
+type: calendar
+filter_scope: space
+label: 日历视图
+options:
+  startDateExpr: start__c
+  endDateExpr: end__c
+  textExpr: name
+  allDayExpr: is_all_day__c
+  title:
+    - name
+    - start__c
+    - end__c
+  currentView: day
+  firstDayOfWeek: 1
+  startDayHour: 8
+  endDayHour: 18
+```
+
+- type: 只能配置为 `calendar` 才能被识别为日历视图
+- options: 日历视图相关参数，详情请参阅其官网文档 [DevExtreme JavaScript Scheduler](https://js.devexpress.com/Documentation/Guide/UI_Components/Scheduler/Getting_Started_with_Scheduler/)
+  - startDateExpr: 起始时间字段
+  - endDateExpr: 结束时间字段
+  - textExpr: 名称字段
+  - allDayExpr: 全天事件字段，必须为boolean类型字段
+  - title: 鼠标放置在相关事件区域内时要显示哪些字段的信息
+  - currentView: 日历视图默认打开哪种模式的视图，day, week, month, agenda
+  - firstDayOfWeek: 一周的第一天，0表示周日，1表示周一
+  -startDayHour: 日历从几点开始显示一天的时间线
+  -endDayHour: 日历从几点结束显示一天的时间线
+
+### 视图模式
+
+可以在options配置中指定views属性指定要显示哪些日历视图模式，目前支持以下视图模式：
+
+- 日 day：按天显示日历面板。
+- 周 week： 按周显示日历面板。
+- 月 month： 按月显示日历面板。
+- 列表 agenda：显示为日程列表。
+
+以下配置默认显示周模式视图，只允许在“日”和“周”两个模式中切换视图模式，不显示“月”和“列表”模式。
+
+```yml
+name: calendar
+type: calendar
+filter_scope: space
+label: 日历视图
+options:
+  currentView: week
+  views:
+    - day
+    - month
+```
+
+以下配置额外为日和周模式视图配置参数，相关属性说明请参阅其官网 [Scheduler View Types](https://js.devexpress.com/Documentation/Guide/UI_Components/Scheduler/Views/View_Types/)。
+
+```yml
+name: calendar
+type: calendar
+filter_scope: space
+label: 日历视图
+options:
+  views:
+    - type: day
+      maxAppointmentsPerCell: unlimited
+    - type: week
+      maxAppointmentsPerCell: unlimited
+    - month
+    - agenda
+```
+
+### 过滤条件
+
+日历视图不支持在界面上配置过滤条件，但是可以在代码中配置，其功能及规范与普通列表视图是一样的，详情请参阅文档 [过滤条件规范](/docs/protocol/api-records-filters)。。
+
+给日历视图配置以下过滤条件可以在视图中只显示当前登录用户自己创建的业务数据。
+
+```yml
+filters:
+  - - owner
+    - '='
+    - '{userId}'
+```
+
+### 分组
+
+日历视图还支持按分组来显示日历事件，可以参阅其官网 [Group Appointments by Resources](https://js.devexpress.com/Documentation/Guide/UI_Components/Scheduler/Resources/Group_Appointments_by_Resources/) 查看详细功能说明。
+
+以下列表视图元数据配置内容演示了如何在华炎魔方中实现按“会议室”来分组显示日历面板。
+
+```yaml
+name: calendar_view
+type: calendar
+label: 日历视图
+filter_scope: space
+sort:
+  - - created
+    - desc
+filters:
+  - - owner 
+    - = 
+    - '{userId}'
+  - or 
+  - - staff__c
+    - = 
+    - '{userId}'
+options:
+  startDateExpr: start__c
+  endDateExpr: end__c
+  textExpr: name
+  views:
+    - type: day
+      maxAppointmentsPerCell: unlimited
+      groups:
+        - _room
+    - type: week
+      maxAppointmentsPerCell: unlimited
+    - month
+    - agenda
+  title:
+    - name
+    - meeting_room__c
+    - start__c
+    - end__c
+  currentView: day
+  firstDayOfWeek: 1
+  startDayHour: 8
+  endDayHour: 18
+  resources:
+    - fieldExpr: _room
+      valueExpr: _id
+      displayExpr: name
+      label: 会议室
+      dataSource:
+        store:
+          type: odata
+          version: 4
+          url: "/api/v4/meeting_room__c?$orderby=name"
+          withCredentials: false
+```
+
+以下几个属性配置是分组相关配置的重点
+
+- 在 `options.views` 属性中明确标记“日”视图按名为 `_room` 的数据源来分组。
+- 在 `options.resources` 属性中定义一个名为 `_room` 的数据源，并且该数据源从华炎魔方标准的 OData API 接口中获取数据。
+- 在 `options.title` 属性中额外把当前对象的分组关联字段 ”所属会议室 meeting_room__c“ 显示在标题上。
