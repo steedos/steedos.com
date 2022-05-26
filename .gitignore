@@ -34,3 +34,5 @@ yarn-error.log*
 
 .serverless_nextjs
 .serverless
+
+public/sitemap-0.xml
