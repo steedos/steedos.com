@@ -182,13 +182,29 @@ public:
     policyerror: "密码不能少于8位"
 ```
 
+## 字段索引配置
+
+可以为字段配置 [字段索引](/docs/admin/field_type#%E5%AD%97%E6%AE%B5%E7%B4%A2%E5%BC%95) 以提升数据库中的记录查询速度。
+
+系统会在创建索引的定时程序中为配置了字段索引的字段创建索引，默认是每小时检测一次未创建索引的字段并为其创建好索引。
+
+可以在定时任务配置中修改检测创建字段索引的频率，以下配置是默认的按每小时的频率来检测创建字段索引，其中频率值是一个 [Cron-style Scheduling](https://en.wikipedia.org/wiki/Cron)。
+
+```yaml
+cron:
+  build_index: "0 0 * * * *"
+```
+
+执行字段索引定时程序时只会为未创建过索引的字段创建索引，已存在的索引不会重复创建。
+
 ## 定时任务配置
 
 配置定时任务的属性。
 
 ```yaml
 cron:
-  statistics: 0 0 0 * * *
+  build_index: "0 0 * * * *"
+  statistics: "0 0 0 * * *"
   mailqueue_interval: 1000
   push_interval: 1000
   calendar_dav_interval: 30000
@@ -198,7 +214,8 @@ cron:
   objectwebhooksqueue_interval: 10000
 ```
 
-* statistics: 流程统计的执行时间，如上面的“0 0 0 \* \* \*”意为每天的00:00:00
+* build_index: 创建数据库索引的执行时间，如上面的“0 0 * * * *”意为每小时为数据库执行一次创建索引操作，已存在的索引不会重复创建。
+* statistics: 流程统计的执行时间，如上面的“0 0 0 * * *”意为每天的00:00:00
 * mailqueue_interval: 邮件队列的轮询间隔(单位毫秒)
 * push_interval: 消息推送的轮询间隔(单位毫秒)
 * calendar_dav_interval: 日历同步的轮询间隔(单位毫秒)
