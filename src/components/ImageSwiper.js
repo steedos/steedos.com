@@ -32,7 +32,7 @@ export const ImageSwiper = function({images}) {
           clickable: true,
         }}
         modules={[EffectFlip, Navigation, Pagination]}
-        className="bg-black shadow-md shadow-gray-700 border-black aspect-[3/2] justify-center"
+        className="bg-black shadow-md shadow-gray-700 border-black aspect-[4/3] justify-center max-h-[260px] sm:max-h-[380px] md:max-h-[512px] lg:max-h-[512px] xl:max-h-[600px] ml-0"
         >
         {images.map((image) => (
           <SwiperSlide className="overflow-hidden h-full">

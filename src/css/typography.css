@@ -1,6 +1,6 @@
 .prose {
   color: #374151;
-  max-width: 65ch;
+  /* max-width: 65ch; */
 }
 
 .prose [class~="lead"] {
@@ -76,7 +76,7 @@
   padding-left: 1.75em;
 }
 
-/* .prose ul > li::before {
+.prose ul > li::before {
   content: "";
   position: absolute;
   background-color: #d1d5db;
@@ -85,7 +85,7 @@
   height: 0.375em;
   top: calc(0.875em - 0.1875em);
   left: 0.25em;
-} */
+}
 
 .prose hr {
   border-color: #e5e7eb;

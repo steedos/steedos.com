@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 // This wrapper allows us to pass non-standard HTML attributes through to the DOM element
 // https://www.styled-components.com/docs/basics#passed-props
-class Iframe extends React.Component {
+class Iframe extends React.Component<any> {
   container;
   state = { contentHeight: 100 };
 
@@ -79,20 +79,13 @@ class Frame extends React.Component<Props> {
       theme,
       src,
     } = this.props;
-    const Component = border ? StyledIframe : Iframe;
-    const withBar = !!(icon || canonicalUrl);
 
     return (
-      <Rounded
-        width={width}
-        // height={height}
-        $withBar={withBar}
-        className={isSelected ? "ProseMirror-selectednode" : ""}
-        theme={theme}
+      <div
+        className="w-full max-h-[260px] sm:max-h-[380px] md:max-h-[512px] lg:max-h-[512px] xl:max-h-[600px]"
       >
-        <Component
+        <Iframe
             ref={forwardedRef}
-            $withBar={withBar}
             sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
             width={width}
             // height={height}
@@ -104,18 +97,11 @@ class Frame extends React.Component<Props> {
             className={className}
             allowFullScreen
           />
-      </Rounded>
+      </div>
     );
   }
 }
 
-const Rounded: any = styled.div`
-  border: 1px solid ${(props) => props.theme.embedBorder};
-  border-radius: 6px;
-  overflow: hidden;
-  width: ${(props: any) => props.width};
-  height: ${(props: any) => (props.$withBar ? props.height + 28 : props.height)};
-`;
 
 const Open: any = styled.a`
   color: ${(props) => props.theme.textSecondary} !important;
