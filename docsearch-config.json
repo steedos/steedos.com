@@ -1,6 +1,6 @@
 {
   "index_name": "steedos",
-  "start_urls": ["http://www.steedos.cn/docs/deploy/devops"],
+  "start_urls": ["http://www.steedos.cn/docs"],
   "selectors": {
     "lvl0": "#header h1",
     "lvl1": "#content-wrapper article h1",
