@@ -101,7 +101,7 @@ export default function ProductDetail({ product, vid }) {
           {/* Product */}
           <div className="mt-6 lg:grid lg:grid-cols-5 lg:gap-x-10 lg:items-start">
             {/* Image gallery */}
-            <div className="col-span-3 w-full max-h-[240px] sm:max-h-[512px]">
+            <div className="col-span-3 w-full">
               <ImageSwiper images={getMedia(product)}/>
             </div>
            
