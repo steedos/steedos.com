@@ -153,6 +153,7 @@ export const headerNav = {
     }, 
   ],
   pages: [
+    { name: '文档', href: '/docs/' },
     { name: '视频', href: '/videos/' },
     { name: '应用市场', href: '/collections/steedos-packages' },
   ],
