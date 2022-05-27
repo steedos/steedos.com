@@ -2,8 +2,8 @@
   "index_name": "steedos",
   "start_urls": ["http://www.steedos.cn/docs"],
   "selectors": {
-    "lvl0": "#header h1",
-    "lvl1": "#content-wrapper article h1",
+    "lvl0": "#header p",
+    "lvl1": "#header h1",
     "lvl2": "#content-wrapper h2",
     "lvl3": "#content-wrapper h3",
     "lvl4": "#content-wrapper h4",
