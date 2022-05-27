@@ -31,8 +31,8 @@ const objects = pages.map(page => {
 console.log(objects)
 
 const client = algoliasearch(
-  'TL0K9Y2YIH',
-  '4112cbe8b5affd27883cf29b1df73ad4',
+  process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
+  process.env.ALGOLIA_ADMIN_API_KEY,
 );
 const index = client.initIndex("steedos")
 const result = await index.saveObjects(objects, {

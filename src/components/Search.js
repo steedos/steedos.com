@@ -7,7 +7,7 @@ import { DocSearchModal } from '@docsearch/react'
 import clsx from 'clsx'
 import { useActionKey } from '@/hooks/useActionKey'
 
-const INDEX_NAME = 'docs'
+const INDEX_NAME = process.env.NEXT_PUBLIC_ALGOLIA_INDEX
 const API_KEY = process.env.NEXT_PUBLIC_ALGOLIA_API_KEY
 const APP_ID = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID
 
