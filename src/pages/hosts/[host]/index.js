@@ -233,7 +233,7 @@ export default function Home(props) {
     
       <article className="relative z-10 max-w-5xl mx-auto">
         <main className="px-4 sm:px-6 md:px-8 pb-20">
-          <Markdown body={homepage.body} className="prose sm:prose-lg"></Markdown>
+          <Markdown body={homepage.body} className="prose sm:prose-lg dark:prose-dark"></Markdown>
         </main>
       </article>
       {/* <section className="relative z-10 text-center max-w-screen-lg xl:max-w-screen-xl mx-auto">

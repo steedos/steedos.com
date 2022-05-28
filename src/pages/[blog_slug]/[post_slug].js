@@ -407,10 +407,10 @@ export default function Post(props) {
                 className="relative z-20 prose prose-slate dark:prose-dark"
               >
                 <div className="my-10 text-lg text-slate-700 dark:text-slate-400">
-                  <Markdown body={summary} className="prose prose-lg lg:prose-xl"></Markdown>
+                  <Markdown body={summary} className="prose prose-lg lg:prose-xl dark:prose-dark"></Markdown>
                 </div>
                 <ContentsContext.Provider value={{ registerHeading, unregisterHeading }}>
-                  <Markdown body={body} className="prose lg:prose-lg"></Markdown>
+                  <Markdown body={body} className="prose lg:prose-lg dark:prose-dark"></Markdown>
                 </ContentsContext.Provider>
               </div>
             </article>

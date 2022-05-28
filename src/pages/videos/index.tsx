@@ -18,20 +18,20 @@ const SiteVideos: React.FC = (props: any) => {
   const { videos } = props;
   const name = '视频中心';
   return (
-    <div className="text-black mx-auto max-w-3xl lg:max-w-7xl lg:pt-16 pt-10 px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-3xl lg:max-w-7xl lg:pt-16 pt-10 px-4 sm:px-6 lg:px-8">
       <div className="text-center">
-        <h2 className="mt-1 text-3xl font-extrabold text-gray-900 sm:text-4xl sm:tracking-tight lg:text-5xl">
+        <h2 className="mt-1 text-3xl font-extrabold sm:text-4xl sm:tracking-tight lg:text-5xl text-black dark:text-white">
         {name}
         </h2>
         {/* <p className="prose max-w-xl mt-5 mx-auto text-xl text-gray-500">
         欢迎使用华炎魔方低代码平台，您可以免费访问这里的视频。
         </p> */}
       </div>
-      <div className="text-black mx-auto w-full lg:py-16 py-6 px-1">
+      <div className="mx-auto w-full lg:py-16 py-6 px-1">
       {videos && videos.map((video_collection: any) => {
         return (
           <div className="pt-4" key={video_collection._id}>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-black dark:text-white">
             {video_collection.name}
           </h2>
           {/* <div className="text-gray-500 py-2">

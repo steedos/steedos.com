@@ -8,6 +8,7 @@ import { useEffect, Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition, Menu } from '@headlessui/react'
 import { MenuIcon, SearchIcon, ChevronDownIcon, XIcon, LogoutIcon, ShoppingBagIcon } from '@heroicons/react/outline'
 import { StarIcon } from '@heroicons/react/solid'
+import { ThemeSelect, ThemeToggle } from './ThemeToggle'
 import { headerNav } from '@/navs/header';
 import useSWR from 'swr'
 
@@ -259,7 +260,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
       </div>
       <header className="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white supports-backdrop-blur:bg-white/95 dark:bg-slate-900/75">
        
-        <nav aria-label="Top" className="max-w-8xl mx-auto">
+        <nav aria-label="Top" className="max-w-8xl mx-auto font-semibold text-base leading-6 ">
           <div className="py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
             <div className="flex items-center">
              
@@ -283,8 +284,8 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                               className={classNames(
                                 open
                                   ? 'border-sky-600 text-sky-600'
-                                  : 'border-transparent hover:border-sky-600 hover:text-sky-600 text-gray-700 hover:text-gray-800',
-                                'px-2 relative z-10 flex items-center transition-colors ease-out duration-200 text-base font-medium border-b-2 -mb-px pt-px'
+                                  : 'border-transparent hover:border-sky-600 hover:text-sky-600',
+                                'text-slate-700 dark:text-slate-200 font-semibold px-2 relative z-10 flex items-center transition-colors ease-out duration-200 border-b-2 -mb-px pt-px'
                               )}
                             >
                               <span>{category.name}</span>
@@ -300,11 +301,11 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                           >
-                          <Popover.Panel className="absolute top-full inset-x-0 text-sm text-gray-500">
+                          <Popover.Panel className="absolute top-full inset-x-0 text-sm">
                             {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                            <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
+                            <div className="absolute inset-0 top-1/2 shadow" aria-hidden="true" />
 
-                            <div className="relative bg-white">
+                            <div className="relative bg-white dark:bg-slate-800 font-normal">
                               <div className="max-w-8xl mx-auto px-8">
                                 <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
                                     <div className="col-start-2 grid grid-cols-2 gap-x-8">
@@ -317,7 +318,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                               className="object-center object-cover"
                                             />
                                           </div>
-                                          <a href={item.href} className="mt-6 block font-medium text-gray-900">
+                                          <a href={item.href} className="mt-6 block font-medium font-semibold text-slate-900 dark:text-slate-100">
                                             <span className="absolute z-10 inset-0" aria-hidden="true" />
                                             {item.name}
                                           </a>
@@ -330,7 +331,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                     <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
                                       {category.sections.map((section) => (
                                         <div key={section.name}>
-                                          <p id={`${section.id}-heading`} className="font-medium text-gray-900">
+                                          <p id={`${section.id}-heading`} className="font-medium font-semibold text-slate-900 dark:text-slate-100">
                                             <a href={section.href}>{section.name}</a>
                                           </p>
                                           <ul
@@ -340,7 +341,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                           >
                                             {section.items.map((item) => (
                                               <li key={item.name} className="flex">
-                                                <a href={item.href} className="hover:text-gray-800">
+                                                <a href={item.href} className="hover:text-slate-900 dark:hover:text-slate-300">
                                                   {item.name}
                                                 </a>
                                               </li>
@@ -364,7 +365,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                       key={page.name}
                       href={page.href}
                       target={page.target}
-                      className="px-2 flex items-center text-base font-medium text-gray-700 hover:text-gray-800"
+                      className="px-2 flex items-center text-slate-700 dark:text-slate-200 text-base font-medium "
                     >
                       {page.name}
                     </a>
@@ -373,67 +374,70 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
-                {!userInfo.name && <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800" onClick={goLogin}>
-                    登录
-                  </a>
-                </div>}
-
-                {userInfo.name && <Menu as="div" className="relative inline-block text-left">
-                  <div>
-                    <Menu.Button className="inline-flex justify-center text-gray-700 hover:text-gray-800 w-full px-4 py-2 text-sm font-medium rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                      {userInfo.name}
-                      <ChevronDownIcon
-                        className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
-                        aria-hidden="true"
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <div className="px-1 py-1">
-                        <Menu.Item>
-                          <button
-                            onClick={goLogout}
-                            className={`text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                          >
-                            <LogoutIcon
-                              className="w-5 h-5 mr-2 text-violet-400"
-                              aria-hidden="true"
-                            />
-                            注销
-                          </button>
-                        </Menu.Item>
-                      </div>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-                }
-                {/* Cart */}
-                {userInfo.name && <div className="ml-4 flow-root lg:ml-6">
-                  <a href="/store/shopping-cart" className="group -m-2 p-2 flex items-center">
-                    <ShoppingBagIcon
-                      className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart?.lines?.length}</span>
-                    <span className="sr-only">items in cart, view bag</span>
-                  </a>
-                </div>
-                }
-
 
                 <div className="relative hidden lg:flex items-center ml-auto">
-                  <div className="flex items-center border-l border-slate-200 ml-6 dark:border-slate-800">
-                    {/* <ThemeToggle panelClassName="mt-8" /> */}
+                  <div className="text-slate-700 dark:text-slate-200">
+
+                    {!userInfo.name && <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                      <a href="#" className="hover:text-sky-500 dark:hover:text-sky-400" onClick={goLogin}>
+                        登录
+                      </a>
+                    </div>}
+
+                    {userInfo.name && <Menu as="div" className="relative inline-block text-left">
+                      <div>
+                        <Menu.Button className="inline-flex justify-center text-gray-700 hover:text-gray-800 w-full px-4 py-2 text-sm font-medium rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                          {userInfo.name}
+                          <ChevronDownIcon
+                            className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
+                            aria-hidden="true"
+                          />
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div className="px-1 py-1">
+                            <Menu.Item>
+                              <button
+                                onClick={goLogout}
+                                className={`text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                              >
+                                <LogoutIcon
+                                  className="w-5 h-5 mr-2 text-violet-400"
+                                  aria-hidden="true"
+                                />
+                                注销
+                              </button>
+                            </Menu.Item>
+                          </div>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
+                    }
+                    {/* Cart */}
+                    {userInfo.name && <div className="ml-4 flow-root lg:ml-6">
+                      <a href="/store/shopping-cart" className="group -m-2 p-2 flex items-center">
+                        <ShoppingBagIcon
+                          className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
+                          aria-hidden="true"
+                        />
+                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart?.lines?.length}</span>
+                        <span className="sr-only">items in cart, view bag</span>
+                      </a>
+                    </div>
+                    }
+
+                  </div>
+                  <div className="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-800">
+                    <ThemeToggle panelClassName="mt-8" />
                     <a
                       href="https://github.com/steedos/steedos-platform"
                       target="_blank"

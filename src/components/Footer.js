@@ -4,7 +4,7 @@ import { Logo } from '@/components/Logo'
 
 export const Footer = (props) => {
   return (
-  <footer aria-labelledby="footer-heading" className="bg-gray-50 pt-6">
+  <footer aria-labelledby="footer-heading" className="pt-6">
     <h2 id="footer-heading" className="sr-only">
       Footer
     </h2>
@@ -14,11 +14,11 @@ export const Footer = (props) => {
         {footerNav.map((section) => (
         <div key={section.name} className="col-span-2 sm:col-span-1">
           <div>
-            <h3 className="text-sm font-medium text-gray-900">{section.name}</h3>
+            <h3 className="font-semibold text-slate-900 dark:text-slate-100">{section.name}</h3>
             <ul role="list" className="mt-6 space-y-5">
               {section.items.map((item) => (
                 <li key={item.name} className="text-sm">
-                  <a href={item.href} className="text-gray-500 hover:text-gray-600">
+                  <a href={item.href} className="hover:text-slate-900 dark:hover:text-slate-300">
                     {item.name}
                   </a>
                 </li>
@@ -29,7 +29,7 @@ export const Footer = (props) => {
         ))}
       </div>
 
-      <div className="border-t border-gray-200 py-10 text-center">
+      <div className="border-t border-gray-200 dark:border-gray-700 py-10 text-center">
         <p className="text-sm text-gray-500">&copy; 2022 华炎软件, 保留所有权利</p>
         <a className="text-xs text-gray-400 mt-2" href="https://beian.miit.gov.cn/#/Integrated/recordQuery">(沪ICP备09089283号-11)</a>
         <img className="max-h-60 mx-auto pt-6" src="https://console.steedos.cn/api/files/images/YRgRK94fwndMxMcjM"/>
