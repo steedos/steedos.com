@@ -127,7 +127,7 @@ function Nav({ nav, children, fallbackHref, mobile = false }) {
                     strokeLinejoin="round"
                   />
                 </svg>
-                Quick search...
+                快速搜索...
                 {actionKey && (
                   <span className="ml-auto pl-3 flex-none text-xs font-semibold">
                     {actionKey[0]}K
