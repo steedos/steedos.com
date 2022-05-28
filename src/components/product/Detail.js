@@ -96,7 +96,7 @@ export default function ProductDetail({ product, vid }) {
             </ol>
           </nav>
 
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.name}</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">{product.name}</h1>
 
           {/* Product */}
           <div className="mt-6 lg:grid lg:grid-cols-5 lg:gap-x-10 lg:items-start">
@@ -152,7 +152,7 @@ export default function ProductDetail({ product, vid }) {
                             <Disclosure.Button className="group relative w-full py-6 flex justify-between items-center text-left">
                               <span
                                 className={classNames(
-                                  open ? 'text-indigo-600' : 'text-gray-900',
+                                  open ? 'text-sky-600' : 'text-gray-900',
                                   'text-sm font-medium'
                                 )}
                               >
@@ -161,7 +161,7 @@ export default function ProductDetail({ product, vid }) {
                               <span className="ml-6 flex items-center">
                                 {open ? (
                                   <MinusSmIcon
-                                    className="block h-6 w-6 text-indigo-400 group-hover:text-indigo-500"
+                                    className="block h-6 w-6 text-sky-400 group-hover:text-sky-500"
                                     aria-hidden="true"
                                   />
                                 ) : (

@@ -28,7 +28,7 @@ export default function AddToCart({ productVariant = {} }) {
       <button
         onClick={onClick}
         type="button"
-        className="w-full bg-indigo-50 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+        className="w-full bg-sky-50 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-sky-700 hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-sky-500"
       >
         加入购物车
       </button>
@@ -93,7 +93,7 @@ export default function AddToCart({ productVariant = {} }) {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="w-full bg-indigo-600 border border-transparent rounded-md py-2 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+                    className="w-full bg-sky-600 border border-transparent rounded-md py-2 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-sky-500"
                     onClick={goCheckout}
                   >
                     去结算
