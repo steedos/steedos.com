@@ -23,3 +23,14 @@ abbr[title] {
 .prose.mx-auto p,.prose.mx-auto li{
   word-break: break-all;
 }
+
+#logo {
+  background-image: url('/img/logo-platform.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  min-width: 150px;
+}
+
+.dark #logo {
+  background-image: url('/img/logo-platform-white.png');
+}
