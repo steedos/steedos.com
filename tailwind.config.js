@@ -59,6 +59,7 @@ module.exports = {
               letterSpacing: '-0.025em',
             },
             h2: {
+              marginTop: '2.6em',
               marginBottom: `${16 / 24}em`,
             },
             h3: {

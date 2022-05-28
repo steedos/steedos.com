@@ -392,7 +392,7 @@ export default function Post(props) {
           </div>
         </nav>
         )} */}
-        <div className="max-w-3xl mx-auto pt-10 xl:max-w-none xl:ml-0 xl:mr-[15.5rem] xl:pr-16">
+        <div className="max-w-3xl mx-auto py-10 xl:max-w-none xl:ml-0 xl:mr-[15.5rem] xl:pr-16">
           <div id="content-wrapper" className="lg:px-8 min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible">
             <article className="">
             
