@@ -31,39 +31,6 @@ description: 基于华炎魔方 Stimulsoft 报表插件，可以使用可视化�
 * 配置完成后，可以在该外部数据源记录详细界面右上角点击“测试连接”按钮来测试配置的参数是否正确，当提示连接成功即表示配置生效了。
 
 
-<alert type="info">
-“Debug”开关是用于调式目的，如果是在生产环境中打开该开关，调式完成后请不要忘记把它关闭。
-
-</alert>
-
-**MongoDB**
-
-连接数据库的URL：当在开发环境未配置密码时，格式如：`mongodb://127.0.0.1:27017/steedos`，生产环境会配置密码，其格式如：`mongodb://userUsername:userPassword@127.0.0.1:27017/steedos?replicaSet=rs0`
-
-其他连接选项：按实际配置填上相关内容即可。
-
-**MySQL**
-
-连接数据库的URL：其格式如：`mysql://userUsername:userPassword@192.168.0.33:13306/driver-test`
-
-其他连接选项：按实际配置填上相关内容即可。
-
-**SQL Server**
-
-连接数据库的URL：其格式如：`mssql://userUsername:userPassword@192.168.0.135:1433/driver-test`
-
-其他连接选项：按实际配置填上相关内容即可。
-
-**PostgreSQL**
-
-连接数据库的URL：其格式如：`postgresql://userUsername:userPassword@192.168.0.194:5432/test `
-
-其他连接选项：按实际配置填上相关内容即可。
-
-**Oracle**
-
-敬请期待。。。
-
 ## 查询
 
 确定Stimulsoft报表要使用的数据源后，我们就可以在华炎魔方的查询设计器中编写对应的查询语句，根据实际需求从数据源中查询出仪表盘上需要展示的数据。

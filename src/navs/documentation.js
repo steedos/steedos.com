@@ -49,15 +49,20 @@ export const documentationNav = {
     admin['formula'],
     admin['functions'],
     admin['no-code-extend'],
-    admin['datasource'],
     admin['app'],
     admin['tab'],
+  ],
+  '应用集成': [
+    admin['datasource'],
+    admin['query'],
+    developer['node-red'],
   ],
   '统计分析': [
     admin['reports'],
     admin['record_report'],
     admin['dashboard'],
     admin['stimulsoft'],
+    developer['jsreport'],
   ],
   '自动执行业务流程': [
     admin['auto_process'],
@@ -84,8 +89,4 @@ export const documentationNav = {
     developer['steedosui'],
     developer['client'],
   ],
-  '插件': [
-    developer['node-red'],
-    developer['jsreport'],
-  ]
 }
