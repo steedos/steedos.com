@@ -1,4 +1,4 @@
-// import { Testimonials } from '@/components/Testimonials'
+import { Testimonials } from '@/components/Testimonials'
 // import { DarkMode } from '@/components/home/DarkMode'
 // import { ConstraintBased } from '@/components/home/ConstraintBased'
 // import { BuildAnything } from '@/components/home/BuildAnything'
@@ -170,7 +170,7 @@ export default function Home(props) {
         <Header />
         <section className="text-center px-8">
           <h2 className="text-slate-900 text-4xl tracking-tight font-extrabold sm:text-5xl dark:text-white">
-            数字化转型，需要高效率开发工具
+            高效开发，快速迭代，加速数字化转型
           </h2>
           <figure>
             <blockquote>
@@ -178,7 +178,7 @@ export default function Home(props) {
               对于现代企业而言，能够根据快速变化的工作环境而做出调整并为之适应已变得至关重要。您的公司如何应对这些变化，以及您如何快速做出响应，可能成为决定您的长期成败的关键。您的企业可以通过多种方式实现这种变化，使用低代码开发是越来越受欢迎的一种方式，可使企业适应不断变化的外部环境。
               </p>
             </blockquote>
-            <div className="relative max-w-3xl mx-auto px-4 sm:px-6 md:px-8 mt-10">
+            {/* <div className="relative max-w-3xl mx-auto px-4 sm:px-6 md:px-8 mt-10">
               <div className='w-[360px] h-[200px] sm:w-[640px] sm:h-[360px] mx-auto aspect-video rounded-lg'>
                 <Player
                   // ref={playerRef}
@@ -188,11 +188,11 @@ export default function Home(props) {
                   height="100%"
                 />
               </div>
-            </div>
+            </div> */}
           </figure>
         </section>
       </div>
-      {/* <Testimonials /> */}
+      <Testimonials />
 
       <article className="mt-20 relative z-10 max-w-5xl mx-auto">
         <main className="px-4 sm:px-6 md:px-8 pb-20">
