@@ -58,7 +58,6 @@ export const documentationNav = {
     admin['record_report'],
     admin['dashboard'],
     admin['stimulsoft'],
-    admin['jsreport'],
   ],
   '自动执行业务流程': [
     admin['auto_process'],
