@@ -17,6 +17,16 @@ let testimonials = [
     },
     {
       content:
+        '华炎魔方提供灵活的多维度数据权限架构。使用权限集、权限集组和简档，控制用户可以访问的对象和字段。使用组织范围的共享设置、用户角色和共享规则，以指定用户可以查看并编辑的单个记录。',
+      url: '/docs/admin/permission_set',
+      author: {
+        name: '权限控制',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
+    },
+    {
+      content:
         '定义业务数据的查询与展现形式，您可以自定义需要显示的字段，从不同的维度定义视图展示不一样的数据，设定筛选条件和排序规则等参数。',
       url: '/docs/admin/listview',
       author: {
@@ -27,10 +37,10 @@ let testimonials = [
     },
     {
       content:
-        '华炎魔方提供灵活的多维度数据权限架构。使用权限集、权限集组和简档，控制用户可以访问的对象和字段。使用组织范围的共享设置、用户角色和共享规则，以指定用户可以查看并编辑的单个记录。',
-      url: '/docs/admin/listview',
+        '页面布局用于控制按钮、字段和相关子表的布局和组织方式。它们也帮助确定哪些字段可见、只读和必填。使用页面布局，为您的用户自定义记录页面的内容。        ',
+      url: '/docs/admin/page-layout',
       author: {
-        name: '权限控制',
+        name: '页面布局',
         role: '无代码',
         avatar: require('@/img/icons/home/constraint-based.png').default,
       },
@@ -52,6 +62,16 @@ let testimonials = [
       url: '/docs/admin/query',
       author: {
         name: '查询设计器',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
+    },
+    {
+      content:
+        '华炎魔方内置功能强大的报表统计与分析功能，可以快速创建分组报表、数据透视图。        ',
+      url: '/docs/admin/record_report',
+      author: {
+        name: '分析报表',
         role: '低代码',
         avatar: require('@/img/icons/home/build-anything.png').default,
       },

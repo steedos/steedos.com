@@ -194,12 +194,12 @@ export default function Home(props) {
       </div>
       <Testimonials />
 
-      <article className="mt-20 relative z-10 max-w-5xl mx-auto">
+      {/* <article className="mt-20 relative z-10 max-w-5xl mx-auto">
         <main className="px-4 sm:px-6 md:px-8 pb-20">
           <Markdown body={homepage.body} className="prose sm:prose-lg dark:prose-dark"></Markdown>
         </main>
-      </article>
-      {/* <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44"> */}
+      </article> */}
+      <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
         {/* <ConstraintBased />
         <BuildAnything />
         <Performance />
@@ -211,7 +211,7 @@ export default function Home(props) {
         <ModernFeatures />
         <EditorTools />
         <ReadyMadeComponents /> */}
-      {/* </div> */}
+      </div>
       {/* <Footer /> */}
     </>
   )
