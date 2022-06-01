@@ -223,7 +223,7 @@ export default function Home(props) {
 
 
 
-            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+            <div className="relative max-w-7xl mx-auto px-4 focus:outline-none sm:px-3 md:px-5">
               <div className="py-24 text-center">
                 
                 <h2 className="text-slate-900 text-4xl tracking-tight font-extrabold sm:text-5xl dark:text-white">
