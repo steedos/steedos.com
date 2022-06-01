@@ -7,14 +7,14 @@ description: 华炎魔方拥有丰富的报表统计与数据分析功能，可�
 
 | 名称 | 界面设计 | 权限引擎 | 外部数据源 | 开发人员支持 |
 |----|----|----|----|----|
-| [内置报表](#%E5%86%85%E7%BD%AE%E6%8A%A5%E8%A1%A8) | 支持简单配置 | 内置 | 不支持 | 不需要 |
+| [基础报表](#%E5%86%85%E7%BD%AE%E6%8A%A5%E8%A1%A8) | 支持简单配置 | 内置 | 不支持 | 不需要 |
 | [仪表盘](/docs/admin/dashboard) | 各种丰富图表 | 不内置 | 支持 | 可能需要协助 |
 | [Stimulsoft报表](/docs/admin/stimulsoft) | 像素级界面设计 | 不内置 | 支持 | 可能需要协助 |
 | [JsReport](/docs/developer/jsreport) | 不支持 | 内置 | 不支持 | 开发人员专属 |
 
 其中仪表盘和Stimulsoft报表因为支持编写查询语句直连MongoDB、MySQL、SQL Server、PostgreSQL、Oracle等数据库作为数据源，所以并不内置 [华炎魔方权限引擎](/docs/admin/permission_set)，当查询语句比较复杂时可能需要开发人员协助调试查询语句。
 
-## 内置报表
+## 基础报表
 
  ![](https://console.steedos.cn/api/files/images/YfCSdDEzsqmEE86hv)无需开发人员帮助，业务人员使用华炎魔方内置报表就能配置出功能强大的统计报表，且报表运行时自动按当前用户权限过滤报表数据，动态显示业务统计结果，详情请参阅文档 [华炎魔方内置报表](/docs/admin/record_report)。
 
@@ -31,9 +31,3 @@ description: 华炎魔方拥有丰富的报表统计与数据分析功能，可�
  ![](https://console.steedos.cn/api/files/images/ZRfd6pc2AXyvG7xcC)使用华炎魔方，一般可以借助内置的报表、仪表盘或Stimulsoft报表来分析您的数据，但有时我们会需要定制复杂的报表效果，特别是可能希望报表能按特定的模板样式来表达数据统计结果，这时就需要开发人员使用 [JsReport](/docs/developer/jsreport)，编写Html和Javascript代码来实现各种应用场景下的个性化报表需求。
 
 我们精心编写了集成 [JsReport](https://github.com/jsreport/jsreport) 到华炎魔方的教程，详情请参阅：[JsReport报表开发向导](/docs/developer/jsreport)。
-
-## 连接外部bi工具
-
-我们的工程师正在加班加点编写文档，目前还没有写完，请稍后访问。
-
-
