@@ -102,6 +102,7 @@ function Header() {
         <div className='w-[360px] h-[200px] sm:w-[640px] sm:h-[360px] mx-auto aspect-video'>
           <Player
             // ref={playerRef}
+            className=" rounded-lg"
             hls_url='https://vod.steedos.cn/video/175146ea-1772962056e-0000-0000-009-c59e0.mp4'
             light={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/uYfiSbnj7Ms7djamt`}
             width="100%"
@@ -165,118 +166,39 @@ export default function Home(props) {
         <title>{name} - {homepage.name}</title>
       </Head>
   
-      <div className="mb-10 space-y-20 overflow-hidden sm:mb-16 sm:space-y-32 md:mb-20 md:space-y-40">
-        <Header/>
-      </div>
-
-      {/* <div className="pt-10 bg-gray-900 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
-        <div className="mx-auto max-w-7xl lg:px-8">
-          <div className="lg:grid lg:grid-cols-2 lg:gap-8">
-            <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
-              <div className="lg:py-24">
-                <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
-                  <span className="block">使用低代码技术，</span>
-                  <span className="block text-indigo-400">快速构建个性化应用</span>
-                </h1>
-                <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                {homepage.summary}
-                </p>
-                <div className="mt-10 sm:mt-12">
-                  <form action="https://console.steedos.cn/accounts/a/#/signup" className="sm:max-w-xl sm:mx-auto lg:mx-0" target="_blank">
-                    <div className="sm:flex">
-                      <div className="min-w-0 flex-1">
-                        <label htmlFor="email" className="sr-only">
-                          手机
-                        </label>
-                        <input
-                          id="mobile"
-                          type="mobile"
-                          placeholder="请输入您的手机号"
-                          onChange={(e)=>{setMobile(e.target.value)}}
-                          className="block w-full px-4 py-3 rounded-md border-0 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 focus:ring-offset-gray-900"
-                        />
-                      </div>
-                      <div className="mt-3 sm:mt-0 sm:ml-3">
-                        <button
-                          type="button"
-                          onClick={()=>{
-                            window.open(`https://console.steedos.cn/accounts/a/#/signup?mobile=${mobile}`);
-                          }}
-                          className="block w-full py-3 px-4 rounded-md shadow bg-indigo-500 text-white font-medium hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300 focus:ring-offset-gray-900"
-                        >
-                          开通云服务
-                        </button>
-                      </div>
-                    </div>
-                    <p className="mt-3 text-sm text-gray-300 sm:mt-4">
-                    开始您的华炎魔方低代码之旅。 <a href="https://www.steedos.cn/docs/deploy/deploy-cloud" target="_blank">（阅读开通指南）</a>
-                  
-                    </p>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div className="mt-12 lg:m-0 lg:relative">
-              <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0">
-                <img
-                  className="w-full lg:absolute lg:inset-y-0 lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
-                  src={imageUrl}
-                  alt=""
+      <div className="mb-20 space-y-20 overflow-hidden sm:mb-32 sm:space-y-32 md:mb-40 md:space-y-40">
+        <Header />
+        <section className="text-center px-8">
+          <h2 className="text-slate-900 text-4xl tracking-tight font-extrabold sm:text-5xl dark:text-white">
+            数字化转型，需要高效率开发工具
+          </h2>
+          <figure>
+            <blockquote>
+              <p className="mt-6 max-w-3xl mx-auto text-lg">
+              对于现代企业而言，能够根据快速变化的工作环境而做出调整并为之适应已变得至关重要。您的公司如何应对这些变化，以及您如何快速做出响应，可能成为决定您的长期成败的关键。您的企业可以通过多种方式实现这种变化，使用低代码开发是越来越受欢迎的一种方式，可使企业适应不断变化的外部环境。
+              </p>
+            </blockquote>
+            <div className="relative max-w-3xl mx-auto px-4 sm:px-6 md:px-8 mt-10">
+              <div className='w-[360px] h-[200px] sm:w-[640px] sm:h-[360px] mx-auto aspect-video rounded-lg'>
+                <Player
+                  // ref={playerRef}
+                  hls_url='https://www-steedos-com.oss-accelerate.aliyuncs.com/videos/creator/steedos-guide.mp4'
+                  light={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/m26uoZEELL8t22h4t`}
+                  width="100%"
+                  height="100%"
                 />
               </div>
             </div>
-          </div>
-        </div>
-      </div> */}
-    
-      <article className="relative z-10 max-w-5xl mx-auto">
+          </figure>
+        </section>
+      </div>
+      {/* <Testimonials /> */}
+
+      <article className="mt-20 relative z-10 max-w-5xl mx-auto">
         <main className="px-4 sm:px-6 md:px-8 pb-20">
           <Markdown body={homepage.body} className="prose sm:prose-lg dark:prose-dark"></Markdown>
         </main>
       </article>
-      {/* <section className="relative z-10 text-center max-w-screen-lg xl:max-w-screen-xl mx-auto">
-        <div className="px-4 sm:px-6 md:px-8">
-          <BigText as="h2" className="mb-8">
-            <Widont>“Best practices” don’t actually work.</Widont>
-          </BigText>
-          <figure>
-            <blockquote>
-              <Paragraph className="max-w-4xl mx-auto mb-6">
-                I’ve written{' '}
-                <a
-                  href="https://adamwathan.me/css-utility-classes-and-separation-of-concerns/"
-                  className="text-light-blue-600 font-semibold"
-                  style={{
-                    boxShadow:
-                      'inset 0 -0.1666666667em 0 0 #fff, inset 0 -0.3333333333em 0 0 #bae6fd',
-                  }}
-                >
-                  a few thousand words
-                </a>{' '}
-                <Widont>
-                  on why traditional “semantic class names” are the reason CSS is hard to maintain,
-                  but the truth is you’re never going to believe me until you actually try it. If
-                  you can suppress the urge to retch long enough to give it a chance, I really think
-                  you'll wonder how you ever worked with CSS any other way.
-                </Widont>
-              </Paragraph>
-            </blockquote>
-            <figcaption className="sm:text-xl font-medium flex flex-col items-center">
-              <div className="p-1 border-2 border-light-blue-400 rounded-full mb-3">
-                <img
-                  src={require('@/img/adam.jpg')}
-                  alt=""
-                  className="w-10 h-10 rounded-full bg-light-blue-100"
-                  loading="lazy"
-                />
-              </div>
-              <div className="text-gray-900">Adam Wathan</div>
-              <div className="text-light-blue-600">Creator of Tailwind CSS</div>
-            </figcaption>
-          </figure>
-        </div>
-      </section> */}
-      {/* <Testimonials /> */}
       {/* <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44"> */}
         {/* <ConstraintBased />
         <BuildAnything />
