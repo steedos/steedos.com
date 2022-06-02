@@ -175,7 +175,7 @@ export default function Home(props) {
         <title>{name} - {homepage.name}</title>
       </Head>
   
-      <div className="mb-20 space-y-20 overflow-hidden sm:mb-32 sm:space-y-32 md:mb-40 md:space-y-40">
+      <div className="mb-20 space-y-20 overflow-hidden sm:mb-20 sm:space-y-32 md:mb-20 md:space-y-40">
         <Header />
         <section className="text-center px-8">
           <h2 className="text-slate-900 text-4xl tracking-tight font-extrabold sm:text-5xl dark:text-white">
