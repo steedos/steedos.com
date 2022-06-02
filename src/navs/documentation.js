@@ -70,7 +70,6 @@ export const documentationNav = {
     admin['approval-process'],
     admin['automated-action'],
     admin['workflow-admin'],
-    developer['flow-trigger']
   ],
   '服务端开发': [
     developer['getting-started'],
@@ -79,6 +78,7 @@ export const documentationNav = {
     developer['router'],
     developer['objectql'],
     developer['package'],
+    developer['flow-trigger'],
     developer['deploy-gitpod'],
   ],
   '前端开发': [

@@ -187,17 +187,7 @@ export default function Home(props) {
               对于现代企业而言，能够根据快速变化的工作环境而做出调整并为之适应已变得至关重要。您的公司如何应对这些变化，以及您如何快速做出响应，可能成为决定您的长期成败的关键。您的企业可以通过多种方式实现这种变化，使用低代码开发是越来越受欢迎的一种方式，可使企业适应不断变化的外部环境。
               </p>
             </blockquote>
-            {/* <div className="relative max-w-3xl mx-auto px-4 sm:px-6 md:px-8 mt-10">
-              <div className='w-[360px] h-[200px] sm:w-[640px] sm:h-[360px] mx-auto aspect-video rounded-lg'>
-                <Player
-                  // ref={playerRef}
-                  hls_url='https://www-steedos-com.oss-accelerate.aliyuncs.com/videos/creator/steedos-guide.mp4'
-                  light={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/m26uoZEELL8t22h4t`}
-                  width="100%"
-                  height="100%"
-                />
-              </div>
-            </div> */}
+           
           </figure>
         </section>
       </div>

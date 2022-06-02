@@ -45,25 +45,13 @@ let testimonials = [
         avatar: require('@/img/icons/home/constraint-based.png').default,
       },
     },
-  ],
-  [
     {
       content: '通过配置数据源，可以轻松的连接到第三方业务系统，实现与外部数据的打通.',
       url: '/docs/admin/datasource',
       author: {
         name: '外部数据源',
-        role: '低代码',
-        avatar: require('@/img/icons/home/build-anything.png').default,
-      },
-    },
-    {
-      content:
-        '可视化查询设计工具，连接外部数据源，编写SQL语句即可预览和生成查询API，进一步搭配报表工具和amis工具实现数据分析功能。',
-      url: '/docs/admin/query',
-      author: {
-        name: '查询设计器',
-        role: '低代码',
-        avatar: require('@/img/icons/home/build-anything.png').default,
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
       },
     },
     {
@@ -72,8 +60,8 @@ let testimonials = [
       url: '/docs/admin/record_report',
       author: {
         name: '分析报表',
-        role: '低代码',
-        avatar: require('@/img/icons/home/build-anything.png').default,
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
       },
     },
     {
@@ -82,6 +70,82 @@ let testimonials = [
       url: '/docs/admin/stimulsoft',
       author: {
         name: '像素级报表',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
+    },
+    {
+      content:
+        '使用华炎魔方仪表盘，可以连接任意数据库，在界面上编写查询语句，然后再配置页面和图表，就可以轻松实现各种类型的仪表盘',
+      url: '/docs/admin/dashboard',
+      author: {
+        name: '仪表盘',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
+    },
+  ],
+  [
+    {
+      content:
+        '可视化查询设计工具，连接外部数据源，编写SQL语句即可预览和生成查询API，进一步搭配报表工具和amis工具实现数据分析功能。',
+      url: '/docs/admin/query',
+      author: {
+        name: '查询设计器',
+        role: '无代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
+    },
+    {
+      content: '公式引擎可以帮助非程序员快速实现一些简单的业务逻辑，类似Excel公式，它是从其他字段、表达式或值派生其值的一种算法，可以帮助您根据其他字段自动计算一个字段的值。      ',
+      url: '/docs/admin/formula',
+      author: {
+        name: '公式',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
+    },
+    {
+      content: '工作流规则可让您自动化标准内部过程和进程，以在贵组织范围内节省时间。工作流规则是一组工作流指示的主要容器。这些指示始终可以用“如果/则”语句概括。',
+      url: '/docs/admin/workflow-rules',
+      author: {
+        name: '工作流规则',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
+    },
+    {
+      content: '相比工作流规则，批准过程在自动化处理方面更进一步，让您可以指定批准该类记录所必需经历的审批步骤序列。还可以指定在各个时间点、各个审批步骤的自动处理操作。',
+      url: '/docs/admin/approval-process',
+      author: {
+        name: '批准过程',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
+    },
+    {
+      content: '审批王是图形化的流程设计工具，并与您的业务对象实现数据互通。例如您可以从合同台帐中直接发起一个审批流程，然后在审批王中处理审批相关业务，最终审批结果更新回合同台帐。',
+      url: '/docs/admin/workflow-admin',
+      author: {
+        name: '审批王',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
+    },
+    {
+      content: '自动操作是可重复使用的组件，可在后台执行某种操作，如更新字段或发送电子邮件。创建自动操作后，将其添加到批准过程、工作流规则中。      ',
+      url: '/docs/admin/automated-action',
+      author: {
+        name: '自动化操作',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
+    },
+    {
+      content: '华炎魔方与 IBM Node-Red 低代码应用集成引擎整合，可以通过可视化开发方式，连接SAP、用友、金蝶等主流业务系统及各种数据库。',
+      url: '/docs/developer/node-red',
+      author: {
+        name: 'node-red',
         role: '低代码',
         avatar: require('@/img/icons/home/build-anything.png').default,
       },
@@ -99,9 +163,18 @@ let testimonials = [
     },
     {
       content: '通过编写触发器，可以在记录增删改前和增删改查之后自动触发一段服务端代码，实现个性化的数据校验和处理。',
-      url: '/docs/admin/object',
+      url: '/docs/developer/trigger',
       author: {
         name: '触发器',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content: '与触发器类似，在流程流转到特定节点时自动触发一段代码逻辑。',
+      url: '/docs/developer/flow-trigger',
+      author: {
+        name: '流程触发器',
         role: '高代码',
         avatar: require('@/img/icons/home/editor-tools.png').default,
       },
@@ -119,9 +192,39 @@ let testimonials = [
     {
       content:
         '如果华炎魔方自动生成的标准API不能满足业务需求，可以编写自定义API，在服务端处理业务数据。',
-      url: '/docs/admin/listview',
+      url: '/docs/developer/router',
       author: {
         name: '自定义API',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content:
+        'ObjectQL 是面向对象的跨数据库查询语法。基于ObjectQL语法编写的函数兼容不同类型的数据库。        ',
+      url: '/docs/developer/objectql',
+      author: {
+        name: 'ObjectQL',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content:
+        '可以在对象的列表页和记录详情页配置自定义按钮，并通过编写 Javascript 脚本的方式，处理个性化的业务需求。',
+      url: '/docs/developer/button',
+      author: {
+        name: '自定义按钮',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content:
+        '通过定义软件包，可以将复杂的项目需求拆分成多个子模块分别由不同的团队开发。软件包可以发布到npm仓库，在不同项目、不同客户中复用，也可以上架到华炎魔方应用市场。',
+      url: '/docs/developer/package',
+      author: {
+        name: '软件包',
         role: '高代码',
         avatar: require('@/img/icons/home/editor-tools.png').default,
       },
