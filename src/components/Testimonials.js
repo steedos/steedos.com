@@ -92,7 +92,7 @@ let testimonials = [
       url: '/docs/admin/query',
       author: {
         name: '查询设计器',
-        role: '无代码',
+        role: '低代码',
         avatar: require('@/img/icons/home/build-anything.png').default,
       },
     },
