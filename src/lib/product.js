@@ -14,12 +14,14 @@ const QUERY_PRODUCT_INFO = `
     product_collection,
     product_collection__expand{
         _id,
-        name
+        name,
+        slug
     },
     product_type,
     product_type__expand{
         _id,
-        name
+        name,
+        slug
     },
     status,
     tags,

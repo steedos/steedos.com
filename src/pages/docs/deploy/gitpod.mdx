@@ -1,0 +1,74 @@
+---
+title: Gitpod
+description: Gitpod旨在取代本地桌面开发，所以我们强烈推荐使用它来启动远程开发环境，以免去本地安装开发环境的繁琐过程。
+---
+
+Gitpod是一个在线IDE，点击任何 [GitLab 中国区域云服务](https://gitlab.steedos.cn/) 项目主页上的 Gitpod 按钮即可一键启动远程开发环境。
+
+在几秒钟之内，Gitpod就可以为您提供一个完整的开发环境，包括一个VS Code驱动的IDE和一个可以由项目定制化配置的云Linux容器。
+
+Gitpod旨在取代本地桌面开发，所以我们强烈推荐使用它来启动远程开发环境，以免去本地安装开发环境的繁琐过程，如果需要本地安装开发环境请参考文档：
+
+* [开发环境部署 - Windows](/docs/deploy/deploy-windows)
+* [开发环境部署 - Mac](/docs/deploy/deploy-mac)
+
+## Gitpod 设置
+
+### 浏览器设置
+
+为了在使用Gitpod时获得最好的体验，我们建议您将 Gitpod 列入白名单，以获取您的浏览器上的以下权限：
+
+* 将内容从剪贴板粘贴到Gitpod工作区。
+* 弹出窗口，在一个新的浏览器选项卡访问您开发的服务。
+
+以下是在Chrome浏览器中的配置方法，[Gitpod官网](https://www.gitpod.io) 有详细说明，详情请参阅： <https://www.gitpod.io/docs/configure/browser-settings>。
+
+设置好后你甚至可以把本地文件拖动到Chrome浏览器上Gitpod工作区中相关文件夹内来复制上传文件，大大提高开发效率。
+
+#### 剪贴板
+
+1. 在chrome浏览器中输入地址 `chrome://settings/content/clipboard` 来打开“剪贴板”设置界面。
+2. 在右侧内容界面中找到“允许查看您的剪贴板”栏，点击其旁边的“添加”按钮。
+3. 在弹出的“添加网站”窗口中输入`[*.]vscode.steedos.cn` 然后点击添加按钮即可。
+
+#### 弹出式窗口和重定向
+
+1. 在chrome浏览器中输入地址 `chrome://settings/content/popups` 来打开“弹出式窗口和重定向”设置界面。
+2. 在右侧内容界面中找到“允许发送弹出式窗口并使用重定向”栏，点击其旁边的“添加”按钮。
+3. 在弹出的“添加网站”窗口中输入`[*.]vscode.steedos.cn` 然后点击添加按钮即可。
+
+### 使用本地VS Code
+
+ ![](https://console.steedos.cn/api/files/images/wWCvfb5NQRjM3AE7m)默认情况下，使用Gitpod启用远程开发环境是打开浏览器运行的，我们可以访问 [Gitpod官网个人设置页面](https://vscode.steedos.cn/preferences) 勾选 `Open in Desktop IDE` 选项来开启使用本地VS Code打开远程Gitpod工作区的功能，该功能开启后，就可以使用本地VS Code打开Gitpod工作区了，使用浏览器还是本地VS Code主要看个人习惯，两种方式并没有太大区别。
+
+### Pin
+
+默认情况下，使用Gitpod启动远程开发环境后，连续30分钟不移动鼠标操作其VS Code界面的话，远程服务会自动停止以释放相关资源，但是会保留硬盘资源，如果连续更长时间，比如数天甚至数周不访问的话，该工作区内的所有硬盘资源都会被销毁，这意味着上次访问该工作区时未提交到Git仓库的所有代码以及数据库中数据都将丢失，而且无法再在工作区列表访问该工作区。
+
+ ![](https://console.steedos.cn/api/files/images/LHBaya7fFaTP9pHBs)
+
+我们可以在 [Gitpod 中国区域云服务的Workspaces页面](https://vscode.steedos.cn/workspaces)  看到之前打开过的所有Gitpod工作区，在该列表上找到希望不自动释放资源的Workspace，点击右侧下拉菜单按钮，在展开的菜单中勾选“Pin”选项即可把该Gitpod工作区设置为不自动释放资源。
+
+Pin后的Gitpod工作区，不但会保留未提交到Git仓库的代码，而且在开发环境中安装过的依赖项以及数据库数据等都会持续留存于开发环境中，一般不用担心数据丢失问题，但是我们还是建议大家尽量及时把代码提交到Git仓库中。
+
+### 打开历史工作区
+
+我们可以在 [Gitpod 中国区域云服务的Workspaces页面](https://vscode.steedos.cn/workspaces)  看到之前打开过的所有Gitpod工作区，在该列表上找到希望再启动的工作区，点击右侧下拉菜单按钮，在展开的菜单中点击“Open”选项即可重新启动该工作区远程开发环境。因为第一次启动该工作区时已经部署好了开发环境，所以再次进入该工作区时启动服务速度要比新开工作区时快很多。
+
+### 下载
+
+我们可以在 [Gitpod 中国区域云服务的Workspaces页面](https://vscode.steedos.cn/workspaces) 看到之前打开过的所有Gitpod工作区列表，在该列表上找到想下载的Workspace，点击右侧下拉菜单按钮，在展开的菜单中点击“Download”选项即可把该Gitpod工作区下载到本地，然后把下载之后的文件重命名，在其后缀名加上 `.tar.gz` 就可以解压缩，解压缩后的文件是 `/workspace` 文件夹中的所有文件，其中也包括MongoDB数据库文件。
+
+### 访问MongoDB
+
+使用Gitpod远程启动华炎魔方模板工作区的开发环境中已经预先为VS Code安装了名为 [MongoDB for VS Code](https://github.com/mongodb-js/vscode) 的插件，可以使用该插件来访问华炎魔方工作区连接的MongoDB数据库，以便查看数据库中的数据调试程序。
+
+### 重启远程开发环境
+
+有时我们会因为某些原因希望重启整个远程开发环境而不希望开启全新的远程开发环境，比如端口被占用无法正常启动服务时可能重启整个开发环境服务是比较快捷的方式。
+
+要重启远程开发环境，请在 [Gitpod 中国区域云服务的Workspaces页面](https://vscode.steedos.cn/workspaces) 中浏览目前打开的所有Gitpod工作区，然后在列表上找到希望重启服务的那条记录，点击其右侧下拉菜单按钮，在展开的菜单中勾选“Stop”选项即可停止该Gitpod工作区，待停止成功后重新点击其中的“Open”选项即可重新打开该工作区。
+
+### 重启VS Code
+
+有时我们会因为某些原因希望重启VS Code，在浏览器上的Gitpod远程开发环境中，只需要刷新浏览器即可重启VS Code，而不需要重启整个Gitpod开发环境，非常方便快捷。

@@ -45,19 +45,19 @@ function VariantRadio({ productVariant, onChange, defValue }) {
                     }
                 }} className="mt-2">
                     <RadioGroup.Label className="sr-only">{productVariant.name}</RadioGroup.Label>
-                    <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+                    <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
                         {productVariant.options.map((option) => (
                             <RadioGroup.Option
                                 key={option}
                                 value={option}
                                 className={({ active, checked }) =>
                                     `${active
-                                        ? 'ring-2 ring-offset-2 ring-indigo-500'
+                                        ? 'ring-2 ring-offset-2 ring-sky-500'
                                         : ''
                                     }
-                    ${checked ? 'bg-indigo-600 border-transparent text-white hover:bg-indigo-700' : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50'
+                    ${checked ? 'bg-white text-sky-600 hover:bg-gray-50' : 'bg-white text-gray-900 hover:bg-gray-50'
                                     }
-                                    border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1`
+                                    border-gray-200 border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1`
                                 }
                             >
                                 <RadioGroup.Label as="p">{option}</RadioGroup.Label>

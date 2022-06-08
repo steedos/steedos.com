@@ -1,0 +1,84 @@
+---
+title: 自定义按钮
+description: 可以在对象的列表页和记录详情页配置自定义按钮，并通过编写 Javascript 脚本的方式，处理个性化的业务需求。
+---
+
+## 可视化创建
+
+要在对象设置界面配置自定义操作按钮，请点开设置应用并进入“对象设置→对象”选择一个对象，然后在对象详细页面中找到“操作按钮”子表并点击其右上角新建按钮即可新建一个自定义操作按钮。
+
+
+ ![](https://console.steedos.cn/api/files/images/maYxv5HaJrMjZArdj)其中执行的脚本需要按照以下格式要求填写脚本代码，所有脚本都应该写入一个 `function`函数体内。
+
+```yaml
+function(object_name, record_id){
+  // 在这里补充按钮点击事件业务需求脚本。
+}
+```
+
+## 用代码定义
+
+要用代码开发对象上自定义操作按钮，需要先在对象元数据文件夹中新建`buttons`文件夹用于放置操作按钮相关元数据，以下示例描述了给会议对象开发一个“会后评分”操作按钮的简易过程。
+
+请在`steedos-app/main/default/objects/meeting__c/buttons/`文件夹中分别新建对应的yml和js文件。
+
+### 按钮配置文件`scoring.button.yml`
+
+```yaml
+name: scoring
+is_enable: true
+label: 会后评分
+'on': record_only
+visible: true
+```
+
+其中`on`参数表示按钮要放在什么位置，以下是可选参数：
+
+* list: 只显示在列表右上角;
+* record: 显示在记录查看页右上角，以及列表视图中每项的下拉菜单中;
+* record_more: 显示在记录查看页右上角的“更多”下拉菜单中，以及列表视图中每项的下拉菜单中;
+* list_item: 只显示在列表视图中每项的下拉菜单中;
+* record_only: 只显示在记录查看页右上角;
+* record_only_more: 只显示在记录查看页右上角的“更多”下拉菜单中"
+
+### 按钮脚本文件`scoring.button.js`
+
+```javascript
+module.exports = {
+    scoring: function (object_name, record_id) {
+        $(document.body).addClass('loading');
+        let url = `api/meeting/scoring/application`;
+        let options = {
+            type: 'post',
+            async: true,
+            data: JSON.stringify({ meetingId: record_id }),
+            success: function (data) {
+                toastr.success('已发起会议评分申请。');
+                FlowRouter.reload();
+                $(document.body).removeClass('loading');
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(t(XMLHttpRequest.responseJSON.message))
+                $(document.body).removeClass('loading');
+            }
+        };
+        Steedos.authRequest(url, options);
+    },
+    scoringVisible: function (object_name, record_id, permissions, record) {
+        return record.type__c === '领导会议'; // 领导会议 显示会议评分按钮
+    }
+}
+```
+
+该文件导出两个函数，分别定义按钮事件和按钮显示规则。
+
+* 函数名称规范：按钮事件函数名称没有特别限制，一个正常的函数名称即可；但是按钮显示规则函数要求命名为按钮事件函数同名加上`Visible`后缀。
+* 按钮事件函数：该函数接收的两个参数`object_name, record_id`表示对象api名称和记录ID值。点击按钮时会触发该函数，其内可以通过`Steedos.authRequest`调用华炎魔方API接口。当按钮显示记录详细页，可以调用 `this.record`  、`Creator.getObjectRecord()` 获取当前记录信息； 当按钮显示在列表上，可以调用 `gridRef.current.api.getSelectedRows()` 获取当前选中的记录。
+* 按钮显示规则函数：该函数接收的两个参数`object_name, record_id, permissions, record`表示对象api名称、记录ID值、当前用户对该记录权限及当前记录信息。只有该函数返回值为`true`才会显示按钮。
+
+
+## 前端函数索引
+
+在按钮要执行的脚本中可以调用华炎魔方前端内核函数实现各种功能，比如可以调用 `SteedosUI.showModal` 函数来弹出表单或表格窗口，
+
+请查阅文档 [前端函数索引](/docs/developer/steedosui)了解目前可供调用的内核函数说明。

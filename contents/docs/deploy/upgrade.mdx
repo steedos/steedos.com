@@ -1,0 +1,75 @@
+---
+title: 2.2升级步骤
+description: null
+---
+
+## 2.0升级至2.1
+
+2\.1版本与2.0版本相比较可以说几乎没有什么本质差别，最大的区别就是要求所有私有部署项目必须上华炎云平台激活魔方ID。
+
+### 项目文件升级步骤
+
+请先按上述“升级前准备”小节所述激活华炎魔方，再按上述“如何升级内核版本”小节所述，升级内核版本至2.1最新版本即可。
+
+### 执行数据库升级脚本
+
+请参考文档：[https://github.com/steedos/steedos-platform/blob/2.1/2.0 升级到 2.1.md](https://github.com/steedos/steedos-platform/blob/2.1/2.0%20%E5%8D%87%E7%BA%A7%E5%88%B0%202.1.md)
+
+如果没有用到过文档中提及的功能点，可以不执行相关升级脚本。
+
+### 运行升级后的项目
+
+上述文件目录升级完成后，就可以开始运行项目测试效果了，请打开命令行窗口，先在根目录执行 `yarn`来安装相关依赖包，然后执行 `yarn start` 就可以运行项目了。
+
+## 2.1升级至2.2
+
+最新的2.2版本，华炎魔方集成了可视化页面设计工具AMIS，实现了页面样式拖拉拽自定义设置。升级过程如下：
+
+### 文件替换
+
+调整项目根路径下 services文件夹文件为community.service.js、enterprise.service.js，原相关文件可删除；文件参考：<https://github.com/steedos/steedos-project-template/tree/2.2/services>
+
+### package.json文件修改
+
+* 参考platform发布的版本，将package.json中相关2.1版本的软件包升级到最新的2.2版本；参考本文档介绍的“如何升级内核版本”章节；
+* package.json文件中添加 dependencies :@steedos/webapp-accounts，相应版本号编辑器会自动提示；
+* package.json文件中调整 scripts ，相关属性如下：
+
+  ```jsx
+  "scripts": {
+      "start": "yarn start:community",
+      "flushCacherDB": "node .scripts/flush_cacher_db.js",
+      "start:steedos": "cross-env NODEID=STEEDOS-SERVER moleculer-runner services/steedos-server",
+      "start:app": "cross-env NODEID=STEEDOS-APP moleculer-runner --repl services/steedos-app",
+      "console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
+      "docker": "docker-compose up --build -d",
+      "compile": "lerna run compile",
+      "build": "lerna run build --no-private --stream",
+      "start-ts": " yarn build-steedos-app-ts && yarn start",
+      "build-steedos-app-ts": "cd steedos-app && tsc",
+      "ver": "lerna version --force-publish --exact",
+      "pub": "lerna publish from-package --registry https://registry.npmjs.org",
+      "pub_next": "lerna publish from-package --registry https://registry.npmjs.org --dist-tag next",
+      "sync-to-taobao": "node .scripts/sync_to_taobao.js",
+      "start:community": "yarn flushCacherDB && moleculer-runner services/community.service.js",
+      "start:enterprise": "yarn flushCacherDB && moleculer-runner services/enterprise.service.js",
+      "start:console": "cross-env NODEID=STEEDOS-CONSOLE moleculer connect --config ./moleculer.config.js",
+      "postinstall": "cd .steedos && yarn"
+    },
+  ```
+
+  ### .env文件修改
+* 文件增加以下属性：
+
+```jsx
+STEEDOS_PAGE_RENDER=
+STEEDOS_PUBLIC_PAGE_ASSETURLS=https://unpkg.com/@steedos-ui/builder-widgets@1.1.37/dist/assets.json
+STEEDOS_UNPKG_URL=https://npm.elemecdn.com
+```
+
+### 启动服务
+
+* 执行yarn
+* 再执行yarn start，启动服务。
+
+\

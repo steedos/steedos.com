@@ -1,0 +1,214 @@
+---
+title: 开放流程
+description: 支持接入不同的流程引擎，实现业务流程自定义。
+---
+
+## 核心需求
+
+- 可视化设计业务流程
+- 业务对象与流程引擎相关联
+- 松耦合，支持挂接不同流程引擎
+- 流程同步为元数据
+
+## 数据库设计
+
+### 流程 process
+
+```yml
+name: `processApiName` # Api Name
+label: "" # 显示名称
+object_name: contracts # 关联对象名
+engine: cmbbpm/activiti/flowable/camunda # 引擎类型
+is_active: true # 是否启用
+deploy_time: Date # 发布时间
+version: 1 # 流程最新已发布的版本号
+description: "" # 描述
+entry_criteria: "" # 入口公式 传入 (userSession, Record)
+when: "" # 何时执行入口公式 afterInsert/afterUpdate
+ext: json/bpmn # 同步到元数据的后缀名
+```
+
+- 引擎类型（engine）: cmbbpm/activiti/flowable/camunda 
+
+### 流程版本 process_versions
+
+流程版本记录流程的修订历史，任务在运行时关联到此记录。发起流程时始终取流程最新已发布版。
+
+```yml
+process: `process_id` # 流程_id
+version: 2 # 版本号
+is_active: true # 版本是否已发布
+description: "" # 版本描述
+schema: `process.{engine}.bpmn` # 流程定义schema
+entry_criteria: "" # 入口公式 传入 (userSession, Record)
+when: "" # 何时执行入口公式 afterInsert/afterUpdate
+```
+
+## 元数据
+
+元数据下载时只下载流程最新版本。上传时判断最新版是否是已发布，如果已发布则生成新版本，如未发布则更新。
+
+### 流程 .process.yml
+
+```yml
+name: `processApiName` # Api Name
+label: "" # 显示名称
+object_name: contracts # 关联对象名
+engine: `{engine}` # 引擎类型
+is_active: true # 是否启用
+description: "" # 描述
+entry_criteria: "" # 入口公式
+when: "" # 何时执行入口公式
+```
+
+### 流程图 .process.`[engine]`.`[ext]`
+
+基于 `engine` 的流程图。在元数据中单独保存此文件，以便在 VS Code 中提供设计器插件。
+
+## 接入 BPM 引擎
+
+使用插件方式接入 BPM 服务。
+
+### 定义 BPM 服务
+
+定义 [Moleculer](https://moleculer.services/docs/0.14/services.html) 微服务
+
+```js
+{
+    module.exports = {
+        name: `{engine}`,
+        settings: {
+            serviceEndpoint: "https://{engine}.serviceEndpoint"
+        },
+        actions: {
+            // 保存schema
+            save: {
+                rest: {
+                    method: "POST",
+                    path: "/save"
+                },
+                params: {},
+                handler: async function (ctx){
+                    // call activiti api
+                }
+            },
+
+            // 流程发布
+            deploy: {
+                rest: {
+                    method: "POST",
+                    path: "/deploy"
+                },
+                params: {},
+                handler: async function (ctx){
+                    // call activiti api
+                }
+            },
+
+            // 流程禁用
+            disable: {
+                rest: {
+                    method: "POST",
+                    path: "/disable"
+                },
+                params: {},
+                handler: async function (ctx){
+                    // call activiti api
+                }
+            },
+
+            // 流程启用
+            enable: {
+                rest: {
+                    method: "POST",
+                    path: "/enable"
+                },
+                params: {},
+                handler: async function (ctx){
+                    // call activiti api
+                }
+            },
+
+            // 流程删除
+            delete: {
+                rest: {
+                    method: "POST",
+                    path: "/delete"
+                },
+                params: {},
+                handler: async function (ctx){
+                    // call activiti api
+                }
+            },
+
+            // 申请单发起
+            start: {
+                rest: {
+                    method: "POST",
+                    path: "/start"
+                },
+                params: {},
+                handler: async function (ctx){
+                    // call activiti api
+                }
+            },
+
+
+            // 流程取消前
+            beforeCancel: {
+                rest: {
+                    method: "POST",
+                    path: "/beforeCancel"
+                },
+                params: {},
+                handler: async function (ctx){
+                    // 调用 Steedos 流程触发器脚本。
+                    return await broker.call('process.beforeCancel', { event, context })
+                }
+            },
+        },
+        events: {
+            // 核准
+            [`{engine}.approve`]: async function (ctx) {
+                
+            },
+
+            // 驳回
+            [`{engine}.reject`]: async function (ctx) {
+                
+            },
+
+            // 取消
+            [`{engine}.cancel`]: async function (ctx) {
+                
+            },
+
+            // 撤回，发起后撤回
+            [`{engine}.withdraw`]: async function (ctx) {
+                
+            },
+
+            // 重新发起，与撤回搭配使用
+            [`{engine}.restart`]: async function (ctx) {
+                
+            },
+
+            // 转交，当前审批人将任务转交给他人处理
+            [`{engine}.transfer`]: async function (ctx) {
+                
+            },
+
+            // 加签，拉审批人加入当前节点处理
+            [`{engine}.addsign`]: async function (ctx) {
+                
+            },
+
+            // 退回，当前审批人将任务退回给指定节点
+            [`{engine}.backward`]: async function (ctx) {
+                
+            }
+        }
+    }
+}
+```
+

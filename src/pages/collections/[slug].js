@@ -52,7 +52,7 @@ export default class Collection extends React.Component {
 
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
               <div className="py-24 text-center">
-                <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">{collection.name}</h1>
+                <h1 className="text-4xl font-extrabold tracking-tight text-black dark:text-white">{collection.name}</h1>
                 <p className="mt-4 max-w-3xl mx-auto">
                   <Markdown body={collection.body}/>
                 </p>

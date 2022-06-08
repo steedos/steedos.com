@@ -3,18 +3,18 @@ import '../css/main.css'
 import 'focus-visible'
 import { useState, useEffect, Fragment } from 'react'
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer';
 import { Title } from '@/components/Title'
-import { DefaultLayout } from '@/layouts/DefaultLayout'
 import Router from 'next/router'
 import ProgressBar from '@badrap/bar-of-progress'
 import Head from 'next/head'
-import {MDXProvider} from '@mdx-js/react'
 import twitterLargeCard from '@/img/twitter-large-card.jpg'
 import { ResizeObserver } from '@juggle/resize-observer'
 import 'intersection-observer'
-import mdxComponents from '@/components/mdx';
 import {has, isArray} from 'lodash';
 import { saveAuthInfo } from '@/lib/auth.client';
+import { SearchProvider } from '@/components/Search'
+
 // import { getSite } from '@/lib/site';
 
 if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
@@ -42,7 +42,8 @@ Router.events.on('routeChangeComplete', () => {
 })
 Router.events.on('routeChangeError', progress.finish)
 
-export default function App({ Component, pageProps = {}, router, site }) {
+export default function App({ Component, pageProps = {}, router }) {
+  let [navIsOpen, setNavIsOpen] = useState(false)
   if(typeof window !== 'undefined' && router.query){
     if(has(router.query, 'X-Auth-Token') && has(router.query, 'X-Space-Id') && has(router.query, 'X-User-Id')){
       let authToken = router.query['X-Auth-Token'];
@@ -61,25 +62,53 @@ export default function App({ Component, pageProps = {}, router, site }) {
     }
   }
 
-  const { 
-    meta = {} 
-  } = pageProps;
+  useEffect(() => {
+    if (!navIsOpen) return
+    function handleRouteChange() {
+      setNavIsOpen(false)
+    }
+    Router.events.on('routeChangeComplete', handleRouteChange)
+    return () => {
+      Router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [navIsOpen])
 
-  meta.site = site;
+  const Layout = Component.layoutProps?.Layout || Fragment
 
-  const getLayout =
-    Component.getLayout ||
-    ((Page) => (
-      <DefaultLayout site={meta.site}>
-        <Page {...pageProps} />
-      </DefaultLayout>
-    ))
+  const layoutProps = Component.layoutProps?.Layout
+    ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen }
+    : { }
+  const showHeader = router.pathname !== '/' && !router.pathname.startsWith('/embed')
+  const showFooter = !router.pathname.startsWith('/docs') && !router.pathname.startsWith('/embed')
+  const meta = Component.layoutProps?.meta || pageProps?.meta || {}
+  const description =
+    meta.metaDescription || meta.description || '开源低代码 DevOps 平台'
+
+  let section =
+  meta.section ||
+  Object.entries(Component.layoutProps?.Layout?.nav ?? {}).find(([, items]) =>
+    items.find(({ href }) => href === router.pathname)
+  )?.[0]
 
   return (
     <>
-      <MDXProvider components={mdxComponents}>
-        {getLayout(Component, pageProps)}
-      </MDXProvider>
+      <SearchProvider>
+        {showHeader && (
+          <Header
+            hasNav={Boolean(Component.layoutProps?.Layout?.nav)}
+            navIsOpen={navIsOpen}
+            onNavToggle={(isOpen) => setNavIsOpen(isOpen)}
+            title={meta.title}
+            section={section}
+          />
+        )}
+          <Layout {...layoutProps}>
+            <Component section={section} {...pageProps} />
+          </Layout>
+        {showFooter && (
+          <Footer/>
+        )}
+      </SearchProvider>
     </>
   )
 }

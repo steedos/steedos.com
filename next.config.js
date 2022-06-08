@@ -1,11 +1,28 @@
 const path = require('path')
-const querystring = require('querystring')
 const { createLoader } = require('simple-functional-loader')
 const frontMatter = require('front-matter')
+const withSmartQuotes = require('@silvenon/remark-smartypants')
+const { withTableOfContents } = require('./remark/withTableOfContents')
+const { withSyntaxHighlighting } = require('./remark/withSyntaxHighlighting')
+const { withNextLinks } = require('./remark/withNextLinks')
+const { withLinkRoles } = require('./rehype/withLinkRoles')
+const { withRemarkDirective } = require('./remark/withRemarkDirective')
 const minimatch = require('minimatch')
-// const withBundleAnalyzer = require('@next/bundle-analyzer')({
-//   enabled: process.env.ANALYZE === 'true',
-// })
+
+// const withExamples = require('./remark/withExamples')
+const {
+  highlightCode,
+  fixSelectorEscapeTokens,
+  simplifyToken,
+  normalizeTokens,
+} = require('./remark/utils')
+// const { withPrevalInstructions } = require('./remark/withPrevalInstructions')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+const defaultConfig = require('tailwindcss/resolveConfig')(require('tailwindcss/defaultConfig'))
+const dlv = require('dlv')
+const Prism = require('prismjs')
 
 
 const withPlugins = require('next-compose-plugins');
@@ -28,21 +45,20 @@ const withMDX = require(`@next/mdx`)({
   },
 })
 
+const fallbackLayouts = {
+  'src/pages/docs/protocol/*': ['@/layouts/ProtocolLayout', 'ProtocolLayout'],
+  'src/pages/docs/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
+}
 
-// const withMdxEnhanced = require('next-mdx-enhanced')
+const fallbackDefaultExports = {
+  'src/pages/docs/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
+  'src/pages/developer/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
+  'src/pages/blog/**/*': ['@/layouts/BlogPostLayout', 'BlogPostLayout'],
+}
 
-// const fallbackLayouts = {
-//   'src/pages/docs/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
-//   'src/pages/components/**/*': ['@/layouts/ComponentsLayout', 'ComponentsLayout'],
-//   'src/pages/platform/**/*': ['@/layouts/PlatformLayout', 'PlatformLayout'],
-//   'src/pages/pricing/**/*': ['@/layouts/PricingLayout', 'PricingLayout'],
-//   'src/pages/course/**/*': ['@/layouts/CourseLayout', 'CourseLayout'],
-// }
-
-// const fallbackDefaultExports = {
-//   'src/pages/{docs,components,pricing,platform}/**/*': ['@/layouts/ContentsLayout', 'ContentsLayout'],
-//   'src/pages/course/**/*': ['@/layouts/VideoLayout', 'VideoLayout'],
-// }
+const fallbackGetStaticProps = {
+  'src/pages/blog/**/*': '@/layouts/BlogPostLayout',
+}
 
 module.exports = 
   withPlugins(
@@ -50,24 +66,10 @@ module.exports =
   //   // withBundleAnalyzer({
   //   //   enabled: process.env.ANALYZE === `true`,
   //   // }),
-  //   // withMdxEnhanced({
-  //   //   layoutPath: 'layouts',
-  //   //   defaultLayout: true,
-  //   //   fileExtensions: ['mdx'],
-  //   //   remarkPlugins,
-  //   //   rehypePlugins,
-  //   //   usesSrc: true,
-  //   //   extendFrontMatter: {
-  //   //     process: (mdxContent, frontMatter) => {},
-  //   //     phase: 'prebuild|loader|both',
-  //   //   },
-  //   //   reExportDataFetching: false,
-  //   // })
-    withMDX,
+    // withMDX,
     withTM
   ], 
   {
-  target: 'serverless',
   env: {
     STEEDOS_SERVER_API_KEY: process.env.STEEDOS_SERVER_API_KEY,
     NEXT_STATIC_PROPS_REVALIDATE: process.env.NEXT_STATIC_PROPS_REVALIDATE,
@@ -75,9 +77,11 @@ module.exports =
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
   experimental: {
-    modern: true,
+    // modern: true,
+    // esmExternals: true
   },
   images: {
+    disableStaticImages: true,
     minimumCacheTTL: 3600,
     domains: [
       'res.cloudinary.com', 
@@ -141,6 +145,14 @@ module.exports =
       test: /\.svg$/,
       use: [
         { loader: '@svgr/webpack', options: { svgoConfig: { plugins: { removeViewBox: false } } } },
+        'url-loader',
+      ],
+    })
+
+    config.module.rules.push({
+      test: /\.(png|jpe?g|gif|webp|avif|mp4)$/i,
+      issuer: /\.(jsx?|tsx?|mdx)$/,
+      use: [
         {
           loader: 'file-loader',
           options: {
@@ -151,88 +163,171 @@ module.exports =
       ],
     })
 
-    // config.module.rules.push({
-    //   test: /\.mdx/,
-    //   use: [
-    //     options.defaultLoaders.babel,
-    //     {
-    //       loader: '@mdx-js/loader',
-    //       options: {
-    //         remarkPlugins,
-    //         rehypePlugins,
-    //       },
-    //     },
-    //   ],
-    // })
+    config.resolve.alias['defaultConfig$'] = require.resolve('tailwindcss/defaultConfig')
+    config.module.rules.push({
+      test: require.resolve('tailwindcss/defaultConfig'),
+      use: createLoader(function (_source) {
+        return `export default ${JSON.stringify(defaultConfig)}`
+      }),
+    })
 
-    // config.module.rules.push({
-    //   test: /\.mdx$/,
-    //   use: [
-    //     options.defaultLoaders.babel,
-    //     createLoader(function (source) {
-    //       if (source.includes('/*START_META*/')) {
-    //         const [meta] = source.match(/\/\*START_META\*\/(.*?)\/\*END_META\*\//s)
-    //         return 'export default ' + meta
-    //       }
-    //       return (
-    //         source.replace(/export const/gs, 'const') + `\nMDXContent.layoutProps = layoutProps\n`
-    //       )
-    //     }),
-    //     {
-    //       loader: '@mdx-js/loader',
-    //       options: {
-    //         remarkPlugins,
-    //         rehypePlugins,
-    //       },
-    //     },
-    //     createLoader(function (source) {
-    //       let { meta: fields } = querystring.parse(this.resourceQuery.substr(1))
-    //       let { attributes: meta, body } = frontMatter(source)
-    //       if (fields) {
-    //         for (let field in meta) {
-    //           if (!fields.split(',').includes(field)) {
-    //             delete meta[field]
-    //           }
-    //         }
-    //       }
+    let mdx = (plugins = []) => [
+      {
+        loader: '@mdx-js/loader',
+        options: {
+          remarkPlugins: [
+            // withPrevalInstructions,
+            // withExamples,
+            withTableOfContents,
+            withSyntaxHighlighting,
+            // withNextLinks,
+            withSmartQuotes,
+            ...plugins,
+          ],
+          rehypePlugins: [withLinkRoles],
+        },
+      },
+      createLoader(function (source) {
+        let pathSegments = this.resourcePath.split(path.sep)
+        let slug =
+          pathSegments[pathSegments.length - 1] === 'index.mdx'
+            ? pathSegments[pathSegments.length - 2]
+            : pathSegments[pathSegments.length - 1].replace(/\.mdx$/, '')
+        return source + `\n\nexport const slug = '${slug}'`
+      }),
+    ]
 
-    //       let extra = []
-    //       let resourcePath = path.relative(__dirname, this.resourcePath)
+    config.module.rules.push({
+      test: { and: [/\.mdx$/, /snippets/] },
+      resourceQuery: { not: [/rss/, /preview/] },
+      use: [
+        options.defaultLoaders.babel,
+        {
+          loader: '@mdx-js/loader',
+          options: {
+            remarkPlugins: [withSyntaxHighlighting],
+          },
+        },
+      ],
+    })
 
-    //       if (!/^\s*export\s+(var|let|const)\s+Layout\s+=/m.test(source)) {
-    //         for (let glob in fallbackLayouts) {
-    //           if (minimatch(resourcePath, glob)) {
-    //             extra.push(
-    //               `import { ${fallbackLayouts[glob][1]} as _Layout } from '${fallbackLayouts[glob][0]}'`,
-    //               'export const Layout = _Layout'
-    //             )
-    //             break
-    //           }
-    //         }
-    //       }
+    config.module.rules.push({
+      test: /\.mdx$/,
+      resourceQuery: /rss/,
+      use: [options.defaultLoaders.babel, ...mdx()],
+    })
 
-    //       if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ''))) {
-    //         for (let glob in fallbackDefaultExports) {
-    //           if (minimatch(resourcePath, glob)) {
-    //             extra.push(
-    //               `import { ${fallbackDefaultExports[glob][1]} as _Default } from '${fallbackDefaultExports[glob][0]}'`,
-    //               'export default _Default'
-    //             )
-    //             break
-    //           }
-    //         }
-    //       }
+    config.module.rules.push({
+      test: /\.mdx$/,
+      resourceQuery: /preview/,
+      use: [
+        options.defaultLoaders.babel,
+        createLoader(function (src) {
+          const [preview] = src.split('<!--/excerpt-->')
+          return preview.replace('<!--excerpt-->', '')
+        }),
+        ...mdx([
+          () => (tree) => {
+            let firstParagraphIndex = tree.children.findIndex((child) => child.type === 'paragraph')
+            if (firstParagraphIndex > -1) {
+              tree.children = tree.children.filter((child, index) => {
+                if (child.type === 'import' || child.type === 'export') {
+                  return true
+                }
+                return index <= firstParagraphIndex
+              })
+            }
+          },
+        ]),
+      ],
+    })
 
-    //       return [
-    //         ...(typeof fields === 'undefined' ? extra : []),
-    //         typeof fields === 'undefined' ? body : '',
-    //         typeof fields === 'undefined'
-    //           ? `export const meta = ${JSON.stringify(meta)}`
-    //           : `export const meta = /*START_META*/${JSON.stringify(meta || {})}/*END_META*/`,
-    //       ].join('\n\n')
-    //     }),
-    //   ],
-    // })
+    config.module.rules.push({
+      test: { and: [/\.mdx$/], not: [/snippets/] },
+      resourceQuery: { not: [/rss/, /preview/] },
+      use: [
+        options.defaultLoaders.babel,
+        createLoader(function (source) {
+          if (source.includes('/*START_META*/')) {
+            const [meta] = source.match(/\/\*START_META\*\/(.*?)\/\*END_META\*\//s)
+            return 'export default ' + meta
+          }
+          return (
+            source.replace(/export const/gs, 'const') + `\nMDXContent.layoutProps = layoutProps\n`
+          )
+        }),
+        ...mdx(),
+        createLoader(function (source) {
+          let fields = new URLSearchParams(this.resourceQuery.substr(1)).get('meta') ?? undefined
+          let { attributes: meta, body } = frontMatter(source)
+          if (fields) {
+            for (let field in meta) {
+              if (!fields.split(',').includes(field)) {
+                delete meta[field]
+              }
+            }
+          }
+
+          let extra = []
+          let resourcePath = path.relative(__dirname, this.resourcePath)
+
+          if (!/^\s*export\s+(var|let|const)\s+Layout\s+=/m.test(source)) {
+            for (let glob in fallbackLayouts) {
+              if (minimatch(resourcePath, glob)) {
+                extra.push(
+                  `import { ${fallbackLayouts[glob][1]} as _Layout } from '${fallbackLayouts[glob][0]}'`,
+                  'export const Layout = _Layout'
+                )
+                break
+              }
+            }
+          }
+
+          if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ''))) {
+            for (let glob in fallbackDefaultExports) {
+              if (minimatch(resourcePath, glob)) {
+                extra.push(
+                  `import { ${fallbackDefaultExports[glob][1]} as _Default } from '${fallbackDefaultExports[glob][0]}'`,
+                  'export default _Default'
+                )
+                break
+              }
+            }
+          }
+
+          if (
+            !/^\s*export\s+(async\s+)?function\s+getStaticProps\s+/m.test(
+              source.replace(/```(.*?)```/gs, '')
+            )
+          ) {
+            for (let glob in fallbackGetStaticProps) {
+              if (minimatch(resourcePath, glob)) {
+                extra.push(`export { getStaticProps } from '${fallbackGetStaticProps[glob]}'`)
+                break
+              }
+            }
+          }
+
+          let metaExport
+          if (!/export\s+(const|let|var)\s+meta\s*=/.test(source)) {
+            metaExport =
+              typeof fields === 'undefined'
+                ? `export const meta = ${JSON.stringify(meta)}`
+                : `export const meta = /*START_META*/${JSON.stringify(meta || {})}/*END_META*/`
+          }
+
+          return [
+            ...(typeof fields === 'undefined' ? extra : []),
+            typeof fields === 'undefined'
+              ? body.replace(/<!--excerpt-->.*<!--\/excerpt-->/s, '')
+              : '',
+            metaExport,
+          ]
+            .filter(Boolean)
+            .join('\n\n')
+        }),
+      ],
+    })
 
     return config
   },

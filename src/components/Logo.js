@@ -1,21 +1,13 @@
 
 import Image from 'next/image'
+import { Fragment, useEffect, useRef, useState } from 'react'
 
-const defaultLogSrc = require("@/img/logo_platform.png")
 
 export function Logo(props) {
-  let logoSrc =  props.src || defaultLogSrc
+  
   return (
-    // <Image
-    //   src={logoSrc}
-    //   className={props.className}
-    //   height={40}
-    //   width={128}
-    // />
-    <img src="/logo.png" 
+    <div id="logo"
       className={props.className}
-      height={40}
-      width={128}
     />
   )
 }

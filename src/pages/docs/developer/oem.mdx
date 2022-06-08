@@ -1,0 +1,142 @@
+---
+title: 华炎魔方OEM向导
+description: 
+---
+
+## 个性化Logo
+
+华炎魔方支持把Logo换成自己公司的Logo图片。
+
+系统管理员可以点击设置应用中的“公司设置→公司”菜单进入公司设置页面，在该页面上为Logo属性上传新的Logo图片即可实现Logo的个性化。
+
+## 个性化登录界面
+
+我们还可以把登录界面的Logo及背影图换掉来实现登录界面的个性化。
+
+系统管理员可以点击设置应用中的“公司设置→公司”菜单进入公司设置页面，在该页面的“登录界面”栏为Logo和背景图属性上传新的图片即可实现登录界面的个性化。
+
+## 个性化翻译资源
+
+华炎魔方是支持多语言的低代码平台，我们可以在软件包中通过编写翻译资源文件来覆盖系统默认的相关翻译内容。
+
+我们推荐大家把所有OEM化的相关内容专门做成一个软件包，这样方便后续按模块进行维护、升级和部署。
+
+请按创建一个名为 `oem` 的软件包，以下OEM化相关教程都在该软件包中开发。
+
+### 修改对象的翻译
+
+对象和对象字段的元数据中是可以定义相关显示名称的，比如华炎魔方有一个名为 `company` 的对象，通过字义其 `label` 属性可以配置该对象的显示名称，这个对象在中文环境下显示的是“分部”，英文显示的是“Company”，以下操作过程可以把该对象对应的翻译改为“分公司”和”Sub Corporation“，同时把该对象上名为”分部代码“的字段改为”分公司代码“。
+
+#### 添加翻译文件
+
+在软件包的default文件夹下新建一个objectTranslations文件夹，其下新建 `company.en` 和 `company.zh-CN` 两个同级文件夹对应的中英两种语言的翻译内容，最后各自新建中英文翻译的yml配置文件。 
+
+其目录结构如下：
+
+```bash
+|-- default
+   |-- objectTranslations
+       |-- company.en
+           |-- company.en.objectTranslation.yml
+       |-- company.zh-CN
+           |-- company.zh-CN.objectTranslation.yml
+```
+
+#### 修改翻译内容
+
+在刚新建的yml文件中添加翻译内容，以下文件内容实现了重写 `company` 对象及其字段的中文显示名称
+
+oem/main/default/objectTranslations/company.zh-CN/company.zh-CN.objectTranslation.yml
+
+```yaml
+name: company
+label: 分公司
+fields:
+  code: 
+    label: '公司名称'
+groups:
+  developer: API-Key
+```
+
+### 修改全局变量的翻译文件
+
+全局变量的原始翻译文件可以在 node_modules/@steedos/i18n/translations 中查看。
+
+1、添加全局变量翻译文件。 在指定软件包的default文件夹下新建一个translations文件夹，其下新建 en.translation.yml 和 zh-CN.translation.yml 两个中英文翻译yml文件。目录如下：
+
+```yaml
+|-- default
+   |-- translations
+       |-- en.translation.yml
+       |-- zh-CN.translation.yml
+```
+
+示例：修改审批=>填写表单 中右上角的“帮助”链接； 文件路径：app-oem/main/default/translations/zh-CN.translation.yml
+
+```yaml
+CustomLabels:
+  # 审批=>填写表单 中右上角的“帮助”链接
+  new_help: 'https://www.steedos.cn/docs'
+```
+
+## 个性化样式
+
+个性化样式通过js来新增css样式。
+
+在指定软件包的default文件夹下新建一个client文件夹，其下新建cssName.client.js文件。
+
+```bash
+|-- default
+    |-- client
+        |-- cssName.client.js
+```
+
+示例：点击系统右上角的头像会出现一个弹窗，底部有包含“帮助文档、下载客户端、关于”这三个功能按钮的元素，以下js、css代码就是隐藏此元素。
+
+```javascript
+(function () {
+  try {
+      var styleCss = $(`<style>
+          .steedos #header-profile-popover-id-popover .slds-popover__footer{
+              display: none;
+          }
+      </style>`);
+      $("head").append(styleCss);
+  } catch (error) {
+      console.log(error);
+  }
+})();
+```
+
+## 修改网页标题
+
+网页标题可以通过js进行修改。
+
+在指定软件包的default文件夹下新建一个client文件夹，其下新建cssName.client.js文件。
+
+```bash
+|-- default
+    |-- client
+        |-- cssName.client.js
+```
+
+示例：
+
+```javascript
+(function () {
+  try {
+      Steedos.setAppTitle = function(title){
+          var f = title.split(" | ");
+          document.title = f.length > 1 ? (f.splice(0,f.length-1)).join(" | ") + " | 华夏" : title;
+      };
+      $("title").text("华夏帝国");
+  } catch (error) {
+      console.log(error);
+  }
+})();
+```
+
+## 修改网页icon
+
+在根目录新建一个public文件夹，添加iconName.ico图标，重启服务即可生效。
+

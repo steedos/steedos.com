@@ -1,0 +1,52 @@
+---
+title: 配置对象的共享/限制规则，实现记录级的权限控制
+description: 本教程以合同对象为例，指导您如何使用华炎魔方，通过页面对象配置共享/限制规则，由指定条目条件来指定特定人员；以及记录过滤器，来显示指定条件的数据，最终实现记录级的权限控制。
+---
+
+本教程以合同对象为例，指导您如何使用华炎魔方，通过页面对象配置共享/限制规则，由**指定条目条件**来指定特定人员；以及**记录过滤器**，来显示指定条件的数据，最终实现记录级的权限控制。
+
+## 业务需求
+
+在合同管理需求中，最常见的权限控制就是需要对各部门配置对应的合同管理员，可以看到本部门的所有合同记录；分管领导可以看到分管部门对应的所有合同记录。
+
+下面我们以实现合同管理应用中分管领导可查看分管部门对应的合同记录为例，了解如何在华炎魔方中创建对象的共享规则和限制规则，来实现查看权限在特定条件下的共享和收缩。
+
+## 可视化开发
+
+### 共享规则
+
+管理员在设置》对象设置》对象页面选择合同对象，页面拉到最底部的共享规则，新建并填写完成后保存即可。
+
+ ![新建共享规则-分管领导](https://console.steedos.cn/api/files/images/A3kQLK49AFkhaRTXZ)
+
+配置参数如下：
+
+* **API名称** 唯一标识名称，“fuzong_gao”。
+* **对象** 默认带出当前对象。
+* **启用** 勾选表示立刻启用规则。
+* **指定条目条件** 用于配置该规则生效的条件， `{{$user.userId =='xexW68Y7HuDHLxiyG'}}` ，当登陆用户userSession的`userId`满足条件时该规则才生效。
+* **记录过滤器** 输入要共享或限制查看的数据的过滤条件， `{{[["dept", "in" , ["EtH2rx8txcXJKM5FA","LzozQTr3hafJNkQgR","4Fawrf8YsotbHKHR2"]]]}}` ，即可查看以上3个部门id的合同数据。
+
+### 限制规则
+
+管理员在设置》对象设置》对象页面选择计划入库明细对象，页面拉到最底部的限制规则，新建并填写完成后保存即可。
+
+ ![新建限制规则-验收人](https://console.steedos.cn/api/files/images/hecHRfD6nJ6YEkRoW)
+
+配置参数如下：
+
+* **API名称** 唯一标识名称，“warehousing_acceptor”。
+* **对象** 默认带出当前对象。
+* **启用** 勾选表示立刻启用规则。
+* **指定条目条件** 用于配置该规则生效的条件， `{{$user.roles.indexOf("admin") < 0 && $user.roles.indexOf("asset_admin") < 0'}}` ，当登陆用户不为管理员和资产管理员时该规则才生效。
+* **记录过滤器** 输入要共享或限制查看的数据的过滤条件， `{{[["acceptor", "=" , $user.userId]]}}` ，即当前用户只显示验收人是自己的数据。
+
+详细权限的具体设置见[管理数据访问权限](https://www.steedos.cn/docs/admin/permission_set#%E5%85%B1%E4%BA%AB%E9%99%90%E5%88%B6%E8%A7%84%E5%88%99)相关文档。
+
+## 元数据同步
+
+请参考教程 [开发人员快速向导 - 同步元数据](https://www.steedos.cn/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE)，把之前在界面上配置的限制规则同步为代码，在对应asset应用的/main/default目录下新建restrictionRules文件夹，并生成`warehousing_acceptor.restrictionRule.yml`文件
+
+ ![元数据同步-限制规则](https://console.steedos.cn/api/files/images/KKnET2v6AAKGj8oBg)
+
+\

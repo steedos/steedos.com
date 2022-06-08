@@ -1,0 +1,338 @@
+---
+title: 仪表盘
+description: 使用华炎魔方仪表盘，可以连接任意数据库，在界面上编写查询语句，然后再配置页面和图表，就可以轻松实现各种类型的仪表盘报表，比如Boxplot，Chart - Line, Bar, Area, Pie, Scatter等，本教程将描述如何在华炎魔方中把它配置出来。
+---
+
+## 数据源
+
+要使用仪表盘，首页需要确认的就是其数据来源，华炎魔方目前支持MongoDB、MySQL、SQL Server、PostgreSQL、Oracle等数据库作为数据源，所以仪表盘是可以直接连接这些类型的数据库作为数据源的。
+
+如果使用默认数据源，您只要在新建查询时选择使用默认数据源即可，但是如果要使用第三方数据源，就需要先配置相关外部数据源了。
+
+可以在”设置“应用的”对象设置→外部数据源“界面配置对应的外部数据源"：
+
+* 在配置连接属性时，”连接数据库的URL“与”其他连接选项“二者选填一个即可不用都填写。
+* 当勾选“Debug”属性时，该数据源下所有请求的SQL语句都将在服务端控制台输出日志用于调式。
+* 配置完成后，可以在该外部数据源记录详细界面右上角点击“测试连接”按钮来测试配置的参数是否正确，当提示连接成功即表示配置生效了。
+
+
+## 查询
+
+确定仪表盘要使用的数据源后，我们就可以在华炎魔方的查询设计器中编写对应的查询语句，根据实际需求从数据源中查询出仪表盘上需要展示的数据。
+
+不同的数据源使用的查询语句语法各不相同，比如要查询MongoDB数据库中的数据需要使用MongoDB数据库查询语句，而要查询MySQL数据库中的数据的话就需要使用SQL语句直接查询。
+
+在“设置”应用中，进入“统计分析→查询”界面可以维护华炎魔方所有的查询记录，在查询记录详细界面右上角可以点开查询设计器。
+
+ ![](https://console.steedos.cn/api/files/images/nXP8M8QwWgPeLRWRc)
+
+## 图表
+
+查询语句调式确认好后，我们还需要设计在仪表盘上以什么形式展示查询语句查出的数据结果，比如是以曲线图、柱状图还是以普通表格或其他类型的图表展示数据。
+
+可以在华炎魔方的图表设计器中，根据实际需求轻松设计出各种类型的图表。
+
+在“设置”应用中，进入“统计分析→图表”界面可以维护华炎魔方所有的图表记录，在图表记录详细界面右上角可以点开图表设计器。
+
+ ![](https://console.steedos.cn/api/files/images/7pXfi5qP5zMnLFYck)
+
+## 仪表盘
+
+当图表设计好后，我们就可以把它们加入到仪表盘并最终在应用中展示出来。
+
+在“设置”应用中，进入“统计分析→页面”界面可以维护华炎魔方所有的页面记录，页面记录详细界面就是一个仪表盘设计器。
+
+ ![](https://console.steedos.cn/api/files/images/7YoWD7eytnSb2jEfP)
+
+## 应用
+
+要在应用中展示设计好的仪表盘，需要在“设置”应用中进入“应用程序→选项卡”，在这里可以配置一个选项卡来指向设计好的仪表盘页面，这样大家就可以在应用中点击相关选项卡来查看仪表盘中的统计数据了。
+
+需要注意的是，如果需要传入参数到仪表盘的话，在配置选项卡时，不应该选择”页面“类型，而应该选择”外部链接“类型，并在这里配置好相关”页面“的访问地址，格式为`/builder/[?动态参数，以p_开头]#/page/public/${pageApiName}[?hidden_title]`，并且该地址支持 [开发人员快速向导](/docs/developer/getting-started) 中提到的 [表单公式](/docs/developer/getting-started#%E8%A1%A8%E5%8D%95%E5%85%AC%E5%BC%8F) 这种公式脚本，当需要配置动态参数时可以通过设置公式脚本来实现，我们会在下面”配置过程详解“的 [配置仪表盘参数](#%E5%BA%94%E7%94%A8) 小节中详细说明如何在这里配置外部链接来传参数给仪表盘。
+
+## 同步为代码
+
+与其他元数据一样，上面提到的与仪表盘相关元数据，比如查询、图表、页面等都可以同步为代码，同步这些元数据的方法与其他元数据是一样的，详细操作方法可以参考 [开发人员快速向导](/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE) 中的 [同步元数据](/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE) 小节，下面配置过程详解中也描述了如何同步这些元数据为代码的过程。
+
+| 类型 | 节点 | 同步到文件夹 |
+|----|----|----|
+| 查询 | Queries | main/default/queries |
+| 图表 | Charts | main/default/charts |
+| 页面，即仪表盘 | Pages | main/default/pages |
+| 选项卡 | Tabs | main/default/tabs |
+
+以上表格中“节点”列表示的是不同元数据类型在VSCODE编辑器里的Steedos插件面板中所处节点位置。
+
+## 配置过程详解
+
+### 示例效果
+
+假设我们目标是配置出以下示例效果的仪表盘，我们将演示如何配置出其中的“浇捣统计-按日统计”曲线图。
+
+ ![](https://console.steedos.cn/api/files/images/Sw7ygwuE4JWzKfDsb)
+
+### 配置查询
+
+要实现上述仪表盘统计效果，我们首先要为仪表盘配置查询语句以提供报表需要的数据源。
+
+我们先进入“设置”应用中，然后在“统计分析→查询”界面为“浇捣统计-按日统计”这个示例需求新建一个查询：
+
+* 数据源：这里选择默认数据源，如果需要连接其他外部数据源时可以选择其他数据源。
+* 查询脚本：这里可以输入“浇捣统计-按日统计”这个示例需求的查询脚本，不过具体的脚本是需要编码调式才能确定的，我们这里保持默认值先不改，后续在设计器中单独编码调式。
+
+查询新建好后，我们可以在新建好的查询记录的详细界面右上角看到“打开设计器”按钮，点击它即可打开redash设计器。
+
+ ![](https://console.steedos.cn/api/files/images/PonnTPLBhyQboSPbc)
+
+在这个设计器中左侧列出的是所有可供查询的数据库表，右侧上部是查询语句编辑器，点击该编辑器右下角”Execute“按钮可在右侧下部看到编写好的查询语句的执行结果，点击其旁边的”Save“按钮即可保存编写好的查询语句。
+
+经过编码调式，我们最终确认下来示例需求”浇捣统计-按日统计“对应的查询语句如下所示：
+
+```json
+{
+    "collection": "pcmes_component_detail__c",
+    "aggregate": [
+        {
+            "$project": {
+                "company_id": "$company_id",
+                "workshop__c": "$workshop__c",
+                "unit_volume__c": "$unit_volume__c",
+                "datetime_pound__c": {
+                    "$dateToString": {
+                        "format": "%Y-%m-%d %H:%M:%S",
+                        "date": "$datetime_pound__c",
+                        "timezone": "+08"
+                    }
+                }
+            }
+        },
+        {
+            "$match": {
+                "company_id": "{{ 所属公司 }}",
+                "$and": [
+                    {
+                        "datetime_pound__c": {
+                            "$gte": "{{ 时间范围.start }}"
+                        }
+                    },
+                    {
+                        "datetime_pound__c": {
+                            "$lte": "{{ 时间范围.end }}"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "$group": {
+                "_id": "$datetime_pound__c",
+                "total_volume": {
+                    "$sum": "$unit_volume__c"
+                },
+                "count": {
+                    "$sum": 1
+                }
+            }
+        },{
+            "$sort": 
+                {
+                    "_id": 1,
+                    "direction": 1
+                }
+            
+        }
+    ]
+}
+```
+
+以上查询语句根据传入的”所属公司“和”时间范围“参数值来查询对象`pcmes_component_detail__c`中的数据，并输出基于这些数据按日统计后的浇捣方量和数量值，有关 `MongoDB` 的 `aggregation` 语法请参考其官网文档：      <https://docs.mongodb.com/v4.4/reference/operator/aggregation/group/>。
+
+在上述查询语句中我们用到的两个参数是通过点击设计器右侧的查询编辑器左下角的`{{}}`按钮来设置的，接下来我们把这两个参数配置出来。
+
+首先把鼠标光标放入查询编辑器`$match.company_id`这个参数在冒号右侧的值内，然后点击`{{}}`按钮在弹出下图所示的参数设置界面中配置”所属公司“参数：
+
+ ![](https://console.steedos.cn/api/files/images/QRhAkRTxMZ9avbRKD)
+
+* Keyword：参数的key键名，可以是中文也可以是英文，不过推荐用英文。
+* Title：参数的标题，可以与Keyword不一样，只是用于界面上标识该参数，无实际意义。
+* type：参数类型，这个参数的类型，我们这里需要从数据源中查询”公司“对象数据并列表公司清单以供该参数选择参数值，所以选择类型`Query Based Dropdown List`。
+* Query：选择该参数对应的查询语句，这里我们需要另外新建一个名为“获取所有公司记录”的查询，并在这里选中它。
+
+新建另一个名为“获取所有公司记录”的查询方法跟之前我们新建“浇捣统计-按日统计”这个查询是一样的，这里就不再详细描述其过程了，我们只列出其最终调式确认后的查询语句：
+
+```json
+{
+    "collection": "company",
+    "query": {},
+    "projection": {
+        "_id": 1,
+        "name": 2
+    }
+}
+```
+
+参数配置完成后点击窗口右下角的”Add Parameter“按键即可保存该参数配置，并自动把该参数的`Keyword`值填充到之前鼠标光杆所有位置中。
+
+第一个参数配置完成后，我们把鼠标光标放入查询编辑器`$match.$and.datetime_pound__c.$gte`这个参数在冒号右侧的值内，然后点击`{{}}`按钮在弹出下图所示的参数设置界面中配置”时间范围“参数：
+
+ ![](https://console.steedos.cn/api/files/images/hhCrTm8yDtgyCwBH8)这个参数的类型我们选择`Date and Time Range`，表示一个时间选择器：
+
+ ![](https://console.steedos.cn/api/files/images/YFfimKNX8X4yRP5Ms)以上两个参数中填写值后不但可以看到下面查询结果会相应变更，而且可以点击设计器上的“Save”按钮来保存设置好的参数值，保存后的参数值将成为该查询的默认参数值。
+
+### 配置图表
+
+按上面描述配置完redash的查询后，执行”Execute“可以在右侧下方看到输出结果默认以Table的方式展示出来了，展示结果虽然正确的输出了示例需求需要的曲线图上的各个节点数据，但是并没有以曲线图的方式展示统计结果。
+
+接下来我们需要新建一个redash图表，即`Visualization`，让上面的查询结果可以以曲线图的形式展示出来。
+
+我们可以直接在上面提到的设计器界面右侧下方看到Table图形表头旁边的”Add Visualization”按钮来新建一个redash图表，也可以在华炎魔方”设置“应用的”统计分析→图表“界面新建一个redash图表并打开设计器来设计该图表。
+
+ ![](https://console.steedos.cn/api/files/images/xjjQ7eKM9Hf2g3wwa)在这个图表设计窗口中，我们选择“Visualization Type”为`Chart`，在该类型下的图表中配置不同的”Chart Type“可以设计出各种类型的统计图效果，比如Bar、Line、Area、Pie等等，示例需求“浇捣统计-按日统计”是曲线图，所以我们这里”Chart Type“选择`Line`。
+
+
+图表设计窗口中其他属性根据实际需求配置相关字段到对应的属性中，变更相关属性时可以在右侧实时看到设计效果，可以反复调式配置直到满足示例需求即可。
+
+最后点击保存按钮，我们就完成了名为”按日统计“的图表配置。
+
+### 配置页面
+
+图表设计完成后，我们需要把该图表配置到页面上，这样后续我们才能在应用中展示上面我们设计好的图表效果。
+
+我们可以进入”设置“应用，然后在”统计分析→页面“界面新建一个页面，保存后我们将在页面详细界面上看到redash页面设计器。
+
+进入页面设计器后默认是只读状态，需要操作右上角的下拉菜单并点击展开的”Edit“按钮以进入编辑模式。
+
+ ![](https://console.steedos.cn/api/files/images/J9ryEcD7hRpoKY6CX)进入编辑模式后我们可以在底部看到一个条形框，点击右侧的”Add Charts”按钮，在弹出的表格中选择名为”按日统计“的图表即可把我们上面配置的图表加到该页面。
+
+ ![](https://console.steedos.cn/api/files/images/DDqbWRzyenGhGhxtk)在”按日统计“图表加入页面后，我们可以变更”所属公司“和”时间范围“这两个参数值查看不同参数下的曲线效果，但是需要注意，这里配置的参数值在保存后并不会成为该页面的默认值参数值，要设置默认参数值，请参考上一小节“配置查询”，在查询设计器中设置其默认参数值。    ![](https://console.steedos.cn/api/files/images/ZshA3txiPC5siDau6)
+
+此时我们可以看到上面的图表中曲线图与参数没有分离，即按需求我们在一个页面中需要统一设置参数值，然后后续添加的其他所有图形都能识别应用参数值变化。
+
+要做到这点，只要在图表的右上角下拉菜单中点击”Edit Parameters“按钮，然后在弹出的参数配置界面把参数配置为”New Page parameter“即可。
+
+ ![](https://console.steedos.cn/api/files/images/rFCaJAM7FNE6qPMBj)       ![](https://console.steedos.cn/api/files/images/EkXnAkrFmn5xGGHmb)到此为止，我们完成了“浇捣统计-按日统计”曲线图的所有配置工作了，最后我们点击页面设计器右上角的”Done Editing“来保存刚才的设置。
+
+### 应用
+
+#### 在应用中展示仪表盘
+
+当我们根据需求按上述配置教程把所有仪表盘都配置完成后，我们下一步就可以把这个名称”浇捣统计“的仪表盘配置到应用中展示出来。
+
+可以在“设置”应用中进入“应用程序→选项卡”，然后新建对应的选项卡：
+
+* 类型：选择”页面“，而不是其他类型。
+* 页面：从下拉菜单中选择该选项卡关联的页面，这里我们选择刚配置好的”浇捣统计“页面。
+
+然后再进入“设置”应用的“应用程序→应用程序”界面，新建一个新应用或者选择已有应用，然后在应用的“选项卡”属性中选择刚设置的选项卡。
+
+设置完成后，您就可以在相关应用中看到上面配置好的”浇捣统计“页面了。
+
+#### 配置仪表盘参数
+
+上一小节我们把”浇捣统计“这个仪表盘显示到相关应用中了，用户点开对应的应用在相关选项卡界面可以看到”浇捣统计“页面中统计的数据，但是这里有一个问题：
+
+所有用户在这个仪表盘上看到的”所属公司“参数值都等于之前在”配置查询“小节中保存的默认参数值，但是实际需求会希望每个用户看到”所属公司“这个参数值默认选中的每个用户自己所属的分部，即每个用户看到的参数默认值不同。
+
+为实现这个需求，我们需要在配置选项卡时，不但要把”浇捣统计“这个页面关联到选项卡，也要把当前登录用户”所属分部“值作为参数传到仪表盘上”所属公司“这个参数中。
+
+我们再次在“设置”应用中进入“应用程序→选项卡”，然后找到之前的选项卡，并修改以下属性：
+
+* 类型：不再选择”页面“，而是选择”外部链接“这个类型。
+* 页面：原来我们选择的是”浇捣统计“这个页面，上面把类型切换为”外部链接“后，这个选项就不再需要配置了。
+* 外部链接：在这里可以输入点击选项卡时要打开的外部链接地址，我们依然希望点击这个选项卡能打开之前配置的”浇捣统计“页面，并且我们还需要把”所属公司“参数值传入到页面中。
+
+仪表盘是支持通过URL直接访问的，`/builder/[?动态参数，以p_开头]#/page/public/${pageApiName}[?hidden_title]`是其访问地址格式，规则如下：
+
+* `pageApiName`就是页面的api名称。
+* 所有参数必须以`p_`开头，后接参数名称这是redash的规则，比如`p_ids=xxx`表示传入参数ids，参数值为xxx。
+* `#`号不可以少
+* 最后的`hidden_title`表示，如果希望仪表盘不显示页面标题，可以传入该参数。
+
+比如如果把外部链接配置为`/builder/?p_ids=619383545b2e9a72ec0558b3#/page/public/test?hidden_title`表示点击选项卡时，打开api名称为test的页面，同时传入一个名为`ids`，值为`619383545b2e9a72ec0558b3`的参数，并且打开的仪表盘不用显示页面标题。
+
+按之前提到的传参需求，我们需要给页面传入名为”所属公司“的参数，其值为当前登录用户”所属分部“，很明显，这个参数值是一个动态值，不同的用户登录进来查看仪表盘时需要传入不同的参数值。
+
+在华炎魔方中，选项卡的外部链接是支持公式脚本的，其语法与 [开发人员快速向导](/docs/developer/getting-started) 中提到的 [表单公式](/docs/developer/getting-started#%E8%A1%A8%E5%8D%95%E5%85%AC%E5%BC%8F) 是一样的，用`{{}}`包裹整个脚本，其内可编写`javascript`脚本，并且脚本中注入了`formData`和`global`变量，详情请参考 [表单公式](/docs/developer/getting-started#%E8%A1%A8%E5%8D%95%E5%85%AC%E5%BC%8F)。
+
+有了公式脚本功能，我们只要把上面选项卡的外部链接地址配置为`` {{`/builder/?p_所属公司=${global.user.company_id}&p_时间范围=d_this_week#/page/public/jdtj?hidden_title`}} ``即可动态把当前登录用户”所属分部“值传给仪表盘的“所属公司“参数。
+
+### 同步为代码
+
+与其他元数据一样，上面配置仪表盘过程中提到的相关元数据，包括查询、图表、页面、选项卡和应用都可以同步为代码，下面我们简单描述下如何把上面提到的元数据都同步为代码，以方便后续部署到正式平台。
+
+以下描述均假设我们已经按教程 [开通华炎魔方云服务](/docs/deploy/deploy-cloud) 注册好了云服务账户，然后按教程 [开发环境部署 - Windows](/docs/deploy/deploy-windows) 或 [开发环境部署 - Mac](/docs/deploy/deploy-mac) 安装好了华炎魔方开发环境，并且当前魔方项目已经正常配置好必须的环境变量`STEEDOS_CLOUD_SPACE_ID`和`STEEDOS_CLOUD_API_KEY`。
+
+要同步为代码，我们需要打开VSCODE编辑器中的Steedos插件面板，并点击右上角的刷新按钮来浏览界面上的元数据。
+
+ ![](https://console.steedos.cn/api/files/images/sMT3cJe9SzgDZgcii)如果未配置元数据同步相关的环境变量的话，点击右上角的刷新按钮会报错`Please run command, steedos source:config`，我们只要把以下相关环境变量配置上，或者在项目命令行上运行指令`steedos source:config`在向导中配置相关环境变量即可。
+
+```bash
+[metadata]
+METADATA_SERVER=http://localhost:5000 #配置为访问华炎魔方的URL
+METADATA_APIKEY=#在此填入华炎云上新建的私有部署记录中的API Key
+```
+
+接下来我们在Steedos插件面板上找到刚在界面上新建的查询、图表、页面、选项卡和应用等元数据，点击其右侧的下载按钮即可把代码同步到项目本地文件夹。
+
+需要注意的是上面的操作会把代码同步到默认软件包`steedos-app`目录中，如果需要把界面上配置的元数据同步到`steedos-packages`文件夹下的软件包目录中，
+
+我们需要先配置下以下环境变量来变更默认软件包的位置，或者您也可以使用VSCODE编辑器的“查看→命令面板”中的`setDefaultPackagePath`命令来自动创建相关环境变量：
+
+```bash
+[package]
+DEFAULT_PACKAGE_PATH=steedos-packages/xxx #配置为相关软件包目录
+```
+
+在配置该环境变量后，再点击Steedos插件面板上相关元数据右侧的下载按钮即可把代码同步到`xxx`这个软件包的目录下，而不是同步到默认软件包目录下。
+
+## 关于数据权限
+
+仪表盘与华炎魔方中的 [JsReport报表](/docs/developer/jsreport) 不一样，后者数据来源于华炎魔方提供的GraphQL接口，由于接口本身是会按华炎魔方上配置好的简档权限来返回数据的，所以不同的用户看到的统计结果会不一样；但是仪表盘是直连数据源的，所以默认情况下不同用户看到的仪表盘上展示的统计结果是一样的。
+
+## 支持的图表类型
+
+### boxplot
+
+ ![](https://console.steedos.cn/api/files/images/r3BnMpw527M3ZWXrx)
+
+### chart
+
+ ![](https://console.steedos.cn/api/files/images/Wz7ysaffzuDxSGMZZ)
+
+ ![](https://console.steedos.cn/api/files/images/mCt3aFYzP6TbwyMce)
+
+ ![](https://console.steedos.cn/api/files/images/zFQLLvdp2h42kiJG5)
+
+ ![](https://console.steedos.cn/api/files/images/TXafxRpBs9YDBogpu)
+
+### cohort
+
+ ![](https://console.steedos.cn/api/files/images/Wywswia65nhR9Jisg)
+
+### counter
+
+ ![](https://console.steedos.cn/api/files/images/2JpPzgEYitJuH5EJ3)
+
+### funnel
+
+ ![](https://console.steedos.cn/api/files/images/mfLMqYtQWz7X2cnf4)
+
+### map
+
+ ![](https://console.steedos.cn/api/files/images/RXNmDdBF4o8rkW2g3)
+
+### pivot table
+
+ ![](https://console.steedos.cn/api/files/images/QWyaB8nurCcowTpdZ)
+
+### sankey
+
+ ![](https://console.steedos.cn/api/files/images/JfnwaKtZfPgZSqEiR)
+
+### sunburst
+
+ ![](https://console.steedos.cn/api/files/images/5KZmqRaKeyxJvcass)
+
+### word cloud
+
+ ![](https://console.steedos.cn/api/files/images/SffAHWRBAKtPeXWbH)

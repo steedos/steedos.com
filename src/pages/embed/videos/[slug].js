@@ -12,7 +12,6 @@ import {
 import dynamic from 'next/dynamic'
 
 import { SidebarLayout } from '@/layouts/SidebarLayout'
-import ArticleLayout from '@/layouts/ArticleLayout'
 import tinytime from 'tinytime'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
@@ -127,6 +126,5 @@ export default function VideoEmbed(props) {
     )
 }
 
-VideoEmbed.getLayout = (Component, pageProps)=>{
-    return <Component {...pageProps} />
+VideoEmbed.layoutProps = {
 }

@@ -1,0 +1,281 @@
+---
+title: 微页面
+description: 支持使用代码形式编写自定义控件，并进一步开发组合成自定义前端页面。微页面中需要支持快捷调用平台的基础控件，包括并不限于列表视图、记录详情视图、图表、报表。
+---
+
+微页面也是一种元数据，可以配置菜单指向微页面。微页面可以使用可视化工具设计，最终保存在软件包中。
+
+## 核心需求
+
+- 低代码快速开发页面
+- 提供可视化工具
+- 松耦合，支持多种前端低代码渲染引擎
+- 支持在软件包中注册自定义控件
+- 微页面支持同步为元数据
+
+## 微页面表结构
+
+### 微页面 pages
+
+```yml
+name: `pageApiName`
+is_active: true 
+object_name: contracts
+type: app/record/list/form
+render_engine: amis
+```
+
+### 微页面版本 page_versions
+
+- 保存时, 如果最新版是未发布的, 则修改最新版本
+- 保存时, 如果最新版是已发布的, 则生成一条新版本,并是未发布状态
+
+```yml
+_id: xxx
+page: `page_id`
+version: 2
+is_active: true 
+schema: `amis json`
+```
+
+### 页面分配 page_assignments
+
+如果同一个用户授权了多个page时，使用最新的page授权
+
+```yml
+app: contract
+profile: user
+recordType: null
+page: `page_id`
+mobile: true
+```
+
+#### 设置为组织默认页面
+
+```yml
+app: null
+profile: null
+recordType: null
+page: `page_id`
+desktop: true
+mobile: true
+```
+
+#### 设置为App默认页面
+
+```yml
+app: contract
+profile: null
+recordType: null
+page: `page_id`
+desktop: true
+mobile: true
+```
+
+#### 设置为简档用户默认页面
+
+```
+app: contract
+profile: user
+recordType: null
+page: `page_id`
+desktop: true
+mobile: true
+```
+
+## 微页面元数据
+
+下载时只下载微页面最新版本。上传时只更新版本。
+
+### 微页面 .page.yml
+
+```yml
+name: `pageApiName`
+object_name: contracts
+type: app/record/list/form
+render_engine: amis
+pageAssignments: []
+```
+
+### Amis Schema .page.amis.json
+
+.page.amis.json 独立保存，以便在 VS Code 中直接设计Schema。
+
+```json
+{
+  "type": "page",
+  "title": "标题",
+  "remark": {
+    "title": "标题",
+    "body": "这是一段描述问题，注意到了没，还可以设置标题。而且只有点击了才弹出来。",
+    "icon": "question-mark",
+    "placement": "right",
+    "trigger": "click",
+    "rootClose": true
+  },
+  "body": "内容部分. 可以使用 \\${var} 获取变量。如: `\\$date`: ${date}",
+  "aside": "边栏部分",
+  "toolbar": "工具栏",
+  "initApi": "/amis/api/mock2/page/initData"
+}
+```
+
+## 微页面引擎
+
+系统提供标准的页面接口，可通过插件扩展的方式支持不同的微页面引擎。
+
+- [Baidu Amis](https://github.com/baidu/amis)
+- [Alibaba Formliy](https://github.com/alibaba/formily)
+- [Redash](https://github.com/getredash/redash)
+- [AppSmith](https://github.com/appsmithorg/appsmith)
+- [ToolJet](https://github.com/ToolJet/ToolJet)
+
+
+### 注册自定义组件
+
+```js
+import { Builder } from '@builder.io/react'
+ 
+// Register our heading component for use in
+// the visual editor
+const Heading = props => (
+  <h1 className="my-heading">{props.title}</h1>
+)
+ 
+Builder.registerComponent(Heading, {
+  name: 'Heading',
+  inputs: [{ name: 'title', type: 'text' }]
+})
+```
+
+### 注册微页面引擎
+
+参考 [BuilderIO Plugins](https://www.builder.io/c/docs/extending/plugins)
+
+```js
+import { Builder } from '@steedos-builder/sdk'
+
+// Register amis render 
+const AmisRender = props => {
+  const {schema, data} = props;
+
+  return (
+    <>
+      <div id="amis-root"></div>
+      <Script 
+        src="https://unpkg.com/amis@1.8.0-beta.2/sdk/sdk.js" 
+        onLoad={() => {
+          let amis = amisRequire('amis/embed');
+          amis.embed('#amis-root', schema, data);
+        }}/>
+      <link rel="stylesheet" href="https://unpkg.com/amis@1.8.0-beta.2/sdk/sdk.css" />
+    </>
+  )
+}
+ 
+Builder.register('PageRender', {
+  name: 'amis',
+  component: AmisRender,
+  inputs: [
+    { name: 'schema', type: 'object' },
+    { name: 'data', type: 'object' },
+  ]
+})
+```
+
+### 渲染页面
+
+使用 [BuilderComponent](https://github.com/BuilderIO/builder/tree/main/packages/react) 控件渲染页面。
+
+Amis 集成示例
+
+- [源码](https://github.com/steedos/low-code-protocol/blob/main/src/pages/samples/amis.js)
+- [运行效果](../samples/amis)
+
+```js
+const pageSchema={
+  "data":{
+    "blocks":[
+      {
+        "@type":"@builder.io/sdk:Element",
+        "@version":2,
+        "id":"2b290abc4e4042498645863f53ee6815",
+        "component":{
+          "name":"Amis",
+          "options":{
+              "schema": amisSchema,
+              "data": amisData
+          }
+        },
+        "responsiveStyles":{
+          "large":{
+              "display":"flex",
+              "flexDirection":"column",
+              "alignItems":"stretch",
+              "position":"relative",
+              "margin":"20px",
+              "lineHeight":"normal",
+              "height":"auto",
+              "textAlign":"center"
+          }
+        }
+      }
+    ],
+    "inputs":[
+    ]
+  }
+}
+const pageData = {
+    objectApiName: 'space_users',
+    _id: 'bar'
+  }
+const pageContext = {
+  beforeRender: () => alert('Ready... Go!'),
+  lodash: lodash,
+}
+return (
+  <BuilderComponent 
+    model="page" 
+    content={pageSchema} 
+    data={pageData}
+    context={pageContext}
+    />
+)
+```
+
+## 在软件包中扩展自定义控件
+
+需要支持开发人员在软件包中自定义控件，并且集成到设计器中。
+
+- 创建一个react项目
+- 开发控件，并编写 registerComponent
+- 通过webpack 打包成一个js文件。
+- 保存到软件包 `component-library/{libraryApiName}.component.js`
+- `component-library/{libraryApiName}.component.yml` 定义控件元数据
+- 元数据服务统一合并控件，并提供api下载控件js
+- 前端页面设计工具和与渲染界面加载控件js
+
+参考：
+- [Mattermost Plugins](https://developers.mattermost.com/integrate/plugins/webapp/hello-world/)
+- [Configure a Component for Lightning App Builder](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.use_config_for_app_builder)
+
+## API
+
+### 生成 Schema
+
+通过 API 动态生成 对象的列表视图、记录详情页视图 pageSchema。
+
+```
+GET /api/pageSchema/:renderEngine/:type/default?app=xxx&objectApiName=yyy&recordId=zzz
+```
+
+### 我的 Schema
+
+根据后台配置的页面布局，获取我的 pageSchema。
+
+- 如果没有配置，自动获取默认 Schema。
+- 需要处理 Schema 中的字段权限。
+
+```
+GET /api/pageSchema/:renderEngine/:type/me?app=xxx&objectApiName=yyy&recordId=zzz
+```

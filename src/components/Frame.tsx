@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 // This wrapper allows us to pass non-standard HTML attributes through to the DOM element
 // https://www.styled-components.com/docs/basics#passed-props
-class Iframe extends React.Component {
+class Iframe extends React.Component<any> {
   container;
   state = { contentHeight: 100 };
 
@@ -18,7 +18,8 @@ class Iframe extends React.Component {
       // documentElement.offsetHeight,
       // documentElement.scrollHeight
     );
-    if (contentHeight !== this.state.contentHeight) this.setState({ contentHeight });
+    if (contentHeight > 0)
+      if (contentHeight !== this.state.contentHeight) this.setState({ contentHeight });
   };
   
   onLoad = () => {
@@ -41,7 +42,7 @@ class Iframe extends React.Component {
         onLoad={this.onLoad}
         ref={(container) => { this.container = container; }}
         scrolling="no"
-        style={{ width: '100%', height: `${contentHeight}px` }}
+        // style={{ width: '100%', height: `${contentHeight}px` }}
         title="EmbedAuthSize"
       />
     );
@@ -58,6 +59,7 @@ type Props = {
   width?: string,
   height?: string,
   forwardedRef: any,
+  className?: any,
   theme?:any
 };
 
@@ -73,23 +75,17 @@ class Frame extends React.Component<Props> {
       title,
       canonicalUrl,
       isSelected,
+      className,
       theme,
       src,
     } = this.props;
-    const Component = border ? StyledIframe : Iframe;
-    const withBar = !!(icon || canonicalUrl);
 
     return (
-      <Rounded
-        width={width}
-        // height={height}
-        $withBar={withBar}
-        className={isSelected ? "ProseMirror-selectednode" : ""}
-        theme={theme}
+      <div
+        className="w-full max-h-[260px] sm:max-h-[380px] md:max-h-[512px] lg:max-h-[512px] xl:max-h-[600px]"
       >
-        <Component
+        <Iframe
             ref={forwardedRef}
-            $withBar={withBar}
             sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
             width={width}
             // height={height}
@@ -98,20 +94,14 @@ class Frame extends React.Component<Props> {
             // title="embed"
             loading="lazy"
             src={src}
+            className={className}
             allowFullScreen
           />
-      </Rounded>
+      </div>
     );
   }
 }
 
-const Rounded: any = styled.div`
-  border: 1px solid ${(props) => props.theme.embedBorder};
-  border-radius: 6px;
-  overflow: hidden;
-  width: ${(props: any) => props.width};
-  height: ${(props: any) => (props.$withBar ? props.height + 28 : props.height)};
-`;
 
 const Open: any = styled.a`
   color: ${(props) => props.theme.textSecondary} !important;

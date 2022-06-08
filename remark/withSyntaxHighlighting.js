@@ -1,35 +1,65 @@
-const visit = require('unist-util-visit')
-const { highlightCode } = require('./utils')
-
-const colors = {
-  amber: 'bg-amber-500',
-  emerald: 'bg-emerald-500',
-  fuchsia: 'bg-fuchsia-400',
-  indigo: 'bg-indigo-400',
-  lightBlue: 'bg-light-blue-500',
-  purple: 'bg-purple-400',
-  rose: 'bg-rose-400',
-}
+const { highlightCode, addImport } = require('./utils')
 
 module.exports.withSyntaxHighlighting = () => {
   return (tree) => {
-    visit(tree, 'code', (node) => {
-      if (node.lang !== null) {
-        node.type = 'html'
+    let preTree = { children: [] }
+    let componentName
+    tree.children = tree.children.flatMap((node) => {
+      if (node.type !== 'code') return node
+      // if (node.lang === null) return node
+      if (node.lang === null)
+        node.lang = 'javascript'
+
+      let re = /(<[^>]+)\s+dark-([a-z-]+)="([^"]+)"([^>]*>)/gi
+
+      let lightCode = node.value.replace(
+        re,
+        (_match, before, _key, _value, after) => `${before}${after}`
+      )
+      let darkCode = node.value.replace(re, (_match, before, key, value, after) =>
+        `${before}${after}`.replace(new RegExp(`(\\s${key})="[^"]+"`), `$1="${value}"`)
+      )
+
+      node.type = 'html'
+
+      if (lightCode === darkCode) {
         node.value = [
-          `<div class="my-6 rounded-xl overflow-hidden ${colors[node.meta] || 'bg-gray-800'}">`,
-          `<pre class="language-${node.lang} ${
-            colors[node.meta] ? 'bg-black bg-opacity-75' : ''
-          }">`,
+          `<pre class="language-${node.lang}">`,
           `<code class="language-${node.lang}">`,
-          highlightCode(node.value, node.lang),
+          highlightCode(lightCode, node.lang),
           '</code>',
           '</pre>',
-          '</div>',
+        ]
+          .filter(Boolean)
+          .join('')
+      } else {
+        node.value = [
+          `<pre class="language-${node.lang}">`,
+          `<code class="dark:hidden language-${node.lang}">`,
+          highlightCode(lightCode, node.lang),
+          '</code>',
+          `<code class="hidden dark:block language-${node.lang}">`,
+          highlightCode(darkCode, node.lang),
+          '</code>',
+          '</pre>',
         ]
           .filter(Boolean)
           .join('')
       }
+
+      if (node.meta) {
+        if (!componentName) {
+          componentName = addImport(preTree, '@/components/Editor', 'Editor')
+        }
+        return [
+          { type: 'jsx', value: `<${componentName} filename="${node.meta}">` },
+          node,
+          { type: 'jsx', value: `</${componentName}>` },
+        ]
+      }
+
+      return node
     })
+    tree.children = [...preTree.children, ...tree.children]
   }
 }

@@ -1,137 +1,170 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
-const colors = require('tailwindcss/colors')
+const svgToDataUri = require('mini-svg-data-uri')
 const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette')
-const { toRgba } = require('tailwindcss/lib/util/withAlphaVariable')
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.{js,jsx,tsx,mdx}'],
+  experimental: {
+    optimizeUniversalDefaults: true,
+  },
+  content: ['./src/**/*.{js,jsx,tsx,mdx,html}', './remark/**/*.js'],
   darkMode: 'class',
   theme: {
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-
-      black: '#000',
-      white: '#fff',
-
-      amber: colors.amber,
-      blue: colors.blue,
-      cyan: colors.cyan,
-      emerald: colors.emerald,
-      fuchsia: colors.fuchsia,
-      gray: colors.coolGray,
-      green: colors.green,
-      indigo: colors.indigo,
-      'light-blue': colors.lightBlue,
-      lime: colors.lime,
-      orange: {
-        ...colors.orange,
-        1000: '#4a2008',
-      },
-      pink: {
-        ...colors.pink,
-        1000: '#460d25',
-      },
-      purple: colors.purple,
-      red: colors.red,
-      rose: colors.rose,
-      teal: colors.teal,
-      violet: colors.violet,
-      yellow: colors.yellow,
-
-      code: {
-        punctuation: '#A1E8FF',
-        tag: '#D58FFF',
-        'attr-name': '#4BD0FB',
-        'attr-value': '#A2F679',
-        string: '#A2F679',
-        highlight: 'rgba(134, 239, 172, 0.25)',
-      },
+    // `demo-*` screens are used for the "mobile-first" responsive demo
+    screens: {
+      sm: '640px',
+      'demo-sm': '720px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
+    aspectRatio: {
+      auto: 'auto',
+      square: '1 / 1',
+      video: '16 / 9',
+      1: '1',
+      2: '2',
+      3: '3',
+      4: '4',
+      5: '5',
+      6: '6',
+      7: '7',
+      8: '8',
+      9: '9',
+      10: '10',
+      11: '11',
+      12: '12',
+      13: '13',
+      14: '14',
+      15: '15',
+      16: '16',
     },
     extend: {
+      colors: {
+        code: {
+          highlight: 'rgb(125 211 252 / 0.1)',
+        },
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {
             maxWidth: 'none',
-            color: theme('colors.gray.500'),
-            '> :first-child': { marginTop: null },
-            '> :last-child': { marginBottom: null },
-            '&:first-child > :first-child': {
-              marginTop: '0',
+            color: theme('colors.slate.700'),
+            hr: {
+              borderColor: theme('colors.slate.100'),
+              marginTop: '3em',
+              marginBottom: '3em',
             },
-            '&:last-child > :last-child': {
-              marginBottom: '0',
-            },
-            'h1, h2': {
+            'h1, h2, h3': {
               letterSpacing: '-0.025em',
             },
+            h2: {
+              marginTop: '2.6em',
+              marginBottom: `${16 / 24}em`,
+            },
+            h3: {
+              marginTop: '2.4em',
+              lineHeight: '1.4',
+            },
             h4: {
+              marginTop: '2em',
               fontSize: '1.125em',
             },
-            'h2, h3': {
-              'scroll-margin-top': `${(70 + 40) / 16}rem`,
+            'h2 small, h3 small, h4 small': {
+              fontFamily: theme('fontFamily.mono').join(', '),
+              color: theme('colors.slate.500'),
+              fontWeight: 500,
+            },
+            'h2 small': {
+              fontSize: theme('fontSize.lg')[0],
+              ...theme('fontSize.lg')[1],
+            },
+            'h3 small': {
+              fontSize: theme('fontSize.base')[0],
+              ...theme('fontSize.base')[1],
+            },
+            'h4 small': {
+              fontSize: theme('fontSize.sm')[0],
+              ...theme('fontSize.sm')[1],
+            },
+            'h2, h3, h4': {
+              'scroll-margin-top': 'var(--scroll-mt)',
+            },
+            ul: {
+              listStyleType: 'none',
+              paddingLeft: 0,
             },
             'ul > li': {
-              paddingLeft: '1.5em',
+              position: 'relative',
+              paddingLeft: '1.75em',
             },
             'ul > li::before': {
+              content: '""',
               width: '0.75em',
               height: '0.125em',
+              position: 'absolute',
               top: 'calc(0.875em - 0.0625em)',
               left: 0,
-              borderRadius: 0,
-              backgroundColor: theme('colors.gray.300'),
+              borderRadius: '999px',
+              backgroundColor: theme('colors.slate.300'),
             },
             a: {
-              color: theme('colors.cyan.700'),
-              fontWeight: theme('fontWeight.medium'),
+              fontWeight: theme('fontWeight.semibold'),
               textDecoration: 'none',
-              boxShadow: theme('boxShadow.link'),
+              borderBottom: `1px solid ${theme('colors.sky.300')}`,
+            },
+            'a:hover': {
+              borderBottomWidth: '2px',
             },
             'a code': {
               color: 'inherit',
               fontWeight: 'inherit',
             },
             strong: {
-              color: theme('colors.gray.900'),
-              fontWeight: theme('fontWeight.medium'),
+              color: theme('colors.slate.900'),
+              fontWeight: theme('fontWeight.semibold'),
             },
             'a strong': {
               color: 'inherit',
               fontWeight: 'inherit',
             },
             code: {
-              fontWeight: '400',
-              color: theme('colors.violet.600'),
-            },
-            'code::before': {
-              content: '""'
-            },
-            'code::after': {
-              content: '""'
+              fontWeight: theme('fontWeight.medium'),
+              fontVariantLigatures: 'none',
             },
             pre: {
-              backgroundColor: null,
-              color: theme('colors.white'),
-              borderRadius: 0,
-              marginTop: 0,
-              marginBottom: 0,
+              color: theme('colors.slate.50'),
+              borderRadius: theme('borderRadius.xl'),
+              padding: theme('padding.5'),
+              boxShadow: theme('boxShadow.md'),
+              display: 'flex',
+              marginTop: `${20 / 14}em`,
+              marginBottom: `${32 / 14}em`,
+            },
+            'p + pre': {
+              marginTop: `${-4 / 14}em`,
+            },
+            'pre + pre': {
+              marginTop: `${-16 / 14}em`,
+            },
+            'pre code': {
+              flex: 'none',
+              minWidth: '100%',
             },
             table: {
               fontSize: theme('fontSize.sm')[0],
               lineHeight: theme('fontSize.sm')[1].lineHeight,
             },
             thead: {
-              color: theme('colors.gray.600'),
-              borderBottomColor: theme('colors.gray.200'),
+              color: theme('colors.slate.700'),
+              borderBottomColor: theme('colors.slate.200'),
             },
             'thead th': {
               paddingTop: 0,
               fontWeight: theme('fontWeight.semibold'),
             },
             'tbody tr': {
-              borderBottomColor: theme('colors.gray.200'),
+              borderBottomColor: theme('colors.slate.100'),
             },
             'tbody tr:last-child': {
               borderBottomWidth: '1px',
@@ -139,42 +172,106 @@ module.exports = {
             'tbody code': {
               fontSize: theme('fontSize.xs')[0],
             },
+            'figure figcaption': {
+              textAlign: 'center',
+              fontStyle: 'italic',
+            },
+            'figure > figcaption': {
+              marginTop: `${12 / 14}em`,
+            },
+          },
+        },
+        lg: {
+          css: {
+            h1: {
+              marginTop: '2em',
+            },
+            h2: {
+              marginTop: '2em',
+            },
+            ul: {
+              listStyleType: 'none',
+              paddingLeft: 0,
+            },
+            'ul > li': {
+              position: 'relative',
+              paddingLeft: '1.75em',
+            },
+          }
+        },
+        xl: {
+          css: {
+            h1: {
+              marginTop: '2em',
+            },
+            h2: {
+              marginTop: '2em',
+            },
+            ul: {
+              listStyleType: 'none',
+              paddingLeft: 0,
+            },
+            'ul > li': {
+              position: 'relative',
+              paddingLeft: '1.75em',
+            },
+          }
+        },
+        dark: {
+          css: {
+            color: theme('colors.slate.400'),
+            'h2, h3, h4, thead th': {
+              color: theme('colors.slate.200'),
+            },
+            'h2 small, h3 small, h4 small': {
+              color: theme('colors.slate.400'),
+            },
+            code: {
+              color: theme('colors.slate.200'),
+            },
+            hr: {
+              borderColor: theme('colors.slate.200'),
+              opacity: '0.05',
+            },
+            pre: {
+              boxShadow: 'inset 0 0 0 1px rgb(255 255 255 / 0.1)',
+            },
+            a: {
+              color: theme('colors.white'),
+              borderBottomColor: theme('colors.sky.400'),
+            },
+            strong: {
+              color: theme('colors.slate.200'),
+            },
+            thead: {
+              color: theme('colors.slate.300'),
+              borderBottomColor: 'rgb(148 163 184 / 0.2)',
+            },
+            'tbody tr': {
+              borderBottomColor: 'rgb(148 163 184 / 0.1)',
+            },
+            blockQuote: {
+              color: theme('colors.white'),
+            },
           },
         },
       }),
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-        mono: ['Menlo', ...defaultTheme.fontFamily.mono],
+        mono: ['Fira Code VF', ...defaultTheme.fontFamily.mono],
         source: ['Source Sans Pro', ...defaultTheme.fontFamily.sans],
         'ubuntu-mono': ['Ubuntu Mono', ...defaultTheme.fontFamily.mono],
-        system: defaultTheme.fontFamily.sans,
-        flow: 'Flow',
       },
       spacing: {
         18: '4.5rem',
-        88: '22rem',
-        '15px': '0.9375rem',
-        '23px': '1.4375rem',
         full: '100%',
       },
-      width: {
-        xl: '36rem',
-      },
       maxWidth: {
-        '4.5xl': '60rem',
         '8xl': '90rem',
-      },
-      maxHeight: (theme) => ({
-        sm: '30rem',
-        '(screen-18)': `calc(100vh - ${theme('spacing.18')})`,
-      }),
-      boxShadow: {
-        px: '0 0 0 1px rgba(0, 0, 0, 0.5)',
-        link: 'inset 0 -0.125em 0 0 #fff, inset 0 -0.375em 0 0 rgba(165, 243, 252, 0.4)',
       },
       keyframes: {
         'flash-code': {
-          '0%': { backgroundColor: 'rgba(134, 239, 172, 0.25)' },
+          '0%': { backgroundColor: 'rgb(125 211 252 / 0.1)' },
           '100%': { backgroundColor: 'transparent' },
         },
       },
@@ -182,86 +279,88 @@ module.exports = {
         'flash-code': 'flash-code 1s forwards',
         'flash-code-slow': 'flash-code 2s forwards',
       },
-      cursor: {
-        grab: 'grab',
-        grabbing: 'grabbing',
-      },
-      transitionDuration: {
-        1500: '1.5s',
-      },
-      backgroundImage: {
-        squiggle: `url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%206%203'%20enable-background%3D'new%200%200%206%203'%20height%3D'3'%20width%3D'6'%3E%3Cg%20fill%3D'%23fbbf24'%3E%3Cpolygon%20points%3D'5.5%2C0%202.5%2C3%201.1%2C3%204.1%2C0'%2F%3E%3Cpolygon%20points%3D'4%2C0%206%2C2%206%2C0.6%205.4%2C0'%2F%3E%3Cpolygon%20points%3D'0%2C2%201%2C3%202.4%2C3%200%2C0.6'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")`,
-      },
-      scale: {
-        80: '0.8',
-      },
-      skew: {
-        '-20': '-20deg',
-      },
-    },
-  },
-  variants: {
-    extend: {
-      backgroundColor: ['odd', 'even', 'active'],
-      borderWidth: ['first', 'last', 'hover', 'focus'],
-      cursor: ['active'],
-      opacity: ['disabled'],
-      textColor: ['group-focus'],
-      ringWidth: ['focus-visible'],
-      ringOffsetWidth: ['focus-visible'],
-      ringOffsetColor: ['focus-visible'],
-      ringColor: ['focus-visible'],
-      ringOpacity: ['focus-visible'],
-      rotate: ['first', 'last', 'odd', 'even'],
+      backgroundImage: (theme) => ({
+        squiggle: `url("${svgToDataUri(
+          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 3" enable-background="new 0 0 6 3" width="6" height="3" fill="${theme(
+            'colors.yellow.400'
+          )}"><polygon points="5.5,0 2.5,3 1.1,3 4.1,0"/><polygon points="4,0 6,2 6,0.6 5.4,0"/><polygon points="0,2 1,3 2.4,3 0,0.6"/></svg>`
+        )}")`,
+      }),
     },
   },
   plugins: [
+    require('@tailwindcss/line-clamp'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),
-    function ({ addUtilities, theme }) {
-      const shadows = theme('boxShadow')
-      addUtilities(
-        Object.keys(shadows).reduce(
-          (utils, key) => ({
-            ...utils,
-            [`.text-shadow${key === 'DEFAULT' ? '' : `-${key}`}`]: {
-              textShadow: shadows[key].replace(
-                /([0-9]+(px)? [0-9]+(px)? [0-9]+(px)?) [0-9]+(px)?/g,
-                '$1'
-              ),
-            },
+    function ({ addVariant }) {
+      addVariant(
+        'supports-backdrop-blur',
+        '@supports (backdrop-filter: blur(0)) or (-webkit-backdrop-filter: blur(0))'
+      )
+      addVariant('supports-scrollbars', '@supports selector(::-webkit-scrollbar)')
+      addVariant('children', '& > *')
+      addVariant('scrollbar', '&::-webkit-scrollbar')
+      addVariant('scrollbar-track', '&::-webkit-scrollbar-track')
+      addVariant('scrollbar-thumb', '&::-webkit-scrollbar-thumb')
+      addVariant('demo-dark', '.demo-dark &')
+    },
+    function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'bg-grid': (value) => ({
+            backgroundImage: `url("${svgToDataUri(
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
+            )}")`,
           }),
-          {}
-        )
+        },
+        { values: flattenColorPalette(theme('backgroundColor')), type: 'color' }
+      )
+
+      matchUtilities(
+        {
+          highlight: (value) => ({ boxShadow: `inset 0 1px 0 0 ${value}` }),
+        },
+        { values: flattenColorPalette(theme('backgroundColor')), type: 'color' }
       )
     },
     function ({ addUtilities, theme }) {
-      const utilities = {
-        '.bg-stripes': {
-          backgroundImage:
-            'linear-gradient(45deg, var(--stripes-color) 12.50%, transparent 12.50%, transparent 50%, var(--stripes-color) 50%, var(--stripes-color) 62.50%, transparent 62.50%, transparent 100%)',
-          backgroundSize: '5.66px 5.66px',
+      let backgroundSize = '7.07px 7.07px'
+      let backgroundImage = (color) =>
+        `linear-gradient(135deg, ${color} 10%, transparent 10%, transparent 50%, ${color} 50%, ${color} 60%, transparent 60%, transparent 100%)`
+      let colors = Object.entries(theme('backgroundColor')).filter(
+        ([, value]) => typeof value === 'object' && value[400] && value[500]
+      )
+
+      addUtilities(
+        Object.fromEntries(
+          colors.map(([name, colors]) => {
+            let backgroundColor = colors[400] + '1a' // 10% opacity
+            let stripeColor = colors[500] + '80' // 50% opacity
+
+            return [
+              `.bg-stripes-${name}`,
+              {
+                backgroundColor,
+                backgroundImage: backgroundImage(stripeColor),
+                backgroundSize,
+              },
+            ]
+          })
+        )
+      )
+
+      addUtilities({
+        '.bg-stripes-white': {
+          backgroundImage: backgroundImage('rgba(255 255 255 / 0.75)'),
+          backgroundSize,
         },
-      }
+      })
 
-      const addColor = (name, color) =>
-        (utilities[`.bg-stripes-${name}`] = { '--stripes-color': color })
-
-      const colors = flattenColorPalette(theme('backgroundColor'))
-      for (let name in colors) {
-        try {
-          const [r, g, b, a] = toRgba(colors[name])
-          if (a !== undefined) {
-            addColor(name, colors[name])
-          } else {
-            addColor(name, `rgba(${r}, ${g}, ${b}, 0.4)`)
-          }
-        } catch (_) {
-          addColor(name, colors[name])
-        }
-      }
-
-      addUtilities(utilities)
+      addUtilities({
+        '.ligatures-none': {
+          fontVariantLigatures: 'none',
+        },
+      })
     },
   ],
 }

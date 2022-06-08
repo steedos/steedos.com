@@ -50,7 +50,7 @@ export function TuiBanner() {
       })}
     >
       <div className="max-w-screen-xl mx-auto px-2 sm:px-4">
-        <div className="p-2 rounded-lg bg-gray-900 shadow-lg sm:p-3">
+        <div className="p-2 rounded-lg bg-slate-900 shadow-lg sm:p-3">
           <div className="flex items-center justify-between flex-wrap">
             <div className="w-0 flex-1 flex items-center">
               <img className="h-6" src={logo} alt="" />
@@ -58,7 +58,7 @@ export function TuiBanner() {
                 <span className="lg:hidden">
                   <span className="sr-only">Tailwind UI</span> is now in early access!
                 </span>
-                <span className="hidden lg:inline text-gray-400">
+                <span className="hidden lg:inline text-slate-400">
                   <strong className="text-white font-semibold mr-1">Now in early access!</strong>
                   <span className="xl:hidden">
                     Beautiful UI components by the creators of Tailwind CSS.
@@ -69,17 +69,17 @@ export function TuiBanner() {
                 </span>
               </p>
             </div>
-            <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+            <div className="order-3 mt-2 shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
               <div className="rounded-md shadow-sm">
                 <a
                   href="https://tailwindui.com?utm_source=tailwindcss&utm_medium=footer-banner"
-                  className="flex items-center justify-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-gray-900 bg-white hover:text-gray-800 focus:outline-none focus:underline"
+                  className="flex items-center justify-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-slate-900 bg-white hover:text-slate-800 focus:outline-none focus:underline"
                 >
                   Learn more
                 </a>
               </div>
             </div>
-            <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
+            <div className="order-2 shrink-0 sm:order-3 sm:ml-2">
               <button
                 onClick={() => {
                   try {
@@ -88,7 +88,7 @@ export function TuiBanner() {
                   setState('hidden')
                 }}
                 type="button"
-                className="-mr-1 flex p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800"
+                className="-mr-1 flex p-2 rounded-md hover:bg-slate-800 focus:outline-none focus:bg-slate-800"
                 aria-label="Hide banner"
               >
                 <svg

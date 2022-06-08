@@ -1,0 +1,157 @@
+---
+title: 开发环境部署 - DevOps 远程开发
+shortTitle: DevOps 远程开发
+description: 华炎魔方是 Salesforce Developer Experience (DX) 的开源替代方案，将低代码技术与 DevOps 工具结合 ，帮助企业以更快速度交付更高质量的软件，实现低代码敏捷开发的新高度。
+---
+
+## 直播课程
+
+[查看视频简介 >](/embed/videos/live-course-devops) 
+
+### 注册DevOps账户
+
+请使用企业邮箱，在 [华炎魔方DevOps平台](https://gitlab.steedos.cn/) 注册账户并使用浏览器登录该账户，注册成功后即可在该平台使用包含 GitLab DevOps 和 Gitpod 的远程开发服务。
+
+### 启动远程开发环境
+
+访问 [华炎魔方模板项目](https://gitlab.steedos.cn/steedos/steedos-project-template)，点击右上角`派生(Fork)`按钮，可以把项目复制到自己的账户下。
+
+项目`派生(Fork)`成功后，点击”Gitpod”按钮即可一键启动远程开发环境。 
+
+ ![](https://console.steedos.cn/api/files/images/m59GEDNmorBfDfxPx)
+ 
+启动远程开发环境后会自动执行以下操作，它可以节省开发人员大量时间：
+
+* 自动分配远程服务器资源。
+* 自动从网络下载并加载华炎魔方Docker镜像。
+* 自动安装和配置MongoDB数据库，并以集群模式启动数据库。
+* 自动安装、配置和启动Redis数据库。
+* 自动安装必要的VS Code插件，包括元数据同步、简体中文语言包等。
+* 自动安装项目依赖的NPM包。
+* 自动执行 `yarn start` 启动项目。
+
+### 项目访问地址
+
+远程开发环境启动完成，会自动弹出浏览器，如果未弹出，可能被拦截。
+
+可以手动在浏览器中输入访问地址，只需要在 Gitpod 网址前加上端口号即可。
+
+比如Gitpod访问地址为`https://gold-stingray-81a30kah.ws.vscode.steedos.cn/`，我们只要输入地址 `https://5000-gold-stingray-81a30kah.ws.vscode.steedos.cn/`即可访问刚运行起来的项目。
+
+### 激活华炎魔方 
+
+第一次启动项目，会显示激活华炎魔方的初始化界面，激活后就可以使用初始账户登录系统。
+
+- [激活华炎魔方](./deploy-activate.mdx)
+
+ ![](https://console.steedos.cn/api/files/images/sazPKv6DaPzXBBy8T)
+
+
+### 登录信息
+
+第一次请使用 [华炎魔方客户门户](https://console.steedos.cn/) 中设置的手机号和默认密码登录。
+
+## 软件包开发流程
+
+以下软件包开发流程，描述了在华炎魔方中软件包的开发生命周期，它是实现华炎魔方整个DevOps开发生命周期管理中最重要的环节之一。                                                                                 ![软件包&元数据 示意图](https://console.steedos.cn/api/files/images/duh3tECd387Sz5i8J "软件包&元数据 示意图")](https://console.steedos.cn/api/files/images/duh3tECd387Sz5i8J)
+
+### 可视化开发
+
+基于华炎魔方可视化开发，只要点击鼠标就能开发企业级应用，所以在项目开发初期，我们可以把开发人员与不懂代码的业务人员组织起来，充分讨论分解项目需求后，让业务人员分担大部分可视化开发工作。
+
+可以参考 [华炎魔方官网文档](/docs) 的管理员向导相关教程在界面上开发业务需求，目前可以在可视化界面上进行开发的业务功能主要包括：
+
+* 数据建模
+* 配置数据访问权限
+* 配置自动化业务流程
+* 设置审批王
+* 导入数据
+* 设计业务报表
+* 与企业微信及钉钉客户端集成
+* 连接外部数据源与现有业务系统集成
+
+ ![](https://console.steedos.cn/api/files/images/2ykszh5pWkjvmcwCJ)在界面上做可视化开发时可以随时查看和测试效果，而不需要重启服务，以上截屏动画描述了在可视化界面进行数据建模的大致过程。
+
+### 同步为代码
+
+虽然可视化开发能实现很多业务功能，但是有些复杂业务场景还是需要开发人员参与才能解决，所以项目开发中期，可以让开发人员介入，他们能通过华炎魔方代码同步工具把业务人员做的可视化配置作为元数据同步到代码中，并且在此基础上编写代码来进一步实现各种复杂的业务需求。
+
+ ![](https://console.steedos.cn/api/files/images/A6Y6bqGDMXbby4bFu)以上截屏动画描述了把可视化界面上创建的对象和字段相关元数据同步为代码的大致过程，更多细节请参考文档 [同步元数据](/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE)，推荐使用 [多软件包开发](/docs/developer/getting-started#%E5%A4%9A%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%BC%80%E5%8F%91) 模式，并在同步元数据前 [设置元数据同步路径](/docs/developer/getting-started#%E8%AE%BE%E7%BD%AE%E5%85%83%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E8%B7%AF%E5%BE%84) 为相关软件包文件夹。
+
+Gitpod启动远程开发环境打开华炎魔方模板项目时会自动安装同步元数据需要的Steedos Cli命令行工具和VS Code插件，并且会自动把初始化界面中输入的环境变量参数配置到项目中，您可以直接在项目中使用元数据同步工具而不需要额外做任何配置。
+
+### 代码开发
+
+接下来开发人员可以在相关软件包文件夹中编写代码，通过低代码的方式实现只有编写代码才能实现的相关业务需求。
+
+每一个华炎魔方项目都是一个标准的Node.js工程，开发人员可以在项目中以传统编码方式开发应用程序，更可以参考 [华炎魔方官网文档](/docs) 的开发人员向导相关教程，基于华炎魔方以下出色的低代码能力实现各种高级业务逻辑，在成倍提升开发效率的同时交付出更高质量的项目成果。
+
+* 代码级的元数据配置：比如表单公式、复杂过滤条件，表单级联脚本，操作按钮显示条件等各种只能通过代码才能实现的复杂元数据配置功能，详情请参考文档 [开发人员快速向导](/docs/developer/getting-started)。
+* 代码级的元数据类型：比如触发器，服务端路由API等，详情请参考文档 [开发人员快速向导](/docs/developer/getting-started)。
+* GraphQL API接口：在代码中可以调用业务对象的 [GraphQL API接口](/docs/developer/graphql-api)，这些接口在对象创建的时候就自动生成了，并且它们都集成了 [华炎魔方权限引擎](/docs/admin/permission_set)。
+* ObjectQL：在代码中可以使用 [ObjectQL内核语法](/docs/developer/objectql) 来实现业务对象增删改查，且所有数据操作语句都集成了 [华炎魔方权限引擎](/docs/admin/permission_set)。
+* 代码级报表设计工具：使用 [JsReport报表](/docs/developer/jsreport)，可以编写JavaScript代码来开发设计出各种报表模板。
+* 对象级微服务架构：与NodeRed无缝集成，能快速深度整合现有业务系统，详情请参阅文档 [与现有业务系统整合](https://beta.steedos.cn/docs/developer/node-red)。
+
+代码编写完成后可以通过重新加载软件包的方式来让整个软件包“重启”，而不需要重启华炎魔方服务来测试这些代码，详情请参考文档 [重新加载软件包](/docs/developer/package#%E9%87%8D%E6%96%B0%E5%8A%A0%E8%BD%BD%E8%BD%AF%E4%BB%B6%E5%8C%85)，不过重启服务也是一种有效测试方式。
+
+ ![](https://console.steedos.cn/api/files/images/mKc7NmHkgzxZZLgcT)以上截屏动画描述了使用代码编写触发器来校验数据的合法性，当填写的数据不合法时拦截数据提交。
+
+### 提交代码
+
+功能开发并测试通过后，可以在远程开发环境中使用VS Code的源代码管理工具来把代码提交到Git仓库，详情请参阅本文档底部教程 [源代码版本管理](#%E6%BA%90%E4%BB%A3%E7%A0%81%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86)。
+
+ ![](https://console.steedos.cn/api/files/images/LrgxAtiuqoXm87Svc)以上截屏动画描述了使用VS Code的源代码管理工具提交之前开发的会议应用代码到Git仓库的过程。
+
+### 发布软件包
+
+项目开发完成并测试通过后，可以发布为软件包，发布后的软件包可以在测试环境或生产环境中直接安装使用，还可以在华炎魔方应用市场中定价售卖发布后的软件包，详情请参考教程 [软件包发布与安装](https://www.steedos.cn/docs/developer/package)。
+
+### 部署到测试环境
+
+当软件包开发完成后，需要部署到测试环境来测试相关功能，我们可以重新启动一个全新的 远程开发环境 专门用于测试。
+
+#### 更新代码测试
+
+无论是远程开发环境提交代码后需要进行阶段测试还是工程完工后需要完整测试，亦或是修正BUG后的某个版本需要在上线前测试确认，我们都随时可以安排测试人员在独立的远程测试环境中更新最新代码来测试相关功能。
+
+#### 安装软件包测试
+
+ ![](https://console.steedos.cn/api/files/images/8JRAzNLbvbL2kjBFo)相对于更新代码测试，安装软件包来测试更进一步，也只有这种测试方式才是面向生产环境部署的终极测试手段。
+
+当项目工程拆分为一个或多个软件包发布后，我们更推荐的严格测试方式是，重新创建一个全新的华炎魔方模板项目，然后为其启动一个 远程开发环境 并使用安装软件包的方式来测试相关功能。
+
+### 部署到生产环境
+
+基于华炎魔方软件包开发的应用，不需要像传统开发项目一样部署整个项目代码到生产环境，而只需要把发布后的软件包直接安装到部署好的华炎魔方生产环境即可，这里所说的生产环境可以是 [华炎魔方客户门户](https://console.steedos.cn/) 这样的多租户云环境，也可以是基于 [私有部署 - Docker （推荐）](https://beta.steedos.cn/docs/deploy/deploy-docker)部署的私有华炎魔方项目生产环境。
+
+也正是得益于基于华炎魔方软件包的DevOps开发方式，任何个人开发者或开发团队开发的软件包都可以直接放到 [华炎魔方应用](https://beta.steedos.cn/collections/steedos-packages) 市场售卖。
+
+## 多人协同开发
+
+在中大型软件开发项目中往往需要数人甚至数十人进行团队协同开发，上面我们描述了华炎魔方DevOps开发生命周期中软件包的开发流程，该流程对于单人开发模式和多人协同开发模式一样适用。
+
+### 可视化协同开发
+
+项目开发初期，充分讨论分解项目需求后，我们可以把业务需求分拆成不同的业务对象，然后把业务人员组织起来大家分工协作，每个业务人员分别负责一个或数个业务对象的可视化开发工作，大家访问同一个远程开发环境运行起来的魔方项目，按计划同时在界面上开发各自负责的业务对象。
+
+### 源代码协同开发
+
+与可视化开发一样，在项目中期，多人协同开发一样可以把业务需求分拆后，把开发人员组织起来大家分工协作，不过开发人员是各自运行自己的远程开发环境来开发和调试自己负责的部分，并使用VS Code的源代码管理工具来提交代码并更新其他人提交的代码来协同开发项目。
+
+### 分包协同开发
+
+在业务需求很繁杂和庞大时，尤其是在大型软件开发项目中，我们推荐把业务人员和开发人员进行分组，每组成员各自负责其中某个功能模块的开发和测试，我们正好可以把每个功能模块按软件包来划分，一个软件包负责一个功能模块，并让它们分别管理自己的软件包开发周期，最后在测试环境和生产环境中分别安装这些软件包来测试和部署相应的模块。
+
+
+### Debug模式调试
+
+使用Gitpod启动远程开发环境，在调试开发华炎魔方项目时，可以像在本地开发一样使用VS Code的Debug调试工具调试程序代码。
+
+ ![](https://console.steedos.cn/api/files/images/qRvCB4YK3yHK27ru7)以上截屏动画演示了如何以Debug模式启动项目，华炎魔方是使用JavaScript编写的标准Node.js应用，所以不需要其他额外的配置，只要在VS Code中新建一个“JavaScript Debug Terminal”，并在该命令行窗口中执行 `yarn start` 命令启动服务就可以直接开始断点调试了。
+
+ ![](https://console.steedos.cn/api/files/images/dcnC3Lwt44sKGne5X)以上截屏动画演示了断点调式华炎魔方程序大致过程，关于如何使用VS Code断点调试请参考其官网教程 [Visual Studio Code Debugging](https://code.visualstudio.com/Docs/editor/debugging)，还可以参考 [Node.js debugging in VS Code](https://code.visualstudio.com/docs/nodejs/nodejs-debugging) 了解更多Node.js调试技巧。
+
+## 源代码版本管理
+
+使用Gitpod启动远程开发环境，在调试开发华炎魔方项目时，可以像在本地开发一样使用VS Code的源代码管理工具来更新、提交代码，或者查看代码提交历史等，只要启动Gitpod远程开发环境相关插件会在初始化时自动安装好，您可以直接使用它们，相关使用教程请参考 [Visual Studio Code 源代码管理官网教程](https://code.visualstudio.com/docs/editor/versioncontrol)。

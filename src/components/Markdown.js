@@ -10,11 +10,17 @@ import Frame from '@/components/Frame'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import {atomDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkDirective from 'remark-directive'
+import remarkBreaks from 'remark-breaks'
 import hastscript from 'hastscript'
 import rehypeRaw from 'rehype-raw'
-const visit = require('unist-util-visit')
-const { remarkPlugins } = require('remark');
+import remarkUnwrapImages from 'remark-unwrap-images'
+import BananaSlug from 'github-slugger'
+import { Heading } from '@/components/Heading'
 const imgLinks = require("@pondorasti/remark-img-links")
+
+const slugs = new BananaSlug()
+
+const visit = require('unist-util-visit')
 
 
 // const { serverRuntimeConfig } = getConfig();
@@ -94,22 +100,31 @@ export function img({ node, ...props }) {
   //     quality={100}
   //     className="rounded-lg" />)
   // } else {
-    return <img className="rounded-lg" {...props} />
+    return (
+      <div className="relative pt-10 mt-10">
+        <div className="absolute top-0 inset-x-0 bg-top bg-no-repeat beams top-0"></div>
+        <div className="absolute top-0 inset-x-0 h-[37.5rem] bg-grid-slate-900/[0.04] bg-top [mask-image:linear-gradient(0deg,transparent,black)] dark:bg-grid-slate-100/[0.03] dark:bg-[center_top_-1px] dark:border-t dark:border-slate-100/5 top-0 xl:top-8"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <img className="rounded-lg" {...props} />
+        </div>
+      </div>
+    )
   // }
 }
 
-export function a({ node, ...props }) {
-  if (props.href && isString(props.href)) {
-    const result = props.href.match(/\/embed\/videos\//i);
+export function a({ node, href, ...props }) {
+  if (href && isString(href)) {
+    const result = href.match(/\/embed\/videos\//i);
     if (result) {
-      // const src = props.href.replace('/videos/', '/embed/videos/')
       return <Frame
-        src={props.href}
+        className="aspect-video"
+        src={href}
+        {...props}
       />
     }
 
     const target = "_blank" //props.href.match(/https:\/\//i) || props.href.match(/http:\/\//i) ? "_blank": "_self";
-    return <a href={props.href} target={target}>{props.children}</a>
+    return <a href={href} target={target} {...props}>{props.children}</a>
   }
 }
 
@@ -129,32 +144,60 @@ export function tip({ node, ...props }){
   return <div className="block notice-block tip"><div className="icon"><StarIcon></StarIcon></div><div className="content">{props.children}</div></div>
 }
 
+export function heading({ node, ...props }) {
+  let title = node.children
+    .filter(
+      (n, i, a) =>
+        n.type === 'text'
+    )
+    .map((n) => n.value)
+    .join('')
+  slugs.reset()
+  const id = slugs.slug(title, true) 
+  return <Heading id={id} {...props}/>
+}
+
 export function Markdown(props) {
   const { 
-    body = "", 
+    body, 
     className = 'prose dark:prose-dark'
   } = props
 
-  const __remarkPlugins = [...remarkPlugins, [imgLinks, {absolutePath: ROOT_URL}], remarkDirective, customPlugin, remarkGfm]
-  const markdownBody = body ? body.replace(new RegExp('\\\\n', 'g'), '<br/>\n\n').replace(new RegExp('\\\\\n', 'g'), '<br/>\n\n') : ""
+  const remarkPlugins = [
+    // remarkBreaks,
+    remarkDirective, 
+    customPlugin, 
+    remarkGfm,
+    remarkUnwrapImages,
+    [imgLinks, {absolutePath: ROOT_URL}],
+  ]
+  
+  let fixedBody = body? body: ""
+  fixedBody = fixedBody.replace(/\\\n/g, '\n') 
+  fixedBody = fixedBody.replace(/\\n/g, '\n') 
+  fixedBody = fixedBody.replace(/\n \!\[\]/g, '\n\!\[\]') 
+  // console.log(fixedBody)
   return (
     <>
-      {markdownBody && (
+      {fixedBody && (
         <ReactMarkdown 
-          children={markdownBody} 
-          remarkPlugins={__remarkPlugins} 
+          children={fixedBody} 
+          remarkPlugins={remarkPlugins} 
           rehypePlugins={[rehypeRaw]} 
           className={className}
           skipHtml={false}
           components={{
-            code,
-            // img, 
             a,
+            code,
             info,
             warning,
-            pre,
-            tip
+            tip,
+            // img
+            h1: heading,
+            h2: heading,
+            h3: heading,
           }}
+          transformImageUri={null}
         >
         </ReactMarkdown>
       )}

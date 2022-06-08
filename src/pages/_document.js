@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 export default class MyDocument extends Document {
@@ -9,25 +10,21 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html
-        lang="en"
-        className={`text-gray-500 antialiased ${
-          this.props.dangerousAsPath.startsWith('/examples/') ? '' : 'bg-white'
-        } ${
-          this.props.dangerousAsPath.startsWith('/embed/') ? 'embed-page' : ''
-        }`}
-      >
+      <Html lang="en" className="[--scroll-mt:9.875rem] lg:[--scroll-mt:6.3125rem]">
         <Head>
           <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00b4b6" />
-          {/* <link rel="stylesheet" media="all" href="/css/tailwind-min.css" /> */}
+          <meta name="application-name" content="华炎魔方" />
   
           <meta name="theme-color" content="#ffffff" />
         </Head>
-        <body>
+        <body
+          className={clsx('antialiased text-slate-500 dark:text-slate-400', {
+            'bg-white dark:bg-slate-900': !this.props.dangerousAsPath.startsWith('/examples/'),
+          })}>
           <Main />
           <NextScript />
         </body>

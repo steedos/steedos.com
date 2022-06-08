@@ -1,271 +1,376 @@
-import { useEffect, useState } from 'react'
-import { motion, useTransform, animate, useMotionValue } from 'framer-motion'
-import { gradients } from '@/utils/gradients'
+import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect'
+import clsx from 'clsx'
+import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
-const colors = {
-  lightblue: [gradients.lightblue[0], 'text-cyan-100', 'bg-cyan-100'],
-  purple: [gradients.purple[0], 'text-fuchsia-100', 'bg-fuchsia-100'],
-  orange: [gradients.orange[0], 'text-orange-100', 'bg-orange-100'],
-  teal: [gradients.teal[0], 'text-green-100', 'bg-green-100'],
-  violet: [gradients.violet[0], 'text-purple-100', 'bg-purple-100'],
-  amber: [gradients.amber[0], 'text-orange-100', 'bg-orange-100'],
-  pink: [gradients.pink[0], 'text-rose-100', 'bg-rose-100'],
-  blue: [gradients.blue[0], 'text-light-blue-100', 'bg-light-blue-100'],
-}
-
-const rotation = [-2, 1, -1, 2, -1, 1]
-
-const testimonials = [
-  {
-    content: 'I feel like an idiot for not using Tailwind CSS until now.',
-    tweetUrl: 'https://twitter.com/ryanflorence/status/1187951799442886656',
-    author: {
-      name: 'Ryan Florence',
-      role: 'Remix & React Training',
-      avatar: require('@/img/avatars/ryan-florence.jpg'),
+let testimonials = [
+  // Column 1
+  [
+    {
+      content: '使用可视化界面，进行数据建模，创建对象、字段、关系，快速构建业务系统原型.',
+      url: '/docs/admin/object',
+      author: {
+        name: '数据建模',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
     },
-  },
-  {
-    content:
-      'If I had to recommend a way of getting into programming today, it would be HTML + CSS with Tailwind CSS.',
-    tweetUrl: 'https://twitter.com/rauchg/status/1225611926320738304',
-    author: {
-      name: 'Guillermo Rauch',
-      role: 'Vercel',
-      avatar: require('@/img/avatars/guillermo-rauch.jpg'),
+    {
+      content:
+        '华炎魔方提供灵活的多维度数据权限架构。使用权限集、权限集组和简档，控制用户可以访问的对象和字段。使用组织范围的共享设置、用户角色和共享规则，以指定用户可以查看并编辑的单个记录。',
+      url: '/docs/admin/permission_set',
+      author: {
+        name: '权限控制',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
     },
-  },
-  {
-    content: `I have no design skills and with Tailwind I can actually make good looking websites with ease and it's everything I ever wanted in a CSS framework.`,
-    author: {
-      name: 'Sara Vieira',
-      role: 'CodeSandbox',
-      avatar: require('@/img/avatars/sara-vieira.jpg'),
+    {
+      content:
+        '定义业务数据的查询与展现形式，您可以自定义需要显示的字段，从不同的维度定义视图展示不一样的数据，设定筛选条件和排序规则等参数。',
+      url: '/docs/admin/listview',
+      author: {
+        name: '列表视图',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
     },
-  },
-  {
-    content: `I started using @tailwindcss. I instantly fell in love with their responsive modifiers, thorough documentation, and how easy it was customizing color palettes.`,
-    tweetUrl: 'https://twitter.com/dacey_nolan/status/1303744545587441666',
-    author: {
-      name: 'Dacey Nolan',
-      role: 'Software Engineer',
-      avatar: require('@/img/avatars/dacey-nolan.jpg'),
+    {
+      content:
+        '页面布局用于控制按钮、字段和相关子表的布局和组织方式。它们也帮助确定哪些字段可见、只读和必填。使用页面布局，为您的用户自定义记录页面的内容。        ',
+      url: '/docs/admin/page-layout',
+      author: {
+        name: '页面布局',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
     },
-  },
-
-  {
-    content: 'Loved it the very moment I used it.',
-    tweetUrl: 'https://twitter.com/GTsurwa/status/1304226774491033601',
-    author: {
-      name: 'Gilbert Rabut Tsurwa',
-      role: 'Web Developer',
-      avatar: require('@/img/avatars/gilbert-rabut-tsurwa.jpg'),
+    {
+      content: '通过配置数据源，可以轻松的连接到第三方业务系统，实现与外部数据的打通.',
+      url: '/docs/admin/datasource',
+      author: {
+        name: '外部数据源',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
     },
-  },
-
-  {
-    content:
-      'I came into my job wondering why the last dev would ever implement Tailwind into our projects, within days I was a Tailwind convert and use it for all of my personal projects.',
-    tweetUrl: 'https://twitter.com/maddiexcampbell/status/1303752658029740032',
-    author: {
-      name: 'Madeline Campbell',
-      role: 'Full-Stack Developer',
-      avatar: require('@/img/avatars/madeline-campbell.jpg'),
+    {
+      content:
+        '华炎魔方内置功能强大的报表统计与分析功能，可以快速创建分组报表、数据透视图。        ',
+      url: '/docs/admin/record_report',
+      author: {
+        name: '分析报表',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
     },
-  },
-
-  {
-    content:
-      'There’s one thing that sucks about @tailwindcss - once you’ve used it on a handful of projects it is a real pain in the ass to write normal CSS again.',
-    tweetUrl: 'https://twitter.com/iamgraem_e/status/1322861404781748228?s=21',
-    author: {
-      name: 'Graeme Houston',
-      role: 'JavaScript Developer',
-      avatar: require('@/img/avatars/graeme-houston.jpg'),
+    {
+      content:
+        '基于华炎魔方 Stimulsoft 报表插件，可以使用可视化工具设计像素级报表，例如报价单、发货单等业务单据，或是二维码、条形码。',
+      url: '/docs/admin/stimulsoft',
+      author: {
+        name: '像素级报表',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
     },
-  },
-
-  {
-    content: `Okay, I’m officially *all* in on the @tailwindcss hype train. Never thought building websites could be so ridiculously fast and flexible.`,
-    tweetUrl: 'https://twitter.com/lukeredpath/status/1316543571684663298?s=21',
-    author: {
-      name: 'Aaron Bushnell',
-      role: 'Programmer @ TrendyMinds',
-      avatar: require('@/img/avatars/aaron-bushnell.jpg'),
+    {
+      content:
+        '使用华炎魔方仪表盘，可以连接任意数据库，在界面上编写查询语句，然后再配置页面和图表，就可以轻松实现各种类型的仪表盘',
+      url: '/docs/admin/dashboard',
+      author: {
+        name: '仪表盘',
+        role: '无代码',
+        avatar: require('@/img/icons/home/constraint-based.png').default,
+      },
     },
-  },
-  {
-    content:
-      'Have been working with CSS for over ten years and Tailwind just makes my life easier. It is still CSS and you use flex, grid, etc. but just quicker to write and maintain.',
-    tweetUrl: 'https://twitter.com/debs_obrien/status/1243255468241420288',
-    author: {
-      name: `Debbie O'Brien`,
-      role: 'Head of Learning @ Nuxt.js',
-      avatar: require('@/img/avatars/debbie-obrien.jpg'),
+  ],
+  [
+    {
+      content:
+        '可视化查询设计工具，连接外部数据源，编写SQL语句即可预览和生成查询API，进一步搭配报表工具和amis工具实现数据分析功能。',
+      url: '/docs/admin/query',
+      author: {
+        name: '查询设计器',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
     },
-  },
-  {
-    content: 'Okay, @tailwindcss just clicked for me and now I feel like a #!@%&$% idiot.',
-    tweetUrl: 'https://twitter.com/ken_wheeler/status/1225373231139475458',
-    author: {
-      name: 'Ken Wheeler',
-      role: `React Engineer`,
-      avatar: require('@/img/avatars/ken-wheeler.jpg'),
+    {
+      content: '公式引擎可以帮助非程序员快速实现一些简单的业务逻辑，类似Excel公式，它是从其他字段、表达式或值派生其值的一种算法，可以帮助您根据其他字段自动计算一个字段的值。      ',
+      url: '/docs/admin/formula',
+      author: {
+        name: '公式',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
     },
-  },
-  {
-    content: `I've been using @tailwindcss the past few months and it's amazing. I already used some utility classes before, but going utility-first... this is the way.`,
-    tweetUrl: 'https://twitter.com/JadLimcaco/status/1327417021915561984',
-    author: {
-      name: 'Jad Limcaco',
-      role: 'Designer',
-      avatar: require('@/img/avatars/jad-limcaco.jpg'),
+    {
+      content: '工作流规则可让您自动化标准内部过程和进程，以在贵组织范围内节省时间。工作流规则是一组工作流指示的主要容器。这些指示始终可以用“如果/则”语句概括。',
+      url: '/docs/admin/workflow-rules',
+      author: {
+        name: '工作流规则',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
     },
-  },
-  {
-    content: `After finally getting to use @tailwindcss on a real client project in the last two weeks I never want to write CSS by hand again. I was a skeptic, but the hype is real.`,
-    tweetUrl: 'https://twitter.com/lukeredpath/status/1316543571684663298?s=21',
-    author: {
-      name: 'Luke Redpath',
-      role: 'Ruby & iOS Developer',
-      avatar: require('@/img/avatars/luke-redpath.jpg'),
+    {
+      content: '相比工作流规则，批准过程在自动化处理方面更进一步，让您可以指定批准该类记录所必需经历的审批步骤序列。还可以指定在各个时间点、各个审批步骤的自动处理操作。',
+      url: '/docs/admin/approval-process',
+      author: {
+        name: '批准过程',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
     },
-  },
-  {
-    content:
-      "I didn't think I was going to like @tailwindcss... spent a day using it for a POC, love it! I wish this had been around when we started our company design system, seriously considering a complete rebuild",
-    tweetUrl: 'https://twitter.com/JonBloomer/status/1300923818622377984',
-    author: {
-      name: 'Jon Bloomer',
-      role: 'Front-End Developer',
-      avatar: require('@/img/avatars/jon-bloomer.jpg'),
+    {
+      content: '审批王是图形化的流程设计工具，并与您的业务对象实现数据互通。例如您可以从合同台帐中直接发起一个审批流程，然后在审批王中处理审批相关业务，最终审批结果更新回合同台帐。',
+      url: '/docs/admin/workflow-admin',
+      author: {
+        name: '审批王',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
     },
-  },
-  {
-    content: '@tailwindcss looked unpleasant at first, but now I’m hooked on it.',
-    tweetUrl: 'https://twitter.com/droidgilliland/status/1222733372855848961',
-    author: {
-      name: 'Andrew Gilliland',
-      role: 'Front-End Developer',
-      avatar: require('@/img/avatars/andrew-gilliland.jpg'),
+    {
+      content: '自动操作是可重复使用的组件，可在后台执行某种操作，如更新字段或发送电子邮件。创建自动操作后，将其添加到批准过程、工作流规则中。      ',
+      url: '/docs/admin/automated-action',
+      author: {
+        name: '自动化操作',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
     },
-  },
+    {
+      content: '华炎魔方与 IBM Node-Red 低代码应用集成引擎整合，可以通过可视化开发方式，连接SAP、用友、金蝶等主流业务系统及各种数据库。',
+      url: '/docs/developer/node-red',
+      author: {
+        name: 'node-red',
+        role: '低代码',
+        avatar: require('@/img/icons/home/build-anything.png').default,
+      },
+    },
+  ],
+  [
+    {
+      content: '通过 VS Code 插件，可以将可视化开发的元数据同步为项目源码，实现元数据的版本管理，并进一步利用传统开发中的DevOps工具实现团队开发和自动化。',
+      url: '/docs/developer/sync-metadata',
+      author: {
+        name: '元数据同步',
+        role: 'DevOps',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content: '通过编写触发器，可以在记录增删改前和增删改查之后自动触发一段服务端代码，实现个性化的数据校验和处理。',
+      url: '/docs/developer/trigger',
+      author: {
+        name: '触发器',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content: '与触发器类似，在流程流转到特定节点时自动触发一段代码逻辑。',
+      url: '/docs/developer/flow-trigger',
+      author: {
+        name: '流程触发器',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content:
+        '基于华炎魔方创建的自定义对象，会自动生成 GraphQL API 接口，接口自带身份验证和权限控制，确保业务数据的安全。',
+      url: '/docs/developer/graphql-api',
+      author: {
+        name: 'GraphQL API',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content:
+        '如果华炎魔方自动生成的标准API不能满足业务需求，可以编写自定义API，在服务端处理业务数据。',
+      url: '/docs/developer/router',
+      author: {
+        name: '自定义API',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content:
+        'ObjectQL 是面向对象的跨数据库查询语法。基于ObjectQL语法编写的函数兼容不同类型的数据库。        ',
+      url: '/docs/developer/objectql',
+      author: {
+        name: 'ObjectQL',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content:
+        '可以在对象的列表页和记录详情页配置自定义按钮，并通过编写 Javascript 脚本的方式，处理个性化的业务需求。',
+      url: '/docs/developer/button',
+      author: {
+        name: '自定义按钮',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+    {
+      content:
+        '通过定义软件包，可以将复杂的项目需求拆分成多个子模块分别由不同的团队开发。软件包可以发布到npm仓库，在不同项目、不同客户中复用，也可以上架到华炎魔方应用市场。',
+      url: '/docs/developer/package',
+      author: {
+        name: '软件包',
+        role: '高代码',
+        avatar: require('@/img/icons/home/editor-tools.png').default,
+      },
+    },
+  ],
 ]
 
-function Testimonial({ testimonial, base, index, total }) {
-  const x = useTransform(
-    base,
-    [0, (100 / total) * (index + 1), (100 / total) * (index + 1), 100],
-    ['0%', `${(index + 1) * -100}%`, `${total * 100 - (index + 1) * 100}%`, '0%']
-  )
-  const [straight, setStraight] = useState(false)
+function Testimonial({ author, content, url, expanded }) {
+  let [focusable, setFocusable] = useState(true)
+  let ref = useRef()
 
-  const color = colors[Object.keys(colors)[index % Object.keys(colors).length]]
+  useEffect(() => {
+    if (ref.current.offsetTop !== 0) {
+      setFocusable(false)
+    }
+  }, [])
 
   return (
-    <motion.li
-      className="px-3 md:px-4 flex-none"
-      onMouseEnter={() => setStraight(true)}
-      onMouseLeave={() => setStraight(false)}
-      style={{ x }}
-    >
-      <motion.figure
-        className="shadow-lg rounded-xl flex-none w-80 md:w-xl"
-        initial={false}
-        animate={straight ? { rotate: 0 } : { rotate: rotation[index % rotation.length] }}
-      >
-        <blockquote className="rounded-t-xl bg-white px-6 py-8 md:p-10 text-lg md:text-xl leading-8 md:leading-8 font-semibold text-gray-900">
-          <svg width="45" height="36" className={`mb-5 fill-current ${color[1]}`}>
-            <path d="M13.415.001C6.07 5.185.887 13.681.887 23.041c0 7.632 4.608 12.096 9.936 12.096 5.04 0 8.784-4.032 8.784-8.784 0-4.752-3.312-8.208-7.632-8.208-.864 0-2.016.144-2.304.288.72-4.896 5.328-10.656 9.936-13.536L13.415.001zm24.768 0c-7.2 5.184-12.384 13.68-12.384 23.04 0 7.632 4.608 12.096 9.936 12.096 4.896 0 8.784-4.032 8.784-8.784 0-4.752-3.456-8.208-7.776-8.208-.864 0-1.872.144-2.16.288.72-4.896 5.184-10.656 9.792-13.536L38.183.001z" />
-          </svg>
-          {typeof testimonial.content === 'string' ? (
-            <p>{testimonial.content}</p>
-          ) : (
-            testimonial.content
-          )}
+    <li ref={ref} className="text-sm leading-6">
+      <figure className="relative flex flex-col-reverse bg-slate-50 rounded-lg p-6 dark:bg-slate-800 dark:highlight-white/5">
+        <blockquote className="mt-6 text-slate-700 dark:text-slate-300">
+          {typeof content === 'string' ? <p>{content}</p> : content}
         </blockquote>
-        <figcaption
-          className={`flex items-center space-x-4 p-6 md:px-10 md:py-6 bg-gradient-to-br rounded-b-xl leading-6 font-semibold text-white ${color[0]}`}
-        >
-          <div className="flex-none w-14 h-14 bg-white rounded-full flex items-center justify-center">
-            <img
-              src={testimonial.author.avatar}
-              alt=""
-              className={`w-12 h-12 rounded-full ${color[2]}`}
-              loading="lazy"
-            />
-          </div>
+        <figcaption className="flex items-center space-x-4">
+          <img
+            src={author.avatar}
+            alt=""
+            className="flex-none w-14 h-14 rounded-full object-cover"
+            loading="lazy"
+          />
           <div className="flex-auto">
-            {testimonial.author.name}
-            {testimonial.author.role && (
-              <>
-                <br />
-                <span className={color[1]}>{testimonial.author.role}</span>
-              </>
-            )}
+            <div className="text-base text-slate-900 font-semibold dark:text-slate-300">
+              {url ? (
+                <a href={url} tabIndex={focusable || expanded ? 0 : -1}>
+                  <span className="absolute inset-0" />
+                  {author.name}
+                </a>
+              ) : (
+                author.name
+              )}
+            </div>
+            <div className="mt-0.5">{author.role}</div>
           </div>
-          {testimonial.tweetUrl && (
-            <cite className="flex">
-              <a
-                href={testimonial.tweetUrl}
-                className="opacity-50 hover:opacity-75 transition-opacity duration-200"
-              >
-                <span className="sr-only">Original tweet by {testimonial.author.name}</span>
-                <svg width="33" height="32" fill="currentColor">
-                  <path d="M32.411 6.584c-1.113.493-2.309.826-3.566.977a6.228 6.228 0 002.73-3.437 12.4 12.4 0 01-3.944 1.506 6.212 6.212 0 00-10.744 4.253c0 .486.056.958.16 1.414a17.638 17.638 0 01-12.802-6.49 6.208 6.208 0 00-.84 3.122 6.212 6.212 0 002.762 5.17 6.197 6.197 0 01-2.813-.777v.08c0 3.01 2.14 5.52 4.983 6.091a6.258 6.258 0 01-2.806.107 6.215 6.215 0 005.803 4.312 12.464 12.464 0 01-7.715 2.66c-.501 0-.996-.03-1.482-.087a17.566 17.566 0 009.52 2.79c11.426 0 17.673-9.463 17.673-17.671 0-.267-.007-.536-.019-.803a12.627 12.627 0 003.098-3.213l.002-.004z" />
-                </svg>
-              </a>
-            </cite>
-          )}
         </figcaption>
-      </motion.figure>
-    </motion.li>
+      </figure>
+    </li>
   )
 }
 
 export function Testimonials() {
-  const x = useMotionValue(0)
-  const { inView, ref: inViewRef } = useInView({ threshold: 0, rootMargin: '100px' })
-  const [duration, setDuration] = useState(150)
+  let ref = useRef()
+  let [expanded, setExpanded] = useState(false)
+  let [showCollapseButton, setShowCollapseButton] = useState(false)
+  let [transition, setTransition] = useState(false)
+  let { ref: inViewRef, inView } = useInView({ threshold: 0 })
+  let initial = useRef(true)
+
+  useIsomorphicLayoutEffect(() => {
+    if (initial.current) {
+      initial.current = false
+      return
+    }
+    if (expanded) {
+      ref.current.focus({ preventScroll: expanded })
+    } else {
+      ref.current.focus()
+      ref.current.scrollIntoView()
+    }
+    if (expanded) {
+      setShowCollapseButton(false)
+    }
+  }, [expanded])
 
   useEffect(() => {
-    if (!inView) return
+    setTimeout(() => setTransition(expanded), 0)
+  }, [expanded])
 
-    const controls = animate(x, 100, {
-      type: 'tween',
-      duration,
-      ease: 'linear',
-      loop: Infinity,
-    })
-
-    return controls.stop
-  }, [inView, x, duration])
+  useEffect(() => {
+    if (!expanded || !inView) return
+    function onScroll() {
+      let bodyRect = document.body.getBoundingClientRect()
+      let rect = ref.current.getBoundingClientRect()
+      let middle = rect.top + rect.height / 4 - bodyRect.top - window.innerHeight / 2
+      let isHalfWay = window.scrollY > middle
+      if (showCollapseButton && !isHalfWay) {
+        setShowCollapseButton(false)
+      } else if (!showCollapseButton && isHalfWay) {
+        setShowCollapseButton(true)
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll, { passive: true })
+    }
+  }, [expanded, showCollapseButton, inView])
 
   return (
-    <div
-      ref={inViewRef}
-      className="relative"
-      onMouseEnter={() => setDuration(250)}
-      onMouseLeave={() => setDuration(150)}
+    <section
+      ref={ref}
+      tabIndex="-1"
+      className="relative max-w-7xl mx-auto px-4 focus:outline-none sm:px-3 md:px-5"
     >
+      <h2 className="sr-only">Testimonials</h2>
       <div
-        className="absolute right-0 bottom-1/2 left-0 bg-gradient-to-t from-gray-100 pointer-events-none"
-        style={{ height: 607, maxHeight: '50vh' }}
-      />
-      <div className="flex overflow-hidden -my-8">
-        <ul className="flex items-center w-full py-8">
-          {testimonials.map((testimonial, i) => (
-            <Testimonial
-              key={i}
-              testimonial={testimonial}
-              base={x}
-              index={i}
-              total={testimonials.length}
-            />
-          ))}
-        </ul>
+        ref={inViewRef}
+        className={clsx(
+          'grid grid-cols-1 gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3',
+          !expanded && 'max-h-[33rem] overflow-hidden'
+        )}
+      >
+        {testimonials.map((column, i) => (
+          <ul
+            key={i}
+            className={clsx(
+              'space-y-8',
+              i === 1 && 'hidden sm:block',
+              i === 2 && 'hidden lg:block'
+            )}
+          >
+            {column.map((testimonial) => (
+              <Testimonial key={testimonial.author.name} expanded={expanded} {...testimonial} />
+            ))}
+          </ul>
+        ))}
       </div>
-    </div>
+      <div
+        className={clsx(
+          'inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-white pt-32 pb-8 pointer-events-none dark:from-slate-900',
+          expanded ? 'sticky -mt-52' : 'absolute',
+          transition && 'transition-opacity duration-300',
+          expanded && (showCollapseButton ? 'opacity-100' : 'opacity-0')
+        )}
+      >
+        <button
+          type="button"
+          className={clsx(
+            'relative bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 text-sm text-white font-semibold h-12 px-6 rounded-lg flex items-center dark:bg-slate-700 dark:hover:bg-slate-600',
+            transition && 'transition-transform',
+            expanded && !showCollapseButton && 'translate-y-4',
+            (!expanded || showCollapseButton) && 'pointer-events-auto'
+          )}
+          onClick={() => setExpanded(!expanded)}
+        >
+          {expanded ? '好的，朕知道了 👍' : '查看更多...'}
+        </button>
+      </div>
+    </section>
   )
 }

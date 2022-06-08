@@ -6,7 +6,7 @@
 
 ## 开发流程
 
-请在dev分支开发，而不是在master分支或beta分支开发。
+在master分支开发。
 
 ### 安装依赖包
 
@@ -36,13 +36,13 @@ yarn build
 
 ### 发布到Beta
 
-请把dev分支代码合并到beta分支，合并代码后 [Git Actions](https://github.com/steedos/steedos.com/actions) 会自动开始打包并发布到beta官网。
+请把master分支代码合并到beta分支，合并代码后 [Git Actions](https://github.com/steedos/steedos.com/actions) 会自动开始打包并发布到beta官网。
 
 待 [Git Actions](https://github.com/steedos/steedos.com/actions) 执行成功后请到 <https://beta.steedos.cn/> 确认下，功能正常才可以进行下一步。
 
 ### 发布到官网
 
-请把beta分支代码合并到master分支，请注意合并分支后并不会自动打包发布到官网，需要手动创建releases，创建后才会开始自动发布到.com和.cn官网。
+手动创建releases，创建后才会开始自动发布到.com和.cn官网。
 
 #### 如何创建releases？
 

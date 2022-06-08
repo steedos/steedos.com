@@ -1,0 +1,49 @@
+---
+title: 概览
+description: 本协议以Salesforce Developer Experience (DX)为原型，设计企业低代码DevOps平台的基础规范。
+---
+
+import SteedosPackages from './diagrams/Steedos Packages.drawio.svg'
+
+## 协议内容
+
+本协议研究和制定低代码平台的底层技术规范，包括并不限于元数据、微服务、微函数、微前端、微控件、标准对象、软件包、自动化工具、DevOps 规范。
+
+## 设计原则
+
+本协议是低代码平台的底层协议，需遵循以下原则。
+
+### 微内核设计
+
+内核只包含三个核心微服务。核心微服务可以使用任何语言实现。
+
+  - [软件包服务](./service-package)
+  - [Metadata 服务](./service-metadata)
+  - [Records 服务](./service-records)
+
+### 插件式扩展
+
+除核心微服务外，其他功能均以[插件](./plugin)形式叠加。
+
+插件本身也是一个软件包，插件应该是可插拔式的。启用插件可以扩展平台现有功能，停用插件不应该影响平台基座的运行能力。
+
+## DevOps流程
+
+低代码DevOps平台由源码驱动，将低代码可视化工具融入到传统开发流程中，因而程序员可以在熟悉的环境中工作，并充分利用现有的DevOps平台和效率工具。
+
+<img src={SteedosPackages} alt="Steedos Packages" />
+
+- 使用可视化建模工具搭建项目原型。
+- 通过配置公式、自动化工具，实现基础业务逻辑。
+- 元数据同步到源码，并进行版本管理。
+- 编写代码实现高级业务逻辑。
+- 编写自动化测试脚本。
+- 发布为软件包。
+- 在测试环境中测试软件包。
+- 安装到生产环境/上架到应用市场销售。
+
+## 参考
+
+- [Salesforce Developer Experience (DX)](https://developer.salesforce.com/developer-centers/developer-experience) 
+- [Steedos DevOps Platform](https://www.steedos.cn/docs/deploy/devops) 
+

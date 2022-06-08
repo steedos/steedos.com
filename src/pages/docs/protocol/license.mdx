@@ -1,0 +1,40 @@
+---
+title: 许可证
+description: 如何为软件包添加许可证限制。
+---
+
+## 许可证 Service
+
+### hasFeature
+
+判断平台是否有审计日志功能。
+
+```js
+hasFeature('platform_ee.audit_logs')
+```
+
+返回 true/false
+
+### getProduct
+
+获取产品的License
+
+```js
+getProduct('platform_ee');
+```
+
+返回
+```js
+{
+  product: 'platform_ee',
+  end_date: '2022-12-31',
+  user_number: 10,
+  features: {
+     audit_logs: {
+       label: '审计日志',
+       limit: 100,
+       extra_data: {}
+     }
+  }
+}
+```

@@ -1,0 +1,13 @@
+{
+  "index_name": "steedos-docs",
+  "start_urls": ["https://www.steedos.cn/docs"],
+  "selectors": {
+    "lvl0": "#header p:first-child",
+    "lvl1": "#header h1",
+    "lvl2": "#content-wrapper h2",
+    "lvl3": "#content-wrapper h3",
+    "lvl4": "#content-wrapper h4",
+    "lvl5": "#content-wrapper h5",
+    "text": "#content-wrapper p,#content-wrapper span,#content-wrapper ol"
+  }
+}

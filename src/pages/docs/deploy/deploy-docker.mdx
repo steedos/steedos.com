@@ -1,0 +1,328 @@
+---
+title: Docker 部署
+description: 我们推荐使用 Docker 运行华炎魔方，生产环境推荐使用 centos 或 ubuntu 操作系统。如果您只是安装测试环境，也可以使用 windows 或 mac 系统。
+---
+
+## 安装前准备
+
+### 安装 docker
+
+参考官网安装[docker](https://docs.docker.com/get-docker/)
+
+### 安装 docker-compose
+
+确保本地已安装[docker-compose](https://docs.docker.com/compose/install/)
+
+### 配置 docker 镜像加速
+
+由于镜像存在国外，可配置阿里云[官方镜像加速](https://help.aliyun.com/document_detail/60750.html)
+
+
+## 私有部署
+
+### 创建文件 docker-compose.yml
+
+参考以下内容，创建 docker-compose.yml。其中包含：
+
+* steedos 服务
+* redis 服务
+* mongodb 服务 以及 mongodb 集群初始化脚本
+
+
+```yaml
+version: "3"
+
+services:
+  steedos:
+    image: steedos/steedos-project-template:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./docker-volumes/steedos/storage:/app/storage"
+      # - "./docker-volumes/steedos/.steedos:/app/.steedos" 如需持久化软件包，放开注释
+    environment:
+      - STEEDOS_CLOUD_SPACE_ID=#在此填入私有部署记录中的魔方ID
+      - STEEDOS_CLOUD_API_KEY=#在此填入私有部署记录中的API Key
+      - ROOT_URL=#在此填入服务运行的正式网址，包含端口号3000。例如 http://192.168.0.200:3000
+      - MONGO_URL=mongodb://mongo:27017/steedos
+      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
+      - STEEDOS_CFS_STORE=local
+      - STEEDOS_STORAGE_DIR=/app/storage
+      - TRANSPORTER=redis://redis:6379
+      - CACHER=redis://redis/2
+    depends_on:
+      - mongo
+      - redis
+  
+  redis:
+    image: redis:6.2.4
+    restart: always
+    volumes:
+      - "./docker-volumes/redis/data:/data"
+    command: ["/bin/sh","-c", "redis-server --save \"\" --appendonly no --client-output-buffer-limit replica 0 0 0 --client-output-buffer-limit pubsub 0 0 0 --client-output-buffer-limit slave 0 0 0"]
+    ports:
+      - "6389:6379"
+
+  mongo:
+    image: ecr.aws.steedos.cn/dockerhub/mongo:4.2
+    restart: always
+    volumes:
+      - "./docker-volumes/mongo/data/db:/data/db"
+    command: mongod --oplogSize 128 --profile=1 --slowms=500 --replSet rs0 --bind_ip_all
+    ports:
+      - "27018:27017"
+
+  # this container's job is just run the command to initialize the replica set.
+  # it will run the command and remove himself (it will not stay running)
+  mongo-init-replica:
+    image: mongo:4.2
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          mongo mongo/steedos --eval \"
+            rs.initiate({
+              _id: 'rs0',
+              version: 1,
+              members: [ { _id: 0, host: 'mongo:27017' } ]})\" &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    depends_on:
+      - mongo
+```
+
+
+### 选择 steedos 版本
+
+yml 文件中运行的是 steedos-project-template 项目，可以参考[docker hub](https://hub.docker.com/r/steedos/steedos-project-template/tags?page=1&ordering=last_updated)选择合适的版本号，通常建议运行最新版的 steedos 。
+
+### 设定环境变量
+
+编辑 environment 中的 ROOT_URL 以匹配您的域名或 IP 地址，其他地址默认配置就行
+
+```yaml
+environment:
+      - STEEDOS_CLOUD_SPACE_ID=#在此填入私有部署记录中的魔方ID
+      - STEEDOS_CLOUD_API_KEY=#在此填入私有部署记录中的API Key
+      - PORT=3000
+      - ROOT_URL=#在此填入服务运行的正式网址，包含端口号3000。例如 http://192.168.0.200:3000
+```
+
+请先 [开通华炎魔方云服务](/docs/deploy/deploy-cloud) 然后 [激活华炎魔方](/docs/deploy/deploy-activate)，环境变量`STEEDOS_CLOUD_SPACE_ID`和`STEEDOS_CLOUD_API_KEY`的值就是其中新建的私有部署记录中的”魔方ID”和”ApiKey”。
+
+### 启动服务
+
+使用 docker 启动服务
+
+```yaml
+docker-compose up -d
+```
+
+
+查看服务状态
+
+```yaml
+docker ps
+```
+
+
+停止服务
+
+```yaml
+docker-compose stop
+```
+
+
+停止并删除服务
+
+```yaml
+docker-compose down
+```
+
+
+## 激活华炎魔方
+
+华炎魔方私有部署版完全免费，可以参考以下教程为私有部署的华炎魔方配置华炎云账户，通过华炎云激活后，可解锁所有功能限制，并支持从应用市场下载和安装软件包，或是开发、发布自己的软件包。
+
+请注意，激活过程中会自动为本地华炎魔方项目创建管理员账户，管理员用户名为手机号，初始密码为华炎云管理控制台中配置的默认密码。
+
+[如何激活华炎魔方 >](/docs/deploy/deploy-activate)
+
+## 应用商城
+
+在购买并开通华炎云服务后，您的华炎魔方默认只包含一个叫“办公”的应用。在华炎魔方的应用商城，则提供了更多的企业应用，包括众多合作伙伴发布的各类应用。您可以选择购买并开通这些应用。
+
+
+点这里进入[华炎魔方应用商城](https://www.steedos.cn/collections/steedos-packages)。
+
+### 购买应用
+
+* 浏览并选择应用
+* 点击购买
+* 在提交订单后的二维码页面，使用手机微信付款。
+* 您可以继续选择购买其他的应用。
+
+### 安装应用
+
+选购好所有的应用后，可以一键开通所有的应用。
+
+
+* 登录进入您私有部署的华炎魔方，设置 - 软件包。
+* 点击“安装已购买应用”，系统开始安装所有的已购买、待安装应用。
+* 系统会在服务端自动安装已购买的软件包。
+* 安装完成，会逐一启用各应用。应用全部启用后，可以看到应用的状态已发生变化。
+* 进入应用程序启动器，就可以看到已成功部署的应用，点击即可使用应用。
+* 刷新浏览器，可以查看应用
+
+
+## 常见问题解答
+
+### 如何升级版本？
+
+华炎魔方后台会定期更新升级版本，对于docker部署的服务，修改本地的docker-compose.yml文件，升级版本号
+
+```yaml
+steedos:
+    image: steedos/steedos-project-template:2.1.90 # 修改版本号到最新版
+```
+
+修改后，执行docker-compose down，再执行docker-compose up -d启用服务。
+
+### 本地docker部署好后，登录的用户名密码是什么？
+
+需要先激活华炎魔方，激活时新建华炎魔方会要求设置初始密码，成功激活后，本地华炎魔方项目就自动创建好了管理员账户，管理员用户名为手机号，初始密码为华炎云管理控制台中配置的默认密码。
+
+### 激活过华炎魔方后是否可以断网运行？
+
+只有华炎魔方的安装和激活过程要求连网，后续可以断网运行，不过付费软件包到期后需要重新续费激活。
+
+### 如何配置s3文件存储服务？
+
+配置附件存储的相关参数，附件可以保存在本地，也可以保存在阿里云或AWS S3服务中。
+
+```yaml
+public:
+  cfs:
+    store: "local"
+    local: 
+      folder: "./storage"
+cfs:
+  aliyun:
+    region:
+    internal:
+    bucket:
+    folder:
+    accessKeyId:
+    secretAccessKey:
+aws:
+  endpoint:
+  bucket:
+  accessKeyId:
+  secretAccessKey:
+  s3ForcePathStyle:
+  signatureVersion:
+```
+
+* `public.cfs.store`: 配置附件存储在什么地方，目前支持三个选项，`local`表示存储在本地，`OSS`表示存到阿里云，`S3`表示存到AWS​，默认值为`local`。
+* `public.cfs.local.folder`: 当配置附件存在本地时，需要配置文件夹路径。
+* `cfs.aliyun`: 当配置附件存在阿里云时，需要购买阿里云服务并配置相关参数。
+* `cfs.aws`: 当配置附件存在AWS时，需要购买AWS云服务并配置相关参数。
+
+
+### 如何配置 mongodb 数据库验证？
+
+docker-compose中默认是以非账户验证的方式起的mongo数据库，当然这是一种不安全的服务模式，添加账户验证需要修改配置文件
+
+运行docker ps查看mongo服务的containerId
+
+```yaml
+docker ps
+```
+
+
+连接mongo服务
+
+```yaml
+# 假设containerID为"83981540efb4"
+docker exec -it 83981540efb4 bash
+mongo
+```
+
+
+创建管理员用户和普通用户
+
+```yaml
+use admin;
+db.createUser({user: "adminUsername", pwd: "adminPassword", roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] } );
+use steedos;
+db.createUser({user: "userUsername", pwd: "userPassword", roles: [ { role: "readWrite", db: "yourdbname" }, { role: "read", db: "local"} ] } );
+```
+
+
+查看已创建的用户
+
+```yaml
+use admin;
+db.system.users.find().pretty();
+```
+
+
+数据库用户创建好后，需要修改docker-compose.yml文件
+
+```yaml
+steedos:
+    image: steedos/steedos-project-template:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./docker-volumes/steedos/storage:/app/storage"
+    environment:
+      - PORT=3000
+      - ROOT_URL=http://localhost:3000
+      - MONGO_URL=mongodb://userUsername:userPassword@mongo:27017/steedos?replicaSet=rs0 #添加普通用户和密码
+      - MONGO_OPLOG_URL=mongodb://userUsername:userPassword@mongo:27017/local?replicaSet=rs0&authSource=steedos #添加普通用户和密码
+      - STEEDOS_CFS_STORE=local
+...
+
+  mongo:
+    image: mongo:4.2
+    restart: always
+    volumes:
+      - "./docker-volumes/mongo/data/db:/data/db"
+    command: mongod --auth --oplogSize 128 --profile=1 --slowms=500 --replSet rs0 --bind_ip_all #添加 --auth
+    ports:
+      - "27018:27017"
+```
+
+
+删掉服务并重启
+
+```yaml
+docker-compose down
+docker-compose up -d
+```
+
+### 如何持久化软件包？
+
+首先需要将template项目的初始软件包代码下载到本地服务器上，访问 https://github.com/steedos/steedos-project-template
+
+拷贝 .steedos 文件夹到本地服务器，例如拷贝到 ./docker-volumes/steedos 中，修改docker-compose.yml，放开注释
+
+```yaml
+...
+volumes:
+  - "./docker-volumes/steedos/storage:/app/storage"
+  - "./docker-volumes/steedos/.steedos:/app/.steedos" # 映射软件包路径到本地
+environment:
+...
+```
+
+删掉服务并重启
+
+```yaml
+docker-compose down
+docker-compose up -d
+```
