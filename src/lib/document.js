@@ -61,7 +61,7 @@ export async function getDocuments(){
   `
   const result = await fetchGraphql(query);
 
-  let documents = null;
+  let documents = [];
 
   if(result.data && result.data.documents && result.data.documents.length > 0){
       documents = result.data.documents;
@@ -125,7 +125,7 @@ export async function getCollections(siteId){
   `
   const result = await fetchGraphql(query);
 
-  let collections = null;
+  let collections = [];
 
   if(result.data && result.data.document_collections){
     collections = result.data.document_collections;
