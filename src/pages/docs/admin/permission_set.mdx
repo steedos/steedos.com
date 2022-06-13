@@ -547,7 +547,7 @@ const userSession = await auth.getSessionByUserId(userId);
 ```javascript
 [["tag", "contains", ["start","end"]]] 等效于 [ [ "tag", "contains", "start" ], "or", [ "tag", "contains", "end" ] ]
 ```
-
+<!--
 ### “非”(not)操作
 
 可以在当前筛选条件的基础上取反，例如：
@@ -555,7 +555,7 @@ const userSession = await auth.getSessionByUserId(userId);
 ```javascript
 ["not", ["value", "=", 3]]
 ```
-
+-->
 ### “与(and)”、“或(or)”操作
 
 多个过滤器可以通过“与(and)”、“或(or)”操作进行组合，例如：
