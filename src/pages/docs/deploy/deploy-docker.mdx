@@ -22,76 +22,16 @@ description: 我们推荐使用 Docker 运行华炎魔方，生产环境推荐�
 
 ### 创建文件 docker-compose.yml
 
-参考以下内容，创建 docker-compose.yml。其中包含：
+下载 docker-compose.yml 模版文件。
+
+- [从 Github 下载](https://raw.githubusercontent.com/steedos/steedos-project-template/2.2/docker-compose.yml)
+- [从 Gitlab 下载](https://gitlab.steedos.cn/steedos/steedos-project-template/-/raw/2.2/docker-compose.yml)
+
+其中包含以下服务
 
 * steedos 服务
 * redis 服务
 * mongodb 服务 以及 mongodb 集群初始化脚本
-
-
-```yaml
-version: "3"
-
-services:
-  steedos:
-    image: steedos/steedos-project-template:latest
-    restart: always
-    ports:
-      - "3000:3000"
-    volumes:
-      - "./docker-volumes/steedos/storage:/app/storage"
-      # - "./docker-volumes/steedos/.steedos:/app/.steedos" 如需持久化软件包，放开注释
-    environment:
-      - STEEDOS_CLOUD_SPACE_ID=#在此填入私有部署记录中的魔方ID
-      - STEEDOS_CLOUD_API_KEY=#在此填入私有部署记录中的API Key
-      - ROOT_URL=#在此填入服务运行的正式网址，包含端口号3000。例如 http://192.168.0.200:3000
-      - MONGO_URL=mongodb://mongo:27017/steedos
-      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
-      - STEEDOS_CFS_STORE=local
-      - STEEDOS_STORAGE_DIR=/app/storage
-      - TRANSPORTER=redis://redis:6379
-      - CACHER=redis://redis/2
-    depends_on:
-      - mongo
-      - redis
-  
-  redis:
-    image: redis:6.2.4
-    restart: always
-    volumes:
-      - "./docker-volumes/redis/data:/data"
-    command: ["/bin/sh","-c", "redis-server --save \"\" --appendonly no --client-output-buffer-limit replica 0 0 0 --client-output-buffer-limit pubsub 0 0 0 --client-output-buffer-limit slave 0 0 0"]
-    ports:
-      - "6389:6379"
-
-  mongo:
-    image: ecr.aws.steedos.cn/dockerhub/mongo:4.2
-    restart: always
-    volumes:
-      - "./docker-volumes/mongo/data/db:/data/db"
-    command: mongod --oplogSize 128 --profile=1 --slowms=500 --replSet rs0 --bind_ip_all
-    ports:
-      - "27018:27017"
-
-  # this container's job is just run the command to initialize the replica set.
-  # it will run the command and remove himself (it will not stay running)
-  mongo-init-replica:
-    image: mongo:4.2
-    command: >
-      bash -c
-        "for i in `seq 1 30`; do
-          mongo mongo/steedos --eval \"
-            rs.initiate({
-              _id: 'rs0',
-              version: 1,
-              members: [ { _id: 0, host: 'mongo:27017' } ]})\" &&
-          s=$$? && break || s=$$?;
-          echo \"Tried $$i times. Waiting 5 secs...\";
-          sleep 5;
-        done; (exit $$s)"
-    depends_on:
-      - mongo
-```
 
 
 ### 选择 steedos 版本
