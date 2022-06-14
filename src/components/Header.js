@@ -380,7 +380,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
 
                     <Menu as="div" className="relative inline-block text-left">
                       <div>
-                        <Menu.Button className="inline-flex justify-center text-gray-700 hover:text-gray-800 w-full px-4 py-2 text-sm font-medium rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                        <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                         {/* {userInfo.name && (userInfo.name)} */}
                         我的账户
                           <ChevronDownIcon
@@ -413,7 +413,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                             </Menu.Item>)} */}
                             {!userInfo.name && (
                             <Menu.Item>
-                              <a href="#" onClick={goSignup} className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                              <a href="#" onClick={goSignup} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                 <UserAddIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
@@ -424,7 +424,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
 
                             {!userInfo.name && (
                             <Menu.Item>
-                              <a href="#" onClick={goLogin} className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                              <a href="#" onClick={goLogin} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                 <ShoppingBagIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
@@ -434,7 +434,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                             </Menu.Item>)}
 
                             <Menu.Item>
-                              <a href="https://console.steedos.cn" target="_blank" className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                              <a href="https://console.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                 <ViewGridIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
@@ -444,7 +444,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                             </Menu.Item>
 
                             <Menu.Item>
-                              <a href="https://gitlab.steedos.cn" target="_blank" className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                              <a href="https://gitlab.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                 <ViewGridIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
@@ -457,7 +457,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                             <Menu.Item>
                               <button
                                 onClick={goLogout}
-                                className={`text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                                className={`font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                               >
                                 <LogoutIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
