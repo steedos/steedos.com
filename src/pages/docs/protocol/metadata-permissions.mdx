@@ -209,9 +209,9 @@ field_permissions:
 
 ```yaml
 name: test
-entry_criteria: '{{$user.roles.indexOf(‘salesman‘) > -1}}'
+entry_criteria: '{{$user.roles.indexOf("salesman") > -1}}'
 object_name: contracts__c
-record_filter: '{{[[“profile__c“, “=“, “customer“], “or“, [“owner“, “=“, $user.userId]]}}'
+record_filter: '{{[["profile__c", "=", "customer"], "or", ["owner", "=", $user.userId]]}}'
 ```
 
 | 属性名 | 属性类型 | 属性含义 |
@@ -232,9 +232,9 @@ record_filter: '{{[[“profile__c“, “=“, “customer“], “or“, [“ow
 ```yaml
 name: test
 active: true
-entry_criteria: '{{$user.roles.indexOf(‘salesman‘) > -1}}'
+entry_criteria: '{{$user.roles.indexOf("salesman") > -1}}'
 object_name: contracts__c
-record_filter: '{{[[“company_id“, “=“, $user.company_id],[“profile__c“, “=“, “customer“]]}}'
+record_filter: '{{[["company_id", "=", $user.company_id],["profile__c", "=", "customer"]]}}'
 ```
 
 | 属性名 | 属性类型 | 属性含义 |
