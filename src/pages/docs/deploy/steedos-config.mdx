@@ -13,6 +13,7 @@ ROOT_URL=http://localhost:5000
 TRANSPORTER=redis://127.0.0.1:6379
 CACHER=redis://127.0.0.1:6379/1
 MONGO_URL=mongodb://127.0.0.1:27017/steedos
+MONGO_OPLOG_URL=mongodb://127.0.0.1:27017/local
 
 [metadata]
 METADATA_SERVER=http://localhost:5000
@@ -28,6 +29,7 @@ STEEDOS_CLOUD_API_KEY=#会自动填充为初始界面中输入的环境变量值
 * TRANSPORTER：Redis缓存地址
 * CACHER：Redis缓存频道
 * MONGO_URL：MongoDB数据库地址
+* MONGO_OPLOG_URL：MongoDB数据库操作日志地址
 * METADATA_SERVER：元数据同步服务地址
 * METADATA_APIKEY：元数据同步时用于验证身份的APIKEY
 * STEEDOS_CLOUD_SPACE_ID：华炎魔方ID
