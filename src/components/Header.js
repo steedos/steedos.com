@@ -6,7 +6,7 @@ import Router from 'next/router'
 import { Logo } from '@/components/Logo'
 import { useEffect, Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition, Menu } from '@headlessui/react'
-import { MenuIcon, SearchIcon, ChevronDownIcon, XIcon, LogoutIcon, ShoppingBagIcon } from '@heroicons/react/outline'
+import { MenuIcon, SearchIcon, ChevronDownIcon, XIcon, LogoutIcon, ShoppingBagIcon, ViewGridIcon, UserAddIcon } from '@heroicons/react/outline'
 import { StarIcon } from '@heroicons/react/solid'
 import { ThemeSelect, ThemeToggle } from './ThemeToggle'
 import { headerNav } from '@/navs/header';
@@ -87,7 +87,7 @@ export function NavPopover({ display = 'md:hidden', className, ...props }) {
                     key={category.name}
                     className={({ selected }) =>
                       classNames(
-                        selected ? 'text-sky-600 border-sky-600' : 'text-gray-900 border-transparent',
+                        selected ? 'text-sky-600 border-sky-600' : 'border-transparent',
                         'flex-1 whitespace-nowrap py-4 px-1 border-b-2 text-base font-medium focus:outline-none '
                       )
                     }
@@ -106,7 +106,7 @@ export function NavPopover({ display = 'md:hidden', className, ...props }) {
                         <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
                           <img src={item.imageSrc} alt={item.imageAlt} className="object-center object-cover" />
                         </div>
-                        <a href={item.href} className="mt-6 block font-medium text-gray-900">
+                        <a href={item.href} className="mt-6 block font-medium">
                           <span className="absolute z-10 inset-0" aria-hidden="true" />
                           {item.name}
                         </a>
@@ -118,7 +118,7 @@ export function NavPopover({ display = 'md:hidden', className, ...props }) {
                   </div>
                   {category.sections.map((section) => (
                     <div key={section.name}>
-                      <p id={`${category.id}-${section.id}-heading-mobile`} className="font-medium text-gray-900">
+                      <p id={`${category.id}-${section.id}-heading-mobile`} className="font-medium text-sm">
                         <a href={section.href}>{section.name}</a>
                       </p>
                       <ul
@@ -128,7 +128,7 @@ export function NavPopover({ display = 'md:hidden', className, ...props }) {
                       >
                         {section.items.map((item) => (
                           <li key={item.name} className="flow-root">
-                            <a href={item.href} className="-m-2 p-2 block text-gray-500">
+                            <a href={item.href} className="-m-2 p-2 block">
                               {item.name}
                             </a>
                           </li>
@@ -378,16 +378,11 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                 <div className="relative hidden lg:flex items-center ml-auto">
                   <div className="text-slate-700 dark:text-slate-200">
 
-                    {!userInfo.name && <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                      <a href="#" className="hover:text-sky-500 dark:hover:text-sky-400" onClick={goLogin}>
-                        登录
-                      </a>
-                    </div>}
-
-                    {userInfo.name && <Menu as="div" className="relative inline-block text-left">
+                    <Menu as="div" className="relative inline-block text-left">
                       <div>
                         <Menu.Button className="inline-flex justify-center text-gray-700 hover:text-gray-800 w-full px-4 py-2 text-sm font-medium rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                          {userInfo.name}
+                        {/* {userInfo.name && (userInfo.name)} */}
+                        我的账户
                           <ChevronDownIcon
                             className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
                             aria-hidden="true"
@@ -405,38 +400,80 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                       >
                         <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <div className="px-1 py-1">
+                            {/* Cart */}
+                            {/* {userInfo.name && (
+                            <Menu.Item>
+                              <a href="/store/shopping-cart" className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                <ShoppingBagIcon
+                                  className="w-5 h-5 mr-2 text-sky-400"
+                                  aria-hidden="true"
+                                />
+                                购物车 ({cart?.lines?.length})
+                              </a>
+                            </Menu.Item>)} */}
+                            {!userInfo.name && (
+                            <Menu.Item>
+                              <a href="#" onClick={goSignup} className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                <UserAddIcon
+                                  className="w-5 h-5 mr-2 text-sky-400"
+                                  aria-hidden="true"
+                                />
+                              免费注册账户
+                              </a>
+                            </Menu.Item>)}
+
+                            {!userInfo.name && (
+                            <Menu.Item>
+                              <a href="#" onClick={goLogin} className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                <ShoppingBagIcon
+                                  className="w-5 h-5 mr-2 text-sky-400"
+                                  aria-hidden="true"
+                                />
+                              登录
+                              </a>
+                            </Menu.Item>)}
+
+                            <Menu.Item>
+                              <a href="https://console.steedos.cn" target="_blank" className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                <ViewGridIcon
+                                  className="w-5 h-5 mr-2 text-sky-400"
+                                  aria-hidden="true"
+                                />
+                              管理控制台
+                              </a>
+                            </Menu.Item>
+
+                            <Menu.Item>
+                              <a href="https://gitlab.steedos.cn" target="_blank" className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                <ViewGridIcon
+                                  className="w-5 h-5 mr-2 text-sky-400"
+                                  aria-hidden="true"
+                                />
+                              Gitlab Devops 平台
+                              </a>
+                            </Menu.Item>
+
+                            {userInfo.name && (
                             <Menu.Item>
                               <button
                                 onClick={goLogout}
                                 className={`text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                               >
                                 <LogoutIcon
-                                  className="w-5 h-5 mr-2 text-violet-400"
+                                  className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
                                 />
                                 注销
                               </button>
                             </Menu.Item>
+                            )}
                           </div>
                         </Menu.Items>
                       </Transition>
                     </Menu>
-                    }
-                    {/* Cart */}
-                    {userInfo.name && <div className="ml-4 flow-root lg:ml-6">
-                      <a href="/store/shopping-cart" className="group -m-2 p-2 flex items-center">
-                        <ShoppingBagIcon
-                          className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
-                          aria-hidden="true"
-                        />
-                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart?.lines?.length}</span>
-                        <span className="sr-only">items in cart, view bag</span>
-                      </a>
-                    </div>
-                    }
 
                   </div>
-                  <div className="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-800">
+                  <div className="flex items-center border-l border-slate-200 ml-3 pl-6 dark:border-slate-800">
                     <ThemeToggle panelClassName="mt-8" />
                     <a
                       href="https://github.com/steedos/steedos-platform"
