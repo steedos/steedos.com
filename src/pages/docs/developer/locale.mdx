@@ -13,6 +13,27 @@ description:
 ## 对象国际化
 对象和对象字段的元数据中是可以定义相关显示名称的，比如华炎魔方有一个名为 `company` 的对象，通过字义其 `label` 属性可以配置该对象的显示名称，这个对象在中文环境下显示的是“分部”，英文显示的是“Company”，以下操作过程可以把该对象对应的翻译改为“分公司”和”Sub Corporation“，同时把该对象上名为”分部代码“的字段改为”分公司代码“。
 
+<!--
+### 指定继承对象
+
+如果是要修改华炎魔方内置的标准对象或其他软件包中的对象翻译的话，需要先指定继承对象，否则为该对象添加的国际化翻译内容不会生效。
+
+这里我们要修改的是名为 `company` 的内置对象的国际化翻译内容，所以需要先按以下方式指定继承该对象。
+
+
+```yml
+// locale/main/default/objects/company/company.object.yml
+name: company
+extend: company
+```
+
+添加 `extend: company` 属性意味着此对象继承了 `company` 对象。
+-->
+
+### 同步为代码
+
+如果是为可视化界面上新建的对象添加国际化翻译内容，推荐先把该对象的元数据同步为代码以实现源代码版本管理，详情请参阅教程 [同步元数据](/docs/developer/sync-metadata)，不过这并不是必须的，因为未同步为代码的对象也支持按以下操作步骤实现对象国际化。
+
 ### 添加翻译文件
 
 在软件包的default文件夹下新建一个objectTranslations文件夹，其下新建 `company.en` 和 `company.zh-CN` 两个同级文件夹对应的中英两种语言的翻译内容，最后各自新建中英文翻译的yml配置文件。 
@@ -20,21 +41,22 @@ description:
 其目录结构如下：
 
 ```bash
-|-- default
-   |-- objectTranslations
-       |-- company.en
-           |-- company.en.objectTranslation.yml
-       |-- company.zh-CN
-           |-- company.zh-CN.objectTranslation.yml
+locale
+├── main / default
+└───├── objectTranslations
+    └───├── company.en
+        |   └── company.en.objectTranslation.yml
+        └── company.zh-CN
+            └── company.zh-CN.objectTranslation.yml
 ```
 
 ### 修改翻译内容
 
 在刚新建的yml文件中添加翻译内容，以下两个文件内容实现了重写 `company` 对象及其字段的中文和英文显示名称
 
-locale/main/default/objectTranslations/company.zh-CN/company.zh-CN.objectTranslation.yml
 
 ```yaml
+// locale/main/default/objectTranslations/company.zh-CN/company.zh-CN.objectTranslation.yml
 name: company
 label: 分公司
 fields:
@@ -42,9 +64,9 @@ fields:
     label: '分公司代码'
 ```
 
-locale/main/default/objectTranslations/company.zh-CN/company.en.objectTranslation.yml
-
 ```yaml
+locale/main/default/objectTranslations/company.en/company.en.objectTranslation.yml
+// 
 name: company
 label: Sub Corporation
 fields:
@@ -52,37 +74,221 @@ fields:
     label: 'Sub Corporation Code'
 ```
 
-<!--
 ## 字段国际化
+
+字段作为对象的一部分，其国际化翻译与对象是在一起的，请参考上述“对象国际化”的步骤来实现字段国际化，先添加翻译文件再修改翻译内容。
+
+不过字段上可以配置“分组”，我们如果需要对分组进行国际化翻译，也是修改对象翻译文件，以下翻译内容描述了如何修改华炎魔方内置对象“公司”下名为“华炎云”的字段分组的中文显示名称。
+
+
+```yaml
+// locale/main/default/objectTranslations/spaces.zh-CN/spaces.zh-CN.objectTranslation.yml
+name: spaces
+label: 总公司
+fields:
+  api_key: 
+    label: '密钥'
+groups:
+  Developer: 华炎魔方
+```
+
+该翻译内容把“公司”对象的中文显示名称改为了“总公司”，把字段`api_key`的中文显示名称改为了“密钥”，并且该字段所属的分组显示名称从“华炎云”改为了“华炎魔方”。
+
+可视化界面上新建的字段国际化方式与上面讲的内置对象是一样的，只要在对象翻译文件上加上相关字段或字段分组并设置其翻译文本即可。
 
 ## 列表视图国际化
 
+与字段一样，列表视图也是对象的组成部分之一，其国际化翻译与对象是在一起的，请参考上述“对象国际化”的步骤来实现列表视图国际化，先添加翻译文件再修改翻译内容。
+
+以下翻译内容描述了如何定制可视化界面上新建的名为“项目任务”的自定义对象的“所有”视图的中文和英文名称。
+
+
+```yaml
+// locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
+name: project_tasks__c
+label: 项目任务
+listviews: 
+  all:
+    label: 所有任务
+```
+
+
+```yaml
+// locale/main/default/objectTranslations/project_tasks__c.en/project_tasks__c.en.objectTranslation.yml
+name: project_tasks__c
+label: Project Tasks
+listviews: 
+  all:
+    label: All Tasks
+```
+
+<alert type="info">
+请注意国际化列表视图时在翻译文件中使用的是`listviews`这个单词作为key，它与对象定义时使用的`list_views`相比要少写一个下划线。
+</alert>
+
 ## 操作按钮国际化
+
+与字段和列表视图一样，操作按钮也是对象的组成部分之一，其国际化翻译与对象是在一起的，请参考上述“对象国际化”的步骤来实现列表视图国际化，先添加翻译文件再修改翻译内容。
+
+以下翻译内容描述了如何定制可视化界面上新建的名为“项目任务”的自定义对象的“打印”按钮的中文和英文名称。
+
+
+```yaml
+// locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
+name: project_tasks__c
+label: 项目任务
+actions:
+  print:
+    label: 打印当天任务
+```
+
+```yaml
+// locale/main/default/objectTranslations/project_tasks__c.en/project_tasks__c.en.objectTranslation.yml
+name: project_tasks__c
+label: Project Tasks
+actions:
+  print:
+    label: Print Tasks for today
+```
+
+华炎魔方内置了很多标准操作按钮，比如新建、编辑、删除等，这些标准按钮的国际化方法与自定义按钮是一样的，比如以下翻译内容可以修改上面的“项目任务”对象的“新建”按钮的中文名称为“创建项目任务”。
+
+```yaml
+// locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
+name: project_tasks__c
+label: 项目任务
+actions:
+  standard_new:
+    label: 创建项目任务
+```
+
+内置标准操作按钮清单请参考源码：
+
+- Git仓库源码：[base.zh-CN.objectTranslation.yml](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml#L137)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml`
+
+<alert type="info">
+请注意国际化操作按钮时在翻译文件中使用的是`actions`这个单词作为key，而对象中定义按钮元数据时使用的是`buttons`。
+</alert>
+
+## 自定义国际化变量
+
+自定义国际化变量指的是定义一个全局的国际化Key，并为该Key编写不同语言的国际化翻译内容。
+
+### 添加自定义变量
+
+要添加自定义翻译变量，需要先在软件包中添加对应的翻译文件。
+
+```bash
+locale
+├── main / default
+└───├── translations
+    ├── └── en.translation.yml
+    └── └── zh-CN.translation.yml
+```
+
+以下翻译内容为中文和英文资源分别添加了名为`base_error_start_end_date`的自定义翻译变量。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  base_error_start_end_date: '结束时间不能早于开始时间'
+```
+
+```yml
+// locale/main/default/translations/en.translation.yml
+CustomLabels:
+  base_error_start_end_date: 'The end time cannot be earlier than the start time'
+```
+
+添加自定义国际化变量前，应该先确认下变量名称是否已经被 [内置自定义变量](#内置自定义变量) 或其他软件包占用，一般来说我们启动项目后在浏览器控制台中调用`t`函数即可判断当前key是否已经被占用，只要返回的内容不是key本身就说明该变量已经被占用。
+
+```js
+t('base_error_start_end_date') //返回“开始时间必须小于结束时间”
+```
+
+比如，在浏览器控制台输入以上代码并运行会发现输出的内容为“开始时间必须小于结束时间”，这说明该变量已经被占用了，所以上面不应该使用变量`base_error_start_end_date`,因为它已经被占用了。
+
+我们尝试把该变量前面的`base`去掉，可以看到它并没有被占用。
+
+```js
+t('error_start_end_date') //返回error_start_end_date
+```
+
+<alert type="info">
+如果强行在软件包中添加已经被占用的自定义国际化变量的话，原来引用该变量的地方国际化内容就会被同时修改掉。
+</alert>
+
+
+### 使用自定义变量
+
+在添加好自定义翻译变量后，我们就可以在程序源码中使用它们了，以下示例演示了如何在触发器中抛出错误消息时使用上面新添加的自定义翻译变量。
+
+```js
+// locale/main/default/triggers/project_tasks__c.trigger.js
+const validateStartEndDate = function (start, end) {
+    if(start && end){
+        const startTime = start.getTime ? start.getTime() : (new Date(start)).getTime();
+        const endTime = end.getTime ? end.getTime() : (new Date(end)).getTime();
+        if(endTime - startTime < 1000){
+            throw new Error("base_error_start_end_date");
+        }
+    }
+}
+
+module.exports = {
+    listenTo: 'project_tasks__c',
+    beforeInsert: async function () {
+        const { doc, object_name} = this;
+        validateStartEndDate(doc['start'], doc['end']);
+    },
+    beforeUpdate: async function () {
+        const { doc, object_name} = this;
+        validateStartEndDate(doc['start'], doc['end']);
+    }
+}
+```
+
+从上述示例代码中可以看到，在触发器中只要在抛出错误信息时直接引用自定义翻译变量的key，就可以自动实现错误消息国际化了。
+
+### 内置自定义变量
+
+内置自定义变量清单请参考源码：
+
+- Git仓库源码：[base.zh-CN.objectTranslation.yml](https://github.com/steedos/steedos-platform/tree/master/packages/i18n/translations)
+- 本地NPM包源码： `node_modules/@steedos/i18n/translations`
+
+### 修改自定义变量
+
+我们只要在软件包中添加内置自定义国际化变量同名变量就可以很方便的实现修改这些内置变量的目的。
+
+以下示例代码会把点击九宫格弹出的应用程序窗口中的标题从”应用程序启动器“ 改为“所有应用”。
+
+```
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  creator_app_launcher: 所有应用
+```
+
+以下示例代码会把审批王应用中填写表单时右上角的“帮助”链接地址修改成新的地址。
+
+```yaml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  # 审批=>填写表单 中右上角的“帮助”链接
+  new_help: 'https://www.xxx.cn/docs'
+```
 
 ## 系统消息国际化
 
+要实现系统消息的国际化，请参阅上述 [自定义国际化变量 - 添加自定义变量](#添加自定义变量) 小节添加一个用于提示消息的变量，并为其定义各个语言下的翻译内容，然后参阅上述 [自定义国际化变量 - 使用自定义变量](#使用自定义变量) 小节使用添加好的变量作为提示消息。
+
+如果要修改华炎魔方内置的消息内容，请从上述 [自定义国际化变量 - 内置自定义变量](#内置自定义变量) 小节中提到的源码中找到对应的内置变量名称，然后在软件包中添加同名国际化变量，并定义其翻译内容即可。
+
+<!--
 ## 应用国际化
 
 ## 设置应用菜单国际化
+
  -->
 
-## 全局变量国际化
-
-全局变量的原始翻译文件可以在 node_modules/@steedos/i18n/translations 中查看。
-
-1、添加全局变量翻译文件。 在指定软件包的default文件夹下新建一个translations文件夹，其下新建 en.translation.yml 和 zh-CN.translation.yml 两个中英文翻译yml文件。目录如下：
-
-```yaml
-|-- default
-   |-- translations
-       |-- en.translation.yml
-       |-- zh-CN.translation.yml
-```
-
-示例：修改审批=>填写表单 中右上角的“帮助”链接； 文件路径：app-oem/main/default/translations/zh-CN.translation.yml
-
-```yaml
-CustomLabels:
-  # 审批=>填写表单 中右上角的“帮助”链接
-  new_help: 'https://www.steedos.cn/docs'
-```
