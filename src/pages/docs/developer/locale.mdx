@@ -118,12 +118,22 @@ actions:
     label: 修改
 ```
 
+### 内置对象翻译
+
+部分内置对象国际化翻译文件源码：
+
+- Git仓库源码：[standard-objects/objectTranslations](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations`
+
+要修改这些内置对象的国际化内容，按上面提到的操作步骤，先添加翻译文件，再修改翻译内容，只要为对象上同名国际化变量配置不同的翻译内容值，重启服务后即可看到修改后的效果。
+
 ## 字段国际化
 
 字段作为对象的一部分，其国际化翻译与对象是在一起的，请参考上述“对象国际化”的步骤来实现字段国际化，先添加翻译文件再修改翻译内容。
 
-不过字段上可以配置“分组”，我们如果需要对分组进行国际化翻译，也是修改对象翻译文件，以下翻译内容描述了如何修改华炎魔方内置对象“公司”下名为“华炎云”的字段分组的中文显示名称。
+### 字段分组
 
+不过字段上可以配置“分组”，我们如果需要对分组进行国际化翻译，也是修改对象翻译文件，以下翻译内容描述了如何修改华炎魔方内置对象“公司”下名为“华炎云”的字段分组的中文显示名称。
 
 ```yaml
 // locale/main/default/objectTranslations/spaces.zh-CN/spaces.zh-CN.objectTranslation.yml
@@ -139,6 +149,42 @@ groups:
 该翻译内容把“公司”对象的中文显示名称改为了“总公司”，把字段`api_key`的中文显示名称改为了“密钥”，并且该字段所属的分组显示名称从“华炎云”改为了“华炎魔方”。
 
 可视化界面上新建的字段国际化方式与上面讲的内置对象是一样的，只要在对象翻译文件上加上相关字段或字段分组并设置其翻译文本即可。
+
+### 下拉选项
+
+选择框类型的下拉选项也是可以定制国际化翻译内容的，以下国际化翻译内容实现了给名为“项目任务”的对象下的“优先级”字段配置中文环境下的下拉选项显示名称。
+
+```yml
+// locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
+name: project_tasks__c
+label: 项目任务
+fields:
+  priority__c:
+    label: 优先级
+    options:
+      - label: 高
+        value: high
+      - label: 中
+        value: normal
+      - label: 低
+        value: low
+```
+
+### 其他
+
+字段上的其他属性比如“提示文本”和“描述”也是可以配置国际化内容的，以下示例描述了如何在国际化文件中配置它们。
+
+```yml
+// locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
+name: project_tasks__c
+label: 项目任务
+fields:
+  priority__c:
+    label: 优先级
+    options: ...
+    help: 本周任务请选择“高”，下周任务请选择“中”，否则请选择“低”
+    description: 描述项目任务的紧急程度。
+```
 
 ## 列表视图国际化
 
