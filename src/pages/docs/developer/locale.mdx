@@ -50,6 +50,10 @@ locale
             └── company.zh-CN.objectTranslation.yml
 ```
 
+<alert type="info">
+请注意添加国际化文件时，请按需添加，需要中文就加中文翻译文件，需要英文就加英文翻译文件，不可以加了文件后文件内容却是空的，这样会造成服务端程序抛出异常错误消息。
+</alert>
+
 ### 修改翻译内容
 
 在刚新建的yml文件中添加翻译内容，以下两个文件内容实现了重写 `company` 对象及其字段的中文和英文显示名称
@@ -71,6 +75,47 @@ label: Sub Corporation
 fields:
   code: 
     label: 'Sub Corporation Code'
+```
+
+### Base对象翻译
+
+华炎魔方内置了Base对象，该对象用于配置所有对象的通用属性，其中包括所有对象的通用国际化，它表示可以给所有对象上的通用字段，标准操作按钮等设置默认的国际化内容，而不用每个对象上都去设置一次。
+
+内置的Base对象国际化内容请参考源码：
+
+- Git仓库源码：[base.zh-CN.objectTranslation.yml](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml`
+
+与给某个具体对象实现国际化操作方式一样，需要先为Base对象添加国际化翻译文件。
+
+```bash
+locale
+├── main / default
+└───├── objectTranslations
+    └───├── base.en
+        |   └── base.en.objectTranslation.yml
+        └── base.zh-CN
+            └── base.zh-CN.objectTranslation.yml
+```
+
+然后再设置对应的翻译内容来实现对Base对象的国际化，我们只要把上面提到的Base对象国际化源码中的同名国际化变量添加进去，并定义其翻译内容即可修改默认的国际化内容。
+
+以下翻译内容把中文环境下”分部“字段的显示名称改为了”单位“，并且修改了”新建“和”编辑“这两个标准操作按钮的显示名称，加上它们后，所有对象默认的相关国际化配置都会发生对应的变化，重启服务后就能看到效果。
+
+```yaml
+// locale/main/default/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml
+name: base
+label: base
+fields:
+  company_id: 
+    label: '单位'
+  company_ids: 
+    label: '所属单位'
+actions:
+  standard_new:
+    label: 创建
+  standard_edit:
+    label: 修改
 ```
 
 ## 字段国际化
@@ -163,7 +208,7 @@ actions:
 
 内置标准操作按钮清单请参考源码：
 
-- Git仓库源码：[base.zh-CN.objectTranslation.yml](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml#L137)
+- Git仓库源码：[base.zh-CN.objectTranslation.yml#L137](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml#L137)
 - 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml`
 
 <alert type="info">
