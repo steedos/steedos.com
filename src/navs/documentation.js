@@ -79,6 +79,7 @@ export const documentationNav = {
     developer['objectql'],
     developer['package'],
     developer['flow-trigger'],
+    developer['locale'],
     developer['deploy-gitpod'],
   ],
   '前端开发': [
