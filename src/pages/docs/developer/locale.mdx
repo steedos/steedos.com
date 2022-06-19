@@ -252,6 +252,8 @@ actions:
     label: 创建项目任务
 ```
 
+如果想修改所有对象的某个标准操作按钮的显示名称，请参阅上述 [Base对象翻译](#Base对象翻译) 小节。
+
 内置标准操作按钮清单请参考源码：
 
 - Git仓库源码：[base.zh-CN.objectTranslation.yml#L137](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml#L137)
@@ -316,7 +318,7 @@ t('error_start_end_date') //返回error_start_end_date
 
 #### 触发器中抛错信息
 
-以下示例演示了如何在触发器中抛出错误消息时使用上面新添加的自定义翻译变量。
+以下示例演示了如何在 [触发器](/docs/developer/trigger) 中抛出错误消息时使用上面新添加的自定义翻译变量。
 
 ```js
 // locale/main/default/triggers/project_tasks__c.trigger.js
@@ -345,12 +347,76 @@ module.exports = {
 
 从上述示例代码中可以看到，在触发器中只要在抛出错误信息时直接引用自定义翻译变量的key，就可以自动实现错误消息国际化了，系统会根据当前登录用户所设定的语言返回正确的国际化内容。
 
+<alert type="info">
+因为触发器返回的错误消息会在前端组件中执行国际化转换再显示给最终用户看，所以并不需要在触发器中手动执行服务端国际化函数。
+</alert>
+
 #### 前端脚本中显示变量内容
 
 我们在前端脚本中只要调用 `t` 函数即可得到当前登录用户所设定的语言对应的国际化内容，比如以下脚本会弹出错误消息，显示为前面我们定义的国际化内容。
 
 ```js
 toastr.error(t('base_error_start_end_date'));
+```
+
+#### 自定义API接口中消息
+
+以下示例演示了如何在 [自定义API接口](/docs/developer/router) 中返回业务消息时使用上面新添加的自定义翻译变量。
+
+```js
+// locale/main/default/routes/lbs_distance.router.js
+const express = require("express");
+const router = express.Router();
+const core = require('@steedos/core');
+
+router.get('/api/lbs_distance', core.requireAuthentication, async function (req, res) {
+    try {
+        let long1 = req.query.long1;
+        let lat1 = req.query.lat1;
+        let long2 = req.query.long2;
+        let lat2 = req.query.lat2;
+        if (!long1 || !lat1 || !long2 || !lat2) {
+            throw new Error("lbs_distance_error_params_required");
+        }
+        let result;
+        // 执行地图应用算法计算输出两个地点距离
+        res.status(200).send({ result, success: true });
+    } catch (error) {
+        console.error(error);
+        res.status(200).send({ success: false, error: error.message });
+    }
+});
+exports.default = router;
+```
+
+我们需要在国际化文件中定义变量 `lbs_distance_error_params_required`，以下是中文国际化文件中相关内容：
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  lbs_distance_error_params_required: '缺少经度或纬度参数！'
+```
+
+上述示例中请求`/api/lbs_distance`接口可以发现返回的错误信息并没有翻译为配置好的中文消息。
+
+我们需要在获取把接口返回消息时，在前端调用转换函数才能得到转换后的消息内容。
+
+以下是前端按钮部分示例代码：
+
+```js
+module.exports = {
+  lbs_distance: function (object_name, record_id) {
+    let result = Steedos.authRequest("/api/lbs_distance",{type: 'get', async: false});
+    if(!result.success){
+      toastr.error(t(result.error));
+    }
+    //...
+  },
+
+  disableVisible: function (object_name, record_id, record_permissions, record) {
+    return true;
+  }
+}
 ```
 
 ### 内置自定义变量
