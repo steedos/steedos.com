@@ -440,6 +440,17 @@ CustomLabels:
 
 如果要修改华炎魔方内置的消息内容，请从上述 [自定义国际化变量 - 内置自定义变量](#内置自定义变量) 小节中提到的源码中找到对应的内置变量名称，然后在软件包中添加同名国际化变量，并定义其翻译内容即可。
 
+比如以下翻译内容重新配置了中文环境下部分操作按钮相关的提示消息。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  space_users_method_disable_success: 已成功停用该用户。
+  space_users_method_disable_error: 停用用户失败，%s
+  space_users_method_enable_success: 已成功启用该用户。
+  space_users_method_enable_error: 启用用户失败，%s
+```
+
 ## 审批王
 
 [审批王](/products/workflow) 是一个华炎魔方为大家提供的开源工作流引擎，这是一个广泛应用于企业内部员工（决策层/管理层/执行层）及外部用户（客户/供应商/经销商）的审批应用，下面我们来看看怎么为它实现国际化。
@@ -533,7 +544,7 @@ CustomLabels:
 
 审批王应用中其他国际化相关内容都可以按上面 [内置自定义变量](#内置自定义变量) 小节提供的方法处理，只要找到对应的变量名称即可。
 
-比如以下翻译内容重新配置了部分操作按钮相关的提示消息。
+比如以下翻译内容重新配置了中文环境下部分操作按钮相关的提示消息。
 
 ```yml
 // locale/main/default/translations/zh-CN.translation.yml
