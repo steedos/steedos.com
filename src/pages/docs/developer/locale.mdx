@@ -415,14 +415,12 @@ CustomApplications:
 
 ## 设置应用菜单国际化
 
-设置应用是有左侧菜单的，这个菜单项的默认国际化内容请参考源码：
+后台设置应用是有左侧菜单的，这个菜单项的默认国际化内容请参考源码：
 
 - Git仓库源码：[standard-objects/translations/zh-CN.translation.yml](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/translations/zh-CN.translation.yml)
 - 本地NPM包源码： `node_modules/@steedos/standard-objects/translations/zh-CN.translation.yml`
 
-如果需要修改这个菜单的国际化内容
-
-可以参阅上述 [自定义国际化变量 - 添加自定义变量](#添加自定义变量) 小节添加对应到同名国际化变量，并定义其翻译内容即可。
+如果需要修改这个菜单的国际化内容，可以参阅上述 [自定义国际化变量 - 添加自定义变量](#添加自定义变量) 小节添加对应到同名国际化变量，并定义其翻译内容即可。
 
 以下翻译内容修改了中文环境下"设置"应用的名称和描述，并且把左侧菜单”权限集“改为了”权限组“，加上它们重启服务后就能看到效果。
 
@@ -441,3 +439,111 @@ CustomLabels:
 要实现系统消息的国际化，请参阅上述 [自定义国际化变量 - 添加自定义变量](#添加自定义变量) 小节添加一个用于提示消息的变量，并为其定义各个语言下的翻译内容，然后参阅上述 [自定义国际化变量 - 使用自定义变量](#使用自定义变量) 小节使用添加好的变量作为提示消息。
 
 如果要修改华炎魔方内置的消息内容，请从上述 [自定义国际化变量 - 内置自定义变量](#内置自定义变量) 小节中提到的源码中找到对应的内置变量名称，然后在软件包中添加同名国际化变量，并定义其翻译内容即可。
+
+## 审批王
+
+[审批王](/products/workflow) 是一个华炎魔方为大家提供的开源工作流引擎，这是一个广泛应用于企业内部员工（决策层/管理层/执行层）及外部用户（客户/供应商/经销商）的审批应用，下面我们来看看怎么为它实现国际化。
+
+### 应用
+
+上面 [应用国际化](#应用国际化) 小节描述了如何为一个应用配置国际化翻译，以下翻译内容能把审批王应用的名称从原来的“审批中心”改为“审批王”
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomApplications:
+  approve_workflow:
+    name: 审批王
+    description: 提供图形化的表单与流程设计界面，自定义企业业务审批流程。
+```
+
+### 对象
+
+审批王应用中主要涉及的对象是 `instances`，其默认的国际化内容请参考源码：
+
+- Git仓库源码：[instances.zh-CN.objectTranslation.yml](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations/instances.zh-CN/instances.zh-CN.objectTranslation.yml)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations/instances.zh-CN/instances.zh-CN.objectTranslation.yml`
+
+
+只要按上面 [对象国际化](#对象国际化) 小节所述，为该对象配置国际化翻译内容即可修改该对象的默认国际化效果。
+
+```yaml
+// locale/main/default/objectTranslations/instances.zh-CN/instances.zh-CN.objectTranslation.yml
+name: instances
+label: 审批文件
+```
+
+以上翻译内容会把中文环境下审批王应用中“审批”对象显示名称改为“审批文件”。
+
+### 设置应用菜单
+
+上面 [设置应用菜单国际化](#设置应用菜单国际化) 小节描述了如何为设置应用的左侧菜单配置国际化翻译，以下翻译内容能把菜单“角色”名称改为“审批角色”。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  menu_roles: 审批角色
+```
+
+审批王在后台设置应用的左侧菜单项的默认国际化内容请参考源码：
+
+- Git仓库源码：[standard-objects/translations/zh-CN.translation.yml](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/translations/zh-CN.translation.yml)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/translations/zh-CN.translation.yml`
+
+### 审批状态菜单
+
+我们可以在上面 [内置自定义变量](#内置自定义变量) 小节的参考源码中找到审批状态相关菜单的国际化内容，要修改它们，只要配置下相关翻译变量即可。
+
+以下翻译内容重新配置了相关菜单的显示名称，并修改了部分菜单显示名称。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  inbox: 待审批
+  outbox: 已审批
+  draft: 草稿
+  pending: 进行中
+  completed: 已完成
+  monitor: 监控箱
+  my_instances: 我的文件
+```
+
+### 按钮
+
+我们可以在上面 [内置自定义变量](#内置自定义变量) 小节的参考源码中找到审批王应用中操作按钮显示名称的国际化内容，要修改它们，只要配置下相关翻译变量即可。
+
+以下翻译内容重新配置了相关按钮的国际化内容，也修改了其中部分按钮的显示名称。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  standard_query: 搜索
+  New: 新建文件
+  Send: 发送
+  instance_submit: 提交
+  instance_save: 暂存
+  instance_delete: 删除
+  instance_cancel: 取消申请
+  instance_reassign: 转签核
+  instance_relocate: 重定位
+  instance_print: 打印
+  workflow_attach_upload: 上传附件
+```
+
+### 其它
+
+审批王应用中其他国际化相关内容都可以按上面 [内置自定义变量](#内置自定义变量) 小节提供的方法处理，只要找到对应的变量名称即可。
+
+比如以下翻译内容重新配置了部分操作按钮相关的提示消息。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  Saved successfully: 申请单已暂存.
+  Added successfully: 创建成功!
+  Deleted successfully: 删除成功!
+  Submitted successfully: 提交成功!
+  Canceled successfully: 取消申请成功!
+  Reassigned successfully: Reassigned successfully
+  Relocated successfully: 重定位成功!
+```
+
