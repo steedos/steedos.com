@@ -3,15 +3,39 @@ title: 国际化
 description: 
 ---
 
-华炎魔方是支持多语言的低代码平台，我们可以在软件包中通过编写翻译资源文件来覆盖系统默认的相关翻译内容从而实现国际化。
+华炎魔方是支持多语言的低代码平台，我们可以在软件包中通过编写国际化资源文件来覆盖系统默认的相关翻译内容从而实现国际化。
 
-我们推荐大家把所有国际化的相关内容专门做成一个软件包，这样方便后续按模块进行维护、升级和部署。
+我们鼓励大家在华炎魔方 [GitHub](https://github.com/steedos/steedos-platform) 开源代码中直接修改国际化资源文件并提交PR。
 
-请按创建一个名为 `locale` 的软件包，以下国际化相关教程都在该软件包中开发。
+如果是要在华炎魔方项目中实现国际化，我们推荐大家把所有国际化的相关内容专门做成一个软件包，这样方便后续按模块进行维护、升级和部署，比如可以创建一个名为 `locale` 的软件包，以下国际化相关教程都在该软件包中开发。
 
+## 资源文件
+
+以下是华炎魔方源码中国际化资源文件对应的位置，其中文件或文件名中`zh-CN`表示中文资源文件，`en`表示英文资源文件。
+
+### 对象
+
+对象、对象字段、列表视图、操作按钮等对象元数据的国际化资源文件在以下源码中：
+
+- Git仓库源码：[standard-objects/objectTranslations](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations`
+
+### 设置应用菜单
+
+后台设置应用是有左侧菜单的，这个菜单项的国际化资源文件在以下源码中：
+
+- Git仓库源码：[standard-objects/translations](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/translations)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/translations`
+
+### 其他
+
+其他国际化变量在以下源码中：
+
+- Git仓库源码：[i18n/translations](https://github.com/steedos/steedos-platform/tree/master/packages/i18n/translations)
+- 本地NPM包源码： `node_modules/@steedos/i18n/translations`
 
 ## 对象
-对象和对象字段的元数据中是可以定义相关显示名称的，比如华炎魔方有一个名为 `company` 的对象，通过字义其 `label` 属性可以配置该对象的显示名称，这个对象在中文环境下显示的是“分部”，英文显示的是“Company”，以下操作过程可以把该对象对应的翻译改为“分公司”和”Sub Corporation“，同时把该对象上名为”分部代码“的字段改为”分公司代码“。
+对象和对象字段的元数据中是可以定义相关显示名称的，比如华炎魔方有一个名为 `company` 的对象，通过定义其 `label` 属性可以配置该对象的显示名称，这个对象在中文环境下显示的是“分部”，英文显示的是“Company”，以下操作过程可以把该对象对应的翻译改为“分公司”和”Sub Corporation“，同时把该对象上名为”分部代码“的字段改为”分公司代码“。
 
 <!--
 ### 指定继承对象
