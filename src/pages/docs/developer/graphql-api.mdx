@@ -22,12 +22,14 @@ Authorization : Bearer ${access_token}
 ### 调用登录接口获取用户身份
 
 POST /accounts/password/login
+
 ```json
 {
-  user: { email: 'test@example.com'}
-  password: 'xxx'
+  "user": { "email": "test@example.com"}
+  "password-noencrypt": "xxx"
 }
 ```
+
 调用此接口会返回token。
 
 使用 ${spaceId}（您的魔方ID）和 ${token} 可以验证
