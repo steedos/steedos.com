@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { SidebarLayout, SidebarContext } from '@/layouts/SidebarLayout'
 import { PageHeader } from '@/components/PageHeader'
 import clsx from 'clsx'
-import { Footer } from '@/components/Footer'
+import { Footer } from '@/components/FooterDocs'
 import { mdxComponents } from '@/components/mdxComponents'
 import { MDXProvider } from '@mdx-js/react'
 
@@ -204,13 +204,13 @@ export function ContentsLayout({ children, meta, classes, tableOfContents, secti
         )}
       </ContentsContext.Provider>
 
-      {/* <Footer previous={prev} next={next}>
+      <Footer previous={prev} next={next}>
         <Link
-          href={`https://github.com/steedos/low-code-protocol/edit/main/src/pages${router.pathname}.mdx`}
+          href={`https://github.com/steedos/steedos.com/edit/master/src/pages${router.pathname}.mdx`}
         >
-          <a className="hover:text-slate-900 dark:hover:text-slate-400">Edit this page on GitHub</a>
+          <a className="hover:text-slate-900 dark:hover:text-slate-400">在 GitHub 上编辑此页面</a>
         </Link>
-      </Footer> */}
+      </Footer>
 
       <div className="fixed z-20 top-[3.8125rem] bottom-0 right-[max(0px,calc(50%-45rem))] w-[19.5rem] py-10 px-8 overflow-y-auto hidden xl:block">
         {toc.length > 0 && (
