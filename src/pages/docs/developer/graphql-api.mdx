@@ -16,7 +16,24 @@ GraphQL接口内置权限控制，执行查询前必须先登录系统，当前�
 调用接口前，首先需要先进行接口的身份验证。
 
 ```javascript
-Authorization : Bearer ${token}
+Authorization : Bearer ${access_token}
+```
+
+### 调用登录接口获取用户身份
+
+POST /accounts/password/login
+```json
+{
+  user: { email: 'test@example.com'}
+  password: 'xxx'
+}
+```
+调用此接口会返回token。
+
+使用 ${spaceId}（您的魔方ID）和 ${token} 可以验证
+
+```javascript
+Authorization : ${spaceId},${token}
 ```
 
 ### 使用当前浏览器用户身份验证
@@ -27,17 +44,21 @@ Authorization : Bearer ${token}
 - steedos:token
 - steedos:spaceId
 
+使用 ${spaceId}（您的魔方ID）和 ${token} 可以验证
+
 ```javascript
-Authorization : spaceId,${token}
+Authorization : ${spaceId},${token}
 ```
 
-### 使用 API Key 验证
+### 使用管理员 API Key 验证
 
-由于接口验证是以 API Key 作为 Token 进行验证，因此需要先获取 API Key。可以在设置-高级设置-API Key菜单下，获取用户的API Key。
+如果需要统一以管理员身份调用接口，可以管理员登录系统后，在设置-高级设置-API Key菜单下，获取管理员的API Key。
 
 ```javascript
 Authorization : apikey,${apikey}
 ```
+
+管理员 API Key 需要妥善保管，这种方式只能在服务端调用。
 
 ## 查询数据
 
