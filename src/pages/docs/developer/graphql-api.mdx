@@ -13,22 +13,31 @@ GraphQL接口内置权限控制，执行查询前必须先登录系统，当前�
 
 ## 接口验证
 
-调用接口前，首先需要先进行接口的身份验证。采用API Key来作为 Token，可以更加方便地进行接口调用。不仅如此，还可以实现单点登录、验证登录状态以及注销等功能，这将使得接口调用更加灵活与便捷。
+调用接口前，首先需要先进行接口的身份验证。
 
-### 获取 API Key
+```javascript
+Authorization : Bearer ${token}
+```
+
+### 使用当前浏览器用户身份验证
+
+当前浏览器已用户登录信息保存在 localStorage 中，包括
+
+- steedos:userId
+- steedos:token
+- steedos:spaceId
+
+```javascript
+Authorization : spaceId,${token}
+```
+
+### 使用 API Key 验证
 
 由于接口验证是以 API Key 作为 Token 进行验证，因此需要先获取 API Key。可以在设置-高级设置-API Key菜单下，获取用户的API Key。
 
-### 设置 Header
-
-获取到 API Key 之后设置在请求头 Header 当中就可以进行接口调用了。
-
 ```javascript
-Authorization : Bearer apikey,${apikey}
+Authorization : apikey,${apikey}
 ```
-
-其中 ${apikey} 替换为获取到的 API Key
-
 
 ## 查询数据
 
