@@ -57,7 +57,7 @@ Authorization : Bearer ${spaceId},${token}
 如果需要统一以管理员身份调用接口，可以管理员登录系统后，在设置-高级设置-API Key菜单下，获取管理员的API Key。
 
 ```javascript
-Authorization : apikey,${apikey}
+Authorization : Bearer apikey,${apikey}
 ```
 
 管理员 API Key 需要妥善保管，这种方式只能在服务端调用。
