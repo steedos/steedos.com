@@ -221,7 +221,7 @@ IF(Commission__c >= 1000000, "YES", "NO")
 
 评估两个值或表达式是否都为真。使用此运算符作为逻辑函数 AND 的备选。
 
-**使用：** `（逻辑1）&&（逻辑2）`，以及用您希望评估的值或表达式替换逻辑1 和逻辑2。
+**使用：** `逻辑1 && 逻辑2`，以及用您希望评估的值或表达式替换逻辑1 和逻辑2。
 
 **返回值：** 布尔
 
@@ -236,7 +236,7 @@ IF((Price<100 && Quantity<5),“Small”, null)
 
 评估多个值或表达式中是否至少有一个为真。使用此运算符作为逻辑函数 OR 的备选。
 
-**使用：** `(逻辑1）||（逻辑2)`，用您希望评估的值或表达式替换任意数量的逻辑引用。
+**使用：** `逻辑1 || 逻辑2`，用您希望评估的值或表达式替换任意数量的逻辑引用。
 
 **返回值：** 布尔
 
@@ -248,7 +248,7 @@ IF(Priority = "High" || Status = "New", ROUND(NOW()-CreatedDate, 0), null)
 如果个案 Status（状态）为“New”（新建）或 Priority（优先级）为“High”（高），则此公式返回个案未被处理的天数。如果个案是今天打开的，则该字段显示零。
 
 ```javascript
-(Discount_Rate__c < 0) || (Discount_Rate__c > 0.40)
+Discount_Rate__c < 0 || Discount_Rate__c > 0.40
 ```
 
 
@@ -273,7 +273,7 @@ IF(Priority = "High" || Status = "New", ROUND(NOW()-CreatedDate, 0), null)
 
 ## 日期和时间函数
 
-### addmonths
+### ADDMONTHS
 
 返回的日期是，指定日期之前或之后的指定月数。如果剩余月的天数比起始月少，函数会返回剩余月的最后一天。否则，结果包含与指定日期相同的日组件。
 
@@ -300,7 +300,7 @@ ADDMONTHS (StartDate, 5)
 
 </alert>
 
-### date
+### DATE
 
 从您输入的年、月和日值返回一个日期值。如果公式字段中的 DATE 函数值是无效日期，会返回错误信息。
 
@@ -334,7 +334,7 @@ DATE(2005, 1, 2)
 
 </alert>
 
-### datevalue
+### DATEVALUE
 
 为日期、日期时间或文本表达式返回日期值。
 
@@ -371,7 +371,7 @@ DATEVALUE("2005-1-15 12:30")
 
 </alert>
 
-### datetimevalue
+### DATETIMEVALUE
 
 返回年份、月份、日和 GMT 时间值。
 
@@ -402,7 +402,7 @@ DATETIMEVALUE("2005-11-15 17:00:00")
 
 以日期和时间值形式返回“2005-11-15T17:00:00.000Z”（即utc时间2005 年 11 月 15 日17点整）。
 
-### day
+### DAY
 
 以 1 与 31 之间的一个数字形式返回一个月中的某一天。
 
@@ -426,7 +426,7 @@ DAY(Code_Freeze__c)
 
 </alert>
 
-### hour
+### HOUR
 
 以 24数字格式（0\~23）返回GMT时区小时值。
 
@@ -450,7 +450,7 @@ HOUR(DATETIMEVALUE('2018-12-12 18:06:08'))
 
 返回18，而不是10。
 
-### millisecond
+### MILLISECOND
 
 以 0 与 999 之间的数字形式，返回毫秒值。
 
@@ -474,7 +474,7 @@ MILLISECOND(NOW())
 
 返回当前时间的毫秒值，比如125。
 
-### minute
+### MINUTE
 
 以 0 与 60 之间的数字形式，返回分钟值。
 
@@ -505,7 +505,7 @@ MINUTE函数只授受datetime类型作为参数，不支持time,date,text类型�
 
 </alert>
 
-### month
+### MONTH
 
 以给定日期的数字格式返回月份，即 1（一月）与 12（十二月）之间的一个数字。
 
@@ -536,7 +536,7 @@ MONTH函数只授受date类型作为参数，不支持time,datetime,text类型�
 
 </alert>
 
-### now
+### NOW
 
 返回表示当前时刻的日期时间。
 
@@ -570,7 +570,7 @@ IF(Status = "Open", ROUND(NOW()-CreatedDate, 0), null)
 
 </alert>
 
-### second
+### SECOND
 
 以 0 与 60 之间的数字形式，返回秒值。
 
@@ -594,7 +594,7 @@ SECOND(DATETIMEVALUE('2018-12-12 18:06:08'))
 
 返回 8。
 
-### timenow
+### TIMENOW
 
 返回表示当前时刻的时间值 (GMT)。如果您仅想要跟踪时间，而非日期，使用此函数，而不是 NOW 函数。
 
@@ -624,7 +624,7 @@ IF(Rating="Hot", TEXT(TIMENOW()), TEXT(TIMEVALUE(CreatedDate)))
 
 </alert>
 
-### timevalue
+### TIMEVALUE
 
 返回没有日期的当地时间值，例如工作时间。
 
@@ -650,7 +650,7 @@ TEXT(TIMEVALUE("17:30:45.125"))
 
 </alert>
 
-### today
+### TODAY
 
 将当前日期返回为日期数据类型。
 
@@ -691,7 +691,7 @@ SampleDate < TODAY()
 
 </alert>
 
-### weekday
+### WEEKDAY
 
 返返回指定日期是周几，用 1 表示周日，2 表示周一，以此类推，7 表示周六。
 
@@ -717,7 +717,7 @@ WEEKDAY(customdate1__c)
 
 </alert>
 
-### year
+### YEAR
 
 以给定日期的数字格式返回四位数字表示的年份。
 
@@ -745,7 +745,7 @@ YEAR(TODAY() )- YEAR(Initial_Meeting__c )
 
 ## 逻辑函数
 
-### and
+### AND
 
 如果所有的值均为真，则返回 TRUE（真）响应；如果一个或多个值为假，则返回 FALSE（假）响应。使用此函数作为运算符 && (AND) 的备选。
 
@@ -766,7 +766,7 @@ IF(AND(Price<1,Quantity<1),"Small", null)
 
 如果价格和数量小于 1，此公式将显示“Small”。如果资产有大于 1 的价格或数量，则此字段为空。
 
-### blankvalue
+### BLANKVALUE
 
 判断表达式是否具有值，如果没有值则返回一个置换表达式。如果表达式具有值，则返回表达式的值。
 
@@ -821,7 +821,7 @@ BLANKVALUE(Payment_Due_Date__c, StartDate + 5)
 
 </alert>
 
-### case
+### CASE
 
 根据一系列值检查一个给定表达式。如果表达式等于其中一个值，则返回相应结果。如果它不等于任何值，则返回其他结果。
 
@@ -931,7 +931,7 @@ CASE($User.Country ,​​ "Japan", "Japanese", "US", "English","unknown")
 
 </alert>
 
-### if
+### IF
 
 确定表达式为真或为假。如果为真则返回一个给定值，如果为假则返回另一个值。
 
@@ -973,7 +973,7 @@ IF($user.city = "Napa", 0.0750, IF($user.city = "Paso Robles", 0.0725,  IF($us
 
 </alert>
 
-### isblank
+### ISBLANK
 
 判断表达式是否具有值，如果没有值则返回 TRUE（真）。如果它包含一个值，则该函数返回 FALSE（假）。
 
@@ -1023,7 +1023,7 @@ ISBLANK函数返回值为布尔类型，但是不支持参数值本身为布尔�
 
 </alert>
 
-### not
+### NOT
 
 对于 TRUE（真）返回 FALSE（假），对于 FALSE（假）返回 TRUE（真）。
 
@@ -1038,7 +1038,7 @@ IF(NOT(Status = "Closed"), ROUND(NOW()-CreatedDate, 0), null)
 
 检查变量是否未处理；如果是，则通过从当前日期和时间减去创建日期和时间来计算它未被处理的天数。结果是舍入为零小数位的未处理天数。如果变量已处理，则此字段为空。
 
-### or
+### OR
 
 如果任何表达式为真，则返回 TRUE（真）。如果所有表达式均为假，则返回 FALSE（假）。使用此函数作为运算符 || (OR) 的备选。
 
@@ -1061,7 +1061,7 @@ IF(OR(Priority="High",Status="New"), ROUND(NOW()-CreatedDate, 0), null)
 
 ## 数学函数
 
-### abs（绝对值）
+### ABS
 
 计算一个数字的绝对值。数字的绝对值是不含正、负号的数字。
 
@@ -1078,7 +1078,7 @@ ABS(ExpectedRevenue)
 
 计算 Expected Revenue（预期收入）金额的正值，而无论其为正还是为负。
 
-### ceiling
+### CEILING
 
 将数字向上四舍五入为最接近的整数；如果是负数，先把正数部分舍入为最接近的整数然后加上负号前缀。
 
@@ -1101,7 +1101,7 @@ CEILING(-2.3)
 
 会返回 -3，即 -2.3 舍入为 0 以下的最接近的正整数后加上负号前缀。
 
-### exp
+### EXP
 
 返回一个值，该值等于所指定数字的 e 幂。
 
@@ -1125,7 +1125,7 @@ Principal__c  EXP(Rate__c  Years__c)
 
 此公式基于本金的自定义货币字段、利率的自定义百分比字段和年份的自定义数字字段计算复利。
 
-### floor
+### FLOOR
 
 返回向下舍入为最接近整数的数字；如果是负数，按整数部分舍入后加负号。
 
@@ -1149,7 +1149,7 @@ FLOOR(-2.5)
 
 会返回 -2，即 -2.5 舍入为 0 以上的负数。
 
-### ln
+### LN
 
 返回一个指定数值的自然对数。自然对数以常数 e（值为 2.71828182845904）为底。
 
@@ -1173,7 +1173,7 @@ LN(Value__c)
 
 返回名为 Value（值）的自定义数字字段的自然对数。
 
-### log
+### LOG
 
 返回数字以 10 为底的对数。
 
@@ -1192,7 +1192,7 @@ LOG(Salary__c)
 
 在本示例中，Salary（工资）是自定义金额字段。
 
-### max
+### MAX
 
 返回一系列数字中的最大数字。
 
@@ -1235,7 +1235,7 @@ MAX($user.Commission_Percent__c * Price, Price * Account_Discount__c, 100)
 
 该示例确定要根据以下较大值为资产记录的佣金：用户的价格佣金百分比、价格乘以为金额存储的折扣百分比或 100 美元。本示例假设您有两个针对用户和资产的自定义百分比字段。
 
-### mceiling
+### MCEILING
 
 将数字向上四舍五入为最接近的整数；如果是负数，一样按值大小向上舍入为最接近的负整数。
 
@@ -1262,7 +1262,7 @@ MCEILING(-2.3)
 
 > MCEILING函数与CEILING在传入的参数是正数时用法一样，区别是参数为负数时后者是先按正数值向上舍入后再加上负号前缀。
 
-### mfloor
+### MFLOOR
 
 将数字向下四舍五入为最接近的整数；如果是负数，一样按值大小向下舍入为最接近的负整数。
 
@@ -1289,7 +1289,7 @@ MFLOOR(-2.3)
 
 > MFLOOR函数与FLOOR在传入的参数是正数时用法一样，区别是参数为负数时后者是先按正数值向下舍入后再加上负号前缀。
 
-### min
+### MIN
 
 返回一系列数字中的最小数字。
 
@@ -1317,7 +1317,7 @@ MIN(Gross__c * Bonus_Percent__c, ​  Performance__c / Number_of_Employees__c)
 
 该示例确定了基于两个金额最小值的员工奖金金额：员工的总时间奖金百分比或在所有员工中平分公司的绩效奖金金额。它还假设您有一个名为 Number of Employees（职员数）的自定义数字字段，一个名为 Bonus Percent（奖金百分比）的自定义百分比字段，以及针对员工 Gross（毛利）和公司的 Performance（绩效）的自定义货币字段。
 
-### mod
+### MOD
 
 返回一个数字除以指定除数后的余数。
 
@@ -1353,7 +1353,7 @@ CASE(MOD(My_Date__c - DATE(1900, 1, 7), 7),
 > 请不要使用0值作为除数传入。
 
 
-### round
+### ROUND
 
 返回与所指定的数字最接近的一个数字，并通过指定的位数来约束新数字。
 
@@ -1390,7 +1390,7 @@ ROUND( Amount-Amount* Discount_Percent__c,2)
 > ■ 第一个参数值为负数时，将按正数部分四舍五入后再加上负号前缀作为最终返回值，而不是像javascript编程语言Math.round函数一样按值进行四舍五入。
 
 
-### sqrt
+### SQRT
 
 返回给定数字的正平方根。
 
@@ -1421,7 +1421,7 @@ SQRT(Amplitude__c)
 
 ## 文本函数
 
-### begins
+### BEGINS
 
 确定文本是否以特定字符开头，如果是则返回 TRUE（真）。如果不是，则返回 FALSE（假）。
 
@@ -1450,7 +1450,7 @@ IF(BEGINS (Product_type__c , “ICU”), “Medical”, “Technical”)
 
 </alert>
 
-### br
+### BR
 
 在文本字符串中插入一个换行符。
 
@@ -1476,7 +1476,7 @@ CASE(ShippingCountry,"USA",  ShippingStreet & BR() &  ShippingCity & ",  " & 
 
 </alert>
 
-### casesafeid
+### CASESAFEID
 
 将 15 个字符的 ID 转换成区分大小写的 18 个字符 ID。
 
@@ -1493,7 +1493,7 @@ CASESAFEID (Id)
 
 此公式将 15 个字符的 ID 替换为 18 个字符、区分大小写的 ID。 假设Id值为abcdefghijklmno，该公式将返回"abcdefghijklmnoAAA"。
 
-### contains
+### CONTAINS
 
 比较两个文本参数，如果第一个参数包含第二个参数，则返回 TRUE（真）。如果不包含，则返回 FALSE（假）。
 
@@ -1524,7 +1524,7 @@ IF(CONTAINS(Product_Type__c, "part"), "Parts", "Service")
 
 </alert>
 
-### find
+### FIND
 
 返回某个字符串在文本字符串内的位置（以数字形式表示）。
 
@@ -1575,7 +1575,7 @@ SUBSTITUTE(Email, LEFT(Email, FIND("@", Email)), "www.")
 
 </alert>
 
-### hyperlink
+### HYPERLINK
 
 从指定文本创建一个到可链接的指定 URL 的链接。
 
@@ -1626,7 +1626,7 @@ HYPERLINK("http://servername/call?id=" & Id & "&phone=" & Phone, Phone)
 
 </alert>
 
-### includes
+### INCLUDES
 
 决定多选选项列表字段中选择的任何值是否等于您所指定的文本文字。
 
@@ -1659,7 +1659,7 @@ INCLUDES(Hobbies__c, "Golf")
 
 </alert>
 
-### ispickval
+### ISPICKVAL
 
 确定选项列表字段的值是否等于所指定的文本文字。
 
@@ -1703,7 +1703,7 @@ IF(ISPICKVAL(StageName, "Closed Won"),   ROUND(Amount *0.02, 2), 0)
 
 </alert>
 
-### left
+### LEFT
 
 返回从文本字符串开头算起的指定数量的字符。
 
@@ -1730,7 +1730,7 @@ TRIM(LEFT(LastName, 5)) & “-” & TRIM(RIGHT(SSN__c, 4))
 
 </alert>
 
-### len
+### LEN
 
 返回指定的文本字符串中所含的字符数。
 
@@ -1747,7 +1747,7 @@ LEN(PartNumber__c)
 
 此公式返回 Product Code（产品代码）字段中所含的字符数。
 
-### lower
+### LOWER
 
 将指定文本字符串中的所有字母转换为小写。不是字母的任何字符不受此函数的影响。如果提供区域则应用区域规则。
 
@@ -1771,7 +1771,7 @@ LOWER( TickerSymbol )
 
 以小写字符返回 Ticker Symbol 中的文本。
 
-### lpad
+### LPAD
 
 将指定的字符插入文本字符串的左侧。
 
@@ -1823,7 +1823,7 @@ LPAD("my_company.com", 15, "z")
 
 </alert>
 
-### mid
+### MID
 
 从文本字符串中间返回从给定的起始位置算起的指定数量的字符。
 
@@ -1865,7 +1865,7 @@ MID("ABCDEFGH", 0, 10)
 
 </alert>
 
-### right
+### RIGHT
 
 返回从文本字符串右边算起的指定数量的字符。
 
@@ -1892,7 +1892,7 @@ TRIM(LEFT(LastName, 5))&"-"&TRIM(RIGHT(SSN__c, 4))
 
 </alert>
 
-### rpad
+### RPAD
 
 将指定的字符插入文本字符串的右侧。
 
@@ -1944,7 +1944,7 @@ RPAD("my_company.com", 15, "z")
 
 </alert>
 
-### substitute
+### SUBSTITUTE
 
 用新文本替换文本字符串中的旧文本。
 
@@ -1981,7 +1981,7 @@ SUBSTITUTE(Email, LEFT(Email, FIND("@", Email)), "www.")
 
 </alert>
 
-### text
+### TEXT
 
 在使用公式的任何地方将百分比、数字、日期、日期时间或货币类型字段转换为文本。
 
@@ -2026,7 +2026,7 @@ SerialNumber &"-"& TEXT(Quantity)
 
 </alert>
 
-### trim
+### TRIM
 
 删除文本字符串开头和末尾处的空格和制表符。
 
@@ -2043,7 +2043,7 @@ TRIM(LEFT(LastName,5))& "-" & RIGHT(FirstName, 1)
 
 为用户返回一个网络 ID，该 ID 用连字符分隔其姓氏的前五个字符和其名字的第一个字符。
 
-### upper
+### UPPER
 
 将指定文本字符串中的所有字母转换为大写。不是字母的任何字符不受此函数的影响。如果提供区域则应用区域规则。
 
@@ -2067,7 +2067,7 @@ UPPER("Mycompany.com 123")
 
 返回“MYCOMPANY.COM 123.”。
 
-### value
+### VALUE
 
 将文本字符串转换为数字。
 
@@ -2118,7 +2118,7 @@ MOD(VALUE(Lead_Number__c), 3)
 
 ## 高级函数
 
-### regex
+### REGEX
 
 将文本字段与正则表达式进行比较，如果匹配则返回 TRUE（真）。反之，返回 FALSE（假）。正则表达式是一个字符串，它根据一定语法规则描述字符串的格式。
 
