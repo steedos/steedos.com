@@ -41,6 +41,10 @@ spec:
               cpu: "500m"
               memory: "1Gi"
               ephemeral-storage: 800Mi
+      tolerations:
+        - key: for-steedos-k8s-mgr
+          value: for-steedos-k8s-mgr
+          effect: NoSchedule
       restartPolicy: Always
 
 ---
