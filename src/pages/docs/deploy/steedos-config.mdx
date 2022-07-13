@@ -150,21 +150,6 @@ public:
 - public.password.policies: Array<{policy: '正则表达式', policyError: '不符合表达式时的提示消息'}>
 - 配置了多个密码规则时会同时生效，上述示例中配置的规则是会同时生效的。
 
-## 字段索引配置
-
-可以为字段配置 [字段索引](/docs/admin/field_type#%E5%AD%97%E6%AE%B5%E7%B4%A2%E5%BC%95) 以提升数据库中的记录查询速度。
-
-系统会在创建索引的定时程序中为配置了字段索引的字段创建索引，默认是每小时检测一次未创建索引的字段并为其创建好索引。
-
-可以在定时任务配置中修改检测创建字段索引的频率，以下配置是默认的按每小时的频率来检测创建字段索引，其中频率值是一个 [Cron-style Scheduling](https://en.wikipedia.org/wiki/Cron)。
-
-```yaml
-cron:
-  build_index: "0 0 * * * *"
-```
-
-执行字段索引定时程序时只会为未创建过索引的字段创建索引，已存在的索引不会重复创建。
-
 ## 定时任务配置
 
 配置定时任务的属性。
@@ -201,30 +186,11 @@ cron:
 accounts:
   mobile_phone_locales: ['zh-CN']
   mobile_regexp: '^[0-9]{11}$'
-```
-
-* mobile_phone_locales: 手机号本地化，配置为`zh-CN`表示使用中国的11位手机号，要支持其他国家手机号请参考 [validator](https://www.npmjs.com/package/validator)。
-* mobile_regexp: 手机号格式正则表达式，使用一个正则表达式来描述正确的手机号格式。
-
-
-<alert type="info">
-当同时配置了`mobile_phone_locales`和`mobile_regexp`参数时，优先使用`mobile_phone_locales`。
-
-</alert>
-
-```yaml
-public:
-  accounts:
     is_username_skip_minrequiredlength: true
     UTF8_Names_Validation: '[A-Za-z0-9-_.\u00C0-\u017F\u4e00-\u9fa5]'
 ```
 
+* mobile_phone_locales: 此参数优先。手机号本地化，配置为`zh-CN`表示使用中国的11位手机号，要支持其他国家手机号请参考 [validator](https://www.npmjs.com/package/validator)。
+* mobile_regexp: 手机号格式正则表达式，使用一个正则表达式来描述正确的手机号格式。
 * is_username_skip_minrequiredlength：是否跳过用户名最小位数限制，默认最小为6位。
 * UTF8_Names_Validation: 用户名规则正则表达式。
-
-## web服务url
-
-```yaml
-services:
-  steedos: /
-```
