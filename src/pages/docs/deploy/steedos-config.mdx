@@ -3,18 +3,30 @@ title: 参数配置
 description: 内含华炎魔方环境变量及系统参数说明。
 ---
 
-steedos-config.yml 用于配置系统参数，位于项目的根目录。
+steedos.config.js 用于配置系统参数，位于项目的根目录。
 
-## 必须环境变量
+建议不要直接修改此文件，其中的大部分参数可以通过环境变量设置。
+
+> 2.2.52 之前的版本使用 steedos-config.yml 和 moleculer.config.js 配置系统参数，现已合并到统一的 steedos.config.js
+
+## 环境变量
 
 ```bash
+# 平台
 PORT=5000
 ROOT_URL=http://localhost:5000
+
+# 微服务通讯 [https://moleculer.services/docs/0.14/networking.html](https://moleculer.services/zh/docs/0.14/networking.html)
 TRANSPORTER=redis://127.0.0.1:6379
+
+# 缓存 https://moleculer.services/zh/docs/0.14/caching.html
 CACHER=redis://127.0.0.1:6379/1
+
+# 数据库
 MONGO_URL=mongodb://127.0.0.1:27017/steedos
 MONGO_OPLOG_URL=mongodb://127.0.0.1:27017/local
 
+# 开发环境元数据同步
 [metadata]
 METADATA_SERVER=http://localhost:5000
 METADATA_APIKEY=#会自动填充为初始界面中输入的环境变量值
@@ -24,54 +36,10 @@ STEEDOS_CLOUD_SPACE_ID=#会自动填充为初始界面中输入的环境变量�
 STEEDOS_CLOUD_API_KEY=#会自动填充为初始界面中输入的环境变量值
 ```
 
-* PORT：服务占用端口
-* ROOT_URL：服务访问地址
-* TRANSPORTER：Redis缓存地址
-* CACHER：Redis缓存频道
-* MONGO_URL：MongoDB数据库地址
-* MONGO_OPLOG_URL：MongoDB数据库操作日志地址
-* METADATA_SERVER：元数据同步服务地址
-* METADATA_APIKEY：元数据同步时用于验证身份的APIKEY
-* STEEDOS_CLOUD_SPACE_ID：华炎魔方ID
-* STEEDOS_CLOUD_API_KEY：验证华炎魔方ID身份的APIKEY
-
-如果Redis配置了密码，请按以下格式配置相关环境变量连接Redis服务：
-
-```bash
-TRANSPORTER=redis://a:123456@192.168.0.95:6379
-CACHER=redis://a:123456@192.168.0.95:6379/1
-```
-
-以上Redis环境变量配置假设要连接的Redis服务地址为192.168.0.95，密码为123456。
-
-请注意，最新版本的华炎魔方需要把ROOT_URL配置为像下面这种本地IP地址或外网域名才能被其他电脑正常访问，否则在列表视图界面会显示“未找到符合查询条件的集合”这种空列表。
-
-```yaml
-ROOT_URL=http://192.168.0.95:5000
-```
-
-另外ROOT_URL地址也不应该以符号`/`结尾，比如配置为 `http://192.168.0.95:5000/` 或 `https://xxx.steedos.cn/` 是错的。
 
 ## 登录界面配置
 
 配置登录界面相关参数，例如是否允许注册、是否允许修改密码、是否允许创建企业。
-
-```yaml
-tenant:
-  _id: ${STEEDOS_CLOUD_SPACE_ID}
-  name: 华炎魔方
-  logo_url: ${STEEDOS_CLOUD_LOGO_URL}
-  logo_square_url: ${STEEDOS_CLOUD_LOGO_SQUARE_URL}
-  background_url:
-  enable_register: ${STEEDOS_TENANT_CONFIG_ENABLE_REGISTER} # 启用注册功能 true / false
-  enable_forget_password: false
-  enable_create_tenant: false
-  enable_password_login: true
-  enable_bind_email: false
-  enable_bind_mobile: false
-  enable_email_code_login: false
-  enable_mobile_code_login: false
-```
 
 * enable_register: 允许创建账户，默认true
 * enable_forget_password:允许密码密码，设置为true时将显示找回密码链接用于找回密码，默认false。
