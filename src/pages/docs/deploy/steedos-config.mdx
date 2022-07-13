@@ -78,6 +78,15 @@ STEEDOS_CFS_AWS_S3_BUCKET=steedos-prod
 STEEDOS_CFS_AWS_S3_ACCESS_KEY_ID=${MINIO_ROOT_USER:-steedos} 
 STEEDOS_CFS_AWS_S3_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD:-steedos123}
 ```
+### 免登录下载
+
+默认系统中上传的头像、图片、附件需要登录之后才能下载。
+
+配置以下变量可以设定免登录下载。
+
+```bash
+STEEDOS_CFS_DOWNLOAD_PUBLIC=avatars,images # 可选 avatars,images,files, 默认值为avatars
+```
 
 ## 邮件配置
 
