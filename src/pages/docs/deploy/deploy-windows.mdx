@@ -167,11 +167,8 @@ ROOT_URL=http://localhost:3000
 MONGO_URL=mongodb://localhost:27017/steedos
 TRANSPORTER=redis://127.0.0.1:6379
 CACHER=redis://127.0.0.1/1
-STEEDOS_CLOUD_SPACE_ID=#在此填入私有部署记录中的魔方ID
-STEEDOS_CLOUD_API_KEY=#在此填入私有部署记录中的API Key
 ```
 
-请先 [开通华炎魔方云服务](/docs/deploy/deploy-cloud) 然后 [激活华炎魔方](/docs/deploy/deploy-activate)，环境变量`STEEDOS_CLOUD_SPACE_ID`和`STEEDOS_CLOUD_API_KEY`的值就是其中新建的私有部署记录中的”魔方ID”和”ApiKey”。
 
 请注意，最新版本的华炎魔方需要把ROOT_URL配置为像下面这种本地IP地址或外网域名才能被其他电脑正常访问，否则在列表视图界面会显示“未找到符合查询条件的集合”这种空列表。
 
@@ -193,39 +190,13 @@ yarn start
 
 根目录下有一个package.json文件，该文件中可以维护项目中各个依赖的npm包的版本号。
 
-要升级华炎魔方的内核版本号，只需要把该文件dependencies节点下的内容替换成 `"@steedos/service-community": "^2.x"` 或者 `"@steedos/service-community": "指定版本"` 就可以了。
-
-```json
-{
-  "dependencies": {
-    "@steedos/service-charts": "2.1.27",
-    "@steedos/service-metadata-server": "2.1.27",
-    "@steedos/service-mongodb-server": "2.1.27",
-    "@steedos/service-package-loader": "2.1.27",
-    "@steedos/service-package-registry": "2.1.27",
-    "@steedos/service-pages": "2.1.27",
-    "@steedos/service-steedos-server": "2.1.27",
-    ...
-  }
-}
-```
-
 * **升级到最新版本**
 
   ```json
   "dependencies": {
-       "@steedos/service-community": "^2.1"
+       "@steedos/service-community": "^2.2"
   },
   ```
-* **升级到指定版本**
-
-  ```json
-  "dependencies": {
-       "@steedos/service-community": "2.1.74"
-  },
-  ```
-
-对于较老版本的魔方项目，在升级内核版本时，除了应该把版本号升级到最新的魔方版本之外，还需要确定下项目根目录下的`steedos-config.yml,.env,package.json`等文件与最新版本的 [模板项目](https://github.com/steedos/steedos-project-template)中同名文件内容是否有明显差异，推荐升级时把有差异的文件内容也复制到您的项目中以避免因配置文件不一致或缺少相关依赖包引起的问题。
 
 修改好package.json文件中的版本号后，命令行中`cd`到项目目录并执行下`yarn`即可安装相关依赖包，待安装完成后再执行下`yarn start`即可以新版本启动服务。
 

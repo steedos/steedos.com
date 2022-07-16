@@ -1,3 +1,10 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-06-18 07:20:28
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-07-11 17:19:01
+ * @Description: 
+ */
 import { createPageList } from '@/utils/createPageList'
 
 const deploy = createPageList(
@@ -55,6 +62,7 @@ export const documentationNav = {
   '应用集成': [
     admin['datasource'],
     admin['query'],
+    admin['amis'],
     developer['node-red'],
   ],
   '统计分析': [

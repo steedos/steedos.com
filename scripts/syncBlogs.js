@@ -1,3 +1,10 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-05-25 17:29:51
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-07-11 14:28:36
+ * @Description: 
+ */
 require('dotenv-flow').config(process.cwd());
 const { Main } = require('next/document');
 const fetch = require('node-fetch');
@@ -78,8 +85,10 @@ async function sync(){
   console.log(site_blogs)
   site_blogs.forEach(blog => {
     const dirname = path.join(process.cwd(), 'contents', 'blogs', blog.slug)
-    if (!fs.statSync(dirname, {throwIfNoEntry:false}))
+    const exists = fs.existsSync(dirname);
+    if (!exists){
       fs.mkdirSync(dirname)
+    }
     blog.posts.forEach(doc => {
       const filename = path.join(dirname, doc.slug + '.mdx')
       const content = 
