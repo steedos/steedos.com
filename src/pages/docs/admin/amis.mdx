@@ -122,6 +122,20 @@ description: 华炎魔方微页面引擎，全新引入amis渲染器，帮助开
 
 ## 同步为代码
 
+与其他元数据一样，上面提到的与微页面相关元数据，包括业务人员通过查询设计器生成的查询API、页面设计器设计的页面、页面分配、页面版本以及选项卡等都可以同步为代码，同步这些元数据的方法与其他元数据是一样的，详细操作方法可以参考 [开发人员快速向导](/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE) 中的 [同步元数据](/docs/developer/getting-started#%E5%90%8C%E6%AD%A5%E5%85%83%E6%95%B0%E6%8D%AE) 小节。
+
+| 类型 | 节点 | 同步到文件夹 |
+|----|----|----|
+| 查询 | Queries | main/default/queries |
+| 微页面 | Pages | main/default/pages |
+| 选项卡 | Tabs | main/default/tabs |
+
+以上表格中“节点”列表示的是不同元数据类型在VSCODE编辑器里的Steedos插件面板中所处节点位置。
+
+其中在页面设计器设计的页面内容会保存到页面版本中，它会以 [amis Schema](https://aisuda.bce.baidu.com/amis/zh-CN/docs/types/schemanode) 格式同步保存到`main/default/pages/xxx.page.amis.json`文件中，但是只会保存最后一个已发布的版本中的内容。
+
+另外“页面分配”会同步到微页面元数据，即`main/default/pages/xxx.page.yml`文件的“pageAssignments”属性中。
+
 ## 示例
 
 在这个 [页面效果示例](/blogs/amis#页面效果示例) 中可以看到各种使用 amis 设计出来的效果图。
