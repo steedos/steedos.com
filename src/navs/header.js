@@ -31,10 +31,9 @@ export const headerNav = {
             { name: '技术架构', href: '/platform/architecture' },
             { name: '功能', href: '/platform/features' },
             { name: '报价', href: '/platform/pricing' },
-            { name: '私有部署', href: '/docs/deploy/' },
-            { name: '购买云服务', href: '/docs/deploy/deploy-cloud' },
-            { name: '开源', href: 'https://github.com/steedos/steedos-platform/', target: '_blank' },
-            { name: '低代码协议', href: 'https://low-code-protocol.com', target: '_blank' },
+            { name: '社区版', href: 'https://github.com/steedos/steedos-platform/', target: '_blank' },
+            { name: '企业版', href: '/collections/platform' },
+            { name: '技术服务', href: '/collections/services' },
           ],
         },
         {
@@ -144,7 +143,7 @@ export const headerNav = {
           name: '商城',
           href: '/collections/platform-cloud',
           items: [
-            { name: '云平台', href: '/collections/platform-cloud' },
+            { name: '企业版', href: '/collections/platform' },
             { name: '应用市场', href: '/collections/steedos-packages' },
             { name: '技术服务', href: '/collections/services' },
           ],
