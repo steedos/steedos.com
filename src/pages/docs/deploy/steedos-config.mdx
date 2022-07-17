@@ -36,23 +36,35 @@ STEEDOS_CLOUD_SPACE_ID=#会自动填充为初始界面中输入的环境变量�
 STEEDOS_CLOUD_API_KEY=#会自动填充为初始界面中输入的环境变量值
 ```
 
+## 平台初始化
 
-## 登录界面配置
+```
+STEEDOS_INITIAL_USERNAME= # 用户名
+STEEDOS_INITIAL_PASSWORD= # 密码
+STEEDOS_INITIAL_NAME= # 可选，姓名，未配置时默认为用户名
+STEEDOS_INITIAL_EMAIL= # 可选，邮箱
+STEEDOS_INITIAL_MOBILE= # 可选，手机号
+STEEDOS_INITIAL_TENANT_ID= # 可选，未配置时自动生成
+STEEDOS_INITIAL_TENANT_NAME= # 可选，未配置时就是“我的公司”
+STEEDOS_INITIAL_API_KEY= # 可选，未配置时自动生成随机串
+```
+
+## 登录界面
 
 配置登录界面相关参数，例如是否允许注册、是否允许修改密码、是否允许创建企业。
 
 ```bash
-STEEDOS_TENANT_ENABLE_REGISTER: true  # 允许创建账户，空库时默认true
-STEEDOS_TENANT_ENABLE_FORGET_PASSWORD: true  # 允许密码密码，设置为true时将显示找回密码链接用于找回密码，默认false。
-STEEDOS_TENANT_ENABLE_CREATE_TENANT: false  # 允许创建企业，默认只有空库时允许创建
-STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN: true # 允许使用密码登录，启用时，注册和登录都默认使用密码。默认true
-STEEDOS_TENANT_ENABLE_BIND_EMAIL: false # 强制绑定邮箱，登录后必须输入和验证邮箱。默认false
-STEEDOS_TENANT_ENABLE_BIND_MOBILE: false # 强制绑定手机号，登录后必须输入和验证手机号。默认false
-TEEDOS_TENANT_ENABLE_EMAIL_CODE_LOGIN: false #允许使用邮箱验证码登录，启用时，注册和登录都默认使用验证码。
-STEEDOS_TENANT_ENABLE_MOBILE_CODE_LOGIN: false # 允许使用手机验证码登录，启用时，注册和登录都默认使用验证码。
-STEEDOS_TENANT_TOKEN_SECRET:  # 默认值 43位字符串, 每次重启服务时生成新的值
-STEEDOS_TENANT_ACCESS_TOKEN_EXPIRES_IN: # 默认值 90d
-STEEDOS_TENANT_REFRESH_TOKEN_EXPIRES_IN:  # 默认值 7d
+STEEDOS_TENANT_ENABLE_REGISTER=true  # 允许创建账户，空库时默认true
+STEEDOS_TENANT_ENABLE_FORGET_PASSWORD=true  # 允许密码密码，设置为true时将显示找回密码链接用于找回密码，默认false。
+STEEDOS_TENANT_ENABLE_CREATE_TENANT=false  # 允许创建企业，默认只有空库时允许创建
+STEEDOS_TENANT_ENABLE_PASSWORD_LOGIN=true # 允许使用密码登录，启用时，注册和登录都默认使用密码。默认true
+STEEDOS_TENANT_ENABLE_BIND_EMAIL=false # 强制绑定邮箱，登录后必须输入和验证邮箱。默认false
+STEEDOS_TENANT_ENABLE_BIND_MOBILE=false # 强制绑定手机号，登录后必须输入和验证手机号。默认false
+STEEDOS_TENANT_ENABLE_EMAIL_CODE_LOGIN=false #允许使用邮箱验证码登录，启用时，注册和登录都默认使用验证码。
+STEEDOS_TENANT_ENABLE_MOBILE_CODE_LOGIN=false # 允许使用手机验证码登录，启用时，注册和登录都默认使用验证码。
+STEEDOS_TENANT_TOKEN_SECRET=  # 默认值 43位字符串, 每次重启服务时生成新的值
+STEEDOS_TENANT_ACCESS_TOKEN_EXPIRES_IN= # 默认值 90d
+STEEDOS_TENANT_REFRESH_TOKEN_EXPIRES_IN=  # 默认值 7d
 ```
 
 ## 文件存储
@@ -104,20 +116,19 @@ email:
   signname: ${STEEDOS_EMAIL_SIGNNAME}
 ```
 
-## OIDC 单点登录
+## OIDC 身份认证
 
-配置 OpenID Connnect 单点登录的参数，可以连接 Keycloak 服务器。
+企业版：配置 OpenID Connnect 单点登录的参数，可以连接 Keycloak 服务器。
 
 ```
-sso:
-  oidc:
-    config_url: ${STEEDOS_IDENTITY_OIDC_CONFIG_URL}
-    client_id: ${STEEDOS_IDENTITY_OIDC_CLIENT_ID}
-    client_secret: ${STEEDOS_IDENTITY_OIDC_CLIENT_SECRET}
-    name: ${STEEDOS_IDENTITY_OIDC_NAME}
-    label: ${STEEDOS_IDENTITY_OIDC_LABEL}
-    logo: ${STEEDOS_IDENTITY_OIDC_LOGO}
-    require_local_account: ${STEEDOS_IDENTITY_OIDC_REQUIRE_LOCAL_ACCOUNT}
+# OpenID Connect
+STEEDOS_IDENTITY_OIDC_ENABLED=true
+STEEDOS_IDENTITY_OIDC_CONFIG_URL=https://id.steedos.cn/realms/master/.well-known/openid-configuration
+STEEDOS_IDENTITY_OIDC_CLIENT_ID=steedos-oidc-public
+STEEDOS_IDENTITY_OIDC_CLIENT_SECRET=none
+STEEDOS_IDENTITY_OIDC_NAME=Steedos ID
+STEEDOS_IDENTITY_OIDC_LOGO=
+STEEDOS_IDENTITY_OIDC_REQUIRE_LOCAL_ACCOUNT=false
 ```
 
 ## 发送短信配置
