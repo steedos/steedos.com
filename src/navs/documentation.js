@@ -27,6 +27,7 @@ const developer = createPageList(
 export const documentationNav = {
   '安装部署': [
     deploy['getting-started'],
+    deploy['create-steedos-app'],
     deploy['deploy-docker'],
     deploy['deploy-cloud'],
     deploy['devops'],

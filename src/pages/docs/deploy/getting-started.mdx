@@ -5,53 +5,11 @@ description: 华炎魔方将低代码技术与企业业务场景结合， 助力
 
 华炎魔方基于 [Nodejs](https://nodejs.org/zh-cn/) 开发，运行环境需要 [mongodb 数据库](https://www.mongodb.com/docs/v4.2/administration/install-community/) 和 [redis 缓存](https://redis.io/docs/getting-started/) 服务。
 
-
-使用以下命令，可以在本地创建华炎魔方模版项目。
+您可以使用 [create-steedos-app命令](./create-steedos-app) 快速创建华炎魔方模版项目。
 
 ```shell
 npx create-steedos-app my-app
 ```
-
-## Create Steedos App
-
-使用华炎魔方最简单的方法是使用`create-steedos-app`。这个CLI工具使您能够快速开始构建一个新的华炎魔方应用程序，并为您设置好一切。
-
-你可以使用默认的华炎魔方项目模板创建一个新应用，也可以使用官方的 [示例项目](https://github.com/steedos/steedos-platform/tree/master/examples) 来创建应用。
-
-要开始，使用以下命令:
-
-```shell
-npx create-steedos-app@latest my-app
-# or
-yarn create steedos-app my-app
-# or
-pnpm create steedos-app my-app
-```
-
-也可以用`-e, --example`参数基于示例项目创建一个新应用:
-
-```shell
-npx create-steedos-app my-app -e project-ee
-# or
-yarn create steedos-app my-app -e project-ee
-# or
-pnpm create steedos-app my-app -e project-ee
-```
-
-以上命令会创建一个名为`my-app`的华炎魔方企业版项目而不是社区版项目。
-
-#### 参数
-
-`create-steedos-app` 命令支持以下参数:
-
-- `-e, --example [name]|[github-url]`： 一个引导应用程序的示例。你可以使用一个来自 [华炎魔方示例项目Git源码仓库](https://github.com/steedos/steedos-platform/tree/master/examples) 或GitHub URL的示例名称。URL可以使用任何分支或子目录。
-- `--example-path [path-to-example]`： 在极少数情况下，GitHub URL可能包含一个带有斜杠的分支名称(例如bug/fix-1)或示例的路径(例如foo/bar)。在这种情况下，你必须使用像`-example-path foo/bar`这样的单独指定示例的路径的命令。
-- `--use-npm`： 显式地告诉CLI使用npm来引导应用。
-- `--use-pnpm`： 显式地告诉CLI使用pnpm来引导应用。
-
-<alert type="info">
-注意：要使用`yarn`进行引导，我们建议运行`yarn create steedos-app my-app`
-</alert>
 
 ## Docker部署
 
