@@ -393,7 +393,8 @@ module.exports = {
         const userId = this.userId;
         const spaceId = this.spaceId;
         if (userId && spaceId) {
-            var isAdmin = Steedos.isSpaceAdmin(spaceId, userId);
+            const userSession = await auth.getSessionByUserId(userId, spaceId);
+            var isAdmin = userSession.is_space_admin;
             if(!isAdmin && this.doc.owner){
                 throw new Error("只有系统管理员才能变更合同所有者！");
                 //return false // 把throw error换成这行，将会新建失败，但是不提示错误信息。
@@ -405,7 +406,8 @@ module.exports = {
         const userId = this.userId;
         const spaceId = this.spaceId;
         if (userId && spaceId) {
-            var isAdmin = Steedos.isSpaceAdmin(spaceId, userId);
+            const userSession = await auth.getSessionByUserId(userId, spaceId);
+            var isAdmin = userSession.is_space_admin;
             if(!isAdmin && this.doc.owner){
                 throw new Error("只有系统管理员才能变更合同所有者！");
                 //return false // 把throw error换成这行，将会修改失败，但是不提示错误信息。
