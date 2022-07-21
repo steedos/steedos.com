@@ -27,6 +27,7 @@ const developer = createPageList(
 export const documentationNav = {
   '安装部署': [
     deploy['getting-started'],
+    deploy['create-steedos-app'],
     deploy['deploy-docker'],
     deploy['deploy-cloud'],
     deploy['devops'],
@@ -62,7 +63,6 @@ export const documentationNav = {
   '应用集成': [
     admin['datasource'],
     admin['query'],
-    admin['amis'],
     developer['node-red'],
   ],
   '统计分析': [
@@ -91,6 +91,7 @@ export const documentationNav = {
     developer['deploy-gitpod'],
   ],
   '前端开发': [
+    developer['amis'],
     developer['graphql-api'],
     developer['button'],
     developer['form-event'],

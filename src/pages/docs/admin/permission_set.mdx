@@ -393,7 +393,8 @@ module.exports = {
         const userId = this.userId;
         const spaceId = this.spaceId;
         if (userId && spaceId) {
-            var isAdmin = Steedos.isSpaceAdmin(spaceId, userId);
+            const userSession = await auth.getSessionByUserId(userId, spaceId);
+            var isAdmin = userSession.is_space_admin;
             if(!isAdmin && this.doc.owner){
                 throw new Error("只有系统管理员才能变更合同所有者！");
                 //return false // 把throw error换成这行，将会新建失败，但是不提示错误信息。
@@ -405,7 +406,8 @@ module.exports = {
         const userId = this.userId;
         const spaceId = this.spaceId;
         if (userId && spaceId) {
-            var isAdmin = Steedos.isSpaceAdmin(spaceId, userId);
+            const userSession = await auth.getSessionByUserId(userId, spaceId);
+            var isAdmin = userSession.is_space_admin;
             if(!isAdmin && this.doc.owner){
                 throw new Error("只有系统管理员才能变更合同所有者！");
                 //return false // 把throw error换成这行，将会修改失败，但是不提示错误信息。
@@ -454,10 +456,10 @@ module.exports = {
             let filters = query.filters;
             //自定义生成用户权限查询条件
             let permissionsFilters;
-            var isAdmin = Steedos.isSpaceAdmin(spaceId, userId);
+            const userSession = await auth.getSessionByUserId(userId, spaceId);
+            var isAdmin = userSession.is_space_admin;
             if (!isAdmin) {
-                //获取当前用户所属组织，第三个参数true表示需要返回包含所属组织的父组织在内的全部组织
-                var organizations = Steedos.getUserOrganizations(spaceId, userId, true);
+                var organizations = userSession.organizations.map((org) => { return org._id });
                 permissionsFilters = [
                     ["owner", "=", userId],
                     "or",
@@ -484,7 +486,8 @@ module.exports = {
 可以通过以下代码来判断当前用户是否是系统管理员。
 
 ```javascript
-var isAdmin = Steedos.isSpaceAdmin(spaceId, userId);
+const userSession = await auth.getSessionByUserId(userId, spaceId);
+var isAdmin = userSession.is_space_admin;
 if (!isAdmin) {
     //当前登录用户不是管理员
 }
@@ -495,8 +498,8 @@ if (!isAdmin) {
 可以通过以下代码来获取当前用户所属组织，一般用于在过滤条件中按组织来过滤数据。
 
 ```javascript
-//传入第三个参数值为true时表示需要返回包含所属组织的父组织在内的全部组织。
-var organizations = Steedos.getUserOrganizations(spaceId, userId, true);
+const userSession = await auth.getSessionByUserId(userId, spaceId);
+var organizations = userSession.organizations.map((org) => { return org._id });
 ```
 
 #### userSession
@@ -505,10 +508,10 @@ var organizations = Steedos.getUserOrganizations(spaceId, userId, true);
 
 ```javascript
 const auth = require("@steedos/auth");
-const userSession = await auth.getSessionByUserId(userId);
+const userSession = await auth.getSessionByUserId(userId, spaceId);
 ```
 
-`userSession`中所包含的用户信息详情请查阅本文档底部的 [userSession详解](#usersession%E8%AF%A6%E8%A7%A3) 小节。
+`userSession`中所包含的用户信息详情请查阅本文档底部的 [userSession详解](#userSession详解) 小节。
 
 ## 集成API
 
