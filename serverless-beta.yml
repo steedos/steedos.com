@@ -33,6 +33,13 @@ steedos-website-beta:
         NEXT_PUBLIC_DEPLOYMENT_URL=https://beta.steedos.cn
         NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=https://console.steedos.cn
         STEEDOS_SERVER_API_KEY=${steedos_api_key}
+        KEYCLOAK_ID=${KEYCLOAK_ID}
+        KEYCLOAK_SECRET=${KEYCLOAK_SECRET}
+        KEYCLOAK_ISSUER=${KEYCLOAK_ISSUER}
+        NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID=${NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID}
+        NEXTAUTH_URL=${NEXTAUTH_URL}
+        NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+        JWT_SECRET=${JWT_SECRET}
       cleanupDotNext: true
       postBuildCommands: []
 
