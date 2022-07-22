@@ -73,6 +73,13 @@ module.exports =
   env: {
     STEEDOS_SERVER_API_KEY: process.env.STEEDOS_SERVER_API_KEY,
     NEXT_STATIC_PROPS_REVALIDATE: process.env.NEXT_STATIC_PROPS_REVALIDATE,
+    KEYCLOAK_ID: process.env.KEYCLOAK_ID,
+    KEYCLOAK_SECRET: process.env.KEYCLOAK_SECRET,
+    KEYCLOAK_ISSUER: process.env.KEYCLOAK_ISSUER,
+    NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID: process.env.NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    JWT_SECRET:process.env.JWT_SECRET,
   },
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
