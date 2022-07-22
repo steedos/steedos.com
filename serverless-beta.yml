@@ -1,4 +1,11 @@
 steedos_api_key: ${env.STEEDOS_SERVER_API_KEY}
+keycloak_id: ${env.KEYCLOAK_ID}
+keycloak_secret: ${env.KEYCLOAK_SECRET}
+keycloak_issuer: ${env.KEYCLOAK_ISSUER}
+next_public_nextauth_provider_id: ${env.NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID}
+nextauth_url: ${env.NEXTAUTH_URL}
+nextauth_secret: ${env.NEXTAUTH_SECRET}
+jwt_secret: ${env.JWT_SECRET}
 
 steedos-website-beta:
   component: "@sls-next/serverless-component@v3.6.1-alpha.2" # it is recommended you pin the latest stable version of serverless-next.js
@@ -33,13 +40,13 @@ steedos-website-beta:
         NEXT_PUBLIC_DEPLOYMENT_URL=https://beta.steedos.cn
         NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=https://console.steedos.cn
         STEEDOS_SERVER_API_KEY=${steedos_api_key}
-        KEYCLOAK_ID=${KEYCLOAK_ID}
-        KEYCLOAK_SECRET=${KEYCLOAK_SECRET}
-        KEYCLOAK_ISSUER=${KEYCLOAK_ISSUER}
-        NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID=${NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID}
-        NEXTAUTH_URL=${NEXTAUTH_URL}
-        NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
-        JWT_SECRET=${JWT_SECRET}
+        KEYCLOAK_ID=${keycloak_id}
+        KEYCLOAK_SECRET=${keycloak_secret}
+        KEYCLOAK_ISSUER=${keycloak_issuer}
+        NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID=${next_public_nextauth_provider_id}
+        NEXTAUTH_URL=${nextauth_url}
+        NEXTAUTH_SECRET=${nextauth_secret}
+        JWT_SECRET=${jwt_secret}
       cleanupDotNext: true
       postBuildCommands: []
 
