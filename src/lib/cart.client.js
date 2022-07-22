@@ -6,7 +6,7 @@ export async function changeCart(variantId, quantity, router){
         return data;
     } catch (Exception) {
         if(Exception.message === '401'){
-            goLogin()
+            goLogin(router)
         }
     }
 }

@@ -11,7 +11,7 @@ import { StarIcon } from '@heroicons/react/solid'
 import { ThemeSelect, ThemeToggle } from './ThemeToggle'
 import { headerNav } from '@/navs/header';
 import useSWR from 'swr'
-
+import { useRouter } from 'next/router'
 import { authValidate, goLogin, goLogout, goSignup } from '@/lib/auth.client';
 import { getCart } from '@/lib/cart.client';
 
@@ -25,7 +25,6 @@ function classNames(...classes) {
 
 export function NavPopover({ display = 'md:hidden', className, ...props }) {
   let [isOpen, setIsOpen] = useState(false)
-
   useEffect(() => {
     if (!isOpen) return
     function handleRouteChange() {
@@ -173,7 +172,7 @@ export function NavPopover({ display = 'md:hidden', className, ...props }) {
 
 export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section }) {
   let [isOpaque, setIsOpaque] = useState(false)
-
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [userInfo, setUserInfo] = useState({})
   const [cart, setCart] = useState({lines: []})
@@ -413,7 +412,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                             </Menu.Item>)} */}
                             {!userInfo.name && (
                             <Menu.Item>
-                              <a href="#" onClick={goSignup} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                              <a href="#" onClick={()=>{return goSignup(router)}} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                 <UserAddIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
@@ -424,7 +423,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
 
                             {!userInfo.name && (
                             <Menu.Item>
-                              <a href="#" onClick={goLogin} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                              <a href="#" onClick={()=>{return goLogin(router)}} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                 <ShoppingBagIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
@@ -456,7 +455,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                             {userInfo.name && (
                             <Menu.Item>
                               <button
-                                onClick={goLogout}
+                                onClick={()=>{return goLogout(router)}}
                                 className={`font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                               >
                                 <LogoutIcon

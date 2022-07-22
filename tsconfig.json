@@ -39,6 +39,9 @@
       ],
       "@/lib/*": [
         "src/lib/*"
+      ],
+      "@/pages/*": [
+        "src/pages/*"
       ]
     },
     "incremental": true

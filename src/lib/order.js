@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-05-10 13:24:28
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-22 09:41:15
+ * @Description: 
+ */
 import { fetchAPI, ROOT_URL } from '@/lib/base.client'
 import { goLogin } from '@/lib/auth.client'
 /**
@@ -19,7 +26,7 @@ export async function submitOrder(orderInfo, router){
         }
     } catch (Exception) {
         if(Exception.message === '401'){
-            goLogin()
+            goLogin(router)
         }else{
             router.push(`/store/payment-fail`)
         }
