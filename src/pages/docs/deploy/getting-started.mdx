@@ -5,18 +5,32 @@ description: 华炎魔方将低代码技术与企业业务场景结合， 助力
 
 华炎魔方基于 [Nodejs](https://nodejs.org/zh-cn/) 开发，运行环境需要 [mongodb 数据库](https://www.mongodb.com/docs/v4.2/administration/install-community/) 和 [redis 缓存](https://redis.io/docs/getting-started/) 服务。
 
-## 生产环境部署
+## 创建新项目
 
-您可以使用以下方式部署华炎魔方生产环境。生产环境可以通过安装软件包扩展现有功能。
+您可以使用 [create-steedos-app命令](./create-steedos-app) 快速创建华炎魔方模版项目。
 
-- [Docker 私有部署](./deploy-docker)
-- [购买 AWS 云服务](./deploy-cloud)
-<!-- - [集群 部署](./deploy-cluster) -->
+```shell
+npx create-steedos-app my-app
+```
 
-## 开发环境部署
+## Docker部署
 
-您可以使用以下方式部署华炎魔方开发环境，开发环境可以开发、调试并发布软件包。
+如果您只是想试用华炎魔方的功能，建议使用 Docker 部署。
 
-- [DevOps 远程开发环境部署](./devops)
+- [docker-compose.yml](https://gitlab.steedos.cn/steedos/docker/-/tree/main/steedos-community)
+- [Docker 私有部署说明](./deploy-docker)
+
+## 远程开发环境
+
+点击以下链接，启动Gitpod远程开发环境。
+
+- [Gitpod 运行项目模版（海外版）](https://gitpod.io/#github.com/steedos/steedos-project-template)
+- [Gitpod 运行项目模版（中国版）](https://vscode.steedos.cn/#gitlab.steedos.cn/steedos/steedos-project-template)
+- [华炎魔方 DevOps 远程开发环境使用说明](./devops)
+
+## 本地开发环境部署
+
+如果您精通 nodejs, mongodb, redis，您可以参考一下教程手工部署华炎魔方开发环境。
+
 - [Windows 本地开发环境部署](./deploy-windows)
 - [Mac 本地开发环境部署](./deploy-mac)

@@ -1,0 +1,650 @@
+---
+title: 国际化
+description: 
+---
+
+华炎魔方是支持多语言的低代码平台，我们可以在软件包中通过编写国际化资源文件来覆盖系统默认的相关翻译内容从而实现国际化。
+
+我们鼓励大家在华炎魔方 [GitHub](https://github.com/steedos/steedos-platform) 开源代码中直接修改国际化资源文件并提交PR。
+
+如果是要在华炎魔方项目中实现国际化，我们推荐大家把所有国际化的相关内容专门做成一个软件包，这样方便后续按模块进行维护、升级和部署，比如可以创建一个名为 `locale` 的软件包，以下国际化相关教程都在该软件包中开发。
+
+## 资源文件
+
+以下是华炎魔方源码中国际化资源文件对应的位置，其中文件或文件名中`zh-CN`表示中文资源文件，`en`表示英文资源文件。
+
+### 对象
+
+对象、对象字段、列表视图、操作按钮等对象元数据的国际化资源文件在以下源码中：
+
+- Git仓库源码：[standard-objects/objectTranslations](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations`
+
+### 设置应用菜单
+
+后台设置应用是有左侧菜单的，这个菜单项的国际化资源文件在以下源码中：
+
+- Git仓库源码：[standard-objects/translations](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/translations)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/translations`
+
+### 其他
+
+其他国际化变量在以下源码中：
+
+- Git仓库源码：[i18n/translations](https://github.com/steedos/steedos-platform/tree/master/packages/i18n/translations)
+- 本地NPM包源码： `node_modules/@steedos/i18n/translations`
+
+## 对象
+对象和对象字段的元数据中是可以定义相关显示名称的，比如华炎魔方有一个名为 `company` 的对象，通过定义其 `label` 属性可以配置该对象的显示名称，这个对象在中文环境下显示的是“分部”，英文显示的是“Company”，以下操作过程可以把该对象对应的翻译改为“分公司”和”Sub Corporation“，同时把该对象上名为”分部代码“的字段改为”分公司代码“。
+
+<!--
+### 指定继承对象
+
+如果是要修改华炎魔方内置的标准对象或其他软件包中的对象翻译的话，需要先指定继承对象，否则为该对象添加的国际化翻译内容不会生效。
+
+这里我们要修改的是名为 `company` 的内置对象的国际化翻译内容，所以需要先按以下方式指定继承该对象。
+
+
+```yml
+// locale/main/default/objects/company/company.object.yml
+name: company
+extend: company
+```
+
+添加 `extend: company` 属性意味着此对象继承了 `company` 对象。
+-->
+
+### 同步为代码
+
+如果是为可视化界面上新建的对象添加国际化翻译内容，推荐先把该对象的元数据同步为代码以实现源代码版本管理，详情请参阅教程 [同步元数据](/docs/developer/sync-metadata)，不过这并不是必须的，因为未同步为代码的对象也支持按以下操作步骤实现对象国际化。
+
+### 添加翻译文件
+
+在软件包的default文件夹下新建一个objectTranslations文件夹，其下新建 `company.en` 和 `company.zh-CN` 两个同级文件夹对应的中英两种语言的翻译内容，最后各自新建中英文翻译的yml配置文件。 
+
+其目录结构如下：
+
+```bash
+locale
+├── main / default
+└───├── objectTranslations
+    └───├── company.en
+        |   └── company.en.objectTranslation.yml
+        └── company.zh-CN
+            └── company.zh-CN.objectTranslation.yml
+```
+
+<alert type="info">
+请注意添加国际化文件时，请按需添加，需要中文就加中文翻译文件，需要英文就加英文翻译文件，不可以加了文件后文件内容却是空的，这样会造成服务端程序抛出异常错误消息。
+</alert>
+
+### 修改翻译内容
+
+在刚新建的yml文件中添加翻译内容，以下两个文件内容实现了重写 `company` 对象及其字段的中文和英文显示名称
+
+
+```yaml
+// locale/main/default/objectTranslations/company.zh-CN/company.zh-CN.objectTranslation.yml
+name: company
+label: 分公司
+fields:
+  code: 
+    label: '分公司代码'
+```
+
+```yaml
+// locale/main/default/objectTranslations/company.en/company.en.objectTranslation.yml
+name: company
+label: Sub Corporation
+fields:
+  code: 
+    label: 'Sub Corporation Code'
+```
+
+### Base对象翻译
+
+华炎魔方内置了Base对象，该对象用于配置所有对象的通用属性，其中包括所有对象的通用国际化，它表示可以给所有对象上的通用字段，标准操作按钮等设置默认的国际化内容，而不用每个对象上都去设置一次。
+
+内置的Base对象国际化内容请参考源码：
+
+- Git仓库源码：[base.zh-CN.objectTranslation.yml](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml`
+
+与给某个具体对象实现国际化操作方式一样，需要先为Base对象添加国际化翻译文件。
+
+```bash
+locale
+├── main / default
+└───├── objectTranslations
+    └───├── base.en
+        |   └── base.en.objectTranslation.yml
+        └── base.zh-CN
+            └── base.zh-CN.objectTranslation.yml
+```
+
+然后再设置对应的翻译内容来实现对Base对象的国际化，我们只要把上面提到的Base对象国际化源码中的同名国际化变量添加进去，并定义其翻译内容即可修改默认的国际化内容。
+
+以下翻译内容把中文环境下”分部“字段的显示名称改为了”单位“，并且修改了”新建“和”编辑“这两个标准操作按钮的显示名称，加上它们后，所有对象默认的相关国际化配置都会发生对应的变化，重启服务后就能看到效果。
+
+```yaml
+// locale/main/default/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml
+name: base
+label: base
+fields:
+  company_id: 
+    label: '单位'
+  company_ids: 
+    label: '所属单位'
+actions:
+  standard_new:
+    label: 创建
+  standard_edit:
+    label: 修改
+```
+
+### 内置对象翻译
+
+部分内置对象国际化翻译文件源码：
+
+- Git仓库源码：[standard-objects/objectTranslations](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations`
+
+要修改这些内置对象的国际化内容，按上面提到的操作步骤，先添加翻译文件，再修改翻译内容，只要为对象上同名国际化变量配置不同的翻译内容值，重启服务后即可看到修改后的效果。
+
+## 字段
+
+字段作为对象的一部分，其国际化翻译与对象是在一起的，请参考上述“对象国际化”的步骤来实现字段国际化，先添加翻译文件再修改翻译内容。
+
+### 字段分组
+
+不过字段上可以配置“分组”，我们如果需要对分组进行国际化翻译，也是修改对象翻译文件，以下翻译内容描述了如何修改华炎魔方内置对象“公司”下名为“华炎云”的字段分组的中文显示名称。
+
+```yaml
+// locale/main/default/objectTranslations/spaces.zh-CN/spaces.zh-CN.objectTranslation.yml
+name: spaces
+label: 总公司
+fields:
+  api_key: 
+    label: '密钥'
+groups:
+  Developer: 华炎魔方
+```
+
+该翻译内容把“公司”对象的中文显示名称改为了“总公司”，把字段`api_key`的中文显示名称改为了“密钥”，并且该字段所属的分组显示名称从“华炎云”改为了“华炎魔方”。
+
+可视化界面上新建的字段国际化方式与上面讲的内置对象是一样的，只要在对象翻译文件上加上相关字段或字段分组并设置其翻译文本即可。
+
+### 下拉选项
+
+选择框类型的下拉选项也是可以定制国际化翻译内容的，以下国际化翻译内容实现了给名为“项目任务”的对象下的“优先级”字段配置中文环境下的下拉选项显示名称。
+
+```yml
+// locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
+name: project_tasks__c
+label: 项目任务
+fields:
+  priority__c:
+    label: 优先级
+    options:
+      - label: 高
+        value: high
+      - label: 中
+        value: normal
+      - label: 低
+        value: low
+```
+
+### 其他
+
+字段上的其他属性比如“提示文本”和“描述”也是可以配置国际化内容的，以下示例描述了如何在国际化文件中配置它们。
+
+```yml
+// locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
+name: project_tasks__c
+label: 项目任务
+fields:
+  priority__c:
+    label: 优先级
+    options: ...
+    help: 本周任务请选择“高”，下周任务请选择“中”，否则请选择“低”
+    description: 描述项目任务的紧急程度。
+```
+
+## 列表视图
+
+与字段一样，列表视图也是对象的组成部分之一，其国际化翻译与对象是在一起的，请参考上述“对象国际化”的步骤来实现列表视图国际化，先添加翻译文件再修改翻译内容。
+
+以下翻译内容描述了如何定制可视化界面上新建的名为“项目任务”的自定义对象的“所有”视图的中文和英文名称。
+
+
+```yaml
+// locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
+name: project_tasks__c
+label: 项目任务
+listviews: 
+  all:
+    label: 所有任务
+```
+
+
+```yaml
+// locale/main/default/objectTranslations/project_tasks__c.en/project_tasks__c.en.objectTranslation.yml
+name: project_tasks__c
+label: Project Tasks
+listviews: 
+  all:
+    label: All Tasks
+```
+
+<alert type="info">
+请注意国际化列表视图时在翻译文件中使用的是`listviews`这个单词作为key，它与对象定义时使用的`list_views`相比要少写一个下划线。
+</alert>
+
+## 操作按钮
+
+与字段和列表视图一样，操作按钮也是对象的组成部分之一，其国际化翻译与对象是在一起的，请参考上述“对象国际化”的步骤来实现列表视图国际化，先添加翻译文件再修改翻译内容。
+
+以下翻译内容描述了如何定制可视化界面上新建的名为“项目任务”的自定义对象的“打印”按钮的中文和英文名称。
+
+
+```yaml
+// locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
+name: project_tasks__c
+label: 项目任务
+actions:
+  print:
+    label: 打印当天任务
+```
+
+```yaml
+// locale/main/default/objectTranslations/project_tasks__c.en/project_tasks__c.en.objectTranslation.yml
+name: project_tasks__c
+label: Project Tasks
+actions:
+  print:
+    label: Print Tasks for today
+```
+
+华炎魔方内置了很多标准操作按钮，比如新建、编辑、删除等，这些标准按钮的国际化方法与自定义按钮是一样的，比如以下翻译内容可以修改上面的“项目任务”对象的“新建”按钮的中文名称为“创建项目任务”。
+
+```yaml
+// locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
+name: project_tasks__c
+label: 项目任务
+actions:
+  standard_new:
+    label: 创建项目任务
+```
+
+如果想修改所有对象的某个标准操作按钮的显示名称，请参阅上述 [Base对象翻译](#Base对象翻译) 小节。
+
+内置标准操作按钮清单请参考源码：
+
+- Git仓库源码：[base.zh-CN.objectTranslation.yml#L137](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml#L137)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations/base.zh-CN/base.zh-CN.objectTranslation.yml`
+
+<alert type="info">
+请注意国际化操作按钮时在翻译文件中使用的是`actions`这个单词作为key，而对象中定义按钮元数据时使用的是`buttons`。
+</alert>
+
+## 自定义变量
+
+自定义国际化变量指的是定义一个全局的国际化Key，并为该Key编写不同语言的国际化翻译内容。
+
+### 添加自定义变量
+
+要添加自定义翻译变量，需要先在软件包中添加全局自定义翻译文件。
+
+```bash
+locale
+├── main / default
+└───├── translations
+    ├── └── en.translation.yml
+    └── └── zh-CN.translation.yml
+```
+
+以下翻译内容为中文和英文资源分别添加了名为`base_error_start_end_date`的自定义翻译变量。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  base_error_start_end_date: '结束时间不能早于开始时间'
+```
+
+```yml
+// locale/main/default/translations/en.translation.yml
+CustomLabels:
+  base_error_start_end_date: 'The end time cannot be earlier than the start time'
+```
+
+添加自定义国际化变量前，应该先确认下变量名称是否已经被 [内置自定义变量](#内置自定义变量) 或其他软件包占用，一般来说我们启动项目后在浏览器控制台中调用`t`函数即可判断当前key是否已经被占用，只要返回的内容不是key本身就说明该变量已经被占用。
+
+```js
+t('base_error_start_end_date') //返回“开始时间必须小于结束时间”
+```
+
+比如，在浏览器控制台输入以上代码并运行会发现输出的内容为“开始时间必须小于结束时间”，这说明该变量已经被占用了，所以上面不应该使用变量`base_error_start_end_date`,因为它已经被占用了。
+
+我们尝试把该变量前面的`base`去掉，可以看到它并没有被占用。
+
+```js
+t('error_start_end_date') //返回error_start_end_date
+```
+
+<alert type="info">
+如果强行在软件包中添加已经被占用的自定义国际化变量的话，原来引用该变量的地方国际化内容就会被同时修改掉。
+</alert>
+
+
+### 使用自定义变量
+
+在添加好自定义翻译变量后，我们就可以在程序源码中使用它们了。
+
+#### 触发器中抛错信息
+
+以下示例演示了如何在 [触发器](/docs/developer/trigger) 中抛出错误消息时使用上面新添加的自定义翻译变量。
+
+```js
+// locale/main/default/triggers/project_tasks__c.trigger.js
+const validateStartEndDate = function (start, end) {
+    if(start && end){
+        const startTime = start.getTime ? start.getTime() : (new Date(start)).getTime();
+        const endTime = end.getTime ? end.getTime() : (new Date(end)).getTime();
+        if(endTime - startTime < 1000){
+            throw new Error("base_error_start_end_date");
+        }
+    }
+}
+
+module.exports = {
+    listenTo: 'project_tasks__c',
+    beforeInsert: async function () {
+        const { doc, object_name} = this;
+        validateStartEndDate(doc['start'], doc['end']);
+    },
+    beforeUpdate: async function () {
+        const { doc, object_name} = this;
+        validateStartEndDate(doc['start'], doc['end']);
+    }
+}
+```
+
+从上述示例代码中可以看到，在触发器中只要在抛出错误信息时直接引用自定义翻译变量的key，就可以自动实现错误消息国际化了，系统会根据当前登录用户所设定的语言返回正确的国际化内容。
+
+<alert type="info">
+因为触发器返回的错误消息会在前端组件中执行国际化转换再显示给最终用户看，所以并不需要在触发器中手动执行服务端国际化函数。
+</alert>
+
+#### 前端脚本中显示变量内容
+
+我们在前端脚本中只要调用 `t` 函数即可得到当前登录用户所设定的语言对应的国际化内容，比如以下脚本会弹出错误消息，显示为前面我们定义的国际化内容。
+
+```js
+toastr.error(t('base_error_start_end_date'));
+```
+
+#### 自定义API接口中消息
+
+以下示例演示了如何在 [自定义API接口](/docs/developer/router) 中返回业务消息时使用上面新添加的自定义翻译变量。
+
+```js
+// locale/main/default/routes/lbs_distance.router.js
+const express = require("express");
+const router = express.Router();
+const core = require('@steedos/core');
+
+router.get('/api/lbs_distance', core.requireAuthentication, async function (req, res) {
+    try {
+        let long1 = req.query.long1;
+        let lat1 = req.query.lat1;
+        let long2 = req.query.long2;
+        let lat2 = req.query.lat2;
+        if (!long1 || !lat1 || !long2 || !lat2) {
+            throw new Error("lbs_distance_error_params_required");
+        }
+        let result;
+        // 执行地图应用算法计算输出两个地点距离
+        res.status(200).send({ result, success: true });
+    } catch (error) {
+        console.error(error);
+        res.status(200).send({ success: false, error: error.message });
+    }
+});
+exports.default = router;
+```
+
+我们需要在国际化文件中定义变量 `lbs_distance_error_params_required`，以下是中文国际化文件中相关内容：
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  lbs_distance_error_params_required: '缺少经度或纬度参数！'
+```
+
+上述示例中请求`/api/lbs_distance`接口可以发现返回的错误信息并没有翻译为配置好的中文消息。
+
+我们需要在获取把接口返回消息时，在前端调用转换函数才能得到转换后的消息内容。
+
+以下是前端按钮部分示例代码：
+
+```js
+module.exports = {
+  lbs_distance: function (object_name, record_id) {
+    let result = Steedos.authRequest("/api/lbs_distance",{type: 'get', async: false});
+    if(!result.success){
+      toastr.error(t(result.error));
+    }
+    //...
+  },
+
+  disableVisible: function (object_name, record_id, record_permissions, record) {
+    return true;
+  }
+}
+```
+
+### 内置自定义变量
+
+内置自定义变量清单请参考源码：
+
+- Git仓库源码：[i18n/translations](https://github.com/steedos/steedos-platform/tree/master/packages/i18n/translations)
+- 本地NPM包源码： `node_modules/@steedos/i18n/translations`
+
+### 修改自定义变量
+
+我们只要在软件包中添加内置自定义国际化变量同名变量就可以很方便的实现修改这些内置变量的目的。
+
+以下示例代码会把点击九宫格弹出的应用程序窗口中的标题从”应用程序启动器“ 改为“所有应用”。
+
+```
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  creator_app_launcher: 所有应用
+```
+
+以下示例代码会把审批王应用中填写表单时右上角的“帮助”链接地址修改成新的地址。
+
+```yaml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  # 审批=>填写表单 中右上角的“帮助”链接
+  new_help: 'https://www.xxx.cn/docs'
+```
+
+## 应用
+
+一般来说我会需要对应用的名称和描述进行国际化配置，与上述 [自定义国际化变量 - 添加自定义变量](#添加自定义变量) 小节类似，要实现应用的国际化，我们需要先在软件包中添加全局自定义翻译文件。
+
+```bash
+locale
+├── main / default
+└───├── translations
+    ├── └── en.translation.yml
+    └── └── zh-CN.translation.yml
+```
+
+不同的是在定义翻译内容时，并不是把翻译内容定义在 `CustomLabels` 节点下，而是放在名为 `CustomApplications` 的节点下。
+
+以下翻译内容为中文和英文资源分别配置了Api名称为`oa`的“办公”应用的自定义翻译变量，加上它们重启服务后就能看到效果。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomApplications:
+  oa:
+    name: 办公自动化
+    description: 协同办公系统，包含审批、文档、公告、任务、日程等模块。
+```
+
+```yml
+// locale/main/default/translations/en.translation.yml
+CustomApplications:
+  oa:
+    name: OA
+    description: Collaborative office system
+```
+
+## 设置应用菜单
+
+后台设置应用是有左侧菜单的，这个菜单项的默认国际化内容请参考源码：
+
+- Git仓库源码：[standard-objects/translations/zh-CN.translation.yml](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/translations/zh-CN.translation.yml)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/translations/zh-CN.translation.yml`
+
+如果需要修改这个菜单的国际化内容，可以参阅上述 [自定义国际化变量 - 添加自定义变量](#添加自定义变量) 小节添加对应到同名国际化变量，并定义其翻译内容即可。
+
+以下翻译内容修改了中文环境下"设置"应用的名称和描述，并且把左侧菜单”权限集“改为了”权限组“，加上它们重启服务后就能看到效果。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomApplications:
+  admin:
+    name: 系统设置
+    description: 系统管理员可以设置公司、人员、权限等基本系统。
+CustomLabels:
+  menu_permission_set: 权限组
+```
+
+## 系统消息
+
+要实现系统消息的国际化，请参阅上述 [自定义国际化变量 - 添加自定义变量](#添加自定义变量) 小节添加一个用于提示消息的变量，并为其定义各个语言下的翻译内容，然后参阅上述 [自定义国际化变量 - 使用自定义变量](#使用自定义变量) 小节使用添加好的变量作为提示消息。
+
+如果要修改华炎魔方内置的消息内容，请从上述 [自定义国际化变量 - 内置自定义变量](#内置自定义变量) 小节中提到的源码中找到对应的内置变量名称，然后在软件包中添加同名国际化变量，并定义其翻译内容即可。
+
+比如以下翻译内容重新配置了中文环境下部分操作按钮相关的提示消息。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  space_users_method_disable_success: 已成功停用该用户。
+  space_users_method_disable_error: 停用用户失败，%s
+  space_users_method_enable_success: 已成功启用该用户。
+  space_users_method_enable_error: 启用用户失败，%s
+```
+
+## 审批王
+
+[审批王](/products/workflow) 是一个华炎魔方为大家提供的开源工作流引擎，这是一个广泛应用于企业内部员工（决策层/管理层/执行层）及外部用户（客户/供应商/经销商）的审批应用，下面我们来看看怎么为它实现国际化。
+
+### 应用
+
+上面 [应用国际化](#应用国际化) 小节描述了如何为一个应用配置国际化翻译，以下翻译内容能把审批王应用的名称从原来的“审批中心”改为“审批王”
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomApplications:
+  approve_workflow:
+    name: 审批王
+    description: 提供图形化的表单与流程设计界面，自定义企业业务审批流程。
+```
+
+### 对象
+
+审批王应用中主要涉及的对象是 `instances`，其默认的国际化内容请参考源码：
+
+- Git仓库源码：[instances.zh-CN.objectTranslation.yml](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/objectTranslations/instances.zh-CN/instances.zh-CN.objectTranslation.yml)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/objectTranslations/instances.zh-CN/instances.zh-CN.objectTranslation.yml`
+
+
+只要按上面 [对象国际化](#对象国际化) 小节所述，为该对象配置国际化翻译内容即可修改该对象的默认国际化效果。
+
+```yaml
+// locale/main/default/objectTranslations/instances.zh-CN/instances.zh-CN.objectTranslation.yml
+name: instances
+label: 审批文件
+```
+
+以上翻译内容会把中文环境下审批王应用中“审批”对象显示名称改为“审批文件”。
+
+### 设置应用菜单
+
+上面 [设置应用菜单国际化](#设置应用菜单国际化) 小节描述了如何为设置应用的左侧菜单配置国际化翻译，以下翻译内容能把菜单“角色”名称改为“审批角色”。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  menu_roles: 审批角色
+```
+
+审批王在后台设置应用的左侧菜单项的默认国际化内容请参考源码：
+
+- Git仓库源码：[standard-objects/translations/zh-CN.translation.yml](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/translations/zh-CN.translation.yml)
+- 本地NPM包源码： `node_modules/@steedos/standard-objects/translations/zh-CN.translation.yml`
+
+### 审批状态菜单
+
+我们可以在上面 [内置自定义变量](#内置自定义变量) 小节的参考源码中找到审批状态相关菜单的国际化内容，要修改它们，只要配置下相关翻译变量即可。
+
+以下翻译内容重新配置了相关菜单的显示名称，并修改了部分菜单显示名称。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  inbox: 待审批
+  outbox: 已审批
+  draft: 草稿
+  pending: 进行中
+  completed: 已完成
+  monitor: 监控箱
+  my_instances: 我的文件
+```
+
+### 按钮
+
+我们可以在上面 [内置自定义变量](#内置自定义变量) 小节的参考源码中找到审批王应用中操作按钮显示名称的国际化内容，要修改它们，只要配置下相关翻译变量即可。
+
+以下翻译内容重新配置了相关按钮的国际化内容，也修改了其中部分按钮的显示名称。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  standard_query: 搜索
+  New: 新建文件
+  Send: 发送
+  instance_submit: 提交
+  instance_save: 暂存
+  instance_delete: 删除
+  instance_cancel: 取消申请
+  instance_reassign: 转签核
+  instance_relocate: 重定位
+  instance_print: 打印
+  workflow_attach_upload: 上传附件
+```
+
+### 其它
+
+审批王应用中其他国际化相关内容都可以按上面 [内置自定义变量](#内置自定义变量) 小节提供的方法处理，只要找到对应的变量名称即可。
+
+比如以下翻译内容重新配置了中文环境下部分操作按钮相关的提示消息。
+
+```yml
+// locale/main/default/translations/zh-CN.translation.yml
+CustomLabels:
+  Saved successfully: 申请单已暂存.
+  Added successfully: 创建成功!
+  Deleted successfully: 删除成功!
+  Submitted successfully: 提交成功!
+  Canceled successfully: 取消申请成功!
+  Reassigned successfully: Reassigned successfully
+  Relocated successfully: 重定位成功!
+```
+

@@ -8,6 +8,15 @@
   height: 100%;
 } */
 
+
+.login{
+  height: 100%;
+}
+
+.login #__next {
+  height: 100%;
+}
+
 .react-player__shadow {
   background: rgba(0, 0, 0, 0.8) !important;
   border-radius: 16px !important;

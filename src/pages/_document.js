@@ -24,9 +24,10 @@ export default class MyDocument extends Document {
         <body
           className={clsx('antialiased text-slate-500 dark:text-slate-400', {
             'bg-white dark:bg-slate-900': !this.props.dangerousAsPath.startsWith('/examples/'),
+            'login': this.props.dangerousAsPath.startsWith('/login')
           })}>
           <Main />
-          <NextScript />
+          <NextScript/>
         </body>
         <script src={`https://hm.baidu.com/hm.js?${process.env.NEXT_PUBLIC_BAIDU_TONGJI_ID}`}/>
       </Html>

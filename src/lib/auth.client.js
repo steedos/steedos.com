@@ -1,4 +1,5 @@
 import { fetchAPI, ROOT_URL } from '@/lib/base.client';
+import { getSession, signOut } from 'next-auth/react';
 
 function getRedirectUrl(href = window.location.href){
 	const redirect = href.replace("/steedos/sign-in", "").replace("/accounts/a/#/logout", "");
@@ -15,17 +16,19 @@ export async function authValidate(){
     return data;
 }
 
-export function goLogin(){
-    window.location.href = `${ROOT_URL}/accounts/a/#/login?redirect_uri=${getRedirectUrl()}`
+export function goLogin(router){
+    window.location.href = `/login?callbackUrl=${getRedirectUrl()}`;
+    // router.replace(`/login?callbackUrl=${getRedirectUrl()}`, null, {shallow: true})
+    // window.location.href = `${ROOT_URL}/accounts/a/#/login?redirect_uri=${getRedirectUrl()}`
 }
 
-export function goSignup(){
+export function goSignup(router){
     window.location.href = `${ROOT_URL}/accounts/a/#/signup?redirect_uri=${getRedirectUrl()}`
 }
 
-export function goLogout(){
-    removeAuthInfo()
-    window.location.href = `${ROOT_URL}/accounts/a/#/logout?redirect_uri=${getRedirectUrl()}`
+export function goLogout(router){
+    signOut({callbackUrl: getRedirectUrl()})
+    //window.location.href = `${ROOT_URL}/accounts/a/#/logout?redirect_uri=${getRedirectUrl()}`
 }
 
 export function saveAuthInfo(userId, spaceId, authToken){
@@ -40,16 +43,20 @@ export function removeAuthInfo(){
     localStorage.removeItem("steedos:token");
 }
 
-export function getAuthorization(){
+export async function getAuthorization(){
     try {
-        let spaceId = localStorage.getItem('steedos:spaceId');
-        let token = localStorage.getItem('steedos:token');
-
-        if (window.location.search && !spaceId && !token) {
-            var searchParams = new URLSearchParams(window.location.search);
-            spaceId = searchParams.get('X-Space-Id');
-            token = searchParams.get('X-Auth-Token');
+        const session = await getSession()
+        if(!session || !session.steedos){
+            return ;
         }
+        let spaceId = session.steedos.space;
+        let token = session.steedos.token;
+
+        // if (window.location.search && !spaceId && !token) {
+        //     var searchParams = new URLSearchParams(window.location.search);
+        //     spaceId = searchParams.get('X-Space-Id');
+        //     token = searchParams.get('X-Auth-Token');
+        // }
         if (!spaceId || !token) {
             return null;
         }

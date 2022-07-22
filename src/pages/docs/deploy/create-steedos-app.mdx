@@ -1,0 +1,58 @@
+---
+title: Create Steedos App
+description: 创建一个空的项目，或是导入一个示例项目。
+---
+
+使用华炎魔方最简单的方法是使用`create-steedos-app`。这个CLI工具使您能够快速开始构建一个新的华炎魔方应用程序，并为您设置好一切。
+
+你可以使用默认的华炎魔方项目模板创建一个新应用，也可以使用官方的 [示例项目](https://github.com/steedos/steedos-platform/tree/master/examples) 来创建应用。
+
+## 创建空项目
+
+```shell
+npx create-steedos-app@latest my-app
+# or
+yarn create steedos-app my-app
+# or
+pnpm create steedos-app my-app
+```
+
+## 导入平台模版项目
+
+可以用`-e, --example`参数导入平台模版项目。
+
+平台模版项目清单位于：https://github.com/steedos/steedos-platform/tree/master/examples
+
+```shell
+npx create-steedos-app my-app -e project-ee
+# or
+yarn create steedos-app my-app -e project-ee
+# or
+pnpm create steedos-app my-app -e project-ee
+```
+
+## 从 Github 导入模版项目
+
+可以用`-e, --example`参数导入模版项目。
+
+例如：https://github.com/steedos/steedos-examples
+
+```shell
+npx create-steedos-app my-app -e https://github.com/steedos/steedos-examples/tree/main/with-amis
+# or
+yarn create steedos-app my-app -e https://github.com/steedos/steedos-examples/tree/main/with-amis
+# or
+pnpm create steedos-app my-app -e https://github.com/steedos/steedos-examples/tree/main/with-amis
+```
+
+## 参数说明
+
+`create-steedos-app` 命令支持以下参数:
+
+- `-e, --example [name]|[github-url]`： 一个引导应用程序的示例。你可以使用一个来自 [华炎魔方项目Git源码仓库](https://github.com/steedos/steedos-platform/tree/master/examples) 或GitHub URL的示例名称。URL可以使用任何分支或子目录。
+- `--use-npm`： 显式地告诉CLI使用npm来引导应用。
+- `--use-pnpm`： 显式地告诉CLI使用pnpm来引导应用。
+
+<alert type="info">
+注意：要使用`yarn`进行引导，我们建议运行`yarn create steedos-app my-app`
+</alert>

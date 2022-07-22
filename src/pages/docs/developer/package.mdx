@@ -96,7 +96,7 @@ DEFAULT_PACKAGE_PATH=steedos-packages/project #配置为相关软件包目录
 * 修改软件包文件夹名称为`project`。
 * 修改软件包名称，即软件包文件夹中 `package.json` 文件中的“name”属性值为`project`。
 
-因为华炎魔方是基于 nodejs 标准的 [npm](https://www.npmjs.com/) 规范来定义软件包的，所以我们也可以在软件包文件夹`steedos-packages`中新建一个子文件夹`project`，然后`cd`到该文件夹，并执行命令`npm init`来初始化项目的方式来创建一个软件包，不过我们依然需要从默认软件包文件夹`steedos-app`中把名为`package.service.js`的微服务配置文件复制该文件夹中。
+因为华炎魔方是基于 nodejs 标准的 [npm](https://www.npmjs.com/) 规范来定义软件包的，所以我们也可以在软件包文件夹`steedos-packages`中新建一个子文件夹`project`，然后`cd`到该文件夹，并执行命令`npm init`来初始化项目的方式来创建一个软件包，不过我们依然需要从默认软件包文件夹`steedos-app`中把名为`package.service.js`的微服务配置文件复制该文件夹中。如果当前软件包需要依赖其它软件包，在`package.service.js`文件中配置`dependencies:['~packages-软件包名称']`即可，示例：`dependencies: ['~packages-@steedos-labs/contract']`。
 
 ### 运行项目
 
@@ -111,7 +111,7 @@ STEEDOS_CLOUD_API_KEY=#在此填入华炎云上新建的私有部署记录中的
 
 ### 需求开发
 
-为方便演示，我们在“对象设置→对象”界面上简单新建一个名为“项目”的对象，为其配置好相关字段后，在“应用程序→选项卡”界面新建一个选项卡指向该对象，最后在“应用程序→应用程序”界面新建一个应用配置上该选项卡用于展示该对象数据。
+为方便演示，我们在“对象设置→对象”界面上简单新建一个名为“项目”的对象，为其配置好相关字段后，在“用户界面→选项卡”界面新建一个选项卡指向该对象，最后在“应用程序→应用程序”界面新建一个应用配置上该选项卡用于展示该对象数据。
 
  ![](https://console.steedos.cn/api/files/images/unt7trJ2YdwHyZtGa)
 

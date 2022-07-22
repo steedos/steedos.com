@@ -94,7 +94,7 @@ const doc = {
 };
 await objectql.getObject(objectApiName).directInsert(doc);
 ```
-
+<!--
 ### insertMany
 
 添加多条记录。该函数会触发配置的触发器函数： beforeInsert 、afterInsert 。添加 “任务” 等特殊记录后会发送通知给指定人员。
@@ -170,6 +170,7 @@ const docs = [
 ];
 await objectql.getObject(objectApiName).directInsertMany(docs);
 ```
+-->
 
 ## 修改数据
 
@@ -242,7 +243,7 @@ result==> {
 } 
 */
 ```
-
+<!--
 ### updateMany
 
 更新多条记录。该函数会触发配置的触发器函数： beforeUpdate 、afterUpdate 。更新 “任务” 等特殊记录后会发送通知给指定人员。
@@ -284,7 +285,7 @@ const doc = {
 };
 await objectql.getObject(objectApiName).directUpdateMany(filters, doc);
 ```
-
+-->
 ## 删除数据
 
 支持删除单条数据和批量删除数据，以direct前缀表示直接执行相关操作不触发触发器。
@@ -324,7 +325,7 @@ const result = await objectql.getObject(objectApiName).directDelete(id);
 console.log('result==>',result)
 // result==> 1
 ```
-
+<!--
 ### deleteMany
 
 批量删除数据。 该函数会触发配置的触发器函数： beforeDelete、afterDelete 。
@@ -358,7 +359,7 @@ const objectApiName = "contacts";
 const filters = ["name","contains","Important"];
 await objectql.getObject(objectApiName).directDeleteMany(filters);
 ```
-
+-->
 ## 查找数据
 
 提供了五种查找数据的方法和一种查看对象配置详情的方法

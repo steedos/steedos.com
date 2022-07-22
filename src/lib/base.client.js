@@ -1,10 +1,11 @@
+
 import { getAuthorization } from '@/lib/auth.client';
 
 export const ROOT_URL = process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL
 
 export async function fetchAPI(api, options = { credentials: 'include' }) {
     const headers = { 'Content-Type': 'application/json' }
-    const AUTHORIZATION = getAuthorization()
+    const AUTHORIZATION = await getAuthorization()
     if (AUTHORIZATION) {
         headers[
             'Authorization'

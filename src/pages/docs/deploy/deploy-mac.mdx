@@ -42,8 +42,8 @@ npm i steedos-cli --global
 国内用户配置[淘宝 NPM 镜像](https://developer.aliyun.com/mirror/NPM)以提高 NPM 包下载速度：
 
 ```javascript
-npm config set registry https://registry.npm.taobao.org
-yarn config set registry https://registry.npm.taobao.org
+npm config set registry http://registry.npmmirror.com
+yarn config set registry http://registry.npmmirror.com
 ```
 
 #### 安装Mongodb数据库服务
@@ -197,11 +197,7 @@ ROOT_URL=http://localhost:3000
 MONGO_URL=mongodb://localhost:27017/steedos
 TRANSPORTER=redis://127.0.0.1:6379
 CACHER=redis://127.0.0.1/1
-STEEDOS_CLOUD_SPACE_ID=#在此填入私有部署记录中的魔方ID
-STEEDOS_CLOUD_API_KEY=#在此填入私有部署记录中的API Key
 ```
-
-请先 [开通华炎魔方云服务](/docs/deploy/deploy-cloud) 然后 [激活华炎魔方](/docs/deploy/deploy-activate)，环境变量`STEEDOS_CLOUD_SPACE_ID`和`STEEDOS_CLOUD_API_KEY`的值就是其中新建的私有部署记录中的”魔方ID”和”ApiKey”。
 
 请注意，最新版本的华炎魔方需要把ROOT_URL配置为像下面这种本地IP地址或外网域名才能被其他电脑正常访问，否则在列表视图界面会显示“未找到符合查询条件的集合”这种空列表。
 
@@ -223,125 +219,12 @@ yarn start
 
 根目录下有一个package.json文件，该文件中可以维护项目中各个依赖的npm包的版本号。
 
-要升级华炎魔方的内核版本号，只需要把该文件dependencies节点下的内容替换成 `"@steedos/service-community": "^2.x"` 或者 `"@steedos/service-community": "指定版本"` 就可以了。
-
-```json
-{
-  "dependencies": {
-    "@steedos/service-charts": "2.1.27",
-    "@steedos/service-metadata-server": "2.1.27",
-    "@steedos/service-mongodb-server": "2.1.27",
-    "@steedos/service-package-loader": "2.1.27",
-    "@steedos/service-package-registry": "2.1.27",
-    "@steedos/service-pages": "2.1.27",
-    "@steedos/service-steedos-server": "2.1.27",
-    ...
-  }
-}
-```
-
-* **升级到最新版本**
-
   ```json
   "dependencies": {
-       "@steedos/service-community": "^2.1"
-  },
-  ```
-* **升级到指定版本**
-
-  ```json
-  "dependencies": {
-       "@steedos/service-community": "2.1.74"
+       "@steedos/service-community": "^2.2"
   },
   ```
 
-对于较老版本的魔方项目，在升级内核版本时，除了应该把版本号升级到最新的魔方版本之外，还需要确定下项目根目录下的`steedos-config.yml,.env,package.json`等文件与最新版本的 [模板项目](https://github.com/steedos/steedos-project-template)中同名文件内容是否有明显差异，推荐升级时把有差异的文件内容也复制到您的项目中以避免因配置文件不一致或缺少相关依赖包引起的问题。
 
-修改好package.json文件中的版本号后，命令行中`cd`到项目目录并执行下`yarn`即可安装相关依赖包，待安装完成后再执行下`yarn start`即可以新版本启动服务。
-
-
-:::info
 [查询最新steedos-server 版本号](https://www.npmjs.com/package/steedos-server)
 
-:::
-
-## 激活华炎魔方
-
-华炎魔方私有部署版完全免费，可以参考以下教程为私有部署的华炎魔方配置华炎云账户，通过华炎云激活后，可解锁所有功能限制，并支持从应用市场下载和安装软件包，或是开发、发布自己的软件包。
-
-请注意，激活过程中会自动为本地华炎魔方项目创建管理员账户，管理员用户名为手机号，初始密码为华炎云管理控制台中配置的默认密码。
-
-[如何激活华炎魔方 >](/docs/deploy/deploy-activate)
-
-## 常见问题解答
-
-### 本地项目运行后，登录的用户名密码是什么？
-
-需要先激活华炎魔方，激活时新建华炎魔方会要求设置初始密码，成功激活后，本地华炎魔方项目就自动创建好了管理员账户，管理员用户名为手机号，初始密码为华炎云管理控制台中配置的默认密码。
-
-### 激活过华炎魔方后是否可以断网运行？
-
-只有华炎魔方的安装和激活过程要求连网，后续可以断网运行，不过付费软件包到期后需要重新续费激活。
-
-### mac mongodb开启账户验证
-
-安装MongoDB服务后，系统默认不会开启账户验证，建议开启账户验证，提高服务的安全性。
-
-首先，打开系统终端窗口，执行以下操作：
-
-```javascript
-# 连上数据库
-mongo;
-
-# 切换到admin
-use admin;
-
-# 创建管理员账号
-db.createUser({user: "adminUsername", pwd: "adminPassword", roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] } );
-
-# 切换到steedos
-use steedos;
-
-# 创建普通用户
-db.createUser({user: "userUsername", pwd: "userPassword", roles: [ { role: "readWrite", db: "steedos" }, { role: "read", db: "local"} ] } );
-
-# 切换到admin查看已创建的用户
-use admin;
-db.system.users.find().pretty();
-
-# 退出数据库
-exit;
-```
-
-编辑数据库配置文件mongod.conf，执行以下操作：
-
-```javascript
-# 找到security，去掉'#'并新加一行
-security:
-  # 缩进两个空格
-  authorization: enabled
-```
-
-保存修改后，执行命令重启数据库服务。
-
-```javascript
-brew services restart mongodb-community@4.2 
-```
-
-修改华炎魔方项目的配置文件.env.local，添加mongo账户认证信息：
-
-```javascript
-PORT=3000
-ROOT_URL=http://localhost:3000
-# 修改MONGO_URL和MONGO_OPLOG_URL
-MONGO_URL=mongodb://userUsername:userPassword@mongo:27017/steedos?replicaSet=rs0
-MONGO_OPLOG_URL=mongodb://userUsername:userPassword@mongo:27017/local?replicaSet=rs0&authSource=steedos
-MONGOMS_DOWNLOAD_MIRROR=https://www-steedos-com.oss-cn-beijing.aliyuncs.com/steedos/platform/bin/mongodb
-MONGOMS_DEBUG=true
-TRANSPORTER=redis://localhost:6379
-CACHER=redis://localhost/1
-```
-
-保存配置文件，并重启华炎魔方项目。
-
-\

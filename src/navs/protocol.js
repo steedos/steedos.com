@@ -20,7 +20,7 @@ export const protocolNav = {
     pages['plugin'],
   ],
   '软件包开发': [
-    pages['objectql'],
+    // pages['objectql'],
     // pages['functions'],
     pages['trigger'],
     pages['flow-trigger'],

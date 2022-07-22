@@ -1,3 +1,10 @@
+/*
+ * @Author: yinlianghui@steedos.com
+ * @Date: 2022-06-18 07:20:28
+ * @LastEditors: yinlianghui@steedos.com
+ * @LastEditTime: 2022-07-11 17:19:01
+ * @Description: 
+ */
 import { createPageList } from '@/utils/createPageList'
 
 const deploy = createPageList(
@@ -20,6 +27,7 @@ const developer = createPageList(
 export const documentationNav = {
   '安装部署': [
     deploy['getting-started'],
+    deploy['create-steedos-app'],
     deploy['deploy-docker'],
     deploy['deploy-cloud'],
     deploy['devops'],
@@ -79,9 +87,11 @@ export const documentationNav = {
     developer['objectql'],
     developer['package'],
     developer['flow-trigger'],
+    developer['locale'],
     developer['deploy-gitpod'],
   ],
   '前端开发': [
+    developer['amis'],
     developer['graphql-api'],
     developer['button'],
     developer['form-event'],

@@ -64,6 +64,9 @@ module.exports = {
 
 * 如果return的是false，则中断操作，如在before.insert里return false,则不执行insert操作。
 
+## 触发器&权限
+
+请参考教程 [触发器&权限](/docs/admin/permission_set#触发器&权限) 了解如何在触发器中实现权限判断。
 
 ## 触发器示例
 
@@ -79,6 +82,7 @@ beforeInsert: async function () {
 },
 ```
 
+请参考示例项目 [with-object-trigger](https://github.com/steedos/steedos-examples/tree/main/with-object-trigger) 了解更多。
 
 ## 创建触发器
 

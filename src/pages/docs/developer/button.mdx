@@ -75,6 +75,7 @@ module.exports = {
 * 函数名称规范：按钮事件函数名称没有特别限制，一个正常的函数名称即可；但是按钮显示规则函数要求命名为按钮事件函数同名加上`Visible`后缀。
 * 按钮事件函数：该函数接收的两个参数`object_name, record_id`表示对象api名称和记录ID值。点击按钮时会触发该函数，其内可以通过`Steedos.authRequest`调用华炎魔方API接口。当按钮显示记录详细页，可以调用 `this.record`  、`Creator.getObjectRecord()` 获取当前记录信息； 当按钮显示在列表上，可以调用 `gridRef.current.api.getSelectedRows()` 获取当前选中的记录。
 * 按钮显示规则函数：该函数接收的两个参数`object_name, record_id, permissions, record`表示对象api名称、记录ID值、当前用户对该记录权限及当前记录信息。只有该函数返回值为`true`才会显示按钮。
+* 请注意上述`{button_name}Visible`函数的返回值会覆盖`{button_name}.button.yml`文件中定义的`visible`属性值。
 
 
 ## 前端函数索引

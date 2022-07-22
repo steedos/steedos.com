@@ -23,7 +23,7 @@ JsReport一个用于设计和呈现各种报表的开源平台，使用它，只
 
 
 <alert type="info">
-通过steedos cli命令行新建的华炎魔方项目会自带JsReport项目工程，您只要在命令行中运行`npx create-steedos-app my-app`即可生成一个带有初始化好的JsReport项目工程的华炎魔方项目，不需要手动新建`jsreport-app`文件夹来初始化JsReport项目工程。
+通过steedos cli命令行新建的华炎魔方项目会自带JsReport项目工程，您只要在命令行中运行`npx create-steedos-app -e jsreport-app`即可生成一个带有初始化好的JsReport项目工程的华炎魔方项目，不需要手动新建`jsreport-app`文件夹来初始化JsReport项目工程。
 
 </alert>
 
@@ -79,7 +79,7 @@ JsReport与华炎魔方从开发到部署都是两个独立的node项目，它�
 
 因为下面我们要基于华炎魔方示例项目中的会议软件包来实现上述示例需求，所以我们要先克隆好[示例项目](https://github.com/steedos/steedos-examples)，克隆好后，打开命令行窗口`cd`到项目文件夹，然后在命令行窗口中执行`yarn`来安装相关依赖包，再执行`yarn start`来运行该项目，项目运行起来后，我们录入一些会议数据用于后续开发和测试。
 
-下面的开发过程是假设本地已安装和运行了示例项目，其访问地址为\`<http://localhost:5000/>\`。
+下面的开发过程是假设本地已安装和运行了示例项目，其访问地址为 `http://localhost:5000/`。
 
  ![](https://console.steedos.cn/api/files/images/4e47MNr5BWjrkqrPE)
 
@@ -601,7 +601,7 @@ JSREPORT_URL=http://localhost:5488
 
 因为最后我们在示例华炎魔方项目中改了代码来增加“本周会议”按钮，所以我们还需要在之前华炎魔方命令行窗口停掉之前跑起来的华炎魔方项目，并在其目录中再次运行`yarn start`来重启华炎魔方项目。
 
-最后，我们在浏览器中输入地址\`<http://localhost:5000/>\`来访问重启后的华方魔方项目，进入“办公”应用，点击“人员”导航栏，并进一步点击进入某个人员记录详细界面，在其右上角找到“本周会议”按钮，点击它即可打开一个展示了该人员本周会议日程的PDF文件，并且可以点击该PDF文件窗口右上角的打印按钮来打印出这份日程报表。
+最后，我们在浏览器中输入地址`http://localhost:5000/`来访问重启后的华方魔方项目，进入“办公”应用，点击“人员”导航栏，并进一步点击进入某个人员记录详细界面，在其右上角找到“本周会议”按钮，点击它即可打开一个展示了该人员本周会议日程的PDF文件，并且可以点击该PDF文件窗口右上角的打印按钮来打印出这份日程报表。
 
  ![](https://console.steedos.cn/api/files/images/qRdhtNyNdFQNKQuEi)
 
