@@ -1,3 +1,10 @@
+/*
+ * @Author: baozhoutao@steedos.com
+ * @Date: 2022-07-21 16:45:44
+ * @LastEditors: baozhoutao@steedos.com
+ * @LastEditTime: 2022-07-22 14:04:02
+ * @Description: 
+ */
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export default CredentialsProvider({
@@ -16,7 +23,7 @@ export default CredentialsProvider({
       const user = { id: 1, name: "J Smith", email: "jsmith@example.com" }
       try {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL}/accounts/password/login`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/accounts/password/login`, {
           method: 'POST',
           body: JSON.stringify({ user: {email: credentials.email}, password: credentials.password })
         })
