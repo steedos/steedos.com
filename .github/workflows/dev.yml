@@ -21,7 +21,7 @@ jobs:
       KEYCLOAK_SECRET: ${{ secrets.BETA_KEYCLOAK_SECRET }}
       KEYCLOAK_ISSUER: https://id.steedos.cn/realms/dev
       NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID: keycloak
-      NEXTAUTH_URL: https://beta.steedos.cn
+      NEXTAUTH_URL: https://dev.steedos.cn
       NEXTAUTH_SECRET: ${{ secrets.BETA_NEXTAUTH_SECRET }}
       JWT_SECRET: ${{ secrets.BETA_JWT_SECRET }}
     steps:
