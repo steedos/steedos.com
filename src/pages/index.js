@@ -120,10 +120,6 @@ function Header() {
 
 export async function getStaticProps({params}) {
 
-  const {
-    host,
-  } = params
-  const site = await getSiteByDomain(host)
   
   const slug = 'steedos-packages'
   const collection = await getCollectionProducts(slug)
@@ -131,48 +127,21 @@ export async function getStaticProps({params}) {
   return {
     props: {
       collection,
-      ...site
     },
-    notFound: !site || !site.homepage,
     revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
 }
 
-export async function getStaticPaths() {
-  const items = await getSiteDomains()
-
-  // Get the paths we want to pre-render based on posts
-  const paths = items.map((item) => ({
-    params: { 
-      host: item.name },
-  }))
-
-  return { paths, fallback: 'blocking' }
-}
 
 export default function Home(props) {
   const {
     name,
-    collection,
-    homepage = {name: '', body: ''}
+    collection
   } = props
-  const [mobile, setMobile] = useState('')
-  const backgroundImageUrl = '/img/header-background-ellipse.png'
-  const imageUrl = homepage.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${homepage.image}` : null
   return (
     <>
       <Head>
-        <meta
-          key="twitter:title"
-          name="twitter:title"
-          content={`${name} - ${homepage.name}`}
-        />
-        <meta
-          key="og:title"
-          property="og:title"
-          content={`${name} - ${homepage.name}`}
-        />
-        <title>{name} - {homepage.name}</title>
+        <title>华炎魔方低代码平台 - 赋能企业，打造数字驱动型组织</title>
       </Head>
   
       <div className="mb-20 space-y-20 overflow-hidden sm:mb-20 sm:space-y-32 md:mb-20 md:space-y-40">
@@ -193,24 +162,7 @@ export default function Home(props) {
       </div>
       <Testimonials />
 
-      {/* <article className="mt-20 relative z-10 max-w-5xl mx-auto">
-        <main className="px-4 sm:px-6 md:px-8 pb-20">
-          <Markdown body={homepage.body} className="prose sm:prose-lg dark:prose-dark"></Markdown>
-        </main>
-      </article> */}
       <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
-        {/* <ConstraintBased />
-        <BuildAnything />
-        <Performance />
-        <MobileFirst />
-        <StateVariants />
-        <ComponentDriven />
-        <DarkMode />
-        <Customization />
-        <ModernFeatures />
-        <EditorTools />
-        <ReadyMadeComponents /> */}
-
 
 
             <div className="relative max-w-7xl mx-auto px-4 focus:outline-none sm:px-3 md:px-5">

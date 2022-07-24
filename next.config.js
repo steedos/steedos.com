@@ -103,30 +103,6 @@ module.exports =
   async redirects() {
     return require('./redirects.json')
   },
-  async rewrites() {
-    return [
-      {
-        has: [
-          {
-            type: 'host',
-            value: '(?<host>.*)',
-          },
-        ],
-        source: '/',
-        destination: '/hosts/steedos.cn',
-      },
-      // {
-      //   has: [
-      //     {
-      //       type: 'host',
-      //       value: '(?<host>.*)',
-      //     },
-      //   ],
-      //   source: '/:path*',
-      //   destination: '/:host/:path*',
-      // },
-    ]
-  },
   webpack(config, options) {
     // if (!options.dev) {
     //   options.defaultLoaders.babel.options.cache = false

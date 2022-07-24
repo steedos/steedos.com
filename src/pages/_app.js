@@ -61,7 +61,7 @@ export default function App({ Component, pageProps: { session, ...pageProps }, r
   const layoutProps = Component.layoutProps?.Layout
     ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen }
     : { }
-  const showHeader = router.pathname !== '/' && !router.pathname.startsWith('/embed') && !router.pathname.startsWith('/login')
+  const showHeader = !router.pathname.startsWith('/embed') && !router.pathname.startsWith('/login')
   const showFooter = !router.pathname.startsWith('/docs') && !router.pathname.startsWith('/embed') && !router.pathname.startsWith('/login')
   const meta = Component.layoutProps?.meta || pageProps?.meta || {}
   const description =
