@@ -37,7 +37,7 @@ steedos-website-dev:
         KEYCLOAK_SECRET=${keycloak_secret}
         KEYCLOAK_ISSUER=${keycloak_issuer}
         NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID=${next_public_nextauth_provider_id}
-        NEXTAUTH_URL=${steedos_api_key}
+        NEXTAUTH_URL=${nextauth_url}
         NEXTAUTH_SECRET=${nextauth_secret}
         JWT_SECRET=${jwt_secret}
       cleanupDotNext: true
