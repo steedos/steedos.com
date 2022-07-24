@@ -9,7 +9,7 @@ jwt_secret: ${env.JWT_SECRET}
 
 
 steedos-website-dev:
-  component: "@sls-next/serverless-component@v3.6.1-alpha.2" # it is recommended you pin the latest stable version of serverless-next.js
+  component: "@sls-next/serverless-component@v3.7.0" # it is recommended you pin the latest stable version of serverless-next.js
   inputs:
     domain: ["dev", "steedos.cn"]
     name:
