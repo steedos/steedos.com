@@ -2,7 +2,7 @@
  * @Author: baozhoutao@steedos.com
  * @Date: 2022-07-20 16:29:22
  * @LastEditors: baozhoutao@steedos.com
- * @LastEditTime: 2022-07-22 11:21:25
+ * @LastEditTime: 2022-07-25 10:45:39
  * @Description: 
  */
 
@@ -13,6 +13,7 @@ const axios = require('axios');
 const jwt = require("jsonwebtoken")
 
 const JWT_API = '/accounts/jwt/login';
+const LOGOUT_API = '/accounts/logout';
 const STEEDOS_TOKENS = {};
 
 const getJWTToken = (user)=>{
@@ -49,6 +50,18 @@ const loginSteedosProject = async (user)=>{
   return STEEDOS_TOKENS[user.email];
 }
 
+const logoutSteedosProject = (token)=>{
+  const projectRootUrl = process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL;
+  axios({
+    url: `${projectRootUrl}${LOGOUT_API}`,
+    method: 'post',
+    data: {},
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` }
+  }).catch((e)=>{
+    console.error(e);
+  })
+}
+
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   // Configure one or more authentication providers
@@ -78,6 +91,15 @@ export const authOptions = {
         }
       }
       return session
+    }
+  },
+  events: {
+    signOut: async (ctx) => {
+      if(ctx?.token?.email){
+        const data = STEEDOS_TOKENS[ctx.token.email]
+        delete STEEDOS_TOKENS[ctx.token.email]
+        logoutSteedosProject(`${data.space},${data.token}`)
+      }
     }
   },
   pages: {
