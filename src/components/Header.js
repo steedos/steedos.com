@@ -415,7 +415,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                             </Menu.Item>)} */}
                             {!session && (
                               <Menu.Item>
-                                <a href="#" onClick={signIn} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                <a href="#" onClick={() => signIn("keycloak")} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                   <ShoppingBagIcon
                                     className="w-5 h-5 mr-2 text-sky-400"
                                     aria-hidden="true"
