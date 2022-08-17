@@ -73,7 +73,7 @@
     "markdown-toc": "^1.2.0",
     "mini-svg-data-uri": "^1.4.4",
     "minimatch": "^3.0.4",
-    "next": "^12.1.6",
+    "next": "^12.2.5",
     "next-auth": "^4.10.3",
     "next-compose-plugins": "^2.2.1",
     "next-mdx-enhanced": "^5.0.0",
