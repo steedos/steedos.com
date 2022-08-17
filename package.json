@@ -31,7 +31,7 @@
     "@sentry/nextjs": "^7.10.0",
     "@silvenon/remark-smartypants": "^1.0.0",
     "@sindresorhus/slugify": "^1.1.0",
-    "@sls-next/serverless-component": "3.4.0",
+    "@sls-next/serverless-component": "3.7.0",
     "@svgr/webpack": "^5.4.0",
     "@swc/core": "^1.2.85",
     "@tailwindcss/aspect-ratio": "^0.4.0",
