@@ -81,7 +81,7 @@ const moduleExports =
     KEYCLOAK_ISSUER: process.env.KEYCLOAK_ISSUER,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    JWT_SECRET:process.env.JWT_SECRET,
+    STEEDOS_IDENTITY_JWT_SECRET:process.env.STEEDOS_IDENTITY_JWT_SECRET,
   },
   target: "serverless",
   webpack5: true,

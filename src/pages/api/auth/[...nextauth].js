@@ -27,7 +27,7 @@ const getJWTToken = (user)=>{
 
   return jwt.sign(
     jwtPayload,
-    process.env.JWT_SECRET,
+    process.env.STEEDOS_IDENTITY_JWT_SECRET,
     {
       expiresIn: 60
     }
@@ -70,7 +70,7 @@ export const authOptions = {
     issuer: process.env.KEYCLOAK_ISSUER,
     name: 'Steedos ID'
   })],
-  // callbacks: {
+  callbacks: {
   //   async jwt(props) {
   //     const { token, account, user } = props;
   //     // Persist the OAuth access_token to the token right after signin
@@ -82,27 +82,25 @@ export const authOptions = {
   //     }
   //     return token
   //   }, 
-  //   async session({ session, token, user }) {
-  //     // Send properties to the client, like an access_token from a provider.
-  //     // session.accessToken = token.accessToken
-  //     if(session.user){
-  //       if(token && token.steedos){
-  //         session.steedos = token.steedos;
-  //       }else{
-  //         const loginResult = await loginSteedosProject(session.user);
-  //         if(loginResult.space && loginResult.token){
-  //           session.steedos = {
-  //             space: loginResult.space,
-  //             token: loginResult.token,
-  //             userId: loginResult.user?.id,
-  //             name: loginResult.user?.name
-  //           }
-  //         }
-  //       }
-  //     }
-  //     return session
-  //   }
-  // },
+    async session({ session, token, user }) {
+      if(session.user){
+        if(token && token.steedos){
+          session.steedos = token.steedos;
+        }else{
+          const loginResult = await loginSteedosProject(session.user);
+          if(loginResult.space && loginResult.token){
+            session.steedos = {
+              space: loginResult.space,
+              token: loginResult.token,
+              userId: loginResult.user?.id,
+              name: loginResult.user?.name
+            }
+          }
+        }
+      }
+      return session
+    }
+  },
   pages: {
     // signIn: '/login',
   }

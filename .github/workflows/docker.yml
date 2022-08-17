@@ -15,6 +15,12 @@ jobs:
       NEXT_PUBLIC_DEPLOYMENT_URL: https://www.steedos.cn
       NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL: https://console.steedos.cn
       NEXT_STATIC_PROPS_REVALIDATE: 3600
+      KEYCLOAK_ID: www.steedos.cn
+      KEYCLOAK_SECRET: ${{ secrets.KEYCLOAK_SECRET }}
+      KEYCLOAK_ISSUER: https://id.steedos.cn/realms/master
+      NEXTAUTH_URL: https://www.steedos.cn
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      STEEDOS_IDENTITY_JWT_SECRET: ${{ secrets.STEEDOS_IDENTITY_JWT_SECRET }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}

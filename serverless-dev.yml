@@ -1,11 +1,4 @@
 steedos_api_key: ${env.STEEDOS_SERVER_API_KEY}
-keycloak_id: ${env.KEYCLOAK_ID}
-keycloak_secret: ${env.KEYCLOAK_SECRET}
-keycloak_issuer: ${env.KEYCLOAK_ISSUER}
-next_public_nextauth_provider_id: ${env.NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID}
-nextauth_url: ${env.NEXTAUTH_URL}
-nextauth_secret: ${env.NEXTAUTH_SECRET}
-jwt_secret: ${env.JWT_SECRET}
 
 
 steedos-website-dev:

@@ -20,12 +20,12 @@ jobs:
       NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL: https://console.steedos.cn
       NEXT_STATIC_PROPS_REVALIDATE: 60
       KEYCLOAK_ID: www.steedos.cn
-      KEYCLOAK_SECRET: ${{ secrets.BETA_KEYCLOAK_SECRET }}
+      KEYCLOAK_SECRET: ${{ secrets.KEYCLOAK_SECRET }}
       KEYCLOAK_ISSUER: https://id.steedos.cn/realms/master
       NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID: keycloak
       NEXTAUTH_URL: https://beta.steedos.cn
-      NEXTAUTH_SECRET: ${{ secrets.BETA_NEXTAUTH_SECRET }}
-      JWT_SECRET: ${{ secrets.BETA_JWT_SECRET }}
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      STEEDOS_IDENTITY_JWT_SECRET: ${{ secrets.STEEDOS_IDENTITY_JWT_SECRET }}
     steps:
       - uses: actions/checkout@v2
 

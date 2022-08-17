@@ -16,9 +16,16 @@ jobs:
       STEEDOS_SERVER_API_KEY: ${{ secrets.STEEDOS_SERVER_API_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      NEXT_PUBLIC_DEPLOYMENT_URL: https://www.steedos.cn
+      NEXT_PUBLIC_DEPLOYMENT_URL: https://www.steedos.com
       NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL: https://console.steedos.cn
       NEXT_STATIC_PROPS_REVALIDATE: 3600
+      KEYCLOAK_ID: www.steedos.cn
+      KEYCLOAK_SECRET: ${{ secrets.KEYCLOAK_SECRET }}
+      KEYCLOAK_ISSUER: https://id.steedos.cn/realms/master
+      NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID: keycloak
+      NEXTAUTH_URL: https://www.steedos.com
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      STEEDOS_IDENTITY_JWT_SECRET: ${{ secrets.STEEDOS_IDENTITY_JWT_SECRET }}
     steps:
       - uses: actions/checkout@v2
 
