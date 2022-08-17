@@ -54,7 +54,9 @@ ROUND((amount*0.02), 2)
 
 支持引用当前登录用户相关字段，写法是以`$user`开头来表示当前登录用户的引用，并用点符号来连接后续要扩展引用的属性，比如`$user.name`表示引用当前用户的名称，`$user.organization.name`表示引用当前用户所属组织的名称。
 
-要引用关联字段指向的记录id只要用点符号来连接`_id`即可，比如`reference_to_field_name._id`，`$user._id`
+要引用关联字段指向的记录id只要用点符号来连接`_id`即可，比如`reference_to_field_name._id`，`$user._id`。
+
+除了可以用 `$user` 开头的表达式来引用当前登录用户信息，还可以用 `$userSession` 开头的表达式来引用当前登录用户的 UserSession，详情请参阅 [如何创建公式字段 - $userSession](#$userSession)。
 
 ### 跨对象引用
 
@@ -213,11 +215,19 @@ CASE(Days_Open__c, 1,  true,false)
 
 可以在跨对象公式中用点符号连接各级对象上的外键字段以形成引用链，理论上支持无限层次的引用，但是出于性能考虑请避免引用层级过多，比如上面提到的联系人对象上可以配置公式`account.created_by.name`表示输出联系人所属客户的记录创建人的名称。
 
-可以在公式中输入`$user`变量来引用当前登录用户的相关信息，作为跨对象公式的一种，你也应该在其后用点符号来扩展引用链，`$user`指向的是`space_users`表而不是`users`表，所以只能从 space_users 表中外键字段开始扩展其引用链，比如`$user.organization.owner.name`，更多可扩展属性请参考 [space_users对象源码](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/space_users.object.yml)。
-
 需要注意的是，跨对象公式最后一个引用链不可以是外键字段，即不可以是相关表”或“主表/子表”类型的字段，比如上面提到的联系人对象上的公式如果配置为`account.created_by`是表示输出联系人的创建人，但是这是不合法的，因为`created_by`是一个外键字段，它指向了关联创建人整条记录，而不是只输出关联创建人的某个字段值，所以正确的写法是需要再向`created_by`这个外键字段进一步扩展引用其下一级对象的字段，比如上面提到的`account.created_by.name`就是一个合法的跨对象公式。
 
 如果是想让公式输出外键字段值本身，可以在最后扩展引用下其关联对象的主键字段（即`_id`）即可，也就是把公式表达式写成`account.created_by._id`就可以输出联系人所属客户的创建人`_id`值。
+
+### $user 
+
+可以在公式中输入`$user` 变量来引用当前登录用户的相关信息，作为跨对象公式的一种，你也应该在其后用点符号来扩展引用链，`$user`指向的是`space_users`表而不是`users`表，所以只能从 space_users 表中外键字段开始扩展其引用链，比如`$user.organization.owner.name`，更多可扩展属性请参考 [space_users对象源码](https://github.com/steedos/steedos-platform/blob/master/packages/standard-objects/space_users.object.yml)。
+
+### $userSession
+
+在公式中输入`$userSession` 变量是引用当前登录用户信息的另一种方式，与 `$user` 变量不同，它是一个指向 [userSession](/docs/admin/permission_set#userSession详解) 的变量，而 `$user` 是一个指向`space_users`表的跨对象公式。
+
+比如`$userSession.roles`可以获取当前用户所属权限集，`$userSession.is_space_admin`可以获取当前用户是否是工作区管理员，更多属性请参考文档 [userSession](/docs/admin/permission_set#userSession详解)。
 
 ### 关于公式级联触发的提示
 

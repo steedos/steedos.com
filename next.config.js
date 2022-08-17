@@ -7,6 +7,7 @@ const { withSyntaxHighlighting } = require('./remark/withSyntaxHighlighting')
 const { withNextLinks } = require('./remark/withNextLinks')
 const { withLinkRoles } = require('./rehype/withLinkRoles')
 const { withRemarkDirective } = require('./remark/withRemarkDirective')
+const { withSentryConfig } = require('@sentry/nextjs');
 const minimatch = require('minimatch')
 
 // const withExamples = require('./remark/withExamples')
@@ -60,7 +61,7 @@ const fallbackGetStaticProps = {
   'src/pages/blog/**/*': '@/layouts/BlogPostLayout',
 }
 
-module.exports = 
+const moduleExports = 
   withPlugins(
   [
   //   // withBundleAnalyzer({
@@ -71,16 +72,18 @@ module.exports =
   ], 
   {
   env: {
+    NEXT_PUBLIC_DEPLOYMENT_URL: process.env.NEXT_PUBLIC_DEPLOYMENT_URL,
+    NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL: process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL,
     STEEDOS_SERVER_API_KEY: process.env.STEEDOS_SERVER_API_KEY,
     NEXT_STATIC_PROPS_REVALIDATE: process.env.NEXT_STATIC_PROPS_REVALIDATE,
     KEYCLOAK_ID: process.env.KEYCLOAK_ID,
     KEYCLOAK_SECRET: process.env.KEYCLOAK_SECRET,
     KEYCLOAK_ISSUER: process.env.KEYCLOAK_ISSUER,
-    NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID: process.env.NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     JWT_SECRET:process.env.JWT_SECRET,
   },
+  target: "serverless",
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
   experimental: {
@@ -315,3 +318,22 @@ module.exports =
     return config
   },
 });
+
+
+
+// const sentryWebpackPluginOptions = {
+//   // Additional config options for the Sentry Webpack plugin. Keep in mind that
+//   // the following options are set automatically, and overriding them is not
+//   // recommended:
+//   //   release, url, org, project, authToken, configFile, stripPrefix,
+//   //   urlPrefix, include, ignore
+
+//   silent: true, // Suppresses all logs
+//   // For all available options, see:
+//   // https://github.com/getsentry/sentry-webpack-plugin#options.
+// };
+
+// // Make sure adding Sentry options is the last code to run before exporting, to
+// // ensure that your source maps include changes from all other Webpack plugins
+// module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
+module.exports = moduleExports
