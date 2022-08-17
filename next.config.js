@@ -71,7 +71,17 @@ const moduleExports =
     withTM
   ], 
   {
-  env: process.env,
+  env: {
+    NEXT_PUBLIC_DEPLOYMENT_URL: process.env.NEXT_PUBLIC_DEPLOYMENT_URL,
+    NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL: process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL,
+    STEEDOS_SERVER_API_KEY: process.env.STEEDOS_SERVER_API_KEY,
+    NEXT_STATIC_PROPS_REVALIDATE: process.env.NEXT_STATIC_PROPS_REVALIDATE,
+    KEYCLOAK_ID: process.env.KEYCLOAK_ID,
+    KEYCLOAK_SECRET: process.env.KEYCLOAK_SECRET,
+    KEYCLOAK_ISSUER: process.env.KEYCLOAK_ISSUER,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+  },
   target: "serverless",
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
