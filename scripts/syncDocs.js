@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 
-const ROOT_URL = process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL
+const ROOT_URL = process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL
 const API_KEY = process.env.STEEDOS_SERVER_API_KEY
 
 

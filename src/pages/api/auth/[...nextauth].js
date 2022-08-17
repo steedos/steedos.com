@@ -50,7 +50,7 @@ const loginSteedosProject = async (user)=>{
 }
 
 const logoutSteedosProject = (token)=>{
-  const projectRootUrl = process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL;
+  const projectRootUrl = process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL;
   axios({
     url: `${projectRootUrl}${LOGOUT_API}`,
     method: 'post',
@@ -87,15 +87,17 @@ export const authOptions = {
         if(token && token.steedos){
           session.steedos = token.steedos;
         }else{
-          const loginResult = await loginSteedosProject(session.user);
-          if(loginResult.space && loginResult.token){
-            session.steedos = {
-              space: loginResult.space,
-              token: loginResult.token,
-              userId: loginResult.user?.id,
-              name: loginResult.user?.name
+          try {
+            const loginResult = await loginSteedosProject(session.user);
+            if(loginResult.space && loginResult.token){
+              session.steedos = {
+                space: loginResult.space,
+                token: loginResult.token,
+                userId: loginResult.user?.id,
+                name: loginResult.user?.name
+              }
             }
-          }
+          } catch (e) {console.error(e)}
         }
       }
       return session

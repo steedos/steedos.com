@@ -108,7 +108,7 @@ function Header() {
             // ref={playerRef}
             className=" rounded-lg"
             hls_url='https://vod.steedos.cn/video/175146ea-1772962056e-0000-0000-009-c59e0.mp4'
-            light={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/uYfiSbnj7Ms7djamt`}
+            light={`${process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL}/api/files/images/uYfiSbnj7Ms7djamt`}
             width="100%"
             height="100%"
           />
@@ -178,7 +178,7 @@ export default function Home(props) {
               <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
                 {collection?.products?.map((product) => {
 
-                  const imageUrl = product.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${product.image}` : null
+                  const imageUrl = product.image?process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL + `/api/files/images/${product.image}` : null
                   return (
                   <div
                     key={product.slug}

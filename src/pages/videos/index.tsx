@@ -46,7 +46,7 @@ const SiteVideos: React.FC = (props: any) => {
                       <Link href={`/videos/${video.slug}`}>
                         <a>
                           <img
-                            src={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/${video.thumb_image}`}
+                            src={`${process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL}/api/files/images/${video.thumb_image}`}
                             alt={video.name}
                             width={1280}
                             height={720}

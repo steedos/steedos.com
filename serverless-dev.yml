@@ -25,7 +25,7 @@ steedos-website-dev:
       env:
         NEXTAUTH_URL=https://dev.steedos.cn
         NEXT_PUBLIC_DEPLOYMENT_URL=https://dev.steedos.cn
-        NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=https://console.dev.steedos.cn
+        NEXT_PUBLIC_STEEDOS_ROOT_URL=https://console.dev.steedos.cn
         STEEDOS_SERVER_API_KEY=${steedos_api_key}
       cleanupDotNext: true
       postBuildCommands: []

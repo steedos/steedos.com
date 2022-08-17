@@ -80,7 +80,7 @@ const BlogPosts: React.FC = (props: any) => {
         {posts?.map((post) => {
 
           const fullSlug = `/${blog.slug}/${post.slug}`
-          const imageUrl = post.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${post.image}` : null
+          const imageUrl = post.image?process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL + `/api/files/images/${post.image}` : null
           return (
             <div
               key={post.slug}

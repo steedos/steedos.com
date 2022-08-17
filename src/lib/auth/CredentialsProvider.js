@@ -23,7 +23,7 @@ export default CredentialsProvider({
       const user = { id: 1, name: "J Smith", email: "jsmith@example.com" }
       try {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/accounts/password/login`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL}/accounts/password/login`, {
           method: 'POST',
           body: JSON.stringify({ user: {email: credentials.email}, password: credentials.password })
         })

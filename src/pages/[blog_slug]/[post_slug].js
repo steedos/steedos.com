@@ -310,7 +310,7 @@ export default function Post(props) {
   }
   const section = blog.name
   const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
-  const imageUrl = image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${image}` : null
+  const imageUrl = image?process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL + `/api/files/images/${image}` : null
   return (
     <>
       <NextSeo

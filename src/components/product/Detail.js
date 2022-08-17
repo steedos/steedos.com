@@ -201,7 +201,7 @@ export default function ProductDetail({ product, vid }) {
                 {product.reviews.map((review, reviewIdx) => (
                   <div key={review._id} className="flex text-sm text-gray-500 space-x-4">
                     <div className="flex-none py-10">
-                      <img src={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/avatar/${review.owner}`} alt="" className="w-10 h-10 bg-gray-100 rounded-full" />
+                      <img src={`${process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL}/avatar/${review.owner}`} alt="" className="w-10 h-10 bg-gray-100 rounded-full" />
                     </div>
                     <div className='py-10'>
                       <h3 className="font-medium text-gray-900">{review.owner__expand.name}</h3>

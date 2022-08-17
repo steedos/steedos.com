@@ -89,7 +89,7 @@ const Video: FunctionComponent<any> = (props) => {
   
   let seo_title_calc = title;
   const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
-  const imageUrl = thumb_image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${thumb_image}` : null
+  const imageUrl = thumb_image?process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL + `/api/files/images/${thumb_image}` : null
   return (
     <>
       <NextSeo
@@ -127,7 +127,7 @@ const Video: FunctionComponent<any> = (props) => {
                 <Player
                   ref={playerRef}
                   hls_url={hls_url}
-                  light={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/${thumb_image}`}
+                  light={`${process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL}/api/files/images/${thumb_image}`}
                   width="100%"
                   height="100%"
                   // config= {{

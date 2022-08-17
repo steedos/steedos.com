@@ -47,7 +47,7 @@ export default function ProductDetail({product}){
   }
 
   const url = process.env.NEXT_PUBLIC_DEPLOYMENT_URL + router.asPath
-  const imageUrl = product.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${product.image}` : null
+  const imageUrl = product.image?process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL + `/api/files/images/${product.image}` : null
 
   return (
     <>

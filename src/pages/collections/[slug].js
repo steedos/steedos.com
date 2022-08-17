@@ -60,7 +60,7 @@ export default class Collection extends React.Component {
               <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
                 {collection?.products?.map((product) => {
 
-                  const imageUrl = product.image?process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL + `/api/files/images/${product.image}` : null
+                  const imageUrl = product.image?process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL + `/api/files/images/${product.image}` : null
                   return (
                   <div
                     key={product.slug}
@@ -96,7 +96,7 @@ export default class Collection extends React.Component {
                   //     </div> */}
                   //     <div className=" p-6 space-y-6">
                   //       <div className="w-full flex items-center justify-between space-x-6 text-right">
-                  //         <img className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src={`${process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL}/api/files/images/${product.image}`} alt=""/>
+                  //         <img className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src={`${process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL}/api/files/images/${product.image}`} alt=""/>
                   //         <div className="flex-1 truncate">
                   //           <div className="flex items-center space-x-3">
                   //             <h3 className="text-gray-900 text-sm font-medium truncate"></h3>

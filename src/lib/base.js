@@ -1,4 +1,4 @@
-export const ROOT_URL = process.env.NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL
+export const ROOT_URL = process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL
 export const API_KEY = process.env.STEEDOS_SERVER_API_KEY
 
 const GRAPHQL_API = '/graphql'
