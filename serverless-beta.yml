@@ -38,15 +38,8 @@ steedos-website-beta:
     build:
       env:
         NEXT_PUBLIC_DEPLOYMENT_URL=https://beta.steedos.cn
-        NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=https://console.dev.steedos.cn
+        NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=https://console.steedos.cn
         STEEDOS_SERVER_API_KEY=${steedos_api_key}
-        KEYCLOAK_ID=test
-        KEYCLOAK_SECRET=123
-        KEYCLOAK_ISSUER=https://id.steedos.cn/realms/dev
-        NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID=keycloak
-        NEXTAUTH_URL=http://localhost:3000
-        NEXTAUTH_SECRET=${nextauth_secret}
-        JWT_SECRET=${jwt_secret}
       cleanupDotNext: true
       postBuildCommands: []
 
