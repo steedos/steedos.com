@@ -2,6 +2,7 @@ import '../css/fonts.css'
 import '../css/main.css'
 import 'focus-visible'
 import { useState, useEffect, Fragment } from 'react'
+import { SessionProvider } from "next-auth/react"
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer';
 import { Title } from '@/components/Title'
@@ -42,7 +43,11 @@ Router.events.on('routeChangeComplete', () => {
 })
 Router.events.on('routeChangeError', progress.finish)
 
-export default function App({ Component, pageProps: { session, ...pageProps }, router }) {
+export default function App({ 
+  Component,
+  pageProps: { session, ...pageProps }, 
+  router 
+}) {
   let [navIsOpen, setNavIsOpen] = useState(false)
 
   useEffect(() => {
@@ -74,8 +79,7 @@ export default function App({ Component, pageProps: { session, ...pageProps }, r
   )?.[0]
 
   return (
-    <>
-     <SessionProvider session={session}>
+    <SessionProvider session={session}>
       <SearchProvider>
         {showHeader && (
           <Header
@@ -93,8 +97,7 @@ export default function App({ Component, pageProps: { session, ...pageProps }, r
           <Footer/>
         )}
       </SearchProvider>
-     </SessionProvider>
-    </>
+    </SessionProvider>
   )
 }
 
