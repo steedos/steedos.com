@@ -17,11 +17,11 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       NEXT_PUBLIC_DEPLOYMENT_URL: https://beta.steedos.cn
-      NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL: https://console.dev.steedos.cn
+      NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL: https://console.steedos.cn
       NEXT_STATIC_PROPS_REVALIDATE: 60
-      KEYCLOAK_ID: test
+      KEYCLOAK_ID: www.steedos.cn
       KEYCLOAK_SECRET: ${{ secrets.BETA_KEYCLOAK_SECRET }}
-      KEYCLOAK_ISSUER: https://id.steedos.cn/realms/dev
+      KEYCLOAK_ISSUER: https://id.steedos.cn/realms/master
       NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID: keycloak
       NEXTAUTH_URL: https://beta.steedos.cn
       NEXTAUTH_SECRET: ${{ secrets.BETA_NEXTAUTH_SECRET }}
