@@ -71,11 +71,7 @@ const moduleExports =
     withTM
   ], 
   {
-  env: {
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    STEEDOS_SERVER_API_KEY: process.env.STEEDOS_SERVER_API_KEY,
-    NEXT_STATIC_PROPS_REVALIDATE: process.env.NEXT_STATIC_PROPS_REVALIDATE,
-  },
+  env: process.env,
   target: "serverless",
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
