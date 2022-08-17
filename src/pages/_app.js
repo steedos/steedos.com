@@ -2,7 +2,6 @@ import '../css/fonts.css'
 import '../css/main.css'
 import 'focus-visible'
 import { useState, useEffect, Fragment } from 'react'
-import { SessionProvider } from "next-auth/react"
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer';
 import { Title } from '@/components/Title'
