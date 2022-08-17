@@ -11,6 +11,7 @@ import { StarIcon } from '@heroicons/react/solid'
 import { ThemeSelect, ThemeToggle } from './ThemeToggle'
 import { headerNav } from '@/navs/header';
 import useSWR from 'swr'
+import { useSession, signIn, signOut } from "next-auth/react"
 
 import { authValidate, goLogin, goLogout, goSignup } from '@/lib/auth.client';
 import { getCart } from '@/lib/cart.client';
@@ -173,6 +174,7 @@ export function NavPopover({ display = 'md:hidden', className, ...props }) {
 
 export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section }) {
   let [isOpaque, setIsOpaque] = useState(false)
+  const { data: session } = useSession()
 
   const [open, setOpen] = useState(false)
   const [userInfo, setUserInfo] = useState({})
@@ -411,28 +413,35 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                 购物车 ({cart?.lines?.length})
                               </a>
                             </Menu.Item>)} */}
-                            {!userInfo.name && (
+                            {!session && (
+                              <Menu.Item>
+                                <a href="#" onClick={signIn} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                  <ShoppingBagIcon
+                                    className="w-5 h-5 mr-2 text-sky-400"
+                                    aria-hidden="true"
+                                  />
+                                  登录
+                                </a>
+                              </Menu.Item>
+                            )}
+                            {session && (
+                              <Menu.Item>
+                                <a href="#" className="font-bold text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-base">
+                                  {session.user.name}
+                                </a>
+                              </Menu.Item>
+                            )}
+
+
                             <Menu.Item>
-                              <a href="#" onClick={goSignup} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <UserAddIcon
+                              <a href="https://id.steedos.cn/realms/master/account/" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                <ViewGridIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
                                 />
-                              免费注册账户
+                              我的账户
                               </a>
-                            </Menu.Item>)}
-
-                            {!userInfo.name && (
-                            <Menu.Item>
-                              <a href="#" onClick={goLogin} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <ShoppingBagIcon
-                                  className="w-5 h-5 mr-2 text-sky-400"
-                                  aria-hidden="true"
-                                />
-                              登录
-                              </a>
-                            </Menu.Item>)}
-
+                            </Menu.Item>
                             <Menu.Item>
                               <a href="https://console.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                 <ViewGridIcon
@@ -453,19 +462,16 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                               </a>
                             </Menu.Item>
 
-                            {userInfo.name && (
-                            <Menu.Item>
-                              <button
-                                onClick={goLogout}
-                                className={`font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                              >
-                                <LogoutIcon
-                                  className="w-5 h-5 mr-2 text-sky-400"
-                                  aria-hidden="true"
-                                />
-                                注销
-                              </button>
-                            </Menu.Item>
+                            {session && (
+                              <Menu.Item>
+                                <a href="#" onClick={signOut} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                  <LogoutIcon
+                                    className="w-5 h-5 mr-2 text-sky-400"
+                                    aria-hidden="true"
+                                  />
+                                  注销
+                                </a>
+                              </Menu.Item>
                             )}
                           </div>
                         </Menu.Items>
