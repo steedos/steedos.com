@@ -37,6 +37,7 @@ steedos-website-beta:
           headers: ["Authorization", "Host"]
     build:
       env:
+        NEXTAUTH_URL=https://beta.steedos.cn
         NEXT_PUBLIC_DEPLOYMENT_URL=https://beta.steedos.cn
         NEXT_PUBLIC_STEEDOS_SERVER_ROOT_URL=https://console.steedos.cn
         STEEDOS_SERVER_API_KEY=${steedos_api_key}
