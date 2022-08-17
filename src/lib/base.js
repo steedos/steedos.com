@@ -4,16 +4,14 @@ export const API_KEY = process.env.STEEDOS_SERVER_API_KEY
 const GRAPHQL_API = '/graphql'
 
 export function getAuthHeaders() {
+    if (!API_KEY) {
+        throw new Error('Please configure the environment variable STEEDOS_SERVER_API_KEY');
+    }
+
     const headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-    }
-    if (API_KEY) {
-        headers[
-            'Authorization'
-        ] = `Bearer apikey,${API_KEY}`
-    } else {
-        throw new Error('Please configure the environment variable STEEDOS_SERVER_API_KEY');
+        'Authorization': `Bearer apikey,${API_KEY}`
     }
     return headers;
 }
