@@ -13,7 +13,6 @@ import { headerNav } from '@/navs/header';
 import useSWR from 'swr'
 import { useSession, signIn, signOut } from "next-auth/react"
 
-import { authValidate, goLogin, goLogout, goSignup } from '@/lib/auth.client';
 import { getCart } from '@/lib/cart.client';
 
 const navigation = headerNav;
@@ -194,15 +193,6 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
       window.removeEventListener('scroll', onScroll, { passive: true })
     }
   }, [isOpaque])
-
-  useSWR('AuthValidate', async () => {
-    const userInfo = await authValidate();
-    if (!userInfo.error) {
-      setUserInfo(userInfo)
-    } else {
-      setUserInfo({})
-    }
-  })
 
   useSWR('cart', async () => {
     const cart = await getCart();
