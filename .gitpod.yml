@@ -13,10 +13,6 @@ tasks:
       nvm use v14
     command: |
       nvm use v14
-  - name: start
-    init: |
-      yarn
-    command: |
       echo "NEXTAUTH_URL=$(gp url 3000)" >> .env.local
+      yarn
       yarn dev
-

@@ -1,0 +1,60 @@
+---
+title: JWT SSO
+description: 使用JWT进行单点登录。
+---
+
+## JWT 协议
+
+JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案。JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。
+
+{
+  "sub": "1234567890",
+  "name": "Jack Zhuang",
+  "email": "jack@steedos.com",
+  "phone": "18600000000",
+  "username": "jack",
+  "iat": 1516239022
+}
+
+以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。
+
+参考 https://jwt.io/
+
+## 启用 JWT 
+
+配置环境变量，启用JWT。
+
+```
+STEEDOS_IDENTITY_JWT_ENABLED=true
+```
+
+## 从 Steedos 登录到 第三方系统
+
+在华炎魔方中创建应用，配置应用 URL 和 JWT Secret 参数。可以使用 JWT 协议与第三方系统进行单点登录。
+
+当用户点击应用链接时，系统通过 URL 传入 token 参数。
+
+第三方系统使用 JWT Secret 解密 token 参数，可以获得当前用户的身份认证信息。
+
+```
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "email": "john@portqhd.com",
+  "phone": "18601110111",
+  "username": "john",
+  "iat": 1516239022
+}
+```
+
+按照JWT规范
+
+```
+iss (issuer)：签发人
+exp (expiration time)：过期时间
+sub (subject)：主题
+aud (audience)：受众
+nbf (Not Before)：生效时间
+iat (Issued At)：签发时间
+jti (JWT ID)：编号
+```
