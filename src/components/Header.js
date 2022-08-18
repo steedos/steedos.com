@@ -6,8 +6,7 @@ import Router from 'next/router'
 import { Logo } from '@/components/Logo'
 import { useEffect, Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition, Menu } from '@headlessui/react'
-import { MenuIcon, SearchIcon, ChevronDownIcon, XIcon, LogoutIcon, ShoppingBagIcon, ViewGridIcon, UserAddIcon } from '@heroicons/react/outline'
-import { StarIcon } from '@heroicons/react/solid'
+import { UserIcon, CodeIcon, ChevronDownIcon, CogIcon, LogoutIcon, ShoppingBagIcon, ViewGridIcon, UserAddIcon } from '@heroicons/react/outline'
 import { ThemeSelect, ThemeToggle } from './ThemeToggle'
 import { headerNav } from '@/navs/header';
 import useSWR from 'swr'
@@ -424,7 +423,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
 
                             <Menu.Item>
                               <a href="https://id.steedos.cn/realms/master/account/" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <ViewGridIcon
+                                <UserIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
                                 />
@@ -433,7 +432,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                             </Menu.Item>
                             <Menu.Item>
                               <a href="https://console.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <ViewGridIcon
+                                <CogIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
                                 />
@@ -443,7 +442,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
 
                             <Menu.Item>
                               <a href="https://gitlab.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <ViewGridIcon
+                                <CodeIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
                                 />
