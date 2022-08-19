@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { VersionSwitcher } from '@/components/VersionSwitcher'
 import { SearchButton } from '@/components/Search'
 import clsx from 'clsx'
 import Router from 'next/router'
