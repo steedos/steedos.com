@@ -17,6 +17,14 @@ import clsx from 'clsx'
 import styles from './index.module.css'
 
 
+import { CallToAction } from '@/components/salient/CallToAction'
+import { Faqs } from '@/components/salient/Faqs'
+import { Hero } from '@/components/salient/Hero'
+import { Pricing } from '@/components/salient/Pricing'
+import { PrimaryFeatures } from '@/components/salient/PrimaryFeatures'
+import { SecondaryFeatures } from '@/components/salient/SecondaryFeatures'
+import { Testimonials as Testimonials2} from '@/components/salient/Testimonials'
+
 
 function Header() {
   return (
@@ -149,6 +157,13 @@ export default function Home(props) {
       </div>
       <Testimonials />
 
+        {/* <Hero />
+        <PrimaryFeatures />
+        <SecondaryFeatures />
+        <CallToAction />
+        <Testimonials2 />
+        <Pricing />
+        <Faqs /> */}
       <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
 
 

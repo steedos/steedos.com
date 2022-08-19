@@ -230,17 +230,17 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
       <div className="absolute z-40 lg:z-50 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
         <div className="w-[108rem] flex-none flex justify-end">
           <picture>
-            <source srcSet={require('@/img/beams/docs@30.avif').default} type="image/avif" />
+            <source srcSet={'/img/beams/docs@30.avif'} type="image/avif" />
             <img
-              src={require('@/img/beams/docs@tinypng.png').default}
+              src={'/img/beams/docs@tinypng.png'}
               alt=""
               className="w-[71.75rem] flex-none max-w-none dark:hidden"
             />
           </picture>
           <picture>
-            <source srcSet={require('@/img/beams/docs-dark@30.avif').default} type="image/avif" />
+            <source srcSet={'/img/beams/docs-dark@30.avif'} type="image/avif" />
             <img
-              src={require('@/img/beams/docs-dark@tinypng.png').default}
+              src={'/img/beams/docs-dark@tinypng.png'}
               alt=""
               className="w-[90rem] flex-none max-w-none hidden dark:block"
             />

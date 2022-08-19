@@ -12,7 +12,7 @@ let testimonials = [
       author: {
         name: '数据建模',
         role: '无代码',
-        avatar: require('@/img/icons/home/constraint-based.png').default,
+        avatar: '/img/icons/home/constraint-based.png',
       },
     },
     {
@@ -22,7 +22,7 @@ let testimonials = [
       author: {
         name: '权限控制',
         role: '无代码',
-        avatar: require('@/img/icons/home/constraint-based.png').default,
+        avatar: '/img/icons/home/constraint-based.png',
       },
     },
     {
@@ -32,7 +32,7 @@ let testimonials = [
       author: {
         name: '列表视图',
         role: '无代码',
-        avatar: require('@/img/icons/home/constraint-based.png').default,
+        avatar: '/img/icons/home/constraint-based.png',
       },
     },
     {
@@ -42,7 +42,7 @@ let testimonials = [
       author: {
         name: '页面布局',
         role: '无代码',
-        avatar: require('@/img/icons/home/constraint-based.png').default,
+        avatar: '/img/icons/home/constraint-based.png',
       },
     },
     {
@@ -51,7 +51,7 @@ let testimonials = [
       author: {
         name: '外部数据源',
         role: '无代码',
-        avatar: require('@/img/icons/home/constraint-based.png').default,
+        avatar: '/img/icons/home/constraint-based.png',
       },
     },
     {
@@ -61,7 +61,7 @@ let testimonials = [
       author: {
         name: '分析报表',
         role: '无代码',
-        avatar: require('@/img/icons/home/constraint-based.png').default,
+        avatar: '/img/icons/home/constraint-based.png',
       },
     },
     {
@@ -71,7 +71,7 @@ let testimonials = [
       author: {
         name: '像素级报表',
         role: '无代码',
-        avatar: require('@/img/icons/home/constraint-based.png').default,
+        avatar: '/img/icons/home/constraint-based.png',
       },
     },
     {
@@ -81,7 +81,7 @@ let testimonials = [
       author: {
         name: '仪表盘',
         role: '无代码',
-        avatar: require('@/img/icons/home/constraint-based.png').default,
+        avatar: '/img/icons/home/constraint-based.png',
       },
     },
   ],
@@ -93,7 +93,7 @@ let testimonials = [
       author: {
         name: '查询设计器',
         role: '低代码',
-        avatar: require('@/img/icons/home/build-anything.png').default,
+        avatar: '/img/icons/home/build-anything.png',
       },
     },
     {
@@ -102,7 +102,7 @@ let testimonials = [
       author: {
         name: '公式',
         role: '低代码',
-        avatar: require('@/img/icons/home/build-anything.png').default,
+        avatar: '/img/icons/home/build-anything.png',
       },
     },
     {
@@ -111,7 +111,7 @@ let testimonials = [
       author: {
         name: '工作流规则',
         role: '低代码',
-        avatar: require('@/img/icons/home/build-anything.png').default,
+        avatar: '/img/icons/home/build-anything.png',
       },
     },
     {
@@ -120,7 +120,7 @@ let testimonials = [
       author: {
         name: '批准过程',
         role: '低代码',
-        avatar: require('@/img/icons/home/build-anything.png').default,
+        avatar: '/img/icons/home/build-anything.png',
       },
     },
     {
@@ -129,7 +129,7 @@ let testimonials = [
       author: {
         name: '审批王',
         role: '低代码',
-        avatar: require('@/img/icons/home/build-anything.png').default,
+        avatar: '/img/icons/home/build-anything.png',
       },
     },
     {
@@ -138,7 +138,7 @@ let testimonials = [
       author: {
         name: '自动化操作',
         role: '低代码',
-        avatar: require('@/img/icons/home/build-anything.png').default,
+        avatar: '/img/icons/home/build-anything.png',
       },
     },
     {
@@ -147,7 +147,7 @@ let testimonials = [
       author: {
         name: 'node-red',
         role: '低代码',
-        avatar: require('@/img/icons/home/build-anything.png').default,
+        avatar: '/img/icons/home/build-anything.png',
       },
     },
   ],
@@ -158,7 +158,7 @@ let testimonials = [
       author: {
         name: '元数据同步',
         role: 'DevOps',
-        avatar: require('@/img/icons/home/editor-tools.png').default,
+        avatar: '/img/icons/home/editor-tools.png',
       },
     },
     {
@@ -167,7 +167,7 @@ let testimonials = [
       author: {
         name: '触发器',
         role: '高代码',
-        avatar: require('@/img/icons/home/editor-tools.png').default,
+        avatar: '/img/icons/home/editor-tools.png',
       },
     },
     {
@@ -176,7 +176,7 @@ let testimonials = [
       author: {
         name: '流程触发器',
         role: '高代码',
-        avatar: require('@/img/icons/home/editor-tools.png').default,
+        avatar: '/img/icons/home/editor-tools.png',
       },
     },
     {
@@ -186,7 +186,7 @@ let testimonials = [
       author: {
         name: 'GraphQL API',
         role: '高代码',
-        avatar: require('@/img/icons/home/editor-tools.png').default,
+        avatar: '/img/icons/home/editor-tools.png',
       },
     },
     {
@@ -196,7 +196,7 @@ let testimonials = [
       author: {
         name: '自定义API',
         role: '高代码',
-        avatar: require('@/img/icons/home/editor-tools.png').default,
+        avatar: '/img/icons/home/editor-tools.png',
       },
     },
     {
@@ -206,7 +206,7 @@ let testimonials = [
       author: {
         name: 'ObjectQL',
         role: '高代码',
-        avatar: require('@/img/icons/home/editor-tools.png').default,
+        avatar: '/img/icons/home/editor-tools.png',
       },
     },
     {
@@ -216,7 +216,7 @@ let testimonials = [
       author: {
         name: '自定义按钮',
         role: '高代码',
-        avatar: require('@/img/icons/home/editor-tools.png').default,
+        avatar: '/img/icons/home/editor-tools.png',
       },
     },
     {
@@ -226,7 +226,7 @@ let testimonials = [
       author: {
         name: '软件包',
         role: '高代码',
-        avatar: require('@/img/icons/home/editor-tools.png').default,
+        avatar: '/img/icons/home/editor-tools.png',
       },
     },
   ],

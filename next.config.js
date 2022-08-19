@@ -4,27 +4,16 @@ const frontMatter = require('front-matter')
 const withSmartQuotes = require('@silvenon/remark-smartypants')
 const { withTableOfContents } = require('./remark/withTableOfContents')
 const { withSyntaxHighlighting } = require('./remark/withSyntaxHighlighting')
-const { withNextLinks } = require('./remark/withNextLinks')
 const { withLinkRoles } = require('./rehype/withLinkRoles')
-const { withRemarkDirective } = require('./remark/withRemarkDirective')
-const { withSentryConfig } = require('@sentry/nextjs');
+// const { withSentryConfig } = require('@sentry/nextjs');
 const minimatch = require('minimatch')
 
-// const withExamples = require('./remark/withExamples')
-const {
-  highlightCode,
-  fixSelectorEscapeTokens,
-  simplifyToken,
-  normalizeTokens,
-} = require('./remark/utils')
+
 // const { withPrevalInstructions } = require('./remark/withPrevalInstructions')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 const defaultConfig = require('tailwindcss/resolveConfig')(require('tailwindcss/defaultConfig'))
-const dlv = require('dlv')
-const Prism = require('prismjs')
-
 
 const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(
@@ -38,14 +27,6 @@ const withTM = require('next-transpile-modules')(
 const {remarkPluginsWebpack} = require('./remark')
 const {rehypePlugins} = require('./rehype')
   
-const withMDX = require(`@next/mdx`)({
-  extension: /\.mdx?$/,
-  options: {
-    rehypePlugins,
-    remarkPlugins: remarkPluginsWebpack
-  },
-})
-
 const fallbackLayouts = {
   'src/pages/docs/protocol/*': ['@/layouts/ProtocolLayout', 'ProtocolLayout'],
   'src/pages/docs/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
@@ -67,7 +48,6 @@ const moduleExports =
   //   // withBundleAnalyzer({
   //   //   enabled: process.env.ANALYZE === `true`,
   //   // }),
-    // withMDX,
     withTM
   ], 
   {
@@ -89,20 +69,11 @@ const moduleExports =
   experimental: {
     // modern: true,
     // esmExternals: true
+    newNextLinkBehavior: true,
+    scrollRestoration: true,
+    images: { allowFutureImage: true }
   },
-  images: {
-    disableStaticImages: true,
-    minimumCacheTTL: 3600,
-    domains: [
-      'res.cloudinary.com', 
-      'huayan.steedos.cn', 
-      'console.dev.steedos.cn', 
-      'console.steedos.cn', 
-      'steedos.cn', 
-      'www.steedos.cn', 
-      'cn.steedos.cn'
-    ],
-  },
+  
   async redirects() {
     return require('./redirects.json')
   },
@@ -127,27 +98,27 @@ const moduleExports =
     //   ],
     // })
 
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: [
-        { loader: '@svgr/webpack', options: { svgoConfig: { plugins: { removeViewBox: false } } } },
-        'url-loader',
-      ],
-    })
+    // config.module.rules.push({
+    //   test: /\.svg$/,
+    //   use: [
+    //     { loader: '@svgr/webpack', options: { svgoConfig: { plugins: { removeViewBox: false } } } },
+    //     'url-loader',
+    //   ],
+    // })
 
-    config.module.rules.push({
-      test: /\.(png|jpe?g|gif|webp|avif|mp4)$/i,
-      issuer: /\.(jsx?|tsx?|mdx)$/,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            publicPath: '/_next',
-            name: 'static/media/[name].[hash].[ext]',
-          },
-        },
-      ],
-    })
+    // config.module.rules.push({
+    //   test: /\.(png|jpe?g|gif|webp|avif|mp4)$/i,
+    //   issuer: /\.(jsx?|tsx?|mdx)$/,
+    //   use: [
+    //     {
+    //       loader: 'file-loader',
+    //       options: {
+    //         publicPath: '/_next',
+    //         name: 'static/media/[name].[hash].[ext]',
+    //       },
+    //     },
+    //   ],
+    // })
 
     config.resolve.alias['defaultConfig$'] = require.resolve('tailwindcss/defaultConfig')
     config.module.rules.push({
