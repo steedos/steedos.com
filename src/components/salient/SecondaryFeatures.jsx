@@ -114,13 +114,13 @@ function Feature({ feature, isActive, className, ...props }) {
       </div>
       <h3
         className={clsx(
-          'mt-6 text-sm font-medium',
-          isActive ? 'text-blue-600' : 'text-slate-600'
+          'mt-6 text-base font-medium',
+          isActive ? 'text-blue-600' : 'text-slate-600 dark:text-slate-400'
         )}
       >
         {feature.name}
       </h3>
-      <p className="mt-2 font-display text-xl text-slate-900">
+      <p className="mt-2 font-display text-xl text-slate-900 dark:text-slate-200">
         {feature.summary}
       </p>
       {/* <p className="mt-4 text-sm text-slate-600">{feature.description}</p> */}
@@ -215,10 +215,10 @@ export function SecondaryFeatures() {
     >
       <Container>
         <div className="mx-auto max-w-2xl md:text-center">
-          <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
             构建企业核心业务系统
           </h2>
-          <p className="mt-4 text-lg tracking-tight text-slate-700">
+          <p className="mt-4 text-lg tracking-tight text-slate-700 dark:text-slate-400">
             华炎魔方将低代码技术融入传统企业软件开发流程，在充分满足核心业务系统的各项需求的同时，并大幅降低企业研发成本，提升数字化转型效率。
           </p>
         </div>

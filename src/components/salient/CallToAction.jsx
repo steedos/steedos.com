@@ -24,7 +24,7 @@ export function CallToAction() {
             快速开始
           </h2>
           <p className="mt-4 text-lg tracking-tight text-white">
-            注册试用华炎魔方，看看全新的低代码技术如何帮助您大幅降低开发成本，提升开发效率。
+            注册试用华炎魔方，了解全新的低代码技术如何帮助您大幅降低开发成本，提升开发效率。
           </p>
           <Button href="/register" color="white" className="mt-10">
             免费试用
