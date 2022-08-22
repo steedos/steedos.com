@@ -146,7 +146,7 @@ export function Pricing() {
             ]}
           />
           <Plan
-            name="开发版"
+            name="开发版 （年）"
             price="¥10800"
             description="适用于软件公司的版本。含1开发者许可。"
             href="/register"
