@@ -4,17 +4,17 @@ import { Tab } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { Container } from '@/components/salient/Container'
-import screenshotContacts from '@/images/screenshots/contacts.png'
-import screenshotInventory from '@/images/screenshots/inventory.png'
-import screenshotProfitLoss from '@/images/screenshots/profit-loss.png'
+import screenshotProject from '@/images/screenshots/project.png'
+import screenshotCost from '@/images/screenshots/cost.png'
+import screenshotHR from '@/images/screenshots/hr.png'
 
 const features = [
   {
-    name: 'Reporting',
-    summary: 'Stay on top of things with always up-to-date reporting features.',
+    name: '项目管理',
+    summary: '以项目为主线，管理预算，并穿透管理合同、收付款、费用、任务、进度。',
     description:
-      'We talked about reporting in the section above but we needed three items here, so mentioning it one more time for posterity.',
-    image: screenshotProfitLoss,
+      '华炎项目管理解决方案帮助您跟踪和管理项目，里程碑，任务，已阻止的任务，逾期任务，时间，费用预算，并具有详细的报表功能。',
+    image: screenshotProject,
     icon: function ReportingIcon() {
       let id = useId()
       return (
@@ -44,12 +44,12 @@ const features = [
     },
   },
   {
-    name: 'Inventory',
+    name: '费控管理',
     summary:
-      'Never lose track of what’s in stock with accurate inventory tracking.',
+      '实现从费控管理的全程数字化，打通组织内的业财数据，实现业务财务一体化。',
     description:
       'We don’t offer this as part of our software but that statement is inarguably true. Accurate inventory tracking would help you for sure.',
-    image: screenshotInventory,
+    image: screenshotCost,
     icon: function InventoryIcon() {
       return (
         <>
@@ -72,12 +72,12 @@ const features = [
     },
   },
   {
-    name: 'Contacts',
+    name: '人事管理',
     summary:
-      'Organize all of your contacts, service providers, and invoices in one place.',
+      '员工的入转调离与考勤、薪酬等环节自动打通，让企业人事充分感受一站式的便利。',
     description:
       'This also isn’t actually a feature, it’s just some friendly advice. We definitely recommend that you do this, you’ll feel really organized and professional.',
-    image: screenshotContacts,
+    image: screenshotHR,
     icon: function ContactsIcon() {
       return (
         <>
@@ -123,7 +123,7 @@ function Feature({ feature, isActive, className, ...props }) {
       <p className="mt-2 font-display text-xl text-slate-900">
         {feature.summary}
       </p>
-      <p className="mt-4 text-sm text-slate-600">{feature.description}</p>
+      {/* <p className="mt-4 text-sm text-slate-600">{feature.description}</p> */}
     </div>
   )
 }
@@ -216,11 +216,10 @@ export function SecondaryFeatures() {
       <Container>
         <div className="mx-auto max-w-2xl md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-            Simplify everyday business tasks.
+            构建企业核心业务系统
           </h2>
           <p className="mt-4 text-lg tracking-tight text-slate-700">
-            Because you’d probably be a little confused if we suggested you
-            complicate your everyday business tasks instead.
+            华炎魔方将低代码技术融入传统企业软件开发流程，在充分满足核心业务系统的各项需求的同时，并大幅降低企业研发成本，提升数字化转型效率。
           </p>
         </div>
         <FeaturesMobile />

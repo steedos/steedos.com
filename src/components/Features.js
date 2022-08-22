@@ -274,7 +274,7 @@ function Testimonial({ author, content, url, expanded }) {
   )
 }
 
-export function Testimonials() {
+export function Features() {
   let ref = useRef()
   let [expanded, setExpanded] = useState(false)
   let [showCollapseButton, setShowCollapseButton] = useState(false)

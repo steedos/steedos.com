@@ -1,4 +1,4 @@
-import { Testimonials } from '@/components/Testimonials'
+import { Features } from '@/components/Features'
 import { SearchButton } from '@/components/Search'
 import { useEffect, useState } from 'react'
 import { Logo } from '@/components/Logo'
@@ -12,7 +12,6 @@ import { getCollectionProducts, getCollections } from '@/lib/product';
 import ReviewStars from '@/components/product/ReviewStars'
 import Price from '@/components/product/Price'
 import { getDefaultPrice } from '@/lib/product.client';
-import { Player } from '@/components/player'
 import clsx from 'clsx'
 import styles from './index.module.css'
 
@@ -139,31 +138,16 @@ export default function Home(props) {
         <title>华炎魔方低代码平台 - 赋能企业，打造数字驱动型组织</title>
       </Head>
   
-      <div className="mb-20 space-y-20 overflow-hidden sm:mb-20 sm:space-y-32 md:mb-20 md:space-y-40">
-        <Header />
-        <section className="text-center px-8">
-          <h2 className="text-slate-900 text-4xl tracking-tight font-extrabold sm:text-5xl dark:text-white">
-            高效开发，快速迭代，加速数字化转型
-          </h2>
-          <figure>
-            <blockquote>
-              <p className="mt-6 max-w-3xl mx-auto text-lg">
-              对于现代企业而言，能够根据快速变化的工作环境而做出调整并为之适应已变得至关重要。您的公司如何应对这些变化，以及您如何快速做出响应，可能成为决定您的长期成败的关键。您的企业可以通过多种方式实现这种变化，使用低代码开发是越来越受欢迎的一种方式，可使企业适应不断变化的外部环境。
-              </p>
-            </blockquote>
-           
-          </figure>
-        </section>
-      </div>
-      <Testimonials />
+      <Hero />
+      <PrimaryFeatures />
+      <SecondaryFeatures />
+      {/* <Features /> */}
 
-        {/* <Hero />
-        <PrimaryFeatures />
-        <SecondaryFeatures />
-        <CallToAction />
+        {/* 
+        
         <Testimonials2 />
-        <Pricing />
         <Faqs /> */}
+      <CallToAction />
       <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
 
 
@@ -212,6 +196,8 @@ export default function Home(props) {
               </div>
             </div>
       </div>
+      
+      <Pricing />
       {/* <Footer /> */}
     </>
   )

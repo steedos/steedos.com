@@ -87,7 +87,7 @@ function Plan({ name, price, description, href, features, featured = false }) {
         className="mt-8"
         aria-label={`Get started with the ${name} plan for ${price}`}
       >
-        Get started
+        快速开始
       </Button>
     </section>
   )
@@ -105,56 +105,59 @@ export function Pricing() {
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
             <span className="relative whitespace-nowrap">
               <SwirlyDoodle className="absolute top-1/2 left-0 h-[1em] w-full fill-blue-400" />
-              <span className="relative">Simple pricing,</span>
+              <span className="relative">报价</span>
             </span>{' '}
-            for everyone.
           </h2>
           <p className="mt-4 text-lg text-slate-400">
-            It doesn’t matter what size your business is, our software won’t
-            work well for you.
+          华炎魔方社区版完全免费，不限制用户数、不限制时间。商业用户建议选择企业版，提供更多企业级功能插件及商业支持服务。
           </p>
         </div>
         <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
           <Plan
-            name="Starter"
-            price="$9"
-            description="Good for anyone who is self-employed and just getting started."
+            name="社区版"
+            price="¥0"
+            description="免费使用，无任何限制。"
             href="/register"
             features={[
-              'Send 10 quotes and invoices',
-              'Connect up to 2 bank accounts',
-              'Track up to 15 expenses per month',
-              'Manual payroll support',
-              'Export up to 3 reports',
+              '快速构建应用程序	',
+              '自动化业务流程	',
+              '管理数据访问权限	',
+              '分析您的数据	',
+              '与外部系统集成	',
+              '融合高代码与DevOps工具	',
+              '社区支持	',
             ]}
           />
           <Plan
             featured
-            name="Small business"
-            price="$15"
-            description="Perfect for small / medium sized businesses."
+            name="企业版 （年）"
+            price="¥19800"
+            description="适用于商业用户的版本。含30用户许可。"
             href="/register"
             features={[
-              'Send 25 quotes and invoices',
-              'Connect up to 5 bank accounts',
-              'Track up to 50 expenses per month',
-              'Automated payroll support',
-              'Export up to 12 reports',
-              'Bulk reconcile transactions',
-              'Track in multiple currencies',
+              '自定义品牌和Logo',
+              '审计日志',
+              '企业级高级安全控制',
+              '字段级加密插件',
+              '像素级报表插件',
+              '钉钉、企业微信组织机构同步',
+              '商业支持	',
+              '新增用户: 300元/用户/年',
             ]}
           />
           <Plan
-            name="Enterprise"
-            price="$39"
-            description="For even the biggest enterprise companies."
+            name="开发版"
+            price="¥10800"
+            description="适用于软件公司的版本。含1开发者许可。"
             href="/register"
             features={[
-              'Send unlimited quotes and invoices',
-              'Connect up to 15 bank accounts',
-              'Track up to 200 expenses per month',
-              'Automated payroll support',
-              'Export up to 25 reports, including TPS',
+              'Gitlab DevOps Platform',
+              'Gitpod 远程开发环境',
+              '解决方案源码仓库',
+              'VIP开发者培训课程',
+              'VIP开发者服务群',
+              '应用市场上架支持',
+              '新增开发者: 10800元/开发者/年',
             ]}
           />
         </div>

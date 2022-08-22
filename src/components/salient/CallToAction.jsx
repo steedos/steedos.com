@@ -21,14 +21,13 @@ export function CallToAction() {
       <Container className="relative">
         <div className="mx-auto max-w-lg text-center">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
-            Get started today
+            快速开始
           </h2>
           <p className="mt-4 text-lg tracking-tight text-white">
-            It’s time to take control of your books. Buy our software so you can
-            feel like you’re doing something productive.
+            注册试用华炎魔方，看看全新的低代码技术如何帮助您大幅降低开发成本，提升开发效率。
           </p>
           <Button href="/register" color="white" className="mt-10">
-            Get 6 months free
+            免费试用
           </Button>
         </div>
       </Container>

@@ -5,34 +5,43 @@ import clsx from 'clsx'
 
 import { Container } from '@/components/salient/Container'
 import backgroundImage from '@/images/background-features.jpg'
+import screenshotProject from '@/images/screenshots/project.png'
+import screenshotObjectFields from '@/images/screenshots/object-fields.png'
+import screenshotPageDesigner from '@/images/screenshots/page-designer.png'
+import screenshotFlowDesigner from '@/images/screenshots/flow-designer.png'
 import screenshotExpenses from '@/images/screenshots/expenses.png'
-import screenshotPayroll from '@/images/screenshots/payroll.png'
-import screenshotReporting from '@/images/screenshots/reporting.png'
+import screenshotReporting from '@/images/screenshots/report-designer.png'
 import screenshotVatReturns from '@/images/screenshots/vat-returns.png'
 
 const features = [
+  // {
+  //   title: '企业级解决方案',
+  //   description:
+  //     "只需点击鼠标，就能快速搭建企业级解决方案，处理和分析您的业务数据，并与您现有的业务系统无缝联通。",
+  //   image: screenshotProject,
+  // },
   {
-    title: 'Payroll',
+    title: '可视化页面设计',
     description:
-      "Keep track of everyone's salaries and whether or not they've been paid. Direct deposit not supported.",
-    image: screenshotPayroll,
+      "全新引入 amis 渲染器，并提供可视化编辑工具，帮助开发人员快速使用 百度 amis 创建自定义页面",
+    image: screenshotPageDesigner,
   },
   {
-    title: 'Claim expenses',
+    title: '可视化模型设计',
     description:
-      "All of your receipts organized into one place, as long as you don't mind typing in the data by hand.",
-    image: screenshotExpenses,
+      "基于模型驱动，内置功能强大的建模引擎，零代码也能快速创建智能化、移动化的企业应用程序。",
+    image: screenshotObjectFields,
   },
   {
-    title: 'VAT handling',
+    title: '可视化流程设计',
     description:
-      "We only sell our software to companies who don't deal with VAT at all, so technically we do all the VAT stuff they need.",
-    image: screenshotVatReturns,
+      "内置流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务流程。",
+    image: screenshotFlowDesigner,
   },
   {
-    title: 'Reporting',
+    title: '可视化报表设计',
     description:
-      'Easily export your data into an Excel spreadsheet where you can do whatever the hell you want with it.',
+      '使用可视化工具设计像素级报表，例如报价单、发货单等业务单据，并可嵌入二维码、条形码。',
     image: screenshotReporting,
   },
 ]
@@ -72,11 +81,11 @@ export function PrimaryFeatures() {
       <Container className="relative">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">
-            Everything you need to run your books.
+          可视化，更高效的开发方式
           </h2>
           <p className="mt-6 text-lg tracking-tight text-blue-100">
-            Well everything you need if you aren’t that picky about minor
-            details like tax compliance.
+          对于现代企业而言，能够根据快速变化的工作环境而做出调整并为之适应已变得至关重要。您的公司如何应对这些变化，以及您如何快速做出响应，可能成为决定您的长期成败的关键。您的企业可以通过多种方式实现这种变化，使用低代码开发是越来越受欢迎的一种方式，可使企业适应不断变化的外部环境。
+
           </p>
         </div>
         <Tab.Group

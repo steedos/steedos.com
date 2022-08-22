@@ -16,6 +16,7 @@
   { "source": "/docs/user", "destination": "/docs/user/getting-started", "permanent": true },
   { "source": "/docs/low-code-academy", "destination": "/docs/low-code-academy/getting-started", "permanent": true},
   { "source": "/docs", "destination": "/docs/deploy/getting-started", "permanent": true},
-  { "source": "/cn/steedos/privacy", "destination": "/company/privacy", "permanent": true }
+  { "source": "/cn/steedos/privacy", "destination": "/company/privacy", "permanent": true },
+  { "source": "/register", "destination": "https://id.steedos.cn/", "permanent": true }
 ]
 
