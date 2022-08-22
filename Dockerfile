@@ -11,7 +11,6 @@ COPY ./rehype /app/rehype
 COPY ./remark /app/remark
 COPY ./scripts /app/scripts
 COPY ./src /app/src
-COPY ./.babelrc /app
 COPY ./.env /app
 COPY ./.eslintrc.js /app
 COPY ./jsconfig.json /app
