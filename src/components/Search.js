@@ -123,8 +123,7 @@ export function SearchProvider({ children }) {
 
 function Hit({ hit, children }) {
   return (
-    <Link href={hit.url}>
-      <a
+      <a  href={hit.url}
         className={clsx({
           'DocSearch-Hit--Result': hit.__is_result?.(),
           'DocSearch-Hit--Parent': hit.__is_parent?.(),
@@ -135,7 +134,6 @@ function Hit({ hit, children }) {
       >
         {children}
       </a>
-    </Link>
   )
 }
 
