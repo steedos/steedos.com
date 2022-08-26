@@ -1,4 +1,3 @@
-import { useId } from 'react'
 import Image from 'next/future/image'
 import { Tab } from '@headlessui/react'
 import clsx from 'clsx'
@@ -8,6 +7,7 @@ import screenshotProject from '@/images/screenshots/project.png'
 import screenshotCost from '@/images/screenshots/cost.png'
 import screenshotHR from '@/images/screenshots/hr.png'
 
+let count =1;
 const features = [
   {
     name: '项目管理',
@@ -16,7 +16,7 @@ const features = [
       '华炎项目管理解决方案帮助您跟踪和管理项目，里程碑，任务，已阻止的任务，逾期任务，时间，费用预算，并具有详细的报表功能。',
     image: screenshotProject,
     icon: function ReportingIcon() {
-      let id = useId()
+      let id = count++;
       return (
         <>
           <defs>
