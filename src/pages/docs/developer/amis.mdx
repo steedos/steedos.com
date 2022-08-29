@@ -242,6 +242,40 @@ amis 是百度开源的低代码前端框架，它使用 JSON 配置来生成页
 
 另外“页面分配”会同步到微页面元数据，即`main/default/pages/xxx.page.yml`文件的“pageAssignments”属性中。
 
+## 自定义组件
+
+[amis](https://aisuda.bce.baidu.com/amis/zh-CN/docs) 本身提供了非常丰富的组件功能，基本它可以实现大部分业务场景的UI界面需求。
+
+如果遇到适合自己开发自定义组件的场景，我们也可以通过自定义资产包来把自定义组件集成到amis设计器中，这样我们就可以实现任何我们想要的UI效果了。 
+
+只要把自定义资产包地址配置到环境变量 `STEEDOS_PUBLIC_PAGE_ASSETURLS` 中，华炎魔方会根据资产包中配置的资源包地址自动把相关自定义组件加载并集成到amis引擎中，非常方便。
+
+```bash
+STEEDOS_PUBLIC_PAGE_ASSETURLS=https://unpkg.com/@steedos-widgets/example@0.0.4/dist/assets.json
+```
+
+资产包的地址只要可以访问即可，它可以是发布到npm的包(unpkg.com)地址，也可以是其他任何可以被当前服务访问的地址，比如在远程开发环境中公开的资产包地址。
+
+下面的示例 [amis-custom-components](#amis-custom-components) 完整显示了如何在华炎魔方项目中通过引用自定义资产包的方式来集成自定义组件。
+
+关于自定义资产包及自定义组件的开发，请参考下面的示例 [steedos-widget](#steedos-widget)。
+
 ## 示例
 
-- [examples/amis-dashboard](https://github.com/steedos/steedos-examples/tree/main/with-amis)，里面有一些使用 amis 配置仪表盘的完整示例，希望对大家有帮助。
+### amis-dashboard
+
+https://github.com/steedos/steedos-examples/tree/main/with-amis
+
+里面有一些使用 amis 配置仪表盘的完整示例。
+
+### amis-custom-components
+
+https://github.com/steedos/steedos-examples/tree/main/with-amis-custom-components
+
+完整演示了如何在魔方项目中引用自定义资产包来实现自定义 amis 组件。
+
+### steedos-widgets
+
+演示了如果开发一个名为 Hello 的自定义React组件，并把它发布为可供华炎魔方项目引用的资产包。
+
+https://github.com/steedos/steedos-widgets/blob/master/packages/example
