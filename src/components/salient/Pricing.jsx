@@ -148,7 +148,7 @@ export function Pricing() {
           <Plan
             name="开发版 （年）"
             price="¥10800"
-            description="适用于软件公司的版本。含1开发者许可。"
+            description="适用于软件公司的版本。含1开发者支持。"
             href="/register"
             features={[
               'Gitlab DevOps Platform',
@@ -156,6 +156,7 @@ export function Pricing() {
               '解决方案源码仓库',
               'VIP开发者培训课程',
               'VIP开发者服务群',
+              '平台OEM支持',
               '应用市场上架支持',
               '新增开发者: 10800元/开发者/年',
             ]}

@@ -214,12 +214,12 @@ export function SecondaryFeatures() {
       className="pt-20 pb-14 sm:pb-20 sm:pt-32 lg:pb-32"
     >
       <Container>
-        <div className="mx-auto max-w-2xl md:text-center">
-          <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
-            构建企业核心业务系统
+        <div className="mx-auto max-w-3xl md:text-center">
+          <h2 className="font-display text-4xl tracking-tight text-slate-900 sm:text-5xl dark:text-slate-100">
+            零代码融合高代码，快速且强大
           </h2>
           <p className="mt-4 text-lg tracking-tight text-slate-700 dark:text-slate-400">
-            华炎魔方将低代码技术融入传统企业软件开发流程，在充分满足核心业务系统的各项需求的同时，并大幅降低企业研发成本，提升数字化转型效率。
+            华炎魔方将可视化技术融入传统企业软件开发流程，与传统代码开发工具无缝融合，在大幅降低研发成本的同时，充分满足核心业务系统开发的各项需求，实现前后端业务逻辑的个性化定制。
           </p>
         </div>
         <FeaturesMobile />
