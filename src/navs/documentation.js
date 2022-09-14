@@ -64,6 +64,7 @@ export const documentationNav = {
     admin['datasource'],
     admin['query'],
     developer['node-red'],
+    developer['push'],
   ],
   '统计分析': [
     admin['reports'],
