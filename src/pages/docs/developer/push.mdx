@@ -9,8 +9,6 @@ description: 华炎魔方支持在第三方应用中调用接口来发推送通�
 
 需要先 [安装软件包](/docs/developer/package#安装) `@steedos/service-push` 才能使用该功能。
 
-2. 在魔方系统创建第三方应用，并记录下创建成功后的appId
-
 ## 调用GraphQL接口
 
 调用GraphQL接口往对象 `push_notifications` 中插入一条记录，系统就会自动发送推送通知。
@@ -19,18 +17,24 @@ description: 华炎魔方支持在第三方应用中调用接口来发推送通�
 
 ```js
 mutation {
-    push_notifications__insert(doc:{ 
-      name : "系统管理员为您分配了一个任务1",
-      body : "处理次款事务1",
-      owner_mobile : "xxxxxxxxxxx", //人员手机号
-      app_id : "xxxxxxxxxxxx", //自建第三方应用的appId
-      badge: 1 //待办数
-}){
-      name
-      _id
+  push_notifications__insert(doc:{ 
+    name : "系统管理员为您分配了一个任务1",
+    body : "处理次款事务1",
+    owner_mobile : "xxxxxxxxxxx", //人员手机号
+    app_id : "xxxxxxxxxxxx", //自建第三方应用的appId
+    badge: 1 //待办数
+  }){
+    name
+    _id
   }
 }
 ```
+
+- name：通知显示的标题。
+- body：通知内容正文。
+- owner_mobile：要把通知发送给谁，这里需要输入的是华炎魔方系统中用户的手机号。
+- app_id：选填，关联应用，即在魔方项目中创建的第三方应用的Id值。
+- badge：选填。关联应用中需要显示的待办数值，即应用右上角显示的Badge数值，
 
 假设华炎魔方项目访问地址为 https://huayan-test.steedos.cn， 那么其GraphQL接口地址就是 https://huayan-test.steedos.cn/graphql， 我们只要在第三方系统中调用该地址，发送以上参考数据，华炎魔方就会自动发送推送通知。
 
