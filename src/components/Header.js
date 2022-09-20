@@ -172,6 +172,21 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
   let [isOpaque, setIsOpaque] = useState(false)
   const { data: session } = useSession()
 
+
+  useEffect(() => {
+    if (session) {
+      const userId = session.user.email;
+      const people = {
+        id: userId,
+        name: 'steedos.com/' + session.user.name,
+        spaceId: 'steedos.com',
+        spaceName: 'steedos.com',
+      }
+      window.posthog.identify(userId);
+      window.posthog.people.set(people);
+    }
+  }, [session]);
+  
   const [open, setOpen] = useState(false)
   const [userInfo, setUserInfo] = useState({})
   const [cart, setCart] = useState({lines: []})
