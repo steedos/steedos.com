@@ -14,7 +14,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { getCart } from '@/lib/cart.client';
 
 const navigation = headerNav;
-
+const registration_url = "https://id.steedos.cn/realms/master/protocol/openid-connect/registrations?client_id=steedos-oidc-public&redirect_uri=https://www.steedos.cn&response_type=code&ui_locales=zh_CN"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -369,7 +369,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                       key={page.name}
                       href={page.href}
                       target={page.target}
-                      className="px-2 flex items-center text-slate-700 dark:text-slate-200 text-base font-medium "
+                      className="px-2 flex items-center text-slate-700 dark:text-slate-200 text-base font-medium hover:border-sky-600 hover:text-sky-600 border-b-2 -mb-px pt-px border-transparent "
                     >
                       {page.name}
                     </a>
@@ -384,11 +384,11 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
 
                     <Menu as="div" className="relative inline-block text-left">
                       <div>
-                        <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                        <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium rounded-md bg-opacity-20 hover:text-sky-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                         {/* {userInfo.name && (userInfo.name)} */}
                         我的账户
                           <ChevronDownIcon
-                            className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
+                            className="w-5 h-5 ml-1 -mr-1 text-violet-300 hover:text-sky-500"
                             aria-hidden="true"
                           />
                         </Menu.Button>
@@ -480,6 +480,9 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                       </Transition>
                     </Menu>
 
+                    <a class="hover:text-sky-500 dark:hover:text-sky-400 text-sm font-medium " href={registration_url}>
+                      <span class="ml-2 font-medium text-sm leading-5 rounded-full text-sky-600 bg-sky-400/10 px-3 py-2  dark:text-sky-400">免费注册</span>
+                    </a>
                   </div>
                   <div className="flex items-center border-l border-slate-200 ml-3 pl-6 dark:border-slate-800">
                     <ThemeToggle panelClassName="mt-8" />
