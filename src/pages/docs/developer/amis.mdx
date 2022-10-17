@@ -65,8 +65,6 @@ amis 是百度开源的低代码前端框架，它使用 JSON 配置来生成页
 
 我们在微页面中集成了amis可视化设计器，只要在微页面详情界面点击右上角的“设计器”按钮即可打开它，设计器本身是运行在 [云端](https://builder.steedos.com/amis) 的，但是在上面设计的内容会保存和发布到本地数据库中，也可以 [同步为代码](#同步为代码)。
 
-### 页面设计
-
 我们在微页面设计器中可以拖动左侧的组件到中间的画布中，然后在设计器右侧进一步配置各个组件的属性以实现相关功能。
 
 组件有两种，一种是 amis 本身内置的组件，其使用方法请参阅其官网文档： [amis组件](https://aisuda.bce.baidu.com/amis/zh-CN/components/index)，另一种则是 [华炎魔方组件](#华炎魔方组件)，这是我们为 amis 扩展的可以快速整合华炎魔方各种界面能力的相关功能组件。
@@ -75,16 +73,17 @@ amis 是百度开源的低代码前端框架，它使用 JSON 配置来生成页
 
 页面设计完成后，可以点击设计器右上角的两个预览按钮，预览其在PC和手机端生成的页面效果，右上角还有保存和发布按钮，分别用于保存和发布设计器生成的Schema代码到数据库中。
 
-### 华炎魔方组件
+## 华炎魔方组件
 
 我们为 amis 扩展了以下组件用于快速实现华炎魔方各种界面能力。
 
 - [对象表单 ObjectForm](/docs/amis/object_form)
 - [对象列表 ObjectListView](/docs/amis/object_listview)
+- [对象表格 ObjectTable](/docs/amis/object_table)
 - [标题面板 RecordDetailHeader](/docs/amis/record_detail_header)
 - [相关列表 RecordDetailRelatedList](/docs/amis/record_detail_related_list)
 
-### 关于API
+## 关于API
 
 如果我们在设计器中拖动到画布中的是上面提到的华炎魔方组件，是不用操心界面与后台API接口的交互过程的，因为这些组件已经内置了相关功能。
 
