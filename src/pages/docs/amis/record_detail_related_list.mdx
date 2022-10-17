@@ -40,3 +40,20 @@ recordId属性类似的可以配置为某个具体的记录id值，但是一般�
 | objectApiName | string | 无 | 父级对象api名称 |
 | recordId | string | 无 | 父级记录ID值 |
 | relatedObjectApiName | string | 无 | 相关列表对象api名称 |
+| columns | [object] | 无 | 要显示的对象字段 |
+| filters | [string] | 无 | 过滤条件 |
+| sortField | string | 无 | 排序字段 |
+| sortOrder | string | 无 | 排序顺序 |
+| top | number | 10 | 要显示的记录数量 |
+
+<!--
+| actions | [string] | 无 | 操作 |
+| enableActions | boolean | false | 显示列表视图操作栏 |
+-->
+
+#### columns属性表
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|----|----|----|----|
+| name | string | 无 | 字段api名称 |
+
