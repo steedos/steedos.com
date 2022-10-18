@@ -1,13 +1,11 @@
 import Link from 'next/link'
-import { VersionSwitcher } from '@/components/VersionSwitcher'
 import { SearchButton } from '@/components/Search'
 import clsx from 'clsx'
 import Router from 'next/router'
 import { Logo } from '@/components/Logo'
 import { useEffect, Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition, Menu } from '@headlessui/react'
-import { MenuIcon, SearchIcon, ChevronDownIcon, XIcon, LogoutIcon, ShoppingBagIcon, ViewGridIcon, UserAddIcon } from '@heroicons/react/outline'
-import { StarIcon } from '@heroicons/react/solid'
+import { UserIcon, CodeIcon, ChevronDownIcon, CogIcon, LogoutIcon, ShoppingBagIcon, ViewGridIcon, UserAddIcon } from '@heroicons/react/outline'
 import { ThemeSelect, ThemeToggle } from './ThemeToggle'
 import { headerNav } from '@/navs/header';
 import useSWR from 'swr'
@@ -174,6 +172,21 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
   let [isOpaque, setIsOpaque] = useState(false)
   const { data: session } = useSession()
 
+
+  useEffect(() => {
+    if (session) {
+      const userId = session.user.email;
+      const people = {
+        id: userId,
+        name: 'steedos.com/' + session.user.name,
+        spaceId: 'steedos.com',
+        spaceName: 'steedos.com',
+      }
+      window.posthog.identify(userId);
+      window.posthog.people.set(people);
+    }
+  }, [session]);
+  
   const [open, setOpen] = useState(false)
   const [userInfo, setUserInfo] = useState({})
   const [cart, setCart] = useState({lines: []})
@@ -232,17 +245,17 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
       <div className="absolute z-40 lg:z-50 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
         <div className="w-[108rem] flex-none flex justify-end">
           <picture>
-            <source srcSet={require('@/img/beams/docs@30.avif').default} type="image/avif" />
+            <source srcSet={'/img/beams/docs@30.avif'} type="image/avif" />
             <img
-              src={require('@/img/beams/docs@tinypng.png').default}
+              src={'/img/beams/docs@tinypng.png'}
               alt=""
               className="w-[71.75rem] flex-none max-w-none dark:hidden"
             />
           </picture>
           <picture>
-            <source srcSet={require('@/img/beams/docs-dark@30.avif').default} type="image/avif" />
+            <source srcSet={'/img/beams/docs-dark@30.avif'} type="image/avif" />
             <img
-              src={require('@/img/beams/docs-dark@tinypng.png').default}
+              src={'/img/beams/docs-dark@tinypng.png'}
               alt=""
               className="w-[90rem] flex-none max-w-none hidden dark:block"
             />
@@ -424,7 +437,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
 
                             <Menu.Item>
                               <a href="https://id.steedos.cn/realms/master/account/" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <ViewGridIcon
+                                <UserIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
                                 />
@@ -433,7 +446,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                             </Menu.Item>
                             <Menu.Item>
                               <a href="https://console.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <ViewGridIcon
+                                <CogIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
                                 />
@@ -443,7 +456,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
 
                             <Menu.Item>
                               <a href="https://gitlab.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <ViewGridIcon
+                                <CodeIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
                                 />

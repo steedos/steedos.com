@@ -419,18 +419,18 @@ mutation {
 
 #### 修改单条数据
 
-使用 `mutation.{object_api_name}__update` 语法，传入 `_id` 和 `doc` 参数值。
+使用 `mutation.{object_api_name}__update` 语法，传入 `id` 和 `doc` 参数值。
 
 ```javascript
 mutation {
-  tasks__update(_id:"5cb98489d09a343e14daae95", doc:{name:"Task Important"}) {
+  tasks__update(id:"5cb98489d09a343e14daae95", doc:{name:"Task Important"}) {
     name
     _id
   }
 }
 ```
 
-其中，`tasks`代表要修改记录的对象名称，`_id` 的值 `5cb98489d09a343e14daae95` 代表要修改的记录的 `_id`，`{name:"Task Important"}` 代表要更新的JSON数据。
+其中，`tasks`代表要修改记录的对象名称，`id` 的值 `5cb98489d09a343e14daae95` 代表要修改的记录的 `_id`，`{name:"Task Important"}` 代表要更新的JSON数据。
 
 关键字`__update`表示通过 GraphQL API 在系统中修改一条记录。
 
@@ -485,15 +485,15 @@ mutation {
 
 #### 删除单条数据
 
-使用 `mutation.{object_api_name}__delete` 语法，传入 `_id` 参数值。
+使用 `mutation.{object_api_name}__delete` 语法，传入 `id` 参数值。
 
 ```javascript
 mutation {
-  tasks__delete(_id:"5cb98489d09a343e14daae95")
+  tasks__delete(id:"5cb98489d09a343e14daae95")
 }
 ```
 
-其中，`tasks` 代表要删除记录的对象名，`_id` 的值 `5cb98489d09a343e14daae95` 代表要删除的记录的`_id`
+其中，`tasks` 代表要删除记录的对象名，`id` 的值 `5cb98489d09a343e14daae95` 代表要删除的记录的`_id`
 
 关键字`__delete`表示通过 GraphQL API 在系统中删除一条记录。
 

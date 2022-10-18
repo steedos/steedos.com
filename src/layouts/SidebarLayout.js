@@ -236,15 +236,15 @@ const TopLevelAnchor = forwardRef(
 )
 
 function TopLevelLink({ href, as, ...props }) {
-  if (/^https?:\/\//.test(href)) {
+  // if (/^https?:\/\//.test(href)) {
     return <TopLevelAnchor href={href} {...props} />
-  }
+  // }
 
-  return (
-    <Link href={href} as={as} passHref>
-      <TopLevelAnchor {...props} />
-    </Link>
-  )
+  // return (
+  //   <Link href={href} as={as} passHref>
+  //     <TopLevelAnchor {...props} />
+  //   </Link>
+  // )
 }
 
 function TopLevelNav({ mobile }) {

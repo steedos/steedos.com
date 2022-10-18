@@ -5,7 +5,7 @@ export function Footer({ children, previous, next }) {
   return (
     <footer className={clsx('text-sm leading-6', previous || next ? 'mt-12' : 'mt-16')}>
       {(previous || next) && (
-        <div className="mb-10 text-slate-700 font-semibold flex items-center dark:text-slate-200">
+        <div className="mb-10 text-slate-700 font-semibold flex items-center dark:text-slate-200 justify-between">
           {previous && (
             <Link href={previous.href}>
               <a className="group flex items-center hover:text-slate-900 dark:hover:text-white">

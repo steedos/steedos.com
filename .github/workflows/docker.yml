@@ -7,6 +7,7 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    environment: prod
     strategy:
       matrix:
         node-version: [12.x]
@@ -55,6 +56,9 @@ jobs:
           file: ./Dockerfile
           build-args: |
             "API_TOKEN=${{ secrets.API_TOKEN }}"
+            "KEYCLOAK_SECRET=${{ secrets.KEYCLOAK_SECRET }}"
+            "STEEDOS_IDENTITY_JWT_SECRET=${{ secrets.STEEDOS_IDENTITY_JWT_SECRET }}"
+            "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}"
           platforms: linux/amd64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}

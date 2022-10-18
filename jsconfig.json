@@ -7,6 +7,7 @@
       "@/utils/*": ["src/utils/*"],
       "@/hooks/*": ["src/hooks/*"],
       "@/img/*": ["src/img/*"],
+      "@/images/*": ["src/images/*"],
       "@/navs/*": ["src/navs/*"],
       "@/lib/*": ["src/lib/*"]
       
