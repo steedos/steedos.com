@@ -16,7 +16,7 @@ description: 华炎魔方微页面引擎，内置对象列表组件 ObjectTable�
     type: 'page',
     title: '对象表格',
     body: {
-        "type": "steedos-object-listview",
+        "type": "steedos-object-table",
         "objectApiName": "${objectName}",
         "columns": [{"name": "name"}, {"name": "email"}]
     },
@@ -42,18 +42,18 @@ columns属性需要配置不对象数组格式，描述需要显示哪些字段�
 | filters | [string] | 无 | 过滤条件 |
 | sortField | string | 无 | 排序字段 |
 | sortOrder | string | 无 | 排序顺序 |
-| top | number | 10 | 要显示的记录数量 |
+| top | number | 无 | 要显示的记录数量 |
+| perPage | number | 20 | 设置一页显示多少条数据 |
 
 <!--
 | actions | [string] | 无 | 操作 |
 | enableInlineEdit | boolean | false | 启用内联编辑 |
 | enableActions | boolean | false | 显示列表视图操作栏 |
-| enableSearch | boolean | false | 启用搜索栏 |
 -->
 
 #### columns属性表
 
 | 属性名 | 类型 | 默认值 | 说明 |
 |----|----|----|----|
-| name | string | 无 | 字段api名称 |
+| field | string | 无 | 字段api名称 |
 
