@@ -1,0 +1,47 @@
+---
+title: Amis组件 对象列表
+description: 华炎魔方微页面引擎，内置对象列表组件 ObjectListView，借助amis渲染器，可以帮助开发人员快速生成一个功能完善的列表视图组件。
+---
+
+这是一个基于华炎魔方对象的列表视图组件，它把对象记录显示为表格，同时包含了对象记录的增删改查以及其他操作按钮功能。
+
+## 基本用法
+
+最基本的用法是配置组件的“对象”及“视图”属性，就可以显示出指定对象的列表页面。
+
+如下所示我们配置对象列表的“对象”属性为当前对象，“视图”属性为当前对象的“有效人员”视图：
+
+```json
+{
+    type: 'page',
+    title: '列表视图',
+    body: {
+        "type": "steedos-object-listview",
+        "objectApiName": "${objectName}",
+        "listName": "all"
+    },
+  }
+```
+如果我们按照教程 [Amis微页面 - 列表页面](/docs/developer/amis#列表页面) 新建一个指向人员对象的微页面，并拖动一个对象列表组件到画布，可以看到该组件生成了类似上面的amis Schema配置。
+
+发布后，我们就可以在人员对象的列表页面看到人员列表效果。
+
+objectApiName属性可以被配置为像`space_users`或`accounts`这种固定值，也可以配置为变量，而变量`objectName`在“记录页面”、“列表页面”以及“表单”类型的微页面中存储了当前对象Api名称。
+
+listName属性类似的可以配置为某个固定的列表视图值，也可以配置为某个变量值。
+
+## 属性表
+
+该组件支持下面的配置。
+
+| 属性名 | 类型 | 默认值 | 说明 |
+|----|----|----|----|
+| objectApiName | string | space_users | 关联对象api名称 |
+| listName | string | 无 | 要显示的对象视图名称 |
+| top | number | 无 | 要显示的记录数量 |
+
+<!--
+| enableInlineEdit | boolean | 无 | 启用内联编辑 |
+| enableActions | boolean | 无 | 启用操作栏 |
+| enableSearch | boolean | 无 | 启用搜索栏 |
+-->

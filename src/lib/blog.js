@@ -236,7 +236,7 @@ export async function getBlogs(){
     `
     const result = await fetchGraphql(query);
 
-    let site_blogs = null;
+    let site_blogs = [];
 
     if(result.data && result.data.site_blogs){
         site_blogs = result.data.site_blogs;
