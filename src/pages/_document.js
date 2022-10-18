@@ -29,7 +29,6 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript/>
         </body>
-        <script src={`https://hm.baidu.com/hm.js?${process.env.NEXT_PUBLIC_BAIDU_TONGJI_ID}`}/>
       </Html>
     )
   }

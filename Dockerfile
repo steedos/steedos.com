@@ -15,7 +15,6 @@ COPY ./remark /app/remark
 COPY ./scripts /app/scripts
 COPY ./src /app/src
 COPY ./.env /app
-COPY ./.eslintrc.js /app
 COPY ./jsconfig.json /app
 COPY ./next-env.d.ts /app
 COPY ./next.config.js /app
