@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.steedos.cn
+Host: https://3000-steedos-steedoscom-fvu7pr8eeac.ws-us71.gitpod.io/
 
 # Sitemaps
-Sitemap: https://www.steedos.cn/sitemap.xml
+Sitemap: https://3000-steedos-steedoscom-fvu7pr8eeac.ws-us71.gitpod.io/sitemap.xml
