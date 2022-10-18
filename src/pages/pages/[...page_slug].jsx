@@ -54,7 +54,7 @@ export async function getServerSideProps({
     preview,
   }) {
   
-  const { site_slug, page_slug } = params;
+  const { page_slug } = params;
   const slug = page_slug.join('/')
   
   const result = await axios({
@@ -62,7 +62,7 @@ export async function getServerSideProps({
     method: 'post',
     data: {
       query: `{
-        site_pages (filters: [["site_slug", "=", "${site_slug}"], ["slug", "=", "${slug}"]]) {
+        site_pages (filters: [["slug", "=", "${slug}"]]) {
           _id
           name
           slug
@@ -79,7 +79,6 @@ export async function getServerSideProps({
 
   return {
     props: {
-      site_slug,
       page_slug,
       page,
     },
