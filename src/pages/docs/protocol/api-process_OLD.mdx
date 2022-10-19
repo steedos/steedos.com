@@ -5,10 +5,6 @@ description: 根据流程的元数据定义，自动生成审批相关API。
 
 本协议约定低代码平台流程引擎需要提供的相关API接口的规范，包括请求接口参数，返回值等规则。
 
-## 接口验证
-
-调用接口需要在请求的Headers中添加用户身份验证信息，详情请参阅 [接口验证](/docs/developer/graphql-api#接口验证)。
-
 ## API 清单
 
 | 名称 | 请求操作
@@ -30,12 +26,8 @@ description: 根据流程的元数据定义，自动生成审批相关API。
 #### URI
 
 ```text
-/api/workflow/v2/draft
+/api/workflow/open/drafts
 ```
-
-#### Method
-
-POST
 
 #### 请求参数
 
@@ -43,176 +35,38 @@ POST
 
 | 名称 | 类型| 描述 |
 |----|----|----|
-| instance | object | 审批单字段值 |
-
-其中instance属性描述如下：
-
-| 名称 | 类型| 描述 |
-|----|----|----|
-| space | string | 工作区_id |
 | flow | string | 流程_id |
 | applicant | string | 申请人_id |
+| applicant_username | string | 申请人用户名 |
+| values | object | 审批单字段值 |
 
-```json
-{
-    "instance": {
-        "space": "hKdnwE55WcnWveYxS",
-        "flow": "BayiYu3sk2hv3M2HW",
-        "applicant": "62ede4f62161e377e35de58c"
-    }
-}
-```
+applicant 与 applicant_username 两个参数两选一即可。
 
 #### 返回值
 
 - 该API接口请求成功时返回值格式如下：
 
-| 名称 | 类型| 描述 |
-|----|----|----|
-| instance | object | 审批单字段值 |
-
-其中instance属性描述如下：
-
-| 名称 | 类型| 描述 |
-|----|----|----|
-| _id | string | 创建成功的申请单_id |
-| space | string | 工作区_id |
-| flow | string | 流程_id |
-| flow_version | string | 流程版本_id |
-| form | string | 表单版本_id |
-| form_version | string | 表单版本_id |
-
 ```json
 {
-    "instance": {
-        "_id": "zMiGNe2sJm9KuruvM",
-        "space": "hKdnwE55WcnWveYxS",
-        "flow": "BayiYu3sk2hv3M2HW",
-        "flow_version": "Nvc5wjsgHYkXnNHhk",
-        "form": "Pdq8neQvT7fv5aTyd",
-        "form_version": "thX4kKBAx6iCgciWD"
-    }
+    "status": "success",
+    "data": {...}
 }
 ```
 
-instance中返回的是创建成功的审批单记录信息。
+data返回的是创建成功的审批单记录信息。
 
-### 暂存草稿审批单
-
-#### URI
-
-```text
-/api/workflow/v2/instance/save
-```
-
-#### Method
-
-POST
-
-#### 请求参数
-
-请求该接口时需要传入以下参数。
-
-| 名称 | 类型| 描述 |
-|----|----|----|
-| instance | object | 审批单字段值 |
-
-其中instance属性描述如下：
-
-| 名称 | 类型| 描述 |
-|----|----|----|
-| _id | string | 申请单_id |
-| space | string | 工作区_id |
-| flow | string | 流程_id |
-| flow_version | string | 流程版本_id |
-| form | string | 表单版本_id |
-| form_version | string | 表单版本_id |
-| applicant | string | 申请人_id |
-| applicant_name | string | 申请人姓名 |
-| applicant_organization | string | 申请人所属组织_id |
-| applicant_organization_name | string | 申请人所属组织名称 |
-| applicant_organization_fullname | string | 申请人所属组织全称 |
-| code | string | 申请单Code |
-| traces | [object] | 签核历程 |
-| submit_date | datetime | 提交时间 |
-
-其中traces属性描述如下：
-
-| 名称 | 类型| 描述 |
-|----|----|----|
-| _id | string | 签核历程_id |
-| approves | [object] | 审批历程 |
-
-其中approves属性描述如下：
-
-| 名称 | 类型| 描述 |
-|----|----|----|
-| _id | string | 审批历程_id |
-| description | string | 审批内容 |
-| values | object | 申请单字段值 |
-| next_steps | [object] | 下一步骤信息 |
-
-其中next_steps属性描述如下：
-| 名称 | 类型| 描述 |
-|----|----|----|
-| step | string | 下一步骤_id |
-| users | [string] | 下一步骤处理人 |
+- 该API接口请求失败时返回值格式如下：
 
 ```json
 {
-    "instance": {
-        "_id": "zMiGNe2sJm9KuruvM",
-        "space": "hKdnwE55WcnWveYxS",
-        "flow": "BayiYu3sk2hv3M2HW",
-        "flow_version": "Nvc5wjsgHYkXnNHhk",
-        "form": "Pdq8neQvT7fv5aTyd",
-        "form_version": "thX4kKBAx6iCgciWD",
-        "applicant": "62ede4f62161e377e35de58c",
-        "applicant_name": "xxx",
-        "applicant_organization": "XypyNbzGCJbHMNyWv",
-        "applicant_organization_name": "xxx",
-        "applicant_organization_fullname": "xxx",
-        "code": "",
-        "traces": [
-            {
-                "_id": "7f316cb404fddf2098c8fd2d",
-                "approves": [
-                    {
-                        "_id": "97628d0b9a33b541816caeeb",
-                        "description": "",
-                        "values": {
-                            "field1": "xx",
-                            "field2": "xx",
-                            "field3": "xx"
-                        },
-                        "next_steps": [
-                            {
-                                "step": "e28faf97-a1c4-4bdd-90e5-1b43d42aa10b",
-                                "users": []
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-        "submit_date": xxx
-    }
+    "status": "error",
+    "data": { errors: [{ errorMessage: "..." }] }
 }
 ```
 
-#### 返回值
+### 暂存审批单
 
-- 该API接口请求成功时返回值格式如下：
-
-| 名称 | 类型| 描述 |
-|----|----|----|
-| instance | boolean | 是否成功 |
-
-```json
-{
-    "instance": true
-}
-```
+敬请期待...
 
 ### 计算下一步处理人
 
@@ -358,10 +212,6 @@ orgField 参数是一个json对象，以下表格描述了该参数的属性清�
 /api/workflow/submit
 ```
 
-#### Method
-
-POST
-
 #### 请求参数
 
 请求该接口时需要传入以下参数。
@@ -386,58 +236,15 @@ POST
 
 | 名称 | 类型| 描述 |
 |----|----|----|
-| _id | string | 签核历程_id |
-| step | string | 签核历程步骤_id |
 | approves | object[] | 审批历程 |
 
 以下表格描述了 approves 中的对象键值信息：
 
 | 名称 | 类型| 描述 |
 |----|----|----|
-| _id | string | 审批历程_id |
-| description | string[] | 审批意见 |
-| values | object | 申请单字段值 |
-| next_steps | string[] | 下一步骤信息 |
+| next_steps | string[] | 下一步骤_id集合 |
 | attachments | string[] | 附件 |
-
-以下表格描述了 next_steps 中的对象键值信息：
-
-| 名称 | 类型| 描述 |
-|----|----|----|
-| step | string | 下一步骤_id |
-| users | [string] | 下一步骤处理人 |
-
-```json
-{
-    "Instances": [{
-        "_id": "e6viWhvARgo4xSxBC",
-        "inbox_users": [],
-        "name": "Test",
-        "submitter": "62ede4f62161e377e35de58c",
-        "flow": "BayiYu3sk2hv3M2HW",
-        "applicant": "62ede4f62161e377e35de58c",
-        "traces": [{
-            "_id": "0aed02a8113d7e1a22d5a245",
-            "step": "Ryu58zkQKrFLdvWpw",
-            "approves": [{
-                "_id": "5865e212c0e80024005090f9",
-                "description": "",
-                "values": {
-                    "field1": "xxx",
-                    "field2": "xxx",
-                    "field3": "xxx"
-                },
-                "next_steps": [{
-                    "step": "e28faf97-a1c4-4bdd-90e5-1b43d42aa10b",
-                    "users": [
-                        "62ede4f62161e377e35de58c"
-                    ]
-                }]
-            }]
-        }]
-    }]
-}
-```
+| description | string[] | 审批意见 |
 
 > traces 是每个步骤的签核历程，approves 则是每个签核历程中的审批历程，里面记录了详细的审批表单信息。
 
@@ -476,10 +283,6 @@ alerts中主要是提示流程版本是否已升级。
 ```text
 /api/workflow/engine
 ```
-
-#### Method
-
-POST
 
 #### 请求参数
 
