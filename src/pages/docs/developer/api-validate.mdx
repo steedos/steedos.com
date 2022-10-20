@@ -1,0 +1,49 @@
+---
+title: 接口验证
+description: 华炎魔方接口都自带身份验证和权限控制，以确保业务数据的安全。
+---
+
+## 调用登录接口获取用户身份
+
+平台 ^2.2.52 版本开始支持使用非加密的密码，调用接口登录。
+
+POST /accounts/password/login
+
+```json
+{
+  "user": { "email": "test@example.com"}
+  "password-noencrypt": "xxx"
+}
+```
+
+调用此接口会返回token。
+
+使用 ${spaceId}（您的魔方ID）和 ${token} 可以验证
+
+```javascript
+Authorization : Bearer ${spaceId},${token}
+```
+
+## 使用当前浏览器用户身份验证
+
+当前浏览器已用户登录信息保存在 localStorage 中，包括
+
+- steedos:userId
+- steedos:token
+- steedos:spaceId
+
+使用 ${spaceId}（您的魔方ID）和 ${token} 可以验证
+
+```javascript
+Authorization : Bearer ${spaceId},${token}
+```
+
+## 使用管理员 API Key 验证
+
+如果需要统一以管理员身份调用接口，可以管理员登录系统后，在设置-高级设置-API Key菜单下，获取管理员的API Key。
+
+```javascript
+Authorization : Bearer apikey,${apikey}
+```
+
+管理员 API Key 需要妥善保管，这种方式只能在服务端调用。

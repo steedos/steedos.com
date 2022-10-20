@@ -104,6 +104,7 @@ export const documentationNav = {
     developer['client'],
   ],
   'API': [
+    developer['api-validate'],
     developer['graphql-api'],
     protocol['api-process'],
     protocol['api-metadata'],
