@@ -2,7 +2,7 @@ import { createPageList } from '@/utils/createPageList'
 
 
 const protocol = createPageList(
-  require.context(`../protocol/docs/protocol/?meta=title,shortTitle,published`, false, /\.mdx$/),
+  require.context(`../pages/docs/protocol/?meta=title,shortTitle,published`, false, /\.mdx$/),
   'docs/protocol'
 )
 
