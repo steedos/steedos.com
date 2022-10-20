@@ -23,6 +23,10 @@ const developer = createPageList(
   require.context(`../pages/docs/developer/?meta=title,shortTitle,published`, false, /\.mdx$/),
   'docs/developer'
 )
+const protocol = createPageList(
+  require.context(`../pages/docs/protocol/?meta=title,shortTitle,published`, false, /\.mdx$/),
+  'docs/protocol'
+)
 
 export const documentationNav = {
   '安装部署': [
@@ -93,11 +97,22 @@ export const documentationNav = {
   ],
   '前端开发': [
     developer['amis'],
-    developer['graphql-api'],
     developer['button'],
     developer['form-event'],
     developer['form-formula'],
     developer['steedosui'],
     developer['client'],
+  ],
+  'API': [
+    developer['graphql-api'],
+    protocol['api-process'],
+    protocol['api-metadata'],
+  ],
+  '元数据': [
+    protocol['metadata-object'],
+    protocol['metadata-field-type'],
+    protocol['metadata-ui'],
+    protocol['metadata-permissions'],
+    protocol['metadata-automation'],
   ],
 }

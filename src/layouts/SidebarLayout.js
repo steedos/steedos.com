@@ -357,7 +357,7 @@ function TopLevelNav({ mobile }) {
       >
         系统管理员
       </TopLevelLink>
-      <TopLevelLink
+      {/* <TopLevelLink
         mobile={mobile}
         href="/docs/protocol/overview"
         isActive={pathname.startsWith('/docs/protocol')}
@@ -390,7 +390,7 @@ function TopLevelNav({ mobile }) {
         }
       >
         低代码协议
-      </TopLevelLink>
+      </TopLevelLink> */}
       {/* <TopLevelLink
         mobile={mobile}
         href="/resources"

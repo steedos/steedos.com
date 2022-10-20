@@ -28,7 +28,7 @@ const {remarkPluginsWebpack} = require('./remark')
 const {rehypePlugins} = require('./rehype')
   
 const fallbackLayouts = {
-  'src/pages/docs/protocol/*': ['@/layouts/ProtocolLayout', 'ProtocolLayout'],
+  // 'src/pages/docs/protocol/*': ['@/layouts/ProtocolLayout', 'ProtocolLayout'],
   'src/pages/docs/**/*': ['@/layouts/DocumentationLayout', 'DocumentationLayout'],
 }
 
