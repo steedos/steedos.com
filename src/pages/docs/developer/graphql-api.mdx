@@ -355,6 +355,7 @@ mutation {
 }
 ```
 
+<!--
 #### 新增多条数据
 
 使用 `mutation.{object_api_name}__insert_many` 语法，传入 `docs` 参数值。
@@ -384,6 +385,7 @@ mutation {
   }
 }
 ```
+-->
 
 ### 修改数据
 
@@ -419,6 +421,7 @@ mutation {
 }
 ```
 
+<!--
 #### 修改多条数据
 
 使用 `mutation.{object_api_name}__update_many` 语法，传入 `filters` 和 `doc` 参数值。
@@ -450,7 +453,7 @@ mutation {
   }
 }
 ```
-
+-->
 ### 删除数据
 
 当调用 GraphQL API 删除数据时，系统会首先验证当前用户是否有对应的删除权限。
@@ -479,6 +482,7 @@ mutation {
 }
 ```
 
+<!--
 #### 删除多条数据
 
 使用 `mutation.{object_api_name}__delete_many` 语法，传入 `filters` 参数值。
@@ -504,5 +508,6 @@ mutation {
 ```
 
 > 返回值 `1` 表示成功删除的数据条数。
+-->
 
 参考：[GraphQL](https://graphql.org/)
