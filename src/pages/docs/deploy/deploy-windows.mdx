@@ -17,6 +17,10 @@ description: 本教程指导您如何在 windows 环境下部署华炎魔方开�
 
 从官网下载我们推荐安装 [14.19.3](https://nodejs.org/download/release/v14.19.3/node-v14.19.3-x64.msi)，请点击下载后安装。
 
+安装过程请勾选下图提示框，安装依赖工具，此过程需要等待20-30分钟：
+
+ ![](https://steedos.github.io/assets/images/nodejs-12.19-0084a1f04a4208165c2380462b36b759.png)
+
 更多版本请参考 <https://nodejs.org/en/download/releases/> ，其他版本我们未充分测试过，如果需要使用其他版本请参阅Node.js长期维护版本日程 <https://nodejs.org/zh-cn/about/releases/> 避免安装奇数版本。
 
 ### 安装yarn命令
@@ -97,6 +101,9 @@ replication:
 ```bash
 # 执行mongo连接数据库
 mongo
+
+# 执行集群初始化命令
+rs.initiate()
 
 ...
 # 表示集群配置已成功
