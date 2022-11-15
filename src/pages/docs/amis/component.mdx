@@ -1,0 +1,36 @@
+---
+title: 组件
+description: 组件是微页面的基本元素，微页面中不但有非常丰富的组件可以直接使用，同时还支持自定义组件。
+---
+
+## Amis原生组件
+
+几乎所有的amis原生组件都适用于华炎魔方微页面，请参阅 [Amis 组件](https://aisuda.bce.baidu.com/amis/zh-CN/components)。
+
+## 华炎魔方组件
+
+我们为 amis 扩展了以下组件用于快速实现华炎魔方各种界面能力。
+
+- [对象表单 ObjectForm](/docs/amis/object_form)
+- [对象列表 ObjectListView](/docs/amis/object_listview)
+- [对象表格 ObjectTable](/docs/amis/object_table)
+- [标题面板 RecordDetailHeader](/docs/amis/record_detail_header)
+- [相关列表 RecordDetailRelatedList](/docs/amis/record_detail_related_list)
+
+## 自定义组件
+
+[Amis](https://aisuda.bce.baidu.com/amis/zh-CN/docs) 本身提供了非常丰富的组件功能，基本它可以实现大部分业务场景的UI界面需求。
+
+如果遇到适合自己开发自定义组件的场景，我们也可以通过自定义资产包来把自定义组件集成到amis设计器中，这样我们就可以实现任何我们想要的UI效果了。 
+
+只要把自定义资产包地址配置到环境变量 `STEEDOS_PUBLIC_PAGE_ASSETURLS` 中，华炎魔方会根据资产包中配置的资源包地址自动把相关自定义组件加载并集成到amis引擎中，非常方便。
+
+```bash
+STEEDOS_PUBLIC_PAGE_ASSETURLS=https://unpkg.com/@steedos-widgets/example@0.0.6/dist/assets.json
+```
+
+资产包的地址只要可以访问即可，它可以是发布到npm的包(unpkg.com)地址，也可以是其他任何可以被当前服务访问的地址，比如在远程开发环境中公开的资产包地址。
+
+下面的示例 [amis-custom-components](#amis-custom-components) 完整演示了如何在华炎魔方项目中通过引用自定义资产包的方式来集成自定义组件。
+
+关于自定义资产包及自定义组件的开发，请参考下面的示例 [steedos-widgets](#steedos-widgets)。

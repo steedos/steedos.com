@@ -27,6 +27,10 @@ const protocol = createPageList(
   require.context(`../pages/docs/protocol/?meta=title,shortTitle,published`, false, /\.mdx$/),
   'docs/protocol'
 )
+const amis = createPageList(
+  require.context(`../pages/docs/amis/?meta=title,shortTitle,published`, false, /\.mdx$/),
+  'docs/amis'
+)
 
 export const documentationNav = {
   '安装部署': [
@@ -96,12 +100,21 @@ export const documentationNav = {
     developer['deploy-gitpod'],
   ],
   '前端开发': [
-    developer['amis'],
     developer['button'],
     developer['form-event'],
     developer['form-formula'],
     developer['steedosui'],
     developer['client'],
+  ],
+  'Amis 微页面': [
+    amis['start'],
+    amis['setting'],
+    amis['designer'],
+    amis['component'],
+    amis['api'],
+    amis['page-type'],
+    amis['metadata'],
+    amis['example'],
   ],
   'API': [
     developer['api-validate'],
