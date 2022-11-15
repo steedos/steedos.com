@@ -40,8 +40,17 @@ listName属性类似的可以配置为某个固定的列表视图值，也可以
 | listName | string | 无 | 要显示的对象视图名称 |
 | top | number | 无 | 要显示的记录数量 |
 | perPage | number | 20 | 设置一页显示多少条数据 |
+| showHeader | boolean | false | 显示表头 |
 
 <!--
 | enableInlineEdit | boolean | 无 | 启用内联编辑 |
 | enableActions | boolean | 无 | 启用操作栏 |
 -->
+
+当 showHeader 属性被设置为 `true` 时，请注意：
+
+- 因为表头有切换列表视图功能，所以 `listName,top,perPage` 等属性会被应用到所有视图中。
+- 请不要配置`listName`属性值，否则当切换列表视图时将始终会跳转到该属性值指向的视图。
+- 设计器中会隐藏`listName`属性配置栏，因为此时不允许配置`listName`属性值。
+
+新建“列表页面”类型的微页面时 `showHeader` 属性会被默认设置为 `true` 以允许用户在微页面中对表头部分进行二次开发。
