@@ -78,3 +78,21 @@ description: 在可视化界面上即可配置实现自定义用户界面，以�
 每次点击发布按钮后会把当前最新的页面版本标记为“已发布”，而且后续每次在设计器中修改并保存已发布过的微页面都会生成一个新的待发布的页面版本。
 
 我们在设计器中设计的页面内容最终是以 [amis Schema](https://aisuda.bce.baidu.com/amis/zh-CN/docs/types/schemanode) 保存到每个页面版本中的，如果熟悉 amis Schema 语法，我们也可以直接在页面版本中修改它。
+
+## 页面参数
+
+微页面本身是不支持参数配置的，不过因为微页面支持直接通过url访问，所以如果需要实现带参数的微页面，可以通过新建外部链接类型的 [选项卡](/docs/admin/tab#外部链接选项卡)，并配置其链接地址为微页面访问地址。
+
+微页面访问地址格式为`/app/${appApiName}/page/${pageApiName}[?动态参数]`，规则如下：
+
+- appApiName是应用的api名称
+- pageApiName是微页面的api名称
+- ?后面的参数是可选的，按普通的 [URL Query](https://en.wikipedia.org/wiki/Query_string) 传参写法即可。
+
+比如如果把外部链接配置为`/app/oa/page/oa_home?company_id=619383545b2e9a72ec0558b3`表示点击选项卡时，打开api名称为oa的应用下配置api名称为oa_home的微页面，同时传入一个名为company_id的参数。
+
+在华炎魔方中，选项卡的外部链接是支持公式脚本的，其语法与 [开发人员快速向导](/docs/developer/getting-started) 中提到的 [表单公式](/docs/developer/getting-started#%E8%A1%A8%E5%8D%95%E5%85%AC%E5%BC%8F) 是一样的，用`{{}}`包裹整个脚本，其内可编写`javascript`脚本，并且脚本中注入了`formData`和`global`变量，详情请参考 [表单公式](/docs/developer/getting-started#%E8%A1%A8%E5%8D%95%E5%85%AC%E5%BC%8F)。
+
+有了公式脚本功能，我们只要把上面选项卡的外部链接地址配置为`` {{`/app/oa/page/oa_home?company_id=${global.user.company_id}`}} ``即可动态把当前登录用户”所属分部“值传给微页面的“所属公司“参数。
+
+上面提到的方法只适合页面类型为“应用程序页面”的微页面，其他类型的微页面并不具备为页面配置参数的能力。
