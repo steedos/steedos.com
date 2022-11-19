@@ -295,6 +295,8 @@ actions:
 
 自定义国际化变量指的是定义一个全局的国际化Key，并为该Key编写不同语言的国际化翻译内容。
 
+上面讲到的对象层面的元数据，包括对象、字段、列表视图、操作按钮等，它们的翻译资源文件都是放在`objectTranslations`文件夹内，而其他元数据的翻译资源文件都是放到名为`translations`的文件夹内，用于存放自定义的国际化变量，比如我们后续会讲到的应用、设置菜单、系统消息还有审批王等，都是通过自定义变量来实现国际化的。
+
 #### 添加自定义变量
 
 要添加自定义翻译变量，需要先在软件包中添加全局自定义翻译文件。
@@ -730,7 +732,7 @@ steedos-demo
 ├───├───├───├───objectTranslations
 ├───├───├───├───├───project.ja
 ├───├───├───├───├───├───project.ja.objectTranslation.yml
-├───├───├───├───├───project_task.ja
+├───├───├───├───├───project_task.j
 ├───├───├───├───├───├───project_task.ja.objectTranslation.yml
 ├───├───├───├───├───...
 ├───├───├───├───translations
@@ -743,13 +745,13 @@ steedos-demo
 └───package.json
 ```
 
-从上面的目录变化可以看出，在
+从上面的目录变化可以看出，在文件夹`objectTranslations`中增加了两个对象对应的日本语翻译资源文件，另外在文件夹`translations`中也增加了一个日本语的翻译资源文件，用于存放其他 [自定义变量](#自定义变量) 的翻译内容。
 
 ### 平台国际化
 
+上面我们描述了如何结合 `steedos i18n` 命令快速实现为项目中的元数据添加日本语国际化资源文件的方法，但是我们实际上决定为华炎魔方添加一种全新的国际化语种时，是需要先为平台本身实现新语种的国际化的。
 
-以上命令适用于给
-
+类似的，我们以为平台添加日本语国际化资源文件为例，
 
 ```bash
 steedos i18n ja -s . -p /workspace/steedos-platform/services/standard-object-database/main
