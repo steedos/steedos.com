@@ -687,19 +687,65 @@ locale-ja
 └───package.json
 ```
 
-假设魔方项目目录在`/workspace/project-demo`，里面有一个名称为“项目管理”的软件包，其目录会类型以下结构：
+### 项目国际化
+
+假设魔方项目目录在`/workspace/project-demo`，里面有一个名称为“项目管理”的软件包，其目录会类似以下结构：
 
 ```bash
-locale-ja
-├── main / default
+steedos-demo
+├───steedos-packages
+├───├───project
+├───├───├───main / default
+├───├───├───├───applications
+├───├───├───├───objects
+├───├───├───├───├───project
+├───├───├───├───├───project_task
+├───├───├───├───├───...
+├───├───├───├───...
+├───├───└───package.json
+├───├───locale-ja
+├───├───├───main / default
+├───├───└───package.json
 └───package.json
 ```
 
-我们接下来打开命令行在项目根目录，即`project-demo`下执行以下命令来生成名称为`project`的软件包文件夹下的各种类型元数据对应的翻译文件：
+我们接下来打开命令行在项目根目录，即`steedos-demo`下执行以下命令来生成名称为`project`的软件包文件夹下的各种类型元数据对应的翻译文件：
 
 ```bash
-steedos i18n ja -s . -p /workspace/project-demo/steedos-packages/project/main
+steedos i18n ja -s . -p /workspace/steedos-demo/steedos-packages/project/main
 ```
+
+命令执行成功后会在`steedos-packages/project/main/default/objects`同级生成新的国际化资源文件夹，其目录会类似以下结构：
+
+```bash
+steedos-demo
+├───steedos-packages
+├───├───project
+├───├───├───main / default
+├───├───├───├───applications
+├───├───├───├───objects
+├───├───├───├───├───project
+├───├───├───├───├───project_task
+├───├───├───├───├───...
+├───├───├───├───objectTranslations
+├───├───├───├───├───project.ja
+├───├───├───├───├───├───project.ja.objectTranslation.yml
+├───├───├───├───├───project_task.ja
+├───├───├───├───├───├───project_task.ja.objectTranslation.yml
+├───├───├───├───├───...
+├───├───├───├───translations
+├───├───├───├───├───ja.translation.yml
+├───├───├───├───...
+├───├───└───package.json
+├───├───locale-ja
+├───├───├───main / default
+├───├───└───package.json
+└───package.json
+```
+
+从上面的目录变化可以看出，在
+
+### 平台国际化
 
 
 以上命令适用于给
