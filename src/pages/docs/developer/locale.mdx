@@ -301,7 +301,7 @@ actions:
     label: Print Tasks for today
 ```
 
-华炎魔方内置了很多标准操作按钮，比如新建、编辑、删除等，这些标准按钮的国际化方法与自定义按钮是一样的，比如以下翻译内容可以修改上面的“项目任务”对象的“新建”按钮的中文名称为“创建项目任务”。
+华炎魔方内置了很多标准操作按钮，比如新建、编辑、删除等，这些标准按钮的国际化方法与自定义按钮是一样的，比如以下翻译内容可以修改上面的“项目任务”对象的“新建”按钮的中文名为“创建项目任务”。
 
 ```yaml
 // locale/main/default/objectTranslations/project_tasks__c.zh-CN/project_tasks__c.zh-CN.objectTranslation.yml
@@ -523,7 +523,7 @@ locale
 
 不同的是在定义翻译内容时，并不是把翻译内容定义在 `CustomLabels` 节点下，而是放在名为 `CustomApplications` 的节点下。
 
-以下翻译内容为中文和英文资源分别配置了Api名称为`oa`的“办公”应用的自定义翻译变量，加上它们重启服务后就能看到效果。
+以下翻译内容为中文和英文资源分别配置了Api名为`oa`的“办公”应用的自定义翻译变量，加上它们重启服务后就能看到效果。
 
 ```yml
 // locale/main/default/translations/zh-CN.translation.yml
@@ -723,7 +723,7 @@ locale-ja
 
 ### 项目国际化
 
-假设魔方项目目录在`/workspace/project-demo`，里面有一个名称为“项目管理”的软件包，其目录会类似以下结构：
+假设魔方项目目录在`/workspace/project-demo`，里面有一个名为“项目管理”的软件包，其目录会类似以下结构：
 
 ```bash
 steedos-demo
@@ -743,7 +743,7 @@ steedos-demo
 └───package.json
 ```
 
-我们接下来打开命令行在项目根目录，即`steedos-demo`下执行以下命令来生成名称为`project`的软件包文件夹下的各种类型元数据对应的翻译文件：
+我们接下来打开命令行在项目根目录，即`steedos-demo`下执行以下命令来生成名为`project`的软件包文件夹下的各种类型元数据对应的翻译文件：
 
 ```bash
 steedos i18n ja -s . -p /workspace/steedos-demo/steedos-packages/project/main
@@ -761,6 +761,7 @@ steedos-demo
 ├───├───├───├───├───project
 ├───├───├───├───├───project_task
 ├───├───├───├───├───...
+//项目软件包 project 日本语国际化
 ├───├───├───├───objectTranslations
 ├───├───├───├───├───project.ja
 ├───├───├───├───├───├───project.ja.objectTranslation.yml
@@ -783,14 +784,51 @@ steedos-demo
 
 上面我们描述了如何结合 `steedos i18n` 命令快速实现为项目中的元数据添加日本语国际化资源文件的方法，但是我们实际上决定为华炎魔方添加一种全新的国际化语种时，是需要先为平台本身实现新语种的国际化的。
 
-类似的，我们以为平台添加日本语国际化资源文件为例，
+类似的，我们以为平台 [standard-object-database](#standard-object-database) 包添加日本语国际化资源文件为例。
+
+要通过 `steedos i18n` 命令为平台内置元数据添加国际化资源文件，需要先把 [平台源码](https://github.com/steedos/steedos-platform) 克隆下来。
+
+假设我们把平台源码克隆到项目同级文件夹下，打开命令行在项目根目录，即steedos-demo文件夹下执行以下指令来生成平台中名为standard-object-database的软件包文件夹下的各种类型元数据对应的翻译文件：
 
 ```bash
 steedos i18n ja -s . -p /workspace/steedos-platform/services/standard-object-database/main
-···
+```
+命令执行成功后会在平台源码 `steedos-platform/services/standard-object-database/main/default/objects` 同级生成新的国际化资源文件夹。
+
+我们把平台源码中新生成的文件夹复制到我们国际化软件包中后，目录会类似以下结构：
 
 ```bash
-locale-ja
-├── main / default
+steedos-demo
+├───steedos-packages
+├───├───project
+├───├───├───main / default
+├───├───├───├───applications
+├───├───├───├───objects
+├───├───├───├───├───project
+├───├───├───├───├───project_task
+├───├───├───├───├───...
+//项目软件包 project 日本语国际化
+├───├───├───├───objectTranslations
+├───├───├───├───├───project.ja
+├───├───├───├───├───├───project.ja.objectTranslation.yml
+├───├───├───├───├───project_task.j
+├───├───├───├───├───├───project_task.ja.objectTranslation.yml
+├───├───├───├───├───...
+//平台软件包 standard-object-database 日本语国际化
+├───├───├───├───├───objects.ja
+├───├───├───├───├───├───objects.ja.objectTranslation.yml
+├───├───├───├───├───object_fields.ja
+├───├───├───├───├───├───object_fields.ja.objectTranslation.yml
+├───├───├───├───├───...
+├───├───├───├───translations
+├───├───├───├───├───ja.translation.yml
+├───├───├───├───...
+├───├───└───package.json
+├───├───locale-ja
+├───├───├───main / default
+├───├───└───package.json
 └───package.json
 ```
+
+为平台中其他软件包的元数据添加日本语国际化资源文件的方法与上面为平台软件包 `standard-object-database` 实现日本语国际化方法是一样的。
+
