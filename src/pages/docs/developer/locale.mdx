@@ -782,6 +782,38 @@ steedos-demo
 
 从上面的目录变化可以看出，在文件夹`objectTranslations`中增加了两个对象对应的日本语翻译资源文件，另外在文件夹`translations`中也增加了一个日本语的翻译资源文件，用于存放其他 [自定义变量](#自定义变量) 的翻译内容。
 
+我们可以进一步把日本语国际化相关内容迁移到专门的软件包 `locale-ja` 中，迁移后目录会类似以下结构：
+
+```bash
+steedos-demo
+├───steedos-packages
+├───├───project
+├───├───├───main / default
+├───├───├───├───applications
+├───├───├───├───objects
+├───├───├───├───├───project
+├───├───├───├───├───project_task
+├───├───├───├───├───...
+├───├───└───package.json
+├───├───locale-ja
+├───├───├───main / default
+//项目软件包 project 中对象级别元数据日本语国际化
+├───├───├───├───objectTranslations
+├───├───├───├───├───project.ja
+├───├───├───├───├───├───project.ja.objectTranslation.yml
+├───├───├───├───├───project_task.j
+├───├───├───├───├───├───project_task.ja.objectTranslation.yml
+├───├───├───├───├───...
+├───├───├───├───translations
+//项目软件包 project 中其他元数据日本语国际化
+├───├───├───├───├───ja.translation.yml
+├───├───├───├───...
+├───├───└───package.json
+└───package.json
+```
+
+当然，把日本语翻译资源文件迁移到统一的日本语国际化软件包中这步不是必须的，只是一种推荐方式，这样可以把新加的语种国际化内容在一个软件包中统一维护。
+
 ### 平台国际化
 
 上面我们描述了如何结合 `steedos i18n` 命令快速实现为项目中的元数据添加日本语国际化资源文件的方法，但是我们实际上决定为华炎魔方添加一种全新的国际化语种时，是需要先为平台本身实现新语种的国际化的。
@@ -809,25 +841,26 @@ steedos-demo
 ├───├───├───├───├───project
 ├───├───├───├───├───project_task
 ├───├───├───├───├───...
-//项目软件包 project 日本语国际化
+├───├───├───├───...
+├───├───└───package.json
+├───├───locale-ja
+├───├───├───main / default
+//项目软件包 project 中对象级别元数据日本语国际化
 ├───├───├───├───objectTranslations
 ├───├───├───├───├───project.ja
 ├───├───├───├───├───├───project.ja.objectTranslation.yml
 ├───├───├───├───├───project_task.j
 ├───├───├───├───├───├───project_task.ja.objectTranslation.yml
 ├───├───├───├───├───...
-//平台软件包 standard-object-database 日本语国际化
+//平台软件包 standard-object-database 中对象级别元数据日本语国际化
 ├───├───├───├───├───objects.ja
 ├───├───├───├───├───├───objects.ja.objectTranslation.yml
 ├───├───├───├───├───object_fields.ja
 ├───├───├───├───├───├───object_fields.ja.objectTranslation.yml
 ├───├───├───├───├───...
 ├───├───├───├───translations
+//项目和平台中其他元数据日本语国际化
 ├───├───├───├───├───ja.translation.yml
-├───├───├───├───...
-├───├───└───package.json
-├───├───locale-ja
-├───├───├───main / default
 ├───├───└───package.json
 └───package.json
 ```
