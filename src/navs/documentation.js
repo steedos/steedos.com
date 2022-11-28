@@ -121,6 +121,7 @@ export const documentationNav = {
     developer['graphql-api'],
     protocol['api-process'],
     protocol['api-metadata'],
+    protocol['api-jwt-sso'],
   ],
   '元数据': [
     protocol['metadata-object'],
