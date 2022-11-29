@@ -16,56 +16,32 @@ STEEDOS_IDENTITY_JWT_ENABLED=true
 
 ### 过程描述
 
-1、外接应用在自定义服务端接口中调用魔方接口 GET /accounts/jwt/login 获取令牌；
+1、外接应用在自定义服务端接口中生成jwt
 
-2、外接应用调用魔方接口 POST /api/v4/users/validate 校验令牌并登录；
-
-3、外接应用跳转到魔方。
+2、外接应用在浏览器端跳转至魔方接口 GET {root_url}/accounts/jwt/login?t={jwt}&redirect={redirectURL} 实现单点登录；
 
 ### 示例
 
 1、魔方里新建应用 指定好 API名称（如：finance）、API密钥（如：app_api_secret）；
 
-2、外接应用前端按钮调用自定义接口（如：GET /api/get/token），在自定义接口中调用魔方接口获取令牌， 令牌验证通过后跳转到魔方；
+2、外接应用前端按钮调用自定义接口（如：GET /api/get/token），在自定义接口中生成jwt；
 
 ```js
 module.exports = {
     sso: function (object_name, record_id) {
         const getTokenURL = '/api/get/token'; // 自定义接口
 
-        // 获取令牌
+        // 生成令牌
         const result = Steedos.authRequest(getTokenURL, {
             type: 'GET',
             async: false,
             contentType: 'application/json'
         });
 
-        const loginToken = result.token;
-        const spaceId = result.space;
+        const token = result.token;
         const PLATFORM_ROOT_URL = 'https://5000-steedos-steedosprojectt-5apf195eq37.ws-us77.gitpod.io' // 魔方访问地址，由魔方提供
-        // 去魔方验证令牌
-        $.ajax({
-            url: `${PLATFORM_ROOT_URL}/api/v4/users/validate`,
-            type: 'POST',
-            async: false,
-            contentType: 'application/json',
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            headers: {
-                Authorization: 'Bearer ' + spaceId + ',' + loginToken
-            },
-            success: function (validateResult) {
-                // 验证通过后跳转到魔方
-                if (validateResult.authToken) {
-                    window.open(`${PLATFORM_ROOT_URL}`, '_blank') // 浏览器打开新窗口
-                }
-            },
-            error: function (xhr, msg, ex) {
-                console.error(xhr)
-            }
-        });
+        // 跳转到魔方
+        window.open(`${PLATFORM_ROOT_URL}/accounts/jwt/login?t=${token}&redirect=${PLATFORM_ROOT_URL}`, '_blank') // 浏览器打开新窗口
 
     },
     ssoVisible: function () {
@@ -82,16 +58,15 @@ const express = require("express");
 const router = express.Router();
 const core = require('@steedos/core');
 const jwt = require('jsonwebtoken');
-const axios = require('axios');
 
 /**
- * 获取令牌
+ * 生成令牌
  */
 router.get('/api/get/token', core.requireAuthentication, async function (req, res) {
     const userSession = req.user;
 
     var secret = 'app_api_secret' // 应用的API 密钥，由魔方提供
-    var options = { expiresIn: 60 * 60 }
+    var options = { expiresIn: 30 } // 30秒有效
     var token = jwt.sign({
         profile: {
             email: userSession.email // 当前用户邮件
@@ -99,19 +74,9 @@ router.get('/api/get/token', core.requireAuthentication, async function (req, re
         app_code: 'finance' // 应用的API 名称，由魔方提供
     }, secret, options);
 
-    const PLATFORM_ROOT_URL = 'https://5000-steedos-steedosprojectt-5apf195eq37.ws-us77.gitpod.io' // 魔方访问地址，由魔方提供
-    // 从魔方获取令牌
-    const rest = await axios({
-        url: `${PLATFORM_ROOT_URL}/accounts/jwt/login`,
-        method: "get",
-        data: {},
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        }
+    res.status(200).send({
+        token: token
     });
-    
-    res.status(200).send(rest.data);
 });
 exports.default = router;
 ```
