@@ -5,6 +5,15 @@ description: 通过jwt实现外接应用与魔方平台双向单点登录。
 
 ## 外接应用登录到魔方
 
+### 准备事项
+
+1、 魔方平台需要配置环境变量开启单点登录功能
+
+```env
+# JWT SSO
+STEEDOS_IDENTITY_JWT_ENABLED=true
+```
+
 ### 过程描述
 
 1、外接应用在自定义服务端接口中调用魔方接口 GET /accounts/jwt/login 获取令牌；
