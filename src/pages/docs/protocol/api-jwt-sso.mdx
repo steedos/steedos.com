@@ -7,7 +7,7 @@ description: 通过jwt实现外接应用与魔方平台双向单点登录。
 
 ### 过程描述
 
-1、外接应用在自定义服务端接口中调用魔方接口 POST /accounts/jwt/login 获取令牌；
+1、外接应用在自定义服务端接口中调用魔方接口 GET /accounts/jwt/login 获取令牌；
 
 2、外接应用调用魔方接口 POST /api/v4/users/validate 校验令牌并登录；
 
