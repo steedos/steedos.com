@@ -7,17 +7,17 @@ description: 通过jwt实现外接应用与魔方平台双向单点登录。
 
 ### 过程描述
 
-1、外接应用调用魔方接口 `/accounts/jwt/login` 获取令牌；
+1、外接应用调用魔方接口 POST /accounts/jwt/login 获取令牌；
 
-2、外接应用调用魔方接口 `/api/v4/users/validate` 校验令牌并登录；
+2、外接应用调用魔方接口 POST /api/v4/users/validate 校验令牌并登录；
 
 3、外接应用跳转到魔方。
 
 ### 示例
 
-1、魔方里新建应用 指定好 API名称、API密钥；
+1、魔方里新建应用 指定好 API名称（如：finance）、API密钥（如：app_api_secret）；
 
-2、外接应用前端按钮调用自定义接口`/api/get/token`，在自定义接口中调用魔方接口获取令牌， 令牌验证通过后跳转到魔方；
+2、外接应用前端按钮调用自定义接口（如：GET /api/get/token），在自定义接口中调用魔方接口获取令牌， 令牌验证通过后跳转到魔方；
 
 ```js
 module.exports = {
@@ -68,6 +68,7 @@ module.exports = {
 3、自定义服务端接口。
 
 ```js
+// nodejs示例
 const express = require("express");
 const router = express.Router();
 const core = require('@steedos/core');
@@ -106,8 +107,49 @@ router.get('/api/get/token', core.requireAuthentication, async function (req, re
 exports.default = router;
 ```
 
-
 ## 魔方登录到外接应用
 
-### TODO
+### 过程描述
+
+1、魔方里新建应用，指定好 外部链接、API密钥；
+
+2、应用程序启动器中点击外接应用跳转到外部链接并在url上带上 t 参数
+
+3、外接应用解析 t 参数，成功后跳转到应用内
+
+### 示例
+
+1、魔方里新建应用，指定外部链接（如：GET https://5000-steedos-steedosprojectt-5apf195eq37.ws-us77.gitpod.io/api/sso ）、API密钥（如：app_api_secret）
+
+2、应用程序启动器中点击外接应用跳转到外部链接 https://5000-steedos-steedosprojectt-5apf195eq37.ws-us77.gitpod.io/api/sso?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvYmplY3RfbmFtZSI6InNwYWNlX3VzZXJzIiwiZG9jIjp7Il9pZCI6IkFGTkVuQ3hiU29HRWc0b2NmIiwibmFtZSI6Inh4eCIsInVzZXJuYW1lIjoieHh4eHh4IiwiZW1haWwiOiJzQHMuY29tIn0sImlhdCI6MTY2OTI2NjA0NiwiZXhwIjoxNjY5MjY5NjQ2fQ.qeld2kTl5zjLGjCWgk3cb6UPEPlqmzMaME20mo_t-t4
+
+3、外接应用解析令牌
+
+```js
+// nodejs 示例
+const express = require("express");
+const router = express.Router();
+const jwt = require('jsonwebtoken')
+
+router.get('/api/sso', async function (req, res) {
+    console.log(req.query)
+    // {
+    //     t: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvYmplY3RfbmFtZSI6InNwYWNlX3VzZXJzIiwiZG9jIjp7Il9pZCI6IkFGTkVuQ3hiU29HRWc0b2NmIiwibmFtZSI6Inh4eCIsInVzZXJuYW1lIjoieHh4eHh4IiwiZW1haWwiOiJzQHMuY29tIn0sImlhdCI6MTY2OTI2NjA0NiwiZXhwIjoxNjY5MjY5NjQ2fQ.qeld2kTl5zjLGjCWgk3cb6UPEPlqmzMaME20mo_t-t4'
+    // }
+    const payload = jwt.verify(req.query.t, 'app_api_secret') // 使用配置的 API密钥 验证并解析信息
+    console.log(payload)
+    // {
+    //     profile: {
+    //         name: 'xxx',
+    //         username: 'xxxxxx',
+    //         email: 's@s.com'
+    //     },
+    //     iat: 1669266046,
+    //     exp: 1669269646
+    // }
+
+    res.status(200).send({ message: 'router ok' });
+});
+exports.default = router;
+```
 
