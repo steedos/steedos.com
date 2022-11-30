@@ -131,7 +131,7 @@ export function Pricing() {
           <Plan
             featured
             name="企业版 （年）"
-            price="¥19800"
+            price="¥19,800"
             description="适用于商业用户的版本。含30用户许可。"
             href="/register"
             features={[
@@ -141,24 +141,25 @@ export function Pricing() {
               '字段级加密插件',
               '像素级报表插件',
               '钉钉、企业微信组织机构同步',
-              '商业支持	',
+              '商业支持',
               '新增用户: 300元/用户/年',
             ]}
           />
           <Plan
-            name="开发版 （年）"
-            price="¥10800"
-            description="适用于软件公司的版本。含1开发者支持。"
+            name="SaaS版 （年）"
+            price="¥198,000"
+            description="以 SaaS 模式运行华炎魔方软件包。"
             href="/register"
             features={[
-              'Gitlab DevOps Platform',
-              'Gitpod 远程开发环境',
-              '解决方案源码仓库',
-              'VIP开发者培训课程',
-              'VIP开发者服务群',
-              '平台OEM支持',
-              '应用市场上架支持',
-              '新增开发者: 10800元/开发者/年',
+              '租户自助注册',
+              '租户自助管理',
+              'OIDC统一身份认证',
+              '解决方案模版库',
+              '自定义解决方案',
+              '应用市场',
+              '自定义品牌和Logo',
+              '不限制企业数',
+              '不限制用户数',
             ]}
           />
         </div>
