@@ -1,0 +1,77 @@
+---
+title: 短信通知
+description: 华炎魔方支持腾讯云短信服务，配置后，可以通过手机短信登录和接受账户提醒消息。
+---
+
+## 申请短信服务
+
+1、注册账户：登录腾讯云官网 https://cloud.tencent.com/ 进行注册
+
+2、接入短信服务：腾讯云-产品-企业应用与云通信-云通信-短信  https://cloud.tencent.com/product/sms
+
+3、创建签名：国内短信-签名管理-创建签名-根据指引填入信息，例如创建签名：“华炎魔方”，审核通过可以在签名管理列表里看到已经创建的短信签名
+
+4、创建正文模板：国内短信-正文模板管理-创建正文模板，针对华炎魔方服务，需要创建以下正文模板：
+
+| 模板名称 | 内容 |
+| ---- | ---- | 
+|验证码-登录|您的验证码为：{1}，该验证码{2}分钟内有效，请勿泄漏于他人！| 
+|系统通知-修改密码|系统通知：您的登录密码已被修改| 
+|通讯录手机被修改|通讯录中您的手机号已被修改为{1}。|
+
+5、创建应用：应用管理-应用列表，点击创建应用，例如创建应用 “华炎魔方”
+
+
+## 发送短信配置
+
+编辑.env或者.env.local，添加以下三个环境变量：
+
+```yaml
+STEEDOS_SMS_QCLOUD_SDKAPPID=xxxxxxxxxxx 
+STEEDOS_SMS_QCLOUD_APPKEY=xxxxxxxxxxx
+STEEDOS_SMS_QCLOUD_SIGNNAME=xxxxxxxxxxx   # 例如为：【华炎魔方】
+```
+
+ - STEEDOS_SMS_QCLOUD_SDKAPPID: 腾讯云-短信-应用管理-应用列表-华炎魔方-SDK AppID
+ - STEEDOS_SMS_QCLOUD_APPKEY: 腾讯云-短信-应用管理-应用列表-华炎魔方-App Key
+ - STEEDOS_SMS_QCLOUD_SIGNNAME:  腾讯云-短信-签名管理-华炎魔方（签名内容）
+
+服务版本为2.1及旧版服务，需修改配置文件steedos-config.yml，添加以下配置：
+
+```yaml
+sms:
+  qcloud:
+    smsqueue_interval: 1000 # 默认1秒轮询一次短信队列
+    sdkappid: ${STEEDOS_SMS_QCLOUD_SDKAPPID}
+    appkey: ${STEEDOS_SMS_QCLOUD_APPKEY}
+    signname: ${STEEDOS_SMS_QCLOUD_SIGNNAME}
+```
+
+服务版本为2.2及新版服务，需要修改配置文件steedos.config.js，修改为：
+
+```js
+require('dotenv-flow').config({
+    path: process.cwd(),
+    silent: true
+});
+module.exports = {
+    ......
+    started(broker) {
+        broker.createService(require("@steedos/service-enterprise"));
+    },
+    // 添加settings自定义配置
+    settings: {
+        sms: {
+            qcloud: {
+                smsqueue_interval: 1000 //默认1秒轮询一次短信队列
+                sdkappid: process.env.STEEDOS_SMS_QCLOUD_SDKAPPID
+                appkey: process.env.STEEDOS_SMS_QCLOUD_APPKEY
+                signname: process.env.STEEDOS_SMS_QCLOUD_SIGNNAME
+            }
+        }
+    }
+};
+```
+
+
+
