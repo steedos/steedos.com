@@ -42,6 +42,7 @@ export const documentationNav = {
     deploy['deploy-windows'],
     deploy['deploy-mac'],
     deploy['deploy-activate'],
+    deploy['app-store'],
     deploy['steedos-config'],
     deploy['upgrade'],
   ],
