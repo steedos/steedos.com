@@ -133,6 +133,7 @@ index: false
 is_name: false
 is_wide: false
 label: 收款累计(待收款)
+hidden: false
 omit: false
 precision: 18
 required: false
@@ -163,6 +164,7 @@ summary_type: sum
 | is_name | boolean | 名称字段 |
 | required | boolean | 必填 |
 | is_wide | boolean | 宽字段 |
+| hidden | boolean | 忽略此字段 |
 | omit | boolean | 忽略此字段 |
 | unique | boolean | 唯一索引字段 |
 | index | boolean | 创建字段索引 |
@@ -178,7 +180,8 @@ summary_type: sum
 - **name**: API 名称, 表单事件、触发器等中调用该字段所用的名称。
 - **is_name**: 名称字段, 勾选该属性表示此字段会代替name字段作为“名称字段”。对象上默认以名为name的字段作为”名称字段”,点击“名称字段”会跳转到记录详细页面，支持配置为”名称字段“的字段类型有：文本、多行文本、自动编号、公式、日期、日期时间。
 - **is_wide**: 宽字段，普通字段详细页占一列，宽字段占两列。
-- **omit**: 表单上新建和编辑记录时以及列表和记录详细界面上都忽略该字段，始终不显示且不加载该字段，该属性不会根据字段权限做任何处理，始终以字段配置为准，通常用于系统级的隐藏字段，比如 locked，is_deleted 等。
+- **hidden**: 表单上新建、编辑记录的表单上、列表和记录详细界面上都忽略该字段，始终不显示且不加载该字段，通常用于系统级的隐藏字段，比如 locked，is_deleted 等，该属性值会被字段权限配置覆盖变更。
+- **omit**: 同hidden。
 - **unique**: 字段上配置该属性可以自动生成唯一性索引。
 - **index**: 创建索引，设置true时会自动为数据库字段创建索引。
 - **searchable**: 可全局搜索字段，默认为false，表示在对象快速搜索及全局搜索功能中不可查询该字段，设置为true表示可以全局搜索，该属性只支持文本、长文本、网址、邮件地址、自动编号、选择框（搜索value，不能搜索label）、公式和HTML文本字段类型。
