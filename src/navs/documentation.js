@@ -96,6 +96,7 @@ export const documentationNav = {
     developer['trigger'],
     developer['router'],
     developer['objectql'],
+    developer['filters'],
     developer['package'],
     developer['flow-trigger'],
     developer['locale'],
