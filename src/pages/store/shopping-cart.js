@@ -89,7 +89,7 @@ export default function Cart() {
                                 <dt className="text-sm text-gray-600">
                                   <QuantityInput quantity={merchandise.quantity} index={productIdx} merchandise={merchandise} onChange={onChangeQuantity}></QuantityInput>
                                 </dt>
-                                <dd class="text-sm font-medium text-gray-900">
+                                <dd className="text-sm font-medium text-gray-900">
                                   <Trash onRemove={async () => {
                                     return await onChangeQuantity(0, merchandise)
                                   }} title={`您确定要从购物车移除 ${merchandise.merchandise__expand.product__expand.name} ? `}></Trash>

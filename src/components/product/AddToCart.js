@@ -77,7 +77,7 @@ export default function AddToCart({ productVariant = {} }) {
                         <dt className="text-sm text-gray-600">
                         <CheckIcon className="h-6 w-6" aria-hidden="true"></CheckIcon>
                         </dt>
-                        <dd class="text-sm font-medium text-gray-900">
+                        <dd className="text-sm font-medium text-gray-900">
                         商品已加入购物车
                         </dd>
                     </div>

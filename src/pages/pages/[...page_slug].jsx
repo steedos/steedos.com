@@ -41,7 +41,7 @@ export default function Page({page, site_slug, page_slug}) {
           <link rel="stylesheet" href="https://unpkg.steedos.cn/amis/sdk/iconfont.css" />
           <link rel="stylesheet" href="https://unpkg.steedos.cn/fontawesome/fontawesome.css" />
         </Head>
-        <div id="root" class="page-wrapper"></div>
+        <div id="root" className="page-wrapper"></div>
     </>
   )
 }
