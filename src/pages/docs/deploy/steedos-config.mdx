@@ -110,24 +110,40 @@ STEEDOS_CFS_DOWNLOAD_PUBLIC=avatars,images # 可选 avatars,images,files, 默认
 - 审批王 的申请单详细界面的附件列表和正文文件，其附件标题旁边会显示预览按钮。
 - 华炎魔方对象记录详细界面的附件列表，比如合同详细界面的附件列表，每条附件记录右侧的下拉框列表会显示预览按钮。
 
-> 如果未配置文件预览服务，只能点击附件标题来下载文件,然后在本地查看文件内容。
+> 需升级到2.4最新版，否则会报附件跨域问题；如果未配置文件预览服务，只能点击附件标题来下载文件,然后在本地查看文件内容。
+
+
+修改配置文件steedos.config.js，修改为：
 
 ```bash
-public:
-  webservices:
-    pdfOnline:
-      url: "https://unpkg.steedos.cn/@steedos/pdfjs-dist@1.0.0/web/viewer.html?rangeChunkSize=1024&file="
-    officeOnline:
-      url: "https://view.officeapps.live.com/op/view.aspx?src="
+require('dotenv-flow').config({
+    path: process.cwd(),
+    silent: true
+});
+module.exports = {
+    ......
+    started(broker) {
+        broker.createService(require("@steedos/service-enterprise"));
+    },
+    // 添加settings自定义配置
+    settings: {
+        public: {
+            webservices: {
+                pdfOnline: {
+                    url: "https://unpkg.steedos.cn/@steedos/pdfjs-dist@1.0.0/web/viewer.html?rangeChunkSize=1024&file="
+                },
+                officeOnline: {
+                    url: "https://view.officeapps.live.com/op/view.aspx?src="
+                }
+            }
+        }
+    }
+};
+
 ```
 
-- public.webservices.pdfOnline.url: PDF文件在线预览，需配置的预览服务地址，上述已配置的地址是华炎魔方部署到阿里云上的PDF文件在线预览服务地址。
 - public.webservices.officeOnline.url: Office文件在线预览，需配置的预览服务地址，上述已配置的地址是微软提供的Office文件在线预览服务地址。
 
-### PDF文件预览注意事项
-因为PDF文件在线预览功能不支持跨域，如果您的华炎魔方项目不是运行于steedos.com域名下，需要另外配置网络代理服务才能正常使用PDF文件预览功能。
-
-比如您可以把上述配置的PDF文件预览服务地址改为<http://192.168.0.66:88/pdfview/apps/pdfviewer-es5/web/viewer.html?rangeChunkSize=1024&file=>，其中<http://192.168.0.66:88>为您的华炎魔方项目的访问地址，然后设置下nginx代理服务，把路由pdfview下的地址代理为<http://oss.steedos.com>即可。
 
 ### Office文件预览注意事项
 PDF文件预览服务是支持IP地址访问的，Office文件预览服务则与之不同，如果使用上述配置的微软在线预览服务时，需采用域名及默认端口访问，不能使用IP地址及非默认端口。
