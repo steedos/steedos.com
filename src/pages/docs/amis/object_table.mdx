@@ -18,7 +18,9 @@ description: 华炎魔方微页面引擎，内置对象列表组件 ObjectTable�
     body: {
         "type": "steedos-object-table",
         "objectApiName": "${objectName}",
-        "columns": [{"name": "name"}, {"name": "email"}]
+        "fields": [
+          "name"
+        ],
     },
   }
 ```
@@ -29,7 +31,7 @@ description: 华炎魔方微页面引擎，内置对象列表组件 ObjectTable�
 
 objectApiName属性可以被配置为像`space_users`或`accounts`这种固定值，也可以配置为变量，而变量`objectName`在“记录页面”、“列表页面”以及“表单”类型的微页面中存储了当前对象Api名称。
 
-columns属性需要配置不对象数组格式，描述需要显示哪些字段。
+fields属性需要配置数组格式，描述需要显示哪些字段。
 
 ## 属性表
 
@@ -38,22 +40,25 @@ columns属性需要配置不对象数组格式，描述需要显示哪些字段�
 | 属性名 | 类型 | 默认值 | 说明 |
 |----|----|----|----|
 | objectApiName | string | space_users | 关联对象api名称 |
-| columns | [object] | 无 | 要显示的对象字段 |
-| filters | [string] | 无 | 过滤条件 |
+| fields | [string] | 无 | 显示的字段 |
+| amisCondition | object | 无 | 过滤条件 |
 | sortField | string | 无 | 排序字段 |
 | sortOrder | string | 无 | 排序顺序 |
 | top | number | 无 | 要显示的记录数量 |
 | perPage | number | 20 | 设置一页显示多少条数据 |
+| fieldsExtend | string | 无 | 重写字段配置 |
+| requestAdaptor | string | 无 | 数据接口的发送适配器 |
+| adaptor | string | 无 | 数据接口的接收适配器 |
 
 <!--
 | actions | [string] | 无 | 操作 |
 | enableInlineEdit | boolean | false | 启用内联编辑 |
 | enableActions | boolean | false | 显示列表视图操作栏 |
 -->
-
+<!--
 #### columns属性表
 
 | 属性名 | 类型 | 默认值 | 说明 |
 |----|----|----|----|
 | field | string | 无 | 字段api名称 |
-
+-->

@@ -20,7 +20,8 @@ description: 华炎魔方微页面引擎，内置对象表单组件 ObjectForm�
             "type": "steedos-object-form",
             "label": "对象表单",
             "objectApiName": "${objectName}",
-            "recordId": "${recordId}"
+            "recordId": "${recordId}",
+            "className": "sm:border sm:shadow sm:rounded sm:border-gray-300 bg-white p-4"
         }
     ]
 }
@@ -154,6 +155,9 @@ recordId属性类似的可以配置为某个具体的记录id值，但是一般�
 | recordId | string | 无 | 关联记录ID值 |
 | mode | string | read | 只读read/编辑edit |
 | layout | string | normal | 表单项布局，同amis form的mode属性 |
+| fields | array | 无 | 显示的字段 |
+| excludedFields | array | 无 | 排除的字段 |
+| fieldsExtend | string | 无 | 重写字段配置 |
 
 ## 事件表
 

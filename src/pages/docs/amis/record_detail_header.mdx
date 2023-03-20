@@ -20,7 +20,8 @@ description: 华炎魔方微页面引擎，内置标题面板组件 RecordDetail
     body: {
         "type": "steedos-record-detail-header",
         "objectApiName": "${objectName}",
-        "recordId": "${recordId}"
+        "recordId": "${recordId}",
+        "className": "bg-gray-100 border-b sm:shadow sm:rounded sm:border border-slate-300 p-4 mb-4"
     },
   }
 ```
@@ -40,3 +41,4 @@ recordId属性类似的可以配置为某个具体的记录id值，但是一般�
 |----|----|----|----|
 | objectApiName | string | space_users | 关联对象api名称 |
 | recordId | string | 无 | 关联记录ID值 |
+| className | string | bg-gray-100 border-b sm:shadow sm:rounded sm:border border-slate-300 p-4 mb-4 | CSS类名 |
