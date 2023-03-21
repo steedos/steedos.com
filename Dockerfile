@@ -19,12 +19,17 @@ COPY ./.env /app
 COPY ./jsconfig.json /app
 COPY ./next-env.d.ts /app
 COPY ./next.config.js /app
+COPY ./next-sitemap.js /app
 COPY ./package.json /app
 COPY ./postcss.config.js /app
 COPY ./prettier.config.js /app
+COPY ./sentry.client.config.js /app
+COPY ./sentry.properties /app
+COPY ./sentry.server.config.js /app
 COPY ./redirects.json /app
 COPY ./tailwind.config.js /app
 COPY ./tsconfig.json /app
+COPY ./x.babelrc /app
 COPY ./yarn.lock /app
 # COPY ./.next /app/.next
 
