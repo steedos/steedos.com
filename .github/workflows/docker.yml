@@ -19,6 +19,7 @@ jobs:
       KEYCLOAK_ID: www.steedos.cn
       KEYCLOAK_SECRET: ${{ secrets.KEYCLOAK_SECRET }}
       KEYCLOAK_ISSUER: https://id.steedos.cn/realms/master
+      NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID: keycloak
       NEXTAUTH_URL: https://www.steedos.cn
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       STEEDOS_IDENTITY_JWT_SECRET: ${{ secrets.STEEDOS_IDENTITY_JWT_SECRET }}

@@ -10,6 +10,7 @@ ARG NEXTAUTH_SECRET
 WORKDIR /app
 
 COPY ./public /app/public
+COPY ./contents /app/contents
 COPY ./rehype /app/rehype
 COPY ./remark /app/remark
 COPY ./scripts /app/scripts
@@ -31,6 +32,7 @@ ENV STEEDOS_SERVER_API_KEY=$API_TOKEN
 ENV KEYCLOAK_SECRET=$KEYCLOAK_SECRET
 ENV STEEDOS_IDENTITY_JWT_SECRET=$STEEDOS_IDENTITY_JWT_SECRET
 ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
+ENV NEXT_PUBLIC_NEXTAUTH_PROVIDER_ID=keycloak
 
 # RUN npm config set registry http://registry.npm.taobao.org/
 # RUN yarn config set registry http://registry.npm.taobao.org/
