@@ -38,7 +38,7 @@ export const headerNav = {
         },
         {
           id: 'cloud',
-          name: '解决方案',
+          name: '应用市场',
           href: '/collections/steedos-packages',
           items: [
             { name: '项目管理', href: '/products/project' },

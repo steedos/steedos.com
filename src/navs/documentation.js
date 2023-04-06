@@ -31,22 +31,20 @@ const amis = createPageList(
   require.context(`../pages/docs/amis/?meta=title,shortTitle,published`, false, /\.mdx$/),
   'docs/amis'
 )
-const service = createPageList(
-  require.context(`../pages/docs/service/?meta=title,shortTitle,published`, false, /\.mdx$/),
-  'docs/service'
+const plugins = createPageList(
+  require.context(`../pages/docs/plugins/?meta=title,shortTitle,published`, false, /\.mdx$/),
+  'docs/plugins'
 )
 
 export const documentationNav = {
   '安装部署': [
     deploy['getting-started'],
-    deploy['create-steedos-app'],
     deploy['deploy-docker'],
-    deploy['deploy-cloud'],
+    deploy['deploy-developer'],
     deploy['devops'],
-    deploy['deploy-windows'],
-    deploy['deploy-mac'],
-    deploy['deploy-activate'],
-    deploy['app-store'],
+    deploy['create-steedos-app'],
+    // deploy['deploy-activate'],
+    // deploy['app-store'],
     deploy['steedos-config'],
     deploy['upgrade'],
   ],
@@ -60,7 +58,8 @@ export const documentationNav = {
     admin['organization'],
     admin['permission_set'],
     admin['import'],
-    admin['integration'],
+    admin['integration-ding'],
+    admin['integration-qywx'],
   ],
   '无代码开发': [
     admin['object'],
@@ -72,20 +71,7 @@ export const documentationNav = {
     admin['no-code-extend'],
     admin['app'],
     admin['tab'],
-  ],
-  '应用集成': [
     admin['datasource'],
-    admin['query'],
-    developer['node-red'],
-    developer['push'],
-    developer['sms'],
-  ],
-  '统计分析': [
-    admin['reports'],
-    admin['record_report'],
-    admin['dashboard'],
-    admin['stimulsoft'],
-    developer['jsreport'],
   ],
   '自动执行业务流程': [
     admin['auto_process'],
@@ -94,41 +80,43 @@ export const documentationNav = {
     admin['automated-action'],
     admin['workflow-admin'],
   ],
-  '服务端开发': [
-    developer['getting-started'],
-    developer['sync-metadata'],
-    developer['trigger'],
-    developer['router'],
-    developer['objectql'],
-    developer['filters'],
-    developer['package'],
-    developer['flow-trigger'],
-    developer['locale'],
-    developer['deploy-gitpod'],
-  ],
-  '前端开发': [
-    developer['button'],
-    developer['form-event'],
-    developer['form-formula'],
-    developer['steedosui'],
-    developer['client'],
-  ],
   'Amis 微页面': [
     amis['getting-started'],
     amis['page-type'],
     amis['pages'],
     amis['designer'],
+    amis['button'],
     amis['api'],
     amis['component'],
     amis['metadata'],
     amis['example'],
   ],
-  'API': [
+  '微服务开发': [
+    developer['getting-started'],
+    developer['package'],
+    developer['sync-metadata'],
+    developer['service'],
+    developer['action-trigger'],
+    developer['action-api'],
+    // developer['objectql'],
+    developer['filters'],
+    developer['flow-trigger'],
+    developer['locale'],
+  ],
+  '平台API': [
     developer['api-validate'],
     developer['graphql-api'],
-    protocol['api-process'],
-    protocol['api-metadata'],
-    protocol['api-jwt-sso'],
+    developer['api-process'],
+    developer['api-jwt-sso'],
+  ],
+  '平台微服务': [
+    developer['service-objectql'],
+    developer['service-graphql'],
+    developer['service-push'],
+    developer['service-sms'],
+  ],
+  '插件': [
+    plugins['node-red'],
   ],
   '元数据': [
     protocol['metadata-object'],
@@ -137,4 +125,11 @@ export const documentationNav = {
     protocol['metadata-permissions'],
     protocol['metadata-automation'],
   ],
+  // '统计分析': [
+  //   admin['reports'],
+  //   admin['record_report'],
+  //   admin['dashboard'],
+  //   admin['stimulsoft'],
+  //   developer['jsreport'],
+  // ],
 }
