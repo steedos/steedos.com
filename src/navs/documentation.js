@@ -35,6 +35,10 @@ const plugins = createPageList(
   require.context(`../pages/docs/plugins/?meta=title,shortTitle,published`, false, /\.mdx$/),
   'docs/plugins'
 )
+const apps = createPageList(
+  require.context(`../pages/docs/apps/?meta=title,shortTitle,published`, false, /\.mdx$/),
+  'docs/apps'
+)
 
 export const documentationNav = {
   '安装部署': [
