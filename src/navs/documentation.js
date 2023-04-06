@@ -35,18 +35,26 @@ const plugins = createPageList(
   require.context(`../pages/docs/plugins/?meta=title,shortTitle,published`, false, /\.mdx$/),
   'docs/plugins'
 )
+const apps = createPageList(
+  require.context(`../pages/docs/apps/?meta=title,shortTitle,published`, false, /\.mdx$/),
+  'docs/apps'
+)
 
 export const documentationNav = {
   '安装部署': [
     deploy['getting-started'],
     deploy['deploy-docker'],
-    deploy['deploy-developer'],
-    deploy['devops'],
-    deploy['create-steedos-app'],
     // deploy['deploy-activate'],
     // deploy['app-store'],
     deploy['steedos-config'],
     deploy['upgrade'],
+  ],
+  '开发人员': [
+    developer['getting-started'],
+    developer['create-steedos-app'],
+    developer['devops'],
+    developer['package'],
+    developer['sync-metadata'],
   ],
   '用户向导': [
     user['getting-started'],
@@ -61,16 +69,16 @@ export const documentationNav = {
     admin['integration-ding'],
     admin['integration-qywx'],
   ],
-  '无代码开发': [
+  '自定义对象': [
     admin['object'],
     admin['field_type'],
     admin['listview'],
+    admin['tab'],
+    admin['app'],
     admin['page-layout'],
     admin['formula'],
     admin['functions'],
     admin['no-code-extend'],
-    admin['app'],
-    admin['tab'],
     admin['datasource'],
   ],
   '自动执行业务流程': [
@@ -92,9 +100,6 @@ export const documentationNav = {
     amis['example'],
   ],
   '微服务开发': [
-    developer['getting-started'],
-    developer['package'],
-    developer['sync-metadata'],
     developer['service'],
     developer['action-trigger'],
     developer['action-api'],
