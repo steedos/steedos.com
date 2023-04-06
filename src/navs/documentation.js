@@ -31,6 +31,10 @@ const amis = createPageList(
   require.context(`../pages/docs/amis/?meta=title,shortTitle,published`, false, /\.mdx$/),
   'docs/amis'
 )
+const service = createPageList(
+  require.context(`../pages/docs/service/?meta=title,shortTitle,published`, false, /\.mdx$/),
+  'docs/service'
+)
 
 export const documentationNav = {
   '安装部署': [
@@ -110,12 +114,12 @@ export const documentationNav = {
     developer['client'],
   ],
   'Amis 微页面': [
-    amis['start'],
-    amis['setting'],
-    amis['designer'],
-    amis['component'],
-    amis['api'],
+    amis['getting-started'],
     amis['page-type'],
+    amis['pages'],
+    amis['designer'],
+    amis['api'],
+    amis['component'],
     amis['metadata'],
     amis['example'],
   ],

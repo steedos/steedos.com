@@ -1,5 +1,5 @@
 ---
-title: 关于API
+title: 调用API
 description: 借助华炎魔方丰富的API能力，可以快速搭建出满足各种数据交互需求的个性化页面。
 ---
 
@@ -15,145 +15,12 @@ description: 借助华炎魔方丰富的API能力，可以快速搭建出满足�
 
 华炎魔方会自动为每个对象生成GraphQL接口，详情请参阅教程 [记录 API](/docs/developer/graphql-api)，这意味着不用编写任何代码就可以直接在amis组件中使用GraphQL接口，所以我们推荐大家首选这种方式来配合amis组件实现API交互功能。
 
-## 查询设计器
+- [配置请求适配器](https://aisuda.bce.baidu.com/amis/zh-CN/docs/types/api#%E9%85%8D%E7%BD%AE%E8%AF%B7%E6%B1%82%E9%80%82%E9%85%8D%E5%99%A8)。
 
-查询设计器是另一种非常推荐大家为amis组件配置API接口的方案，这是一种可视化的查询设计工具，可以快速生成查询API接口，有统计汇总查询需求时，很适合使用这种方式与amis工具配合来实现数据分析功能，详情请参考 [查询设计器](/docs/admin/query)。
 
-### 接口访问地址
+- [配置接收适配器](https://aisuda.bce.baidu.com/amis/zh-CN/docs/types/api#%E9%85%8D%E7%BD%AE%E6%8E%A5%E6%94%B6%E9%80%82%E9%85%8D%E5%99%A8)。
 
-查询设计器生成的接口访问地址格式为 `/service/api/~packages-@steedos/service-charts/queries/${queryApiName}/results[?动态参数]`，规则如下：
-
-- queryApiName是查询的api名称
-- ?后面的参数是可选的，按普通的 [URL Query](https://en.wikipedia.org/wiki/Query_string) 传参写法即可。
-
-比如我们要在 amis的 [Service](https://aisuda.bce.baidu.com/amis/zh-CN/components/service) 组件中调用api名称为cost_daily_expense_reimburse的查询接口并且传入datetime参数的话，
-应该配置该组件的数据接口为`${context.rootUrl}/service/api/~packages-@steedos/service-charts/queries/cost_daily_expense_reimburse/results?datetime=${datetime}`。
-
-需要注意的事?后面的参数并不会直接被查询识别，需要通过POST方式传入一个名为parameters的参数才会被识别，通常来说我们可以像上面这样把需要的参数通过url传参方式传递给amis组件数据接口的发送适配器使用。
-
-### 接口参数
-
-查询设计器生成的接口并不会识别url中?后面的参数，需要把一个名为`parameters`的参数以POST方式发送给接口，在amis组件数据接口的发送适配器使用可以在api.data中取到url中传入的参数。
-
-以下是一个amis组件数据接口的”发送适配器“属性中配置的脚本，它从url中获取datetime参数值然后转为查询设计器中查询脚本需要的格式以parameters参数传递给接口。
-
-```js
-var datetime = api.data.datetime;
-var start_and_end;
-if (datetime) {
-  start_and_end = datetime.split(',');
-} else {
-  start_and_end = ['', ''];
-}
-api.data.parameters = {
-  datetime: {
-    start: start_and_end[0],
-    end: start_and_end[1]
-  }
-}
-```
-
-关于amis组件接口的发送适配器使用方法请参阅其官方文档：[配置请求适配器](https://aisuda.bce.baidu.com/amis/zh-CN/docs/types/api#%E9%85%8D%E7%BD%AE%E8%AF%B7%E6%B1%82%E9%80%82%E9%85%8D%E5%99%A8)。
-
-### 接口返回内容
-
-查询设计器生成的接口返回值是一个json，以下是一个返回统计金额的示例，通过在amis组件的数据接口的“接收适配器”属性中通过 `query_result.data.rows[0].amount__c` 即可取到需要显示的统计结果。
-
-```json
-{
-    "query_result": {
-        "retrieved_at": "2022-11-16T08:14:08.246Z",
-        "query_hash": "bb4eb44af5abb5c58eb8bc049253922f",
-        "query": "...",
-        "runtime": 0.003,
-        "data": {
-            "columns": [],
-            "rows": [{ amount__c: 80000 }]
-        },
-        "id": "cost_daily_expense_reimburse",
-        "_id": "cost_daily_expense_reimburse",
-        "data_source_id": "default",
-        "data_source_type": "mongodb"
-    }
-}
-```
-
-关于amis组件接口的接收适配器使用方法请参阅其官方文档：[配置接收适配器](https://aisuda.bce.baidu.com/amis/zh-CN/docs/types/api#%E9%85%8D%E7%BD%AE%E6%8E%A5%E6%94%B6%E9%80%82%E9%85%8D%E5%99%A8)。
-
-### 适配组件
-
-通常来说查询设计器适合设计报表接口，我们通过把 amis的 [Service](https://aisuda.bce.baidu.com/amis/zh-CN/components/service) 或 [Chart 图表](https://aisuda.bce.baidu.com/amis/zh-CN/components/chart) 组件的数据接口配置为查询设计器的访问地址来配套实现报表界面。
-
-### 示例
-
-以下是一个通过使用amis的Service组件调用查询接口实现“日常费用报销金额”面板的简单示例。
-
-```json
-{
-  "type": "service",
-  "body": [
-    {
-      "type": "grid",
-      "id": "u:5f326ed9a36c",
-      "columns": [
-        {
-          "body": [
-            {
-              "type": "panel",
-              "title": "日常费用报销金额",
-              "body": [
-                {
-                  "type": "tpl",
-                  "tpl": "<div class=\"body-row-auto scrollbox\" >\n<div class=\"visualization-renderer\">\n<div class=\"visualization-renderer-wrapper\">\n<div class=\"counter-visualization-container\">\n<div class=\"counter-visualization-content\">\n<div style=\"transform: scale(0.65);\">\n<div class=\"counter-visualization-value\" title=\"${total_amount}\">￥${amount__c}</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>",
-                  "inline": false,
-                  "style": {
-                    "marginTop": "",
-                    "marginBottom": ""
-                  },
-                  "affixFooter": false,
-                  "className": ".h",
-                  "id": "u:6b65e1a44c28"
-                }
-              ],
-              "id": "u:73871fecf5f8",
-              "affixFooter": false,
-              "actions": [
-              ],
-              "headerClassName": "p p-b-xs font-bold r",
-              "inline": false,
-              "className": "Panel--default r no-border ",
-              "bodyClassName": "h-56"
-            }
-          ],
-          "columnClassName": ".h",
-          "id": "u:fd2b48f09182"
-        }
-      ],
-      "className": ".h"
-    }
-  ],
-  "id": "u:29bd9dde1d4a",
-  "messages": {
-  },
-  "api": {
-    "method": "post",
-    "url": "${context.rootUrl}/service/api/~packages-@steedos/service-charts/queries/cost_daily_expense_reimburse/results?datetime=${datetime}",
-    "sendOn": "this.datetime",
-    "requestAdaptor": "\nvar datetime = api.data.datetime;\nvar start_and_end;\nif (datetime) {\n  start_and_end = datetime.split(',');\n} else {\n  start_and_end = ['', ''];\n}\napi.data.parameters = {\n  datetime: {\n    start: start_and_end[0],\n    end: start_and_end[1]\n  }\n}",
-    "adaptor": "\nvar rows = payload?.query_result?.data?.rows;\nif (rows.length) {\n  rows = rows[0]\n} else {\n  rows = { amount__c: 0 }\n}\npayload.data = {\n  amount__c: rows.amount__c\n};\n// console.log('payload ==>', payload)\nreturn payload;\n",
-    "headers": {
-      "Authorization": "Bearer ${context.tenantId},${context.authToken}"
-    }
-  },
-  "affixFooter": false,
-  "className": ".h"
-}
-```
 
 ## 自定义接口
 
-在以上两种为amis组件配置API接口的方案都不适用时，我们还可以借助华炎魔方自定义接口的能力，实现任何复杂需求下的API接口，详情请参阅教程 [自定义API](/docs/developer/router)。
-
-## Node-Red
-
-华炎魔方已经实现与 [IBM Node-Red](/docs/developer/node-red) 应用集成引擎整合，可以通过可视化开发方式，连接SAP、用友、金蝶等主流业务系统及各种数据库，在微页面中调用Node-Red实现的接口也是非常实用的一种方式。
+在标准的GraphQL接口不适用时，我们还可以借助华炎魔方自定义接口的能力，实现任何复杂需求下的API接口，详情请参阅教程 [自定义API](/docs/developer/router)。
