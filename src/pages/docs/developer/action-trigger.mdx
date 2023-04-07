@@ -7,11 +7,10 @@ description: 通过编写触发器，可以在记录增删改前和增删改查�
 
 ## 定义触发器。
 
-在微服务中定义一个action, 并加上 trigger 描述，相当于申明此action为触发器。
+在微服务中定义一个action, 并加上 trigger 参数，相当于定义此action为触发器。
 
 ```js
 actions: {
-
     spaceUsersBeforeUpdate: {
         trigger: { 
             listenTo: 'space_users', 
@@ -24,7 +23,7 @@ actions: {
 }
 ```
 
-## trigger 申明
+## trigger 参数
 
 ```js
     trigger: { 
