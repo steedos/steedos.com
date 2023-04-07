@@ -13,7 +13,10 @@ description: 通过编写触发器，可以在记录增删改前和增删改查�
 actions: {
 
     spaceUsersBeforeUpdate: {
-        trigger: { objectName: 'space_users', when: ['beforeInsert', 'beforeUpdate']},
+        trigger: { 
+            listenTo: 'space_users', 
+            when: ['beforeInsert', 'beforeUpdate']
+        },
         async handler(ctx) {
             this.broker.logger.debug('spaceUsersBeforeUpdate', ctx)
         }   
@@ -25,14 +28,14 @@ actions: {
 
 ```js
     trigger: { 
-        objectName: 'space_users', 
+        listenTo: 'space_users', 
         when: ['beforeInsert', 'beforeUpdate']
     },
 ```
 
-### 对象名称
+### 监听对象
 
-使用 `objectName` 参数指定触发器适用的对象。
+使用 `listenTo` 参数指定触发器适用的对象。
 
 ### 事件前触发
 
@@ -40,10 +43,10 @@ actions: {
 
 事件前触发的触发器函数都是以before前缀命名。
 
-* "beforeInsert"
-* "beforeUpdate"
-* "beforeDelete"
-* "beforeFind"
+* beforeInsert
+* beforeUpdate
+* beforeDelete
+* beforeFind
 
 ### 事件后触发
 
@@ -51,9 +54,9 @@ actions: {
 
 事件前触发的触发器函数都是以after前缀命名。
 
-* "afterInsert"
-* "afterUpdate"
-* "afterDelete"
+* afterInsert
+* afterUpdate
+* afterDelete
 
 ## 触发器执行
 
