@@ -13,7 +13,7 @@ description: 通过编写触发器，可以在记录增删改前和增删改查�
 actions: {
 
     spaceUsersBeforeUpdate: {
-        trigger: { objectName: 'space_users', when: ['before.insert', 'before.update']},
+        trigger: { objectName: 'space_users', when: ['beforeInsert', 'beforeUpdate']},
         async handler(ctx) {
             this.broker.logger.debug('spaceUsersBeforeUpdate', ctx)
         }   
@@ -26,7 +26,7 @@ actions: {
 ```js
     trigger: { 
         objectName: 'space_users', 
-        when: ['before.insert', 'before.update']
+        when: ['beforeInsert', 'beforeUpdate']
     },
 ```
 
@@ -61,15 +61,15 @@ actions: {
 
 Variable | Usage
 -- | --
-isInsert | Returns true if this trigger was fired due to an insert operation, from the Salesforce user interface, Apex, or the API.
-isUpdate | Returns true if this trigger was fired due to an update operation, from the Salesforce user interface, Apex, or the API.
-isDelete | Returns true if this trigger was fired due to a delete operation, from the Salesforce user interface, Apex, or the API.
+isInsert | Returns true if this trigger was fired due to an insert operation, from the Steedos user interface, Service, or the API.
+isUpdate | Returns true if this trigger was fired due to an update operation, from the Steedos user interface, Service, or the API.
+isDelete | Returns true if this trigger was fired due to a delete operation, from the Steedos user interface, Service, or the API.
 isBefore | Returns true if this trigger was fired before any record was saved.
 isAfter | Returns true if this trigger was fired after all records were saved.
 isUndelete | Returns true if this trigger was fired after a record is recovered from the Recycle Bin. This recovery can occur after an undelete operation from the Salesforce user interface, Apex, or the API.
 id | 记录的唯一标识[string].
 doc | 需要新增/修改的记录内容[json].
-previousDoc | 修改/删除前的记录[json], after.update, after.delete时存在此属性.
+previousDoc | 修改/删除前的记录[json], afterUpdate, afterDelete时存在此属性.
 size | The total number of records in a trigger invocation, both old and new.
 userId | 当前用户唯一标识[string]
 spaceId | 当前工作区[string]
