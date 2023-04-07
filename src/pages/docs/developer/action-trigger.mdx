@@ -64,9 +64,10 @@ actions: {
 
 Variable | Usage
 -- | --
-isInsert | Returns true if this trigger was fired due to an insert operation, from the Steedos user interface, Service, or the API.
-isUpdate | Returns true if this trigger was fired due to an update operation, from the Steedos user interface, Service, or the API.
-isDelete | Returns true if this trigger was fired due to a delete operation, from the Steedos user interface, Service, or the API.
+isInsert | Returns true if this trigger was fired due to an insert operation, from the steedos user interface, Service, or the API.
+isUpdate | Returns true if this trigger was fired due to an update operation, from the steedos user interface, Service, or the API.
+isDelete | Returns true if this trigger was fired due to a delete operation, from the steedos user interface, Service, or the API.
+isFind | Returns true if this trigger was fired due to a find operation, from the steedos user interface, Service, or the API.
 isBefore | Returns true if this trigger was fired before any record was saved.
 isAfter | Returns true if this trigger was fired after all records were saved.
 id | 记录的唯一标识[string].
@@ -78,4 +79,3 @@ spaceId | 当前工作区[string]
 objectName | 当前对象名称[string]
 query | 查询数据相关参数[json], beforeFind时存在此属性
 data | 查询结果, afterFind时存在此属性
-when | 触发时机。
