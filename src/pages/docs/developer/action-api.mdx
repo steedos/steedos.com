@@ -3,4 +3,34 @@ title: 自定义API
 description: 如果华炎魔方自动生成的标准API不能满足业务需求，可以编写自定义API，在服务端处理业务数据。
 ---
 
-华炎魔方 2.4+ 版本启用微服务方式开发API，历史版本可以参考 [旧版 Router 文档](./router)
+华炎魔方 2.4+ 版本启用微服务方式开发API。使用 [.router.js](./router) 文件定义路由因为不支持微服务模式运行，建议不再使用。
+
+## 定义API
+
+在微服务的 action 中定义 rest 参数，可以把当前 action 申明为 api。
+
+```js
+module.exports = {
+  name: "example-service",
+
+  actions: {
+    hello: {
+      // 使用微服务方式定义 API 接口。
+      // 访问地址： GET /service/api/example-service/hello/:name
+      rest: { method: 'GET', path: '/hello/:name' },
+      handler(ctx) {
+        return {
+          data: 'Welcome ' + ctx.params.name
+        }
+      }
+    },
+    me: {
+      rest: { method: 'GET', path: '/me' },
+      // 在微服务中获取当前登录的用户信息
+      async handler(ctx) {
+        return ctx.meta.user
+      }
+    },
+  }
+}
+```
