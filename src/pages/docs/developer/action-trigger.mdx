@@ -3,4 +3,78 @@ title: 触发器
 description: 通过编写触发器，可以在记录增删改前和增删改查之后自动触发一段服务端代码，实现个性化的数据校验和处理。
 ---
 
-华炎魔方 2.4+ 版本启用微服务方式开发触发器，历史版本可以参考 [旧版Trigger文档](./trigger)
+华炎魔方 2.4+ 版本支持使用微服务方式开发触发器。 也可以使用 [.trigger.js](./trigger) 定义触发器。
+
+## 定义触发器。
+
+在微服务中定义一个action, 并加上 trigger 参数，相当于定义此action为触发器。
+
+```js
+actions: {
+    spaceUsersBeforeUpdate: {
+        trigger: { 
+            listenTo: 'space_users', 
+            when: ['beforeInsert', 'beforeUpdate']
+        },
+        async handler(ctx) {
+            this.broker.logger.debug('spaceUsersBeforeUpdate', ctx)
+        }   
+    }
+}
+```
+
+## trigger 参数
+
+```js
+    trigger: { 
+        listenTo: 'space_users', 
+        when: ['beforeInsert', 'beforeUpdate']
+    },
+```
+
+### 监听对象
+
+使用 `listenTo` 参数指定触发器适用的对象。
+
+### 事件前触发
+
+事件前触发的触发器，可以用于校验用户录入的数据是否正确，如果有问题，可以抛错，错误信息会反馈到前端操作页面；还可以结合权限控制当前操作等。
+
+事件前触发的触发器函数都是以before前缀命名。
+
+* beforeInsert
+* beforeUpdate
+* beforeDelete
+* beforeFind
+
+### 事件后触发
+
+事件后触发的触发器，可以用于执行关联的事件，比如任务创建完成后发送通知给指定人员。
+
+事件前触发的触发器函数都是以after前缀命名。
+
+* afterInsert
+* afterUpdate
+* afterDelete
+
+## 触发器执行
+
+触发器执行函数中，可以使用 ctx.params 获得以下变量。
+
+Variable | Usage
+-- | --
+isInsert | Returns true if this trigger was fired due to an insert operation, from the steedos user interface, service, or the API.
+isUpdate | Returns true if this trigger was fired due to an update operation, from the steedos user interface, service, or the API.
+isDelete | Returns true if this trigger was fired due to a delete operation, from the steedos user interface, service, or the API.
+isFind | Returns true if this trigger was fired due to a find operation, from the steedos user interface, service, or the API.
+isBefore | Returns true if this trigger was fired before any record was saved.
+isAfter | Returns true if this trigger was fired after all records were saved.
+id | 记录的唯一标识[string].
+doc | 需要新增/修改的记录内容[json].
+previousDoc | 修改/删除前的记录[json], afterUpdate, afterDelete时存在此属性.
+size | The total number of records in a trigger invocation, both old and new.
+userId | 当前用户唯一标识[string]
+spaceId | 当前工作区[string]
+objectName | 当前对象名称[string]
+query | 查询数据相关参数[json], beforeFind时存在此属性
+data | 查询结果, afterFind时存在此属性
