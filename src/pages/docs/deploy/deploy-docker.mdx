@@ -11,12 +11,10 @@ description: 我们推荐使用 Docker 运行华炎魔方，生产环境推荐�
 
 ## 私有部署
 
-### 创建文件 docker-compose.yml
-
 访问 [Steedos Docker](https://github.com/steedos/docker) 项目仓库， 下载 docker-compose.yml 模版文件。
 
-- 华炎魔方社区版： [Github下载](https://github.com/steedos/docker/blob/main/steedos-community/docker-compose.yml) , [Gitlab下载](https://gitlab.steedos.cn/steedos/docker/-/raw/main/steedos-community/docker-compose.yml)
-- 华炎魔方企业版： [Github下载](https://github.com/steedos/docker/blob/main/steedos-enterprise/docker-compose.yml) , [Gitlab下载](https://gitlab.steedos.cn/steedos/docker/-/raw/main/steedos-enterprise/docker-compose.yml)
+- [Github下载](https://github.com/steedos/docker/blob/main/steedos-community/docker-compose.yml)
+- [Gitlab下载](https://gitlab.steedos.cn/steedos/docker/-/raw/main/steedos-community/docker-compose.yml)
 
 ### 选择 steedos 版本
 
@@ -24,7 +22,7 @@ description: 我们推荐使用 Docker 运行华炎魔方，生产环境推荐�
 
 ### 设定环境变量
 
-编辑 environment 中的 ROOT_URL 以匹配您的域名或 IP 地址，其他地址默认配置就行
+参考文档 [配置环境变量](./steedos-config)
 
 ```yaml
 environment:
