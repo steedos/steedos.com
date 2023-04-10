@@ -262,8 +262,6 @@ MongoDB数据库查询语句请参考[redash-MongoDB文档](https://redash.io/he
 
 与其他元数据一样，上面配置仪表盘过程中提到的相关元数据，包括查询、图表、页面、选项卡和应用都可以同步为代码，下面我们简单描述下如何把上面提到的元数据都同步为代码，以方便后续部署到正式平台。
 
-以下描述均假设我们已经按教程 [开通华炎魔方云服务](/docs/deploy/deploy-cloud) 注册好了云服务账户，然后按教程 [开发环境部署 - Windows](/docs/deploy/deploy-windows) 或 [开发环境部署 - Mac](/docs/deploy/deploy-mac) 安装好了华炎魔方开发环境，并且当前魔方项目已经正常配置好必须的环境变量`STEEDOS_CLOUD_SPACE_ID`和`STEEDOS_CLOUD_API_KEY`。
-
 要同步为代码，我们需要打开VSCODE编辑器中的Steedos插件面板，并点击右上角的刷新按钮来浏览界面上的元数据。
 
  ![](https://console.steedos.cn/api/files/images/sMT3cJe9SzgDZgcii)如果未配置元数据同步相关的环境变量的话，点击右上角的刷新按钮会报错`Please run command, steedos source:config`，我们只要把以下相关环境变量配置上，或者在项目命令行上运行指令`steedos source:config`在向导中配置相关环境变量即可。
