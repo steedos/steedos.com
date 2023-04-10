@@ -438,7 +438,7 @@ function TopLevelNav({ mobile }) {
       >
         <span className={pathname === '/resources' ? 'dark:text-purple-400' : ''}>Resources</span>
       </TopLevelLink> */}
-      <TopLevelLink
+      {/* <TopLevelLink
         mobile={mobile}
         href="https://community.steedos.cn"
         className="mb-8"
@@ -485,7 +485,7 @@ function TopLevelNav({ mobile }) {
         }
       >
         社区
-      </TopLevelLink>
+      </TopLevelLink> */}
     </>
   )
 }
