@@ -4,3 +4,27 @@ description: 调用 ObjectQL 微服务，可以执行数据库的增删改查操
 ---
 
 华炎魔方 2.4+ 版本启用微服务方式调用 ObjectQL，历史版本可以参考 [旧版ObjectQL文档](./objectql)
+
+```
+actions: {
+    objectqlAction: {
+        rest: { method: 'GET', path: '/objectql' },
+        async handler(ctx) {
+            return await this.broker.call(
+            'objectql.find', 
+            {
+                objectName: 'space_users',
+                query: {
+                filters: ['user', '=', ctx.meta.user.userId]
+                },
+            },
+            // 如果查询需要带上当前用户的权限，需要传入 user 属性。
+            {
+                user: ctx.meta.user
+            }
+            );
+        }
+        }
+}
+
+```
