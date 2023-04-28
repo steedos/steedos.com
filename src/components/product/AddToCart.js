@@ -28,6 +28,7 @@ export default function AddToCart({ productVariant = {} }) {
       <button
         onClick={onClick}
         type="button"
+        style={{ display:"none" }}
         className="w-full bg-sky-50 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-sky-700 hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-sky-500"
       >
         加入购物车
