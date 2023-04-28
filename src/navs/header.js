@@ -150,6 +150,53 @@ export const headerNav = {
         },
       ]
     }, 
+    {
+      id: 'customer-success-stories',
+      name: '客户案例',
+      featured: [
+        {
+          name: '华炎魔方助力招商银行探索产品低代码化转型',
+          href: '/customer-success-stories/cmbchina-poc',
+          imageSrc: 'https://console.steedos.cn/api/files/images/6440ac94671028003e760f11',
+          imageAlt:
+            '薪福通3.0借助华炎魔方平台向低代码赛道转型。',
+        },
+        {
+          name: '华炎魔方助力清华大学搭建图书馆资产管理系统',
+          href: '/customer-success-stories/tsinghua',
+          imageSrc: 'https://console.steedos.cn/api/files/images/6440acbd671028003e760f13',
+          imageAlt:
+            '2022年9月清华大学图书馆联合上海华炎软件，使用华炎魔方低代码开发平台进行了应用系统生命周期管理软件的研发，通过1个月的时间，完成了整个系统的建设。',
+        },
+      ],
+      sections: [
+        {
+          id: 'customer-cases',
+          name: '项目案例',
+          href: '/customer-success-stories/',
+          items: [
+            { name: '招商银行', href: '/customer-success-stories/cmbchina-poc' },
+            { name: '清华大学', href: '/customer-success-stories/tsinghua' },
+            { name: '建华建材', href: '/customer-success-stories/jianhuabm' },
+            { name: '大众公用', href: '/customer-success-stories/dzug' },
+            { name: '智器云', href: '/customer-success-stories/zqy' },
+            { name: '中意盛森', href: '/customer-success-stories/contract' },
+            { name: '河北港口集团', href: '/customer-success-stories/porthebei' },
+          ],
+        },
+        {
+          id: 'other-cases',
+          name: ' 伙伴案例',
+          href: '/customer-success-stories/',
+          items: [
+            { name: '昱庄智能工厂', href: '/customer-success-stories/yz' },
+            { name: '抗疫平台', href: '/customer-success-stories/COVID-19' },
+            { name: 'SCRM销售', href: '/customer-success-stories/scrm' },
+            { name: 'CTMS临床研究管理', href: '/customer-success-stories/ctms' },
+          ],
+        }
+      ],
+    }
   ],
   pages: [
     { name: '文档', href: '/docs/' },

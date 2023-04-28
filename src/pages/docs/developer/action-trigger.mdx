@@ -53,6 +53,7 @@ actions: {
 
 事件前触发的触发器函数都是以after前缀命名。
 
+* afterFind
 * afterInsert
 * afterUpdate
 * afterDelete
@@ -61,18 +62,18 @@ actions: {
 
 触发器执行函数中，可以使用 ctx.params 获得以下变量。
 
-Variable | Usage
+变量 | 用法
 -- | --
-isInsert | Returns true if this trigger was fired due to an insert operation, from the steedos user interface, service, or the API.
-isUpdate | Returns true if this trigger was fired due to an update operation, from the steedos user interface, service, or the API.
-isDelete | Returns true if this trigger was fired due to a delete operation, from the steedos user interface, service, or the API.
-isFind | Returns true if this trigger was fired due to a find operation, from the steedos user interface, service, or the API.
-isBefore | Returns true if this trigger was fired before any record was saved.
-isAfter | Returns true if this trigger was fired after all records were saved.
+isInsert | 如果此触发器是由于插入操作（从 steedos 用户界面、服务或 API 触发）而触发的，则返回 true。
+isUpdate | 如果此触发器是由于更新操作（从 steedos 用户界面、服务或 API 触发）而触发的，则返回 true。
+isDelete | 如果此触发器是由于删除操作（从 steedos 用户界面、服务或 API 触发）而触发的，则返回 true。
+isFind | 如果此触发器是由于查询操作（从 steedos 用户界面、服务或 API 触发）而触发的，则返回 true。
+isBefore | 如果在操作任何记录之前触发此触发器，则返回 true。
+isAfter | 如果在操作所有记录后触发此触发器，则返回 true。
 id | 记录的唯一标识[string].
 doc | 需要新增/修改的记录内容[json].
 previousDoc | 修改/删除前的记录[json], afterUpdate, afterDelete时存在此属性.
-size | The total number of records in a trigger invocation, both old and new.
+size | 触发器调用中的记录总数（包括旧记录和新记录）。
 userId | 当前用户唯一标识[string]
 spaceId | 当前工作区[string]
 objectName | 当前对象名称[string]
