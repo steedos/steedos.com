@@ -114,52 +114,48 @@ export function Pricing() {
         </div>
         <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
           <Plan
-            name="社区版"
-            price="¥0"
+            name="¥0"
+            price="社区版"
             description="免费使用，无任何限制。"
             href="/register"
             features={[
-              '快速构建应用程序	',
+              '可视化搭建业务应用',
               '自动化业务流程	',
               '管理数据访问权限	',
-              '分析您的数据	',
-              '与外部系统集成	',
-              '融合高代码与DevOps工具	',
-              '社区支持	',
+              '开放标准API接口',
+              '支持外部数据源集成',
+              '支持数据导入导出',
+              '支持移动端同步使用',
+              '自定义业务数据大屏',
+              '公有云/私有化本地部署',
             ]}
           />
           <Plan
             featured
-            name="企业版 （年）"
-            price="¥19,800"
-            description="适用于商业用户的版本。含30用户许可。"
+            name="¥19,800/不限用户/不限时间"
+            price="专业版"
+            description="适用于商业用户的版本。"
             href="/register"
             features={[
               '自定义品牌和Logo',
-              '审计日志',
-              '企业级高级安全控制',
-              '字段级加密插件',
-              '像素级报表插件',
-              '钉钉、企业微信组织机构同步',
-              '商业支持',
-              '新增用户: 300元/用户/年',
+              '业务数据编辑日志',
+              '业务审批流程管理',
+              '钉钉/企业微信集成',
+              '集团级组织角色管理',
             ]}
           />
           <Plan
-            name="SaaS版 （年）"
-            price="¥198,000"
-            description="以 SaaS 模式运行华炎魔方软件包。"
-            href="/register"
+            name="联系我们"
+            price="企业版"
+            description="提供更多企业级功能插件及商业支持服务。"
+            href="/company/about-us"
             features={[
-              '租户自助注册',
-              '租户自助管理',
+              '微服务应用',
+              'Node-red集成',
+              '业务对象字段级加密',
               'OIDC统一身份认证',
               '解决方案模版库',
-              '自定义解决方案',
-              '应用市场',
-              '自定义品牌和Logo',
-              '不限制企业数',
-              '不限制用户数',
+              '应用市场源码',
             ]}
           />
         </div>

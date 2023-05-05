@@ -3,21 +3,19 @@ export const headerNav = {
   categories: [
     {
       id: 'platform',
-      name: '平台',
+      name: '平台介绍',
       featured: [
         {
-          name: '华炎魔方助力大众共用实施数字化转型',
-          href: '/customer-success-stories/dzug',
-          imageSrc: 'https://console.steedos.cn/api/files/images/kq9hPmNhxCFDXMp3u',
-          imageAlt:
-            '华炎魔方仅用3个月的时间，为大众公用建立了完整的业务财务一体化管理系统。',
+          name: '华炎魔方赋能企业，打造数字驱动型组织',
+          href: '/platform/overview',
+          imageSrc: 'https://console.steedos.cn/api/files/images/3TNS6p46atnntJE4y',
+          imageAlt:'华炎魔方赋能企业，打造数字驱动型组织',
         },
         {
-          name: '华炎魔方助力建华建材实施生产管理系统',
-          href: '/customer-success-stories/jianhuabm',
-          imageSrc: 'https://console.steedos.cn/api/files/images/XMgWcjhCk4bKbXYYb',
-          imageAlt:
-            '华炎魔方仅用1.5个月的时间，为建华建材实施了PC构件生产管理系统。',
+          name: '华炎魔方十大引擎',
+          href: '/platform/features',
+          imageSrc: 'https://console.steedos.cn/api/files/images/ER8tP4Yvu8fDfvFkR',
+          imageAlt: '华炎魔方十大引擎',
         },
       ],
       sections: [
@@ -26,14 +24,25 @@ export const headerNav = {
           name: '低代码平台',
           href: '/platform/overview',
           items: [
-            { name: '华炎魔方概览', href: '/platform/overview' },
             { name: '什么是低代码？', href: '/platform/lowcode' },
+            { name: '平台介绍', href: '/platform/overview' },
             { name: '技术架构', href: '/platform/architecture' },
-            { name: '功能', href: '/platform/features' },
-            { name: '报价', href: '/platform/pricing' },
-            { name: '社区版', href: 'https://github.com/steedos/steedos-platform/', target: '_blank' },
-            { name: '企业版', href: '/collections/platform' },
-            { name: '技术服务', href: '/collections/services' },
+            { name: '十大引擎', href: '/platform/features' },
+          ],
+        },
+        {
+          id: 'features',
+          name: '功能',
+          href: '/videos',
+          items: [
+            { name: '零代码开发', href: '/videos/lesson-object' },
+            { name: '公式引擎', href: '/videos/formula-calculates' },
+            { name: '权限引擎', href: '/videos/authority_management' },
+            { name: '规则引擎', href: '/videos/workflow_rules' },
+            { name: '批准过程', href: '/videos/admin-contracts' },
+            { name: '元数据引擎', href: '/videos/lesson-metadata' },
+            { name: '审批王', href: '/videos/admin-contracts' },
+            { name: 'DevOps', href: '/videos/live-course-devops' },
           ],
         },
         {
@@ -52,104 +61,48 @@ export const headerNav = {
             { name: '协同办公', href: '/products/oa' },
           ],
         },
-        {
-          id: 'features',
-          name: '功能',
-          href: '/videos',
-          items: [
-            { name: '零代码开发', href: '/videos/lesson-object' },
-            { name: '公式引擎', href: '/videos/formula-calculates' },
-            { name: '权限引擎', href: '/videos/authority_management' },
-            { name: '规则引擎', href: '/videos/workflow_rules' },
-            { name: '批准过程', href: '/videos/admin-contracts' },
-            { name: '报表引擎', href: '/videos/report' },
-            { name: '元数据引擎', href: '/videos/lesson-metadata' },
-            { name: '审批王', href: '/videos/admin-contracts' },
-            { name: 'DevOps', href: '/videos/live-course-devops' },
-          ],
-        },
       ],
     },
     {
-      id: 'resourses',
-      name: '资源',
+      id: 'solution',
+      name: '解决方案',
+      href: '/collections/steedos-packages',
       featured: [
         {
-          name: '生产环境部署 - Docker （推荐）',
-          href: '/docs/deploy/deploy-docker',
-          imageSrc: 'https://console.steedos.cn/api/files/images/qAyN6KWYdgmKBuwQg',
-          imageAlt:'私有部署完全免费。',
+          name: '项目管理解决方案',
+          href: '/solutions/project',
+          imageSrc: 'https://console.steedos.cn/api/files/images/AnNW9yDQZmTgWAAo7',
+          imageAlt:'项目管理解决方案',
         },
         {
-          name: '开发环境部署 - DevOps 远程开发',
-          href: '/docs/deploy/devops',
-          imageSrc: 'https://console.steedos.cn/api/files/images/AnNW9yDQZmTgWAAo7',
-          imageAlt: '远程开发项目，方便、快捷！',
+          name: 'PC-MES生产管理解决方案',
+          href: '/solutions/pcmes',
+          imageSrc: 'https://console.steedos.cn/api/files/images/raAaARPycouLJwFd2',
+          imageAlt: 'PC-MES生产管理解决方案',
         },
       ],
       sections: [
         {
-          id: 'resources',
-          name: '浏览文档',
-          href: '/docs',
+          id: 'platform',
+          name: '场景解决方案',
+          href: '/platform/overview',
           items: [
-            { name: '安装部署', href: '/docs/deploy' },
-            { name: '管理员向导', href: '/docs/admin' },
-            { name: '用户向导', href: '/docs/user' },
+            { name: '项目管理解决方案', href: '/platform/lowcode' },
+            { name: '合同管理解决方案', href: '/platform/overview' },
+            { name: '在线商城解决方案', href: '/platform/pricing' },
+            { name: 'PC-MES生产管理解决方案', href: '/platform/architecture' },
           ],
         },
         {
-          id: 'developer',
-          name: '开发人员向导',
-          href: '/docs/developer',
+          id: 'cloud',
+          name: '行业解决方案',
+          href: '/collections/steedos-packages',
           items: [
-            { name: '快速向导', href: '/docs/developer/getting-started' },
-            { name: '元数据类型概览', href: '/docs/developer/meta-types' },
-            { name: '软件包发布与安装', href: '/docs/developer/package' },
+            { name: '行业PaaS平台解决方案', href: '/platform/features' },
           ],
-        },
-        {
-          id: 'low-code-academy',
-          name: '低代码学院',
-          href: '/docs/low-code-academy',
-          items: [
-            { name: '合同管理系统', href: '/docs/low-code-academy/low-code-contract-app' },
-            { name: '集团会议管理系统', href: '/docs/low-code-academy/low-code-meeting-app' },
-            { name: '低代码DevOps教程', href: '/docs/low-code-academy/low-code-devops-hr' },
-          ],
-        },
-        {
-          id: 'company',
-          name: '关于我们',
-          href: '/company/about-us',
-          items: [
-            { name: '关于华炎', href: '/company/about-us' },
-            { name: '解决方案', href: '/solutions' },
-            { name: '联系我们', href: '/company/contact-us' },
-          ],
-        },
-        {
-          id: 'customer',
-          name: '客户案例',
-          href: '/customer-success-stories',
-          items: [
-            { name: '建华建材', href: '/customer-success-stories/jianhuabm' },
-            { name: '大众公用', href: '/customer-success-stories/dzug' },
-            { name: '新冠抗疫平台', href: '/customer-success-stories/COVID-19' },
-          ],
-        },
-        {
-          id: 'collections',
-          name: '商城',
-          href: '/collections/platform-cloud',
-          items: [
-            { name: '企业版', href: '/collections/platform' },
-            { name: '应用市场', href: '/collections/steedos-packages' },
-            { name: '技术服务', href: '/collections/services' },
-          ],
-        },
-      ]
-    }, 
+        }
+      ],
+    },
     {
       id: 'customer-success-stories',
       name: '客户案例',
@@ -172,7 +125,7 @@ export const headerNav = {
       sections: [
         {
           id: 'customer-cases',
-          name: '项目案例',
+          name: '客户案例',
           href: '/customer-success-stories/',
           items: [
             { name: '招商银行', href: '/customer-success-stories/cmbchina-poc' },
@@ -186,21 +139,80 @@ export const headerNav = {
         },
         {
           id: 'other-cases',
-          name: ' 伙伴案例',
+          name: '伙伴案例',
           href: '/customer-success-stories/',
           items: [
-            { name: '昱庄智能工厂', href: '/customer-success-stories/yz' },
+            { name: '双汇集团智能工厂', href: '/customer-success-stories/yz' },
             { name: '抗疫平台', href: '/customer-success-stories/COVID-19' },
-            { name: 'SCRM销售', href: '/customer-success-stories/scrm' },
-            { name: 'CTMS临床研究管理', href: '/customer-success-stories/ctms' },
+            { name: '梅斯医学SCRM销售管理', href: '/customer-success-stories/scrm' },
+            { name: '梅斯医学CTMS临床研究管理', href: '/customer-success-stories/ctms' },
+          ],
+        }
+      ],
+    },
+    {
+      id: 'docs&videos',
+      name: '文档视频',
+      featured: [
+        {
+          name: '华炎魔方项目解决方案线上分享会',
+          href: '/videos/course-project',
+          imageSrc: 'https://console.steedos.cn/api/files/images/hqujpwHACBDxmMYyu',
+          imageAlt:
+            '华炎魔方项目解决方案线上分享会。',
+        },
+        {
+          name: '低代码训练营系列课程之业务建模',
+          href: '/videos/course-object',
+          imageSrc: 'https://console.steedos.cn/api/files/images/nob6cAXKMSiS8BBZP',
+          imageAlt:
+            '低代码训练营系列课程之业务建模',
+        },
+      ],
+      sections: [
+        {
+          id: 'docs',
+          name: '配置文档',
+          href: '/docs/',
+          items: [
+            { name: '安装部署', href: '/docs/deploy/getting-started' },
+            { name: '开发向导', href: '/docs/developer/getting-started' },
+            { name: '用户向导', href: '/docs/user/getting-started' },
+            { name: '管理员向导', href: '/docs/admin/getting-started' },
+            { name: '可视化建模', href: '/docs/admin/object' },
+            { name: '自动化流程', href: '/docs/admin/auto_process' },
+            { name: '页面设计', href: '/docs/amis/getting-started' },
+          ],
+        },
+        {
+          id: 'docs',
+          name: '开发文档',
+          href: '/docs/',
+          items: [
+            { name: '元数据介绍', href: '/docs/protocol/metadata-object' },
+            { name: '平台API', href: '/docs/developer/api-validate' },
+            { name: '平台微服务', href: '/docs/developer/service-objectql' },
+            { name: '微服务开发', href: '/docs/developer/service' },
+            { name: '集成插件', href: '/docs/plugins/node-red' },
+            { name: '元数据介绍', href: '/docs/protocol/metadata-object' },
+          ],
+        },
+        {
+          id: 'video',
+          name: '培训视频',
+          href: '/videos',
+          items: [
+            { name: '关于华炎魔方', href: '/videos' },
+            { name: '可视化开发教程', href: '/videos' },
+            { name: '低代码训练营课程回顾', href: '/videos' },
+            { name: '华炎魔方低代码DevOps平台', href: '/videos' },
           ],
         }
       ],
     }
   ],
   pages: [
-    { name: '文档', href: '/docs/' },
-    { name: '视频', href: '/videos/' },
-    { name: '应用市场', href: '/collections/steedos-packages' },
+    { name: '购买服务', href: '/services/pricing' },
+    { name: '关于我们', href: '/company/about-us' },
   ],
 }
