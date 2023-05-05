@@ -85,20 +85,20 @@ export const headerNav = {
         {
           id: 'platform',
           name: '场景解决方案',
-          href: '/platform/overview',
+          href: '/solutions',
           items: [
-            { name: '项目管理解决方案', href: '/platform/lowcode' },
-            { name: '合同管理解决方案', href: '/platform/overview' },
-            { name: '在线商城解决方案', href: '/platform/pricing' },
-            { name: 'PC-MES生产管理解决方案', href: '/platform/architecture' },
+            { name: '项目管理解决方案', href: '/solutions/project' },
+            { name: '合同管理解决方案', href: '/solutions/contract' },
+            { name: '在线商城解决方案', href: '/solutions/ecommerce' },
+            { name: 'PC-MES生产管理解决方案', href: '/solutions/pcmes' },
           ],
         },
         {
           id: 'cloud',
           name: '行业解决方案',
-          href: '/collections/steedos-packages',
+          href: '/solutions',
           items: [
-            { name: '行业PaaS平台解决方案', href: '/platform/features' },
+            { name: '行业PaaS平台解决方案', href: '/solutions/paas' },
           ],
         }
       ],
