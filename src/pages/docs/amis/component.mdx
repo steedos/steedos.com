@@ -18,7 +18,7 @@ description: 组件是微页面的基本元素，微页面中不但有非常丰�
 - [相关列表 RecordDetailRelatedList](/docs/amis/record_detail_related_list)
 
 
-## @data.change广播事件
+## @data.change事件
 
 在amis广播事件可以自定义派发的事件名称`eventName`，其他渲染器可以监听自定义事件并配置响应动作。[了解更多广播事件](https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/event-action)。
 
@@ -29,7 +29,7 @@ description: 组件是微页面的基本元素，微页面中不但有非常丰�
 
 事件名称规范：`@data.changed.对象的API名称`，表示触发某个对象的`@data.change`事件。
 
-### 触发广播
+### 触发
 
 要触发对象的`@data.change`事件，`eventName`按上述名称规范，并配置`actionType: 'broadcast'`。  
 
@@ -57,11 +57,11 @@ description: 组件是微页面的基本元素，微页面中不但有非常丰�
   }
 ```
 
-### 监听广播
+### 监听
 
 要监听`@data.change`事件，事件名按上述名称规范即可。
 
-以下示例演示了一个监听名为`instance_tasks`的对象的`@data.change`事件。会监听其他广播的自定义事件并执行响应动作。传递的数据通过`event.data.xxx`直接获取。
+以下示例演示了一个监听名为`instance_tasks`的对象的`@data.change`事件。当事件触发时会执行相关动作，传递的数据通过`event.data.xxx`获取。
 
 ```json
   "onEvent": {
@@ -80,33 +80,28 @@ description: 组件是微页面的基本元素，微页面中不但有非常丰�
   }
 ```
 
-### 组件功能
+### 应用
 
 华炎魔方很多内置组件都监听了对象的`@data.change`事件，基于amis的广播事件特性可以很方便的调用这些组件的功能和行为，比如组件的刷新功能。 
 
 
-#### 对象列表
+#### 对象列表组件
 
-[此组件的监听广播代码](https://github.com/steedos/steedos-widgets/blob/eab0501ff2624e9dc51b8a96dd6d8e3afb774c48/packages/@steedos-widgets/amis-object/src/amis/AmisObjectListview.tsx#L82)。  
+所有的对象列表组件都监听了对象的`@data.change`事件，支持执行以下行为：
+- 刷新对象列表组件
+- 跳转到记录详细页
 
-对象列表监听了`@data.change`事件，会执行以下行为：  
+详情请参考 [对象列表源码](https://github.com/steedos/steedos-widgets/blob/1.2/packages/@steedos-widgets/amis-object/src/amis/AmisObjectListview.tsx#L83)。  
 
-- 刷新
-- 进入记录详情页
 
-##### **刷新**
-在对象列表中编辑并保存记录后，会刷新对象列表，就是此行为实现的。  
+##### **刷新对象列表组件**
 
-以下示例演示点击按钮后，广播事件响应的动作会执行刷新对象列表命令。
-
-* **data的参数**
-  * objectName: `String`。对象Api名称。
-  * recordId: `String`。当前操作记录的`recordId`，该值有效，进行刷新操作；无效，会进入详细页面，且需配置`data.result.data.recorId`，会根据此值进行路由跳转。选填。
+以下示例演示点击按钮后，刷新名为`project`的对象列表组件：
 
 ```json
 {
   "type": "button",
-  "label": "广播事件-刷新对象列表",
+  "label": "刷新对象列表组件",
   "onEvent": {
     "click": {
       "actions": [
@@ -117,7 +112,7 @@ description: 组件是微页面的基本元素，微页面中不但有非常丰�
           },
           "data": {
             "objectName": "project",
-            "recordId": "xxx" // 此处请保持值recordId值有效，否则将会进入记录详情页
+            "recordId": "xxx" // 此处请保持非空，并不需要真实的记录ID，否则将跳转对象表单
           }
         }
       ]
@@ -126,73 +121,57 @@ description: 组件是微页面的基本元素，微页面中不但有非常丰�
 }
 ```
 
-##### **进入记录详情页**
+对象列表组件会监听`@data.changed.project`事件，并根据传入的参数判断是否刷新对象列表组件。
 
-在对象列表中新建后，会进入记录详情页，就是此行为实现的。  
+要刷新对象列表组件，需在`data`中配置以下参数：
+- objectName: `String`。要触发广播事件对象的对象Api名称，即对象列表绑定的对象api名称。
+- recordId: `String`。此处请保持非空，并不需要真实的记录ID，表示非新建记录，否则将跳转对象表单。
 
-以下示例演示点击按钮后，广播事件响应的动作会进入记录详情页。
+在华炎魔方对象列表页面中**编辑**并保存记录后，会刷新对象列表组件，它是通过在弹出的编辑表单中监听提交成功事件执行此动作来实现的，
+详情请参考 [对象表单组件源码](https://github.com/steedos/steedos-widgets/blob/1.2/packages/%40steedos-widgets/amis-lib/src/lib/converter/amis/index.js#L350)。
 
-* **data的参数**
-  * objectName: `String`。对象Api名称。
-  * recordId: `String`。当前操作记录的`recordId`，该值无效，会进入详细页面，需配置`data.result.data.recorId`，会根据此值进行路由跳转；有效，进行刷新操作。选填。
+<alert type="info">
+源码中的data没有传入`recordId`，是因为表单中的数据会传入`data`，在编辑记录时表单中包含`recordId`变量，`@data.change`事件中的`event.data.recordId`不为空。
+</alert>
+<br/>
+
+##### **跳转到记录详细页**
+
+在华炎魔方对象列表页面中**新建**记录后，会跳转到记录详细页，它是通过在弹出的编辑表单中监听提交成功事件执行此动作来实现的，
+详情请参考 [对象表单组件源码](https://github.com/steedos/steedos-widgets/blob/1.2/packages/%40steedos-widgets/amis-lib/src/lib/converter/amis/index.js#L350)。  
+
+<alert type="info">
+在新建记录时，表单的`recordId`为空，所以会跳转到记录详细页，而不是刷新对象列表组件。
+
+</alert>  
+
+要跳转到记录详细页，需在`data`中配置以下参数：
+- objectName: `String`。要触发广播事件对象的对象Api名称，即对象列表绑定的对象api名称。
+- recordId: `String`。此处请保持为空，表示新建记录。
+
+
+#### 对象表单组件
+
+所有的对象表单组件只读模式都监听了对象的`@data.change`事件，支持执行以下行为： 
+- 刷新对象表单组件
+- 跳转到对象列表组件
+
+详情请参考 [对象表单组件只读模式源码](https://github.com/steedos/steedos-widgets/blob/1.2/packages/@steedos-widgets/amis-lib/src/lib/converter/amis/index.js#L426)。  
+
+##### **刷新对象表单组件**
+
+以下示例演示点击按钮后，刷新名为`project`的对象表单组件。
 
 ```json
 {
   "type": "button",
-  "label": "广播事件-进入记录详情页",
+  "label": "刷新对象表单组件",
   "onEvent": {
     "click": {
       "actions": [
         {
           "actionType": "broadcast",
           "args": {
-            "eventName": "@data.changed.project"
-          },
-          "data": {
-            "objectName": "project",
-            "result":{
-              "data":{
-                "recorId": "xxx"
-              }
-            }
-          }
-        }
-      ]
-    }
-  }
-}
-```
-
-
-#### 对象详细页面
-[此组件的监听广播代码](https://github.com/steedos/steedos-widgets/blob/eab0501ff2624e9dc51b8a96dd6d8e3afb774c48/packages/@steedos-widgets/amis-lib/src/lib/converter/amis/index.js#L426)。  
-对象详细页面监听了`@data.change`事件，会执行以下行为：  
-- 刷新
-- 进入对象列表
-
-
-##### **刷新**
-
-在对象详细页面编辑后，会刷新页面，就是此行为实现的。
-
-以下示例演示了点击按钮后，广播事件响应的动作会执行刷新对象详细页面命令。
-
-* **data的参数：**
-  * objectName: `String`。对象Api名称。
-  * __deletedRecord: `Boolean`。是否为删除操作，若为真，则跳转到对象列表。选填。
-
-
-```json
-{
-  "type": "button",
-  "label": "广播事件-刷新纪录页",
-  "onEvent": {
-    "click": {
-      "actions": [
-        {
-          "actionType": "broadcast",
-          "args": {
-            "objectName": "project",
             "eventName": "@data.changed.project"
           },
           "data": {
@@ -205,27 +184,67 @@ description: 组件是微页面的基本元素，微页面中不但有非常丰�
 }
 ```
 
-##### **进入对象列表**
+只读模式下，对象表单组件会监听`@data.changed.project`事件，并根据传入的参数判断是否刷新对象表单组件。
 
-在对象详细页面删除记录后，会刷新页面，就是此行为实现的。
+要刷新对象表单组件，需在`data`中配置以下参数：
+- objectName: `String`。要触发广播事件对象的对象Api名称，即对象列表绑定的对象api名称。
+- __deletedRecord: `Boolean`。是否为删除操作，若为真，则跳转到对象列表。选填。
 
-以下示例演示了点击按钮后，广播事件响应的动作会进入对象列表。
+在华炎魔方记录详情页中编辑记录后，会刷新对象表单组件，通过在弹出的编辑表单中监听提交成功事件执行此动作来实现的。[对象表单组件源码](https://github.com/steedos/steedos-widgets/blob/1.2/packages/%40steedos-widgets/amis-lib/src/lib/converter/amis/index.js#L350)。
 
-* **data的参数：**
-  * objectName: `String`。对象Api名称。
-  * __deletedRecord: `Boolean`。是否为删除操作，若为真，则跳转到对象列表。选填。
+##### **跳转对象列表组件**
+
+以下示例演示点击按钮后，跳转到名为`project`到对象列表组件。
 
 ```json
 {
   "type": "button",
-  "label": "广播事件-进入对象列表",
+  "label": "跳转对象列表组件",
   "onEvent": {
     "click": {
       "actions": [
         {
           "actionType": "broadcast",
           "args": {
+            "eventName": "@data.changed.project"
+          },
+          "data": {
             "objectName": "project",
+            "__deletedRecord": true
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+对象表单组件会监听广播，根据传入的参数判断是否跳转对象列表组件。
+
+要跳转对象列表组件，需在`data`中配置以下参数：
+- objectName: `String`。要触发广播事件对象的对象Api名称，即对象列表绑定的对象api名称。
+- __deletedRecord: `Boolean`。是否为删除操作，若为真，则跳转到对象列表。选填。
+
+在华炎魔方记录详情页中删除记录后，会跳转对象列表页面组件，通过在弹出的编辑表单中监听提交成功事件执行此动作来实现的。
+详情请参考 [删除按钮源码](https://github.com/steedos/steedos-widgets/blob/1.2/packages/%40steedos-widgets/amis-lib/src/schema/standard_delete.amis.js#L44)。
+
+
+#### 相关列表组件
+
+相关列表监听了对象的`@data.change`事件，会刷新相关列表组件。详情请参考 [相关表组件源码](https://github.com/steedos/steedos-widgets/blob/1.2/packages/%40steedos-widgets/amis-lib/src/lib/converter/amis/fields/lookup.js#L419)。
+
+以下示例演示点击按钮后，刷新名为`project`的相关列表组件。
+
+```json
+{
+  "type": "button",
+  "label": "刷新相关列表",
+  "onEvent": {
+    "click": {
+      "actions": [
+        {
+          "actionType": "broadcast",
+          "args": {
             "eventName": "@data.changed.project"
           },
           "data": {
@@ -238,42 +257,12 @@ description: 组件是微页面的基本元素，微页面中不但有非常丰�
 }
 ```
 
+相关列表组件会监听`@data.changed.project`事件，并根据传入的参数判断是否刷新相关列表组件。
 
+要刷新相关列表组件，需在`data`中配置以下参数：
+  * objectName: `String`。要触发广播事件对象的对象Api名称，即对象列表绑定的对象api名称。
 
-#### 对象相关表列表
-
-[此组件的监听广播代码](https://github.com/steedos/steedos-widgets/blob/eab0501ff2624e9dc51b8a96dd6d8e3afb774c48/packages/@steedos-widgets/amis-lib/src/lib/objectsRelated.js#L161)。  
-
-对象相关表列表进行增、删、改后，会刷新页面，就是此行为实现的。
-
-以下示例演示了点击按钮后，广播事件响应的动作刷新对象相关表列表。
-
-* **data的参数：**
-  * objectName: `String`。对象Api名称。
-
-```json
-{
-  "type": "button",
-  "label": "广播事件-刷新相关表",
-  "onEvent": {
-    "click": {
-      "actions": [
-        {
-          "actionType": "broadcast",
-          "args": {
-            "objectName": "project",
-            "eventName": "@data.changed.project" // 触发广播后刷新project相关表
-          },
-          "data": {
-            "objectName": "project"
-          }
-        }
-      ]
-    }
-  }
-}
-```
-
+在华炎魔方对象相关列表执行增、删、改后，会刷新页面。[相关列表广播源码](https://github.com/steedos/steedos-widgets/blob/1.2/packages/@steedos-widgets/amis-lib/src/lib/objectsRelated.js#L161)。  
 
 
 ## 自定义组件
