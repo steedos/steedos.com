@@ -30,6 +30,24 @@ objectApiName属性可以被配置为像`space_users`或`accounts`这种固定�
 
 listName属性类似的可以配置为某个固定的列表视图值，也可以配置为某个变量值。
 
+## 选中行
+
+如果需要获取列表视图组件选中行，可以在 [amis自定义JS动作脚本](https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/event-action#%E8%87%AA%E5%AE%9A%E4%B9%89-js) 中运行以下代码：
+```js
+let scope = event.context.scoped;
+let result = scope.getComponentById("listview_project").control.props.data.selectedItems.toJSON();
+console.log('选中行：', result);
+/*
+  选中行：
+  [
+    {_id: '64545c09f5c344ec8377c6d7', name: 'test9090', project_code: 'XM-2023-0008', project_manager: '07a0f692-1380-485e-9e7c-5429efc28276', status: 'to_be_signed', …}
+    {_id: '64545bf8f5c344ec8377c6d5', name: 'testlll', project_code: 'XM-2023-0007', project_manager: '07a0f692-1380-485e-9e7c-5429efc28276', status: 'to_be_signed', …}
+  ]
+*/
+```
+
+在上述代码中，演示了获取名为`project`对象的列表视图组件选中行，`getComponentById`函数中传入的是列表视图组件的id，其规范为`listview_${objectApiName}`。
+
 ## 属性表
 
 该组件支持下面的配置。
