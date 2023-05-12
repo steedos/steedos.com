@@ -212,7 +212,7 @@ export const headerNav = {
     }
   ],
   pages: [
-    { name: '购买服务', href: '/services/pricing' },
+    { name: '购买服务', href: '/services/feature_pricing' },
     { name: '关于我们', href: '/company/about-us' },
   ],
 }
