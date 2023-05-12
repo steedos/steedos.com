@@ -109,7 +109,7 @@ export function Pricing() {
             </span>{' '}
           </h2>
           <p className="mt-4 text-lg text-slate-400">
-          华炎魔方社区版完全免费，不限制用户数、不限制时间。商业用户建议选择企业版，提供更多企业级功能插件及商业支持服务。
+          华炎魔方社区版完全免费，不限制用户数、不限制时间。
           </p>
         </div>
         <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
@@ -132,7 +132,7 @@ export function Pricing() {
           />
           <Plan
             featured
-            name="¥19,800/不限用户/不限时间"
+            name="¥9,800/不限用户/年"
             price="专业版"
             description="适用于商业用户的版本。"
             href="/register"
@@ -141,21 +141,22 @@ export function Pricing() {
               '业务数据编辑日志',
               '业务审批流程管理',
               '钉钉/企业微信集成',
-              '集团级组织角色管理',
+              '附件在线预览',
             ]}
           />
           <Plan
-            name="联系我们"
+            name="购买咨询"
             price="企业版"
             description="提供更多企业级功能插件及商业支持服务。"
             href="/company/about-us"
             features={[
-              '微服务应用',
-              'Node-red集成',
               '业务对象字段级加密',
-              'OIDC统一身份认证',
+              '集团级组织角色管理',
+              'ToolJet 微应用',
+              'n8n 业务流程编排',
+              '平台拓展插件',
               '解决方案模版库',
-              '应用市场源码',
+              'Steedos ID统一身份认证',
             ]}
           />
         </div>
