@@ -9,7 +9,6 @@ export const Footer = (props) => {
       Footer
     </h2>
     <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-
       <div className="py-8 grid grid-cols-4 gap-8 xl:col-span-2">
         {footerNav.map((section) => (
         <div key={section.name} className="col-span-2 sm:col-span-1">
@@ -32,7 +31,7 @@ export const Footer = (props) => {
       <div className="border-t border-gray-200 dark:border-gray-700 py-10 text-center">
         <p className="text-sm text-gray-500">&copy; 2022 华炎软件, 保留所有权利</p>
         <a className="text-xs text-gray-400 mt-2" href="https://beian.miit.gov.cn/#/Integrated/recordQuery">(沪ICP备09089283号-11)</a>
-        <img className="max-h-60 mx-auto pt-6" src="https://console.steedos.cn/api/files/images/YRgRK94fwndMxMcjM"/>
+        <img className="max-h-60 mx-auto pt-6" src="/img/QR_contact.png"/>
       </div>
     </div>
   </footer>

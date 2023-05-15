@@ -5,8 +5,6 @@
   { "source": "/platform/", "destination": "/", "permanent": true },
   { "source": "/platform/cases", "destination": "/customer-success-stories/dzug", "permanent": true },
   { "source": "/platform/try", "destination": "/docs/deploy/deploy-cloud", "permanent": true },
-  { "source": "/pricing/platform", "destination": "/platform/pricing", "permanent": true },
-  { "source": "/pricing/platform-cloud", "destination": "/platform/pricing", "permanent": true },
   { "source": "/customers", "destination": "/customer-success-stories", "permanent": true },
   { "source": "/help", "destination": "/docs/", "permanent": true },
   { "source": "/help/download", "destination": "/docs/user/getting-started", "permanent": true },
