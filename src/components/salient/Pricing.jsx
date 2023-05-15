@@ -46,7 +46,7 @@ function CheckIcon({ className }) {
   )
 }
 
-function Plan({ name, price, description, href, features, featured = false }) {
+function Plan({ name, price, description, href, hrefTitle, features, featured = false }) {
   return (
     <section
       className={clsx(
@@ -87,7 +87,7 @@ function Plan({ name, price, description, href, features, featured = false }) {
         className="mt-8"
         aria-label={`Get started with the ${name} plan for ${price}`}
       >
-        快速开始
+        {hrefTitle}
       </Button>
     </section>
   )
@@ -105,7 +105,7 @@ export function Pricing() {
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
             <span className="relative whitespace-nowrap">
               <SwirlyDoodle className="absolute top-1/2 left-0 h-[1em] w-full fill-blue-400" />
-              <span className="relative">报价</span>
+              <span className="relative">版本与报价</span>
             </span>{' '}
           </h2>
           <p className="mt-4 text-lg text-slate-400">
@@ -114,9 +114,10 @@ export function Pricing() {
         </div>
         <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
           <Plan
-            name="¥0"
+            name="完全免费"
             price="社区版"
-            href="/register"
+            href="/docs"
+            hrefTitle="快速开始"
             features={[
               '可视化搭建业务应用',
               '自动化业务流程	',
@@ -133,19 +134,22 @@ export function Pricing() {
             featured
             name="¥9,800/不限用户/年"
             price="专业版"
-            href="/register"
+            hrefTitle="申请试用"
+            href="/company/about-us"
             features={[
               '自定义品牌和Logo',
               '业务数据编辑日志',
               '业务审批流程管理',
-              '钉钉/企业微信集成',
+              '钉钉集成',
+              '企业微信集成',
               '附件在线预览',
             ]}
           />
           <Plan
-            name="购买咨询"
+            name="请联系我们获取报价"
             price="企业版"
             href="/company/about-us"
+            hrefTitle="预约演示"
             features={[
               '业务对象字段级加密',
               '集团级组织角色管理',

@@ -3,7 +3,7 @@ export const headerNav = {
   categories: [
     {
       id: 'platform',
-      name: '平台介绍',
+      name: '产品',
       featured: [
         {
           name: '华炎魔方赋能企业，打造数字驱动型组织',
@@ -21,13 +21,14 @@ export const headerNav = {
       sections: [
         {
           id: 'platform',
-          name: '低代码平台',
+          name: '华炎魔方',
           href: '/platform/overview',
           items: [
             { name: '什么是低代码？', href: '/platform/lowcode' },
             { name: '平台介绍', href: '/platform/overview' },
             { name: '技术架构', href: '/platform/architecture' },
             { name: '十大引擎', href: '/platform/features' },
+            { name: '报价', href: '/platform/pricing' },
           ],
         },
         {
@@ -35,77 +36,32 @@ export const headerNav = {
           name: '功能',
           href: '/videos',
           items: [
-            { name: '零代码开发', href: '/videos/lesson-object' },
-            { name: '公式引擎', href: '/videos/formula-calculates' },
+            { name: '数据建模', href: '/videos/lesson-object' },
             { name: '权限引擎', href: '/videos/authority_management' },
+            { name: '公式引擎', href: '/videos/formula-calculates' },
             { name: '规则引擎', href: '/videos/workflow_rules' },
             { name: '批准过程', href: '/videos/admin-contracts' },
-            { name: '元数据引擎', href: '/videos/lesson-metadata' },
-            { name: '审批王', href: '/videos/admin-contracts' },
+            { name: '元数据同步', href: '/videos/lesson-metadata' },
             { name: 'DevOps', href: '/videos/live-course-devops' },
           ],
         },
         {
-          id: 'cloud',
-          name: '应用市场',
-          href: '/collections/steedos-packages',
-          items: [
-            { name: '项目管理', href: '/products/project' },
-            { name: '合同管理', href: '/products/contract' },
-            { name: '客户管理', href: '/products/crm' },
-            { name: '销售订单', href: '/products/order' },
-            { name: '采购管理', href: '/products/purchase' },
-            { name: '业财管理', href: '/products/finance' },
-            { name: '资产管理', href: '/products/asset' },
-            { name: '审批中心', href: '/products/workflow' },
-            { name: '协同办公', href: '/products/oa' },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'solution',
-      name: '解决方案',
-      href: '/collections/steedos-packages',
-      featured: [
-        {
-          name: '项目管理解决方案',
-          href: '/solutions/project',
-          imageSrc: 'https://console.steedos.cn/api/files/images/AnNW9yDQZmTgWAAo7',
-          imageAlt:'项目管理解决方案',
-        },
-        {
-          name: 'PC-MES生产管理解决方案',
-          href: '/solutions/pcmes',
-          imageSrc: 'https://console.steedos.cn/api/files/images/raAaARPycouLJwFd2',
-          imageAlt: 'PC-MES生产管理解决方案',
-        },
-      ],
-      sections: [
-        {
-          id: 'platform',
-          name: '场景解决方案',
+          id: 'solutions',
+          name: '解决方案',
           href: '/solutions',
           items: [
             { name: '项目管理解决方案', href: '/solutions/project' },
             { name: '合同管理解决方案', href: '/solutions/contract' },
             { name: '在线商城解决方案', href: '/solutions/ecommerce' },
             { name: 'PC-MES生产管理解决方案', href: '/solutions/pcmes' },
-          ],
-        },
-        {
-          id: 'cloud',
-          name: '行业解决方案',
-          href: '/solutions',
-          items: [
             { name: '行业PaaS平台解决方案', href: '/solutions/paas' },
           ],
-        }
+        },
       ],
     },
     {
       id: 'customer-success-stories',
-      name: '客户案例',
+      name: '客户',
       featured: [
         {
           name: '华炎魔方助力招商银行探索产品低代码化转型',
@@ -147,12 +103,24 @@ export const headerNav = {
             { name: '梅斯医学SCRM销售管理', href: '/customer-success-stories/scrm' },
             { name: '梅斯医学CTMS临床研究管理', href: '/customer-success-stories/ctms' },
           ],
-        }
+        },
+        {
+          id: 'about',
+          name: '公司',
+          href: '/company/about-us',
+          items: [
+            { name: '关于我们', href: '/company/about-us' },
+            { name: '客户案例', href: '/customer-success-stories' },
+            { name: '解决方案', href: '/solutions' },
+            { name: '服务', href: '/collections/services' },
+            { name: '联系我们', href: '/company/contact-us' },
+          ],
+        },
       ],
     },
     {
       id: 'docs&videos',
-      name: '文档视频',
+      name: '文档',
       featured: [
         {
           name: '华炎魔方项目解决方案线上分享会',
@@ -209,10 +177,10 @@ export const headerNav = {
           ],
         }
       ],
-    }
+    },
   ],
   pages: [
-    { name: '购买服务', href: '/services/feature_pricing' },
-    { name: '关于我们', href: '/company/about-us' },
+    { name: '报价', href: '/platform/pricing/' },
+    { name: '视频', href: '/videos/' },
   ],
 }
