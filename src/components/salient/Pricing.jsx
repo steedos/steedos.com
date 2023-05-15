@@ -116,7 +116,6 @@ export function Pricing() {
           <Plan
             name="¥0"
             price="社区版"
-            description="免费使用，无任何限制。"
             href="/register"
             features={[
               '可视化搭建业务应用',
@@ -134,7 +133,6 @@ export function Pricing() {
             featured
             name="¥9,800/不限用户/年"
             price="专业版"
-            description="适用于商业用户的版本。"
             href="/register"
             features={[
               '自定义品牌和Logo',
@@ -147,7 +145,6 @@ export function Pricing() {
           <Plan
             name="购买咨询"
             price="企业版"
-            description="提供更多企业级功能插件及商业支持服务。"
             href="/company/about-us"
             features={[
               '业务对象字段级加密',
