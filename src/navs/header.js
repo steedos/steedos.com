@@ -39,7 +39,6 @@ export const headerNav = {
             { name: '数据建模', href: '/videos/lesson-object' },
             { name: '权限引擎', href: '/videos/authority_management' },
             { name: '公式引擎', href: '/videos/formula-calculates' },
-            { name: '规则引擎', href: '/videos/workflow_rules' },
             { name: '批准过程', href: '/videos/admin-contracts' },
             { name: '元数据同步', href: '/videos/lesson-metadata' },
             { name: 'DevOps', href: '/videos/live-course-devops' },
@@ -53,10 +52,41 @@ export const headerNav = {
             { name: '项目管理解决方案', href: '/solutions/project' },
             { name: '合同管理解决方案', href: '/solutions/contract' },
             { name: '在线商城解决方案', href: '/solutions/ecommerce' },
-            { name: 'PC-MES生产管理解决方案', href: '/solutions/pcmes' },
             { name: '行业PaaS平台解决方案', href: '/solutions/paas' },
+            { name: 'PC-MES生产管理解决方案', href: '/solutions/pcmes' },
           ],
         },
+        {
+          id: 'docs',
+          name: '配置文档',
+          href: '/docs',
+          items: [
+            { name: '业务建模', href: '/docs/admin/object' },
+            { name: '用户向导', href: '/docs/user/getting-started' },
+            { name: '管理员向导', href: '/docs/admin/getting-started' },
+            { name: '微页面设计', href: '/docs/amis/getting-started' },
+          ],
+        },
+        {
+          id: 'docs',
+          name: '开发文档',
+          href: '/docs',
+          items: [
+            { name: '安装部署', href: '/docs/deploy/getting-started' },
+            { name: '微服务开发', href: '/docs/developer/service' },
+            { name: '元数据', href: '/docs/protocol/metadata-object' },
+            { name: '平台API', href: '/docs/developer/api-validate' },
+          ],
+        },
+        {
+          id: 'videos',
+          name: '视频',
+          href: '/videos',
+          items: [
+            { name: '培训视频', href: '/videos' },
+            { name: '项目解决方案线上分享会', href: '/videos/course-project' },
+          ],
+        }
       ],
     },
     {
