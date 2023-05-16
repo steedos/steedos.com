@@ -1,7 +1,7 @@
 export const footerNav = [
   {
     id: 'platform',
-    name: '低代码平台',
+    name: '产品',
     href: '/platform/overview',
     items: [
       { name: '什么是低代码？', href: '/platform/lowcode' },
@@ -17,11 +17,23 @@ export const footerNav = [
     name: '解决方案',
     href: '/solutions',
     items: [
-      { name: '项目管理解决方案', href: '/solutions/project' },
-      { name: '合同管理解决方案', href: '/solutions/contract' },
-      { name: '在线商城解决方案', href: '/solutions/ecommerce' },
-      { name: '行业PaaS平台解决方案', href: '/solutions/paas' },
-      { name: 'PC-MES生产管理解决方案', href: '/solutions/pcmes' },
+      { name: '项目管理', href: '/solutions/project' },
+      { name: '合同管理', href: '/solutions/contract' },
+      { name: '在线商城', href: '/solutions/ecommerce' },
+      { name: '行业PaaS平台', href: '/solutions/paas' },
+      { name: 'PC-MES生产管理', href: '/solutions/pcmes' },
+    ],
+  },
+  {
+    id: 'customer-cases',
+    name: '客户',
+    href: '/customer-success-stories/',
+    items: [
+      { name: '招商银行', href: '/customer-success-stories/cmbchina-poc' },
+      { name: '清华大学', href: '/customer-success-stories/tsinghua' },
+      { name: '建华建材', href: '/customer-success-stories/jianhuabm' },
+      { name: '大众公用', href: '/customer-success-stories/dzug' },
+      { name: '河北港口集团', href: '/customer-success-stories/porthebei' },
     ],
   },
   {
@@ -34,18 +46,6 @@ export const footerNav = [
       { name: '解决方案', href: '/solutions' },
       { name: '服务', href: '/collections/services' },
       { name: '联系我们', href: '/company/contact-us' },
-    ],
-  },
-  {
-    id: 'docs',
-    name: '文档',
-    href: '/docs',
-    items: [
-      { name: '培训视频', href: '/videos' },
-      { name: '安装部署', href: '/docs/deploy' },
-      { name: '用户向导', href: '/docs/user' },
-      { name: '管理员向导', href: '/docs/admin' },
-      { name: '开发人员向导', href: '/docs/developer' },
     ],
   },
 ]
