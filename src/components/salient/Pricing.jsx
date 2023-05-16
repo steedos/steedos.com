@@ -135,7 +135,7 @@ export function Pricing() {
             name="¥9,800/不限用户/年"
             price="专业版"
             hrefTitle="申请试用"
-            href="/company/about-us"
+            href="/company/contact-us"
             features={[
               '自定义品牌和Logo',
               '业务数据编辑日志',
@@ -148,7 +148,7 @@ export function Pricing() {
           <Plan
             name="请联系我们获取报价"
             price="企业版"
-            href="/company/about-us"
+            href="/company/contact-us"
             hrefTitle="预约演示"
             features={[
               '业务对象字段级加密',

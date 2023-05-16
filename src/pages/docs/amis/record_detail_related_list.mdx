@@ -1,15 +1,15 @@
 ---
-title: Amis组件 相关列表
-description: 华炎魔方微页面引擎，内置相关列表组件 RecordDetailRelatedList，借助amis渲染器，可以帮助开发人员快速生成一个功能完善的相关列表视图组件。
+title: Amis组件 相关表
+description: 华炎魔方微页面引擎，内置相关表组件 RecordDetailRelatedList，借助amis渲染器，可以帮助开发人员快速生成一个功能完善的相关表视图组件。
 ---
 
-这是一个华炎魔方相关列表视图组件，一般用于在记录详情界面显示相关子表列表，它把对象相关表记录显示为表格，同时包含了对象记录的增删改查以及其他操作按钮功能。
+这是一个华炎魔方相关表视图组件，一般用于在记录详情界面显示相关子表列表，它把对象相关表记录显示为表格，同时包含了对象记录的增删改查以及其他操作按钮功能。
 
 ## 基本用法
 
-最基本的用法是配置组件的“父级对象”、“父级记录”及“相关列表对象”属性，就可以显示出某条对象记录的相关列表界面效果。
+最基本的用法是配置组件的“父级对象”、“父级记录”及“相关表对象”属性，就可以显示出某条对象记录的相关表界面效果。
 
-如下所示我们配置相关列表的“父级对象”属性为当前对象，“父级记录”属性为当前记录，相关列表属性配置为“联系人”：
+如下所示我们配置相关表的“父级对象”属性为当前对象，“父级记录”属性为当前记录，相关表属性配置为“联系人”：
 
 ```json
 {
@@ -23,7 +23,7 @@ description: 华炎魔方微页面引擎，内置相关列表组件 RecordDetail
     },
   }
 ```
-如果我们按照教程 [Amis微页面 - 记录页面](/docs/amis/page-type#%E8%AE%B0%E5%BD%95%E9%A1%B5%E9%9D%A2) 新建一个指向业务伙伴 accounts 对象的微页面，并拖动一个相关列表组件到画布，可以看到该组件生成了类似上面的amis Schema配置。
+如果我们按照教程 [Amis微页面 - 记录页面](/docs/amis/page-type#%E8%AE%B0%E5%BD%95%E9%A1%B5%E9%9D%A2) 新建一个指向业务伙伴 accounts 对象的微页面，并拖动一个相关表组件到画布，可以看到该组件生成了类似上面的amis Schema配置。
 
 发布后，我们就可以在业务伙伴对象的记录详细页面看到当前记录关联的联系人子表列表界面效果。
 
@@ -39,7 +39,7 @@ recordId属性类似的可以配置为某个具体的记录id值，但是一般�
 |----|----|----|----|
 | objectApiName | string | 无 | 父级对象api名称 |
 | recordId | string | 无 | 父级记录ID值 |
-| relatedObjectApiName | string | 无 | 相关列表对象api名称 |
+| relatedObjectApiName | string | 无 | 相关表对象api名称 |
 | columns | [object] | 无 | 要显示的对象字段 |
 | filters | [string] | 无 | 过滤条件 |
 | sortField | string | 无 | 排序字段 |
@@ -58,3 +58,43 @@ recordId属性类似的可以配置为某个具体的记录id值，但是一般�
 |----|----|----|----|
 | field | string | 无 | 字段api名称 |
 
+
+## 动作表
+
+所有的相关表组件都监听了对象的[`@data.change`事件](/docs/amis/component#@data.change事件)，只要触发对象的`@data.change`事件，就能间接调用该组件的以下动作： 
+- [刷新](#刷新)
+
+详情请参考 [相关表组件源码](https://github.com/steedos/steedos-widgets/blob/1.2/packages/%40steedos-widgets/amis-lib/src/lib/objectsRelated.js#L162)。
+
+### 刷新
+
+以下示例演示点击按钮后，刷新名为`project`的相关表组件。
+
+```json
+{
+  "type": "button",
+  "label": "刷新相关表",
+  "onEvent": {
+    "click": {
+      "actions": [
+        {
+          "actionType": "broadcast",
+          "args": {
+            "eventName": "@data.changed.project"
+          },
+          "data": {
+            "objectName": "project"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+点击上述示例中的按钮后会触发绑定`project`对象的相关表组件的`@data.changed`事件，在该事件中，会根据传入的参数判断是否刷新相关表组件。
+
+要刷新相关表组件，需在`data`中配置以下参数：
+- objectName: `String`。要触发广播事件对象的对象Api名称，即列表视图绑定的对象api名称。
+
+在华炎魔方对象相关表中执行增、删、改后，会刷新相关表组件，就是因为触发了页面中相关表组件的`@data.change`事件，在`@data.change`事件中会执行刷新动作。

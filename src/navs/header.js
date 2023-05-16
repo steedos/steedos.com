@@ -35,7 +35,7 @@ export const headerNav = {
         },
         {
           id: 'features',
-          name: '功能',
+          name: '平台功能',
           href: '/videos',
           items: [
             { name: '数据建模', href: '/videos/lesson-object' },
@@ -120,10 +120,11 @@ export const headerNav = {
         },
       ],
     },
+   
   ],
   pages: [
-    { name: '文档', href: '/docs' },
-    { name: '报价', href: '/pricing/platform' },
+    { name: '文档', href: '/docs/' },
     { name: '视频', href: '/videos/' },
+    { name: '联系我们', href: '/company/contact-us' },
   ],
 }

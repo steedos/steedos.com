@@ -12,10 +12,84 @@ description: 组件是微页面的基本元素，微页面中不但有非常丰�
 我们为 amis 扩展了以下组件用于快速实现华炎魔方各种界面能力。
 
 - [对象表单 ObjectForm](/docs/amis/object_form)
-- [对象列表 ObjectListView](/docs/amis/object_listview)
+- [列表视图 ObjectListView](/docs/amis/object_listview)
 - [对象表格 ObjectTable](/docs/amis/object_table)
 - [标题面板 RecordDetailHeader](/docs/amis/record_detail_header)
-- [相关列表 RecordDetailRelatedList](/docs/amis/record_detail_related_list)
+- [相关表 RecordDetailRelatedList](/docs/amis/record_detail_related_list)
+
+
+## @data.change事件
+
+在amis广播事件可以自定义派发的事件名称`eventName`，其他渲染器可以监听自定义事件并配置响应动作。[了解更多广播事件](https://aisuda.bce.baidu.com/amis/zh-CN/docs/concepts/event-action)。
+
+华炎魔方基于amis广播事件，实现了基于对象的`@data.change`事件，只需要在组件中按规范监听相关对象的`@data.change`事件，可以很方便的实现刷新**列表视图**和**表单数据**功能。 
+
+
+### 名称规范
+
+事件名称规范：`@data.changed.对象的API名称`，表示触发某个对象的`@data.change`事件。
+
+### 触发
+
+要触发对象的`@data.change`事件，`eventName`按上述名称规范，并配置`actionType: 'broadcast'`。  
+
+以下示例演示了点击按钮时触发一个名为`instance_tasks`的对象的`@data.change`事件。`actions.data`中的数据会传递给目标事件，可通过`event.data.xxx`直接获取。
+
+```json
+  {
+    "type": "button",
+    "label": "广播一下",
+    "onEvent": {
+      "click": {
+        "actions": [
+          {
+            "actionType": "broadcast",
+            "args": {
+              "eventName": "@data.changed.instance_tasks"
+            },
+            "data":{
+              "objectName": "instance_tasks"
+            }
+          }
+        ]
+      }
+    }
+  }
+```
+
+### 监听
+
+要监听`@data.change`事件，事件名按上述名称规范即可。
+
+以下示例演示了一个监听名为`instance_tasks`的对象的`@data.change`事件。当事件触发时会执行相关动作，传递的数据通过`event.data.xxx`获取。
+
+```json
+  "onEvent": {
+    "@data.changed.instance_tasks": {
+      "actions": [
+        {
+          "actionType": "toast",
+          "args": {
+            "msgType": "info",
+            "msg": "传递的数据：${event.data.objectName}",
+            "position": "top-center"
+          }
+        }
+      ]
+    }
+  }
+```
+
+### 应用
+
+华炎魔方很多内置组件都监听了对象的`@data.change`事件，基于amis的广播事件特性可以很方便的调用这些组件的功能和行为，比如列表视图组件的刷新功能。 
+
+
+以下组件通过监听对象的`@data.change`事件实现了组件的各种动作能力：
+- [列表视图组件](/docs/amis/object_listview#刷新)
+- [对象表单组件](/docs/amis/object_form#刷新对象表单组件)
+- [相关表组件](/docs/amis/record_detail_related_list#刷新)
+
 
 ## 自定义组件
 
