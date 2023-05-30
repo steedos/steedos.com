@@ -223,6 +223,14 @@ export default function PricingPage(props) {
 | 公文管理 |    |    | Y |
 | OKR |    |    | Y |
 
+### 服务支持
+
+|服务项目| 社区版 | 专业版 | 企业版 |
+|----|----|----|----|
+|社区支持| Y | Y | Y |
+|运维服务（可选）|   | Y | Y |
+|开发者支持服务（可选）|   | Y | Y |
+
       `}>
           </Markdown>
         </div>
