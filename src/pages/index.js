@@ -28,7 +28,7 @@ import { Testimonials as Testimonials2} from '@/components/salient/Testimonials'
 
 export async function getStaticProps({params}) {
 
-  
+
   const slug = 'steedos-packages'
   const collection = await getCollectionProducts(slug)
 
@@ -49,16 +49,16 @@ export default function Home(props) {
   return (
     <>
       <Head>
-        <title>华炎魔方低代码平台 - 赋能企业，打造数字驱动型组织</title>
+        <title>华炎魔方低代码PaaS平台 - 赋能企业，打造数字驱动型组织</title>
       </Head>
-  
+
       <Hero />
       <PrimaryFeatures />
       <SecondaryFeatures />
       {/* <Features /> */}
 
-        {/* 
-        
+        {/*
+
         <Testimonials2 />
         <Faqs /> */}
       <CallToAction />
@@ -67,7 +67,7 @@ export default function Home(props) {
 
             <div className="relative max-w-7xl mx-auto px-4 focus:outline-none sm:px-3 md:px-5">
               <div className="py-24 text-center">
-                
+
                 <h2 className="text-slate-900 text-4xl tracking-tight font-extrabold sm:text-5xl dark:text-white">
                   开源开放，携手伙伴，打造海量解决方案
                 </h2>
@@ -110,7 +110,7 @@ export default function Home(props) {
               </div>
             </div>
       </div>
-      
+
       <Pricing />
       {/* <Footer /> */}
     </>
