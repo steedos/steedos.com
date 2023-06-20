@@ -128,6 +128,7 @@ export function Pricing() {
               '支持移动端同步使用',
               '自定义业务数据大屏',
               '公有云/私有化本地部署',
+              'Github平台Issue支持',
             ]}
           />
           <Plan
@@ -143,6 +144,8 @@ export function Pricing() {
               '钉钉集成',
               '企业微信集成',
               '附件在线预览',
+              'Node-Red可视化开发',
+              '客户支持服务群',
             ]}
           />
           <Plan
@@ -158,6 +161,8 @@ export function Pricing() {
               '平台拓展插件',
               '解决方案模版库',
               'Steedos ID统一身份认证',
+              'Metabase仪表盘',
+              '技术支持服务群'
             ]}
           />
         </div>
