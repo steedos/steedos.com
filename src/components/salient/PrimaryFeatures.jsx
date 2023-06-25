@@ -10,7 +10,8 @@ import screenshotObjectFields from '@/images/screenshots/object-fields.png'
 import screenshotPageDesigner from '@/images/screenshots/page-designer.png'
 import screenshotFlowDesigner from '@/images/screenshots/flow-designer.png'
 import screenshotExpenses from '@/images/screenshots/expenses.png'
-import screenshotReporting from '@/images/screenshots/report-designer.png'
+import screenshotDashboard from '@/images/screenshots/dashboard.png'
+import screenshotNodered from '@/images/screenshots/node-red.png'
 import screenshotVatReturns from '@/images/screenshots/vat-returns.png'
 
 const features = [
@@ -33,16 +34,22 @@ const features = [
     image: screenshotObjectFields,
   },
   {
+    title: '可视化仪表盘设计',
+    description:
+      '轻松创建和共享交互式仪表板，帮助用户快速了解数据趋势、关键指标和业务运营状况。',
+    image: screenshotDashboard,
+  },
+  {
     title: '可视化流程设计',
     description:
       "内置流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务流程。",
     image: screenshotFlowDesigner,
   },
   {
-    title: '可视化报表设计',
+    title: '可视化开发', 
     description:
-      '使用可视化工具设计像素级报表，例如报价单、发货单等业务单据，并可嵌入二维码、条形码。',
-    image: screenshotReporting,
+      '提供基于流程的编程工具，可以让用户轻松地将物联网设备、API和在线服务连接在一起。',
+    image: screenshotNodered,
   },
 ]
 

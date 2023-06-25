@@ -15,7 +15,7 @@ export function Hero() {
   return (
     <Container className="pt-20 pb-16 text-center lg:pt-32">
       <h1 className="mx-auto max-w-4xl font-display text-4xl font-medium tracking-tight text-slate-900 sm:text-6xl leading-tight sm:leading-tight	dark:text-slate-200">
-      开源 {' '}
+      智能 {' '}
         <span className="relative whitespace-nowrap text-blue-600">
           <svg
             aria-hidden="true"
@@ -27,11 +27,11 @@ export function Hero() {
           </svg>
           <span className="relative">低代码 PaaS 平台</span>
         </span>{' '}<br/>
-        赋能企业，加速数字化转型
+        赋能企业，打造 AI 驱动型组织
 
       </h1>
       <p className="mt-6 text-lg text-slate-600 text-center max-w-3xl mx-auto dark:text-slate-400">
-      华炎魔方低代码PaaS平台是一款基于 Salesforce Platform 的开源替代方案，旨在为企业提供高效、灵活、易于使用的低代码开发平台。华炎魔方可以支持多种企业应用场景，包括但不限于CRM、ERP、OA、BI、IoT、大数据等。
+      华炎魔方低代码PaaS平台是一款基于 Salesforce Platform 的开源替代方案，旨在为企业提供高效、灵活、智能的低代码开发平台。华炎魔方可以支持多种企业应用场景，包括但不限于CRM、ERP、OA、BI、IoT、大数据等。
       </p>
       {/* <div className="mt-10 flex justify-center gap-x-6">
         <Button href="/register">Get 6 months free</Button>
