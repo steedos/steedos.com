@@ -31,7 +31,7 @@ export function Hero() {
 
       </h1>
       <p className="mt-6 text-lg text-slate-600 text-center max-w-3xl mx-auto dark:text-slate-400">
-      华炎魔方是领先的低代码解决方案，不仅允许没有编程背景的用户快速创建应用，还为有经验的开发人员提供了强大的工具和框架，使他们能够进行更复杂的自定义和集成。
+      华炎魔方提供了超越传统无代码平台的深度定制和开发能力，不仅允许没有编程背景的用户快速创建应用，还为有经验的开发人员提供了强大的工具和框架，使他们能够进行更复杂的自定义和集成。
       </p>
       {/* <div className="mt-10 flex justify-center gap-x-6">
         <Button href="/register">Get 6 months free</Button>
