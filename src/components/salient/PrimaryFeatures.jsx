@@ -88,7 +88,7 @@ export function PrimaryFeatures() {
       <Container className="relative">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">
-          可视化，更高效的开发方式
+          点亮创意，点燃变革，只需几个点击
           </h2>
           <p className="mt-6 text-lg tracking-tight text-blue-100">
           通过直观的拖放界面、预构建的模板和各种自动化工具，用户可以加速应用开发过程，提高工作效率，从而更快地推动业务创新和转型。此外，华炎魔方的可视化界面也大大降低了应用开发的门槛，使得无论是 IT 专业人员还是业务人员都能参与到应用的构建过程中。
