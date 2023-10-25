@@ -16,10 +16,10 @@ export default function PricingPage(props) {
       <Head>
         <title>版本与报价 - 华炎魔方低代码平台</title>
       </Head>
-  
-      
+
+
       <Pricing />
-      
+
       <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
         <div className="relative max-w-7xl mx-auto px-4 focus:outline-none sm:px-3 md:px-5">
           <Markdown body={`
@@ -41,10 +41,9 @@ export default function PricingPage(props) {
 | 手机客户端 | Y | Y | Y |
 | 企业微信集成 |    | Y | Y |
 | 钉钉集成 |    | Y | Y |
-| 附件在线预览 |    | Y | Y |
 | 自定义品牌 |    | Y | Y |
 | 记录修改日志 |    | Y | Y |
-| 用户登录日志 |    | Y | Y |
+| 安全审计日志 |    |  | Y |
 
 ### 自定义业务应用
 
@@ -164,29 +163,6 @@ export default function PricingPage(props) {
 | 二级用户管理员 |    |    | Y |
 | 二级流程管理员 |    |    | Y |
 
-### ToolJet 微应用
-
-| 功能 | 社区版 | 专业版 | 企业版 |
-|----|----|----|----|
-| 可视化定义数据源 |    |    | Y |
-| 可视化定义查询 |    |    | Y |
-| 可视化定义微页面 |    |    | Y |
-| 可视化定义微应用 |    |    | Y |
-| ToolJet 中调用 Amis 控件 |    |    | Y |
-| Amis 中执行 ToolJet 查询 |    |    | Y |
-| 多人协作开发 |    |    | Y |
-| 微应用模版库 |    |    | Y |
-
-### n8n 业务流程编排
-
-| 功能 | 社区版 | 专业版 | 企业版 |
-|----|----|----|----|
-| 对象记录修改时触发流程 |    |    | Y |
-| 对象记录创建节点 |    |    | Y |
-| 对象记录修改节点 |    |    | Y |
-| 对象记录查询节点 |    |    | Y |
-| 对象记录删除节点 |    |    | Y |
-
 ### Steedos ID 统一身份认证
 
 | 功能 | 社区版 | 专业版 | 企业版 |
@@ -196,7 +172,7 @@ export default function PricingPage(props) {
 | SAML 单点登录接口 |    |    | Y |
 | OIDC 单点登录接口 |    |    | Y |
 
-### Metabase 仪表盘
+### 可视化数据分析
 
 | 功能 | 社区版 | 专业版 | 企业版 |
 |----|----|----|----|
@@ -211,15 +187,14 @@ export default function PricingPage(props) {
 |----|----|----|----|
 | MongoDB BI Connector插件 |    |    | Y |
 | MongoDB 字段级加密插件 |    |    | Y |
-| Stimulsoft 像素级报表插件 |    |    | Y |
 
 ### 解决方案模版库
 
 | 功能 | 社区版 | 专业版 | 企业版 |
 |----|----|----|----|
-| 项目任务管理 | Y | Y | Y |
+| 项目里程碑 | Y | Y | Y |
+| 合同管理 |  Y |  Y | Y |
 | CRM |    |    | Y |
-| 合同管理 |    |    | Y |
 | 财务管理 |    |    | Y |
 | 费用管理 |    |    | Y |
 | 采购管理 |    |    | Y |
