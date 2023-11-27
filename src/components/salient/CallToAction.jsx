@@ -26,7 +26,7 @@ export function CallToAction() {
           <p className="mt-4 text-lg tracking-tight text-white">
           与其他低代码或无代码平台不同，Steedos DX优先考虑版本控制和持续集成/持续部署（CI/CD），使得开发人员能够在一个更加结构化和版本化的环境中协作。通过利用源码作为真理的单一来源，它确保了更高的代码质量、更好的团队协作和更快的发布周期。
           </p>
-          <Button href="https://docs.steedos.com/zh-CN/developer" color="white" className="mt-10">
+          <Button href="https://docs.steedos.cn/zh-CN/developer" color="white" className="mt-10">
             了解更多
           </Button>
         </div>
