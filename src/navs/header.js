@@ -123,7 +123,7 @@ export const headerNav = {
 
   ],
   pages: [
-    { name: '文档', href: 'https://docs.steedos.com/zh-CN/', target: "steedos-docs" },
+    { name: '文档', href: 'https://docs.steedos.cn/', target: "steedos-docs" },
     { name: '视频', href: '/videos/' },
     { name: '联系我们', href: '/company/contact-us' },
   ],
