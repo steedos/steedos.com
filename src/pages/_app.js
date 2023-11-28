@@ -54,6 +54,10 @@ export default function App({
     loaded: (posthog) => {
       window.posthog = posthog;
       window.posthog.group('space', 'steedos.com');
+      window.posthog.people.set({
+        spaceId: 'steedos.com',
+        spaceName: 'steedos.com',
+      });
       posthog.opt_in_capturing()
     },
   })  
