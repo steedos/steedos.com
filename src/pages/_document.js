@@ -12,6 +12,19 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en" className="[--scroll-mt:9.875rem] lg:[--scroll-mt:6.3125rem]">
         <Head>
+          {/* Google Analytics 脚本 */}
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVSWFLK780"></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'G-XVSWFLK780');
+              `,
+            }}
+          />
           <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
