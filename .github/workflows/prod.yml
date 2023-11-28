@@ -61,6 +61,11 @@ jobs:
       - name: Upload `.serverless` state to S3
         run: aws s3 sync .serverless s3://steedos-serverless-state-bucket/steedos.com.cn/prod/.serverless --delete  --region ap-east-1
 
+      - name: Invalidate CloudFront distribution
+        run: |
+          aws cloudfront create-invalidation --distribution-id E3C1FK9GG3TIPV --paths "/*"
+
+      
 
   # build-algolia:
   #   runs-on: ubuntu-latest
