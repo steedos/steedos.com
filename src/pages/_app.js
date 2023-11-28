@@ -53,10 +53,7 @@ export default function App({
     api_host: 'https://posthog.steedos.cn',
     loaded: (posthog) => {
       window.posthog = posthog;
-      window.posthog.people.set({
-        spaceId: 'steedos.com',
-        spaceName: 'steedos.com',
-      });
+      window.posthog.group('space', 'steedos.com');
       posthog.opt_in_capturing()
     },
   })  
