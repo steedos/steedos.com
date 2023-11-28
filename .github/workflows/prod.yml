@@ -62,17 +62,17 @@ jobs:
         run: aws s3 sync .serverless s3://steedos-serverless-state-bucket/steedos.com.cn/prod/.serverless --delete  --region ap-east-1
 
 
-  build-algolia:
-    runs-on: ubuntu-latest
-    needs: deploy-staging
-    env:
-      ALGOLIA_APP_ID: TL0K9Y2YIH
-      ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build algolia
-        uses: darrenjennings/algolia-docsearch-action@master
-        with:
-          algolia_application_id: 'TL0K9Y2YIH'
-          algolia_api_key: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
-          file: 'docsearch-config.json'
+  # build-algolia:
+  #   runs-on: ubuntu-latest
+  #   needs: deploy-staging
+  #   env:
+  #     ALGOLIA_APP_ID: TL0K9Y2YIH
+  #     ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Build algolia
+  #       uses: darrenjennings/algolia-docsearch-action@master
+  #       with:
+  #         algolia_application_id: 'TL0K9Y2YIH'
+  #         algolia_api_key: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
+  #         file: 'docsearch-config.json'
