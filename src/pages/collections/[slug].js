@@ -6,7 +6,6 @@ import { Markdown } from '@/components/Markdown'
 
 import { getCollectionProducts, getCollections } from '@/lib/product';
 
-import { getDefaultPrice } from '@/lib/product.client';
 
 export async function getStaticProps({params}) {
   const { slug } = params
@@ -83,7 +82,7 @@ export default class Collection extends React.Component {
                       <p className="text-sm text-gray-500">{product.description}</p>
                       <div className="flex-1 flex items-center justify-between">
                         <p className="text-sm italic text-gray-500"><ReviewStars rating={product.rating}/></p>
-                        <p className="text-base font-medium text-gray-900"><Price price={getDefaultPrice(product)}></Price></p>
+                        {/* <p className="text-base font-medium text-gray-900"><Price price={getDefaultPrice(product)}></Price></p> */}
                       </div>
                     </div>
                   </div>
