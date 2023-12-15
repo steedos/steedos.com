@@ -1,7 +1,19 @@
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
-import { getProductVariants } from '@/lib/product.client'
-import { isFunction, map, each, find } from 'lodash'
+import { isFunction, map, each, groupBy, keys } from 'lodash'
+
+
+export function getProductVariants(product){
+    const variants = [];
+    const { product_variants } = product;
+    each(['option1','option2','option3'], (key)=>{
+        const optionItem = product[key];
+        if(optionItem){
+            variants.push({key: key, name: optionItem, options: keys(groupBy(product_variants, key))})
+        }
+    })
+    return variants;
+}
 
 export default function VariantRadios({ product, onChange, productVariant }) {
     const variants = getProductVariants(product);

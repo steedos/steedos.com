@@ -11,7 +11,6 @@ import {getSite, getSiteByDomain, getSiteDomains} from '@/lib/site'
 import { getCollectionProducts, getCollections } from '@/lib/product';
 import ReviewStars from '@/components/product/ReviewStars'
 import Price from '@/components/product/Price'
-import { getDefaultPrice } from '@/lib/product.client';
 import clsx from 'clsx'
 import styles from './index.module.css'
 
@@ -101,7 +100,6 @@ export default function Home(props) {
                       <p className="text-sm text-gray-500">{product.description}</p>
                       <div className="flex-1 flex items-center justify-between">
                         <p className="text-sm italic text-gray-500"><ReviewStars rating={product.rating}/></p>
-                        <p className="text-base font-medium text-gray-900"><Price price={getDefaultPrice(product)}></Price></p>
                       </div>
                     </div>
                   </div>

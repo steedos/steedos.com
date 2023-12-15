@@ -12,9 +12,8 @@ import twitterLargeCard from '@/img/twitter-large-card.jpg'
 import { ResizeObserver } from '@juggle/resize-observer'
 import 'intersection-observer'
 import {has, isArray} from 'lodash';
-import { saveAuthInfo } from '@/lib/auth.client';
 import { SearchProvider } from '@/components/Search'
-import { SessionProvider } from "next-auth/react"
+// import { SessionProvider } from "next-auth/react"
 import { usePostHog } from 'next-use-posthog'
 // import { getSite } from '@/lib/site';
 
@@ -93,7 +92,7 @@ export default function App({
   )?.[0]
 
   return (
-    <SessionProvider session={session}>
+    // <SessionProvider session={session}>
       <SearchProvider>
         {showHeader && (
           <Header
@@ -111,7 +110,7 @@ export default function App({
           <Footer/>
         )}
       </SearchProvider>
-    </SessionProvider>
+    // </SessionProvider>
   )
 }
 

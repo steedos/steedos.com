@@ -15,13 +15,8 @@ import {
 import { StarIcon } from '@heroicons/react/solid'
 import VariantRadios from '@/components/product/VariantRadios'
 import ReviewStars from '@/components/product/ReviewStars'
-import Price from '@/components/product/Price'
 
-import { getPrice } from '@/lib/product.client';
-import { getMedia } from '@/lib/product.client'
 import { find, each, conformsTo } from 'lodash'
-import BuyNow from '@/components/product/BuyNow'
-import AddToCart from '@/components/product/AddToCart'
 import { Markdown } from '@/components/Markdown'
 import { ImageSwiper } from '@/components/ImageSwiper'
 
@@ -31,7 +26,40 @@ function classNames(...classes) {
 
 const postDateTemplate = tinytime('{YYYY}-{Mo}-{DD}')
 
+export function getFileSrc(fileId){
+  return `${process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL}/api/files/files/${fileId}`
+}
 
+export function getMedia(product){
+  const media = [];
+  if(product && product.media){
+      product.media.forEach(function(item){
+          media.push({_id: item._id, name: item.name, extention: item.extention, src: getFileSrc(item.versions[0])})
+      })
+  }
+  return media;
+}
+
+
+export function formatPrice(price){
+  if(!price){
+      return `¥0.00`
+  }else{
+      return `¥${price.toFixed(2)}`
+  }
+}
+
+export function getPrice(productVariant){
+  if(productVariant){
+      return productVariant.price
+  }
+}
+
+export function getDefaultPrice(product){
+  if(product && product.product_variants && product.product_variants.length > 0){
+      return product.product_variants[0].price
+  }
+}
 
 export default function ProductDetail({ product, vid }) {
 
@@ -111,9 +139,9 @@ export default function ProductDetail({ product, vid }) {
 
               <div className="">
                 <h2 className="sr-only">Product information</h2>
-                <p className="text-3xl text-gray-900">
+                {/* <p className="text-3xl text-gray-900">
                   <Price price={getPrice(productVariant)}></Price>
-                </p>
+                </p> */}
               </div>
 
               {/* Reviews */}
@@ -133,11 +161,11 @@ export default function ProductDetail({ product, vid }) {
                 <Markdown body={product.description}></Markdown>
               </div>
 
-              <VariantRadios product={product} onChange={onVariantRadiosChange} productVariant={productVariant}></VariantRadios>
-              <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+              {/* <VariantRadios product={product} onChange={onVariantRadiosChange} productVariant={productVariant}></VariantRadios> */}
+              {/* <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
                 <AddToCart productVariant={productVariant}></AddToCart>
                 <BuyNow productVariant={productVariant}></BuyNow>
-              </div>
+              </div> */}
               {/* <section aria-labelledby="details-heading" className="mt-12">
                 <h2 id="details-heading" className="sr-only">
                   Additional details

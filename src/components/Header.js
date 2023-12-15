@@ -9,9 +9,7 @@ import { UserIcon, CodeIcon, ChevronDownIcon, CogIcon, LogoutIcon, ShoppingBagIc
 import { ThemeSelect, ThemeToggle } from './ThemeToggle'
 import { headerNav } from '@/navs/header';
 import useSWR from 'swr'
-import { useSession, signIn, signOut } from "next-auth/react"
 
-import { getCart } from '@/lib/cart.client';
 
 const navigation = headerNav;
 const registration_url = "https://id.steedos.cn/realms/master/protocol/openid-connect/registrations?client_id=steedos-oidc-public&redirect_uri=https://www.steedos.cn&response_type=code&ui_locales=zh_CN"
@@ -170,22 +168,22 @@ export function NavPopover({ display = 'md:hidden', className, ...props }) {
 
 export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section }) {
   let [isOpaque, setIsOpaque] = useState(false)
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
 
 
-  useEffect(() => {
-    if (session) {
-      const userId = session.user.email;
-      const people = {
-        id: userId,
-        name: 'steedos.com/' + session.user.name,
-        spaceId: 'steedos.com',
-        spaceName: 'steedos.com',
-      }
-      window.posthog.identify(userId);
-      window.posthog.people.set(people);
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (session) {
+  //     const userId = session.user.email;
+  //     const people = {
+  //       id: userId,
+  //       name: 'steedos.com/' + session.user.name,
+  //       spaceId: 'steedos.com',
+  //       spaceName: 'steedos.com',
+  //     }
+  //     window.posthog.identify(userId);
+  //     window.posthog.people.set(people);
+  //   }
+  // }, [session]);
   
   const [open, setOpen] = useState(false)
   const [userInfo, setUserInfo] = useState({})
@@ -415,7 +413,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                 购物车 ({cart?.lines?.length})
                               </a>
                             </Menu.Item>)} */}
-                            {!session && (
+                            {/* {!session && (
                               <Menu.Item>
                                 <a href="#" onClick={() => signIn("keycloak")} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                   <ShoppingBagIcon
@@ -432,7 +430,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                   {session.user.name}
                                 </a>
                               </Menu.Item>
-                            )}
+                            )} */}
 
 
                             <Menu.Item>
@@ -444,7 +442,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                               我的账户
                               </a>
                             </Menu.Item>
-                            <Menu.Item>
+                            {/* <Menu.Item>
                               <a href="https://console.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                 <CogIcon
                                   className="w-5 h-5 mr-2 text-sky-400"
@@ -452,7 +450,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                 />
                               管理控制台
                               </a>
-                            </Menu.Item>
+                            </Menu.Item> */}
 
                             <Menu.Item>
                               <a href="https://gitlab.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
@@ -464,7 +462,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                               </a>
                             </Menu.Item>
 
-                            {session && (
+                            {/* {session && (
                               <Menu.Item>
                                 <a href="#" onClick={signOut} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                   <LogoutIcon
@@ -474,7 +472,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                   注销
                                 </a>
                               </Menu.Item>
-                            )}
+                            )} */}
                           </div>
                         </Menu.Items>
                       </Transition>
