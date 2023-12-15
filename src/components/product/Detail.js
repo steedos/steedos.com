@@ -15,10 +15,8 @@ import {
 import { StarIcon } from '@heroicons/react/solid'
 import VariantRadios from '@/components/product/VariantRadios'
 import ReviewStars from '@/components/product/ReviewStars'
-import Price from '@/components/product/Price'
 
 import { find, each, conformsTo } from 'lodash'
-import BuyNow from '@/components/product/BuyNow'
 import { Markdown } from '@/components/Markdown'
 import { ImageSwiper } from '@/components/ImageSwiper'
 
