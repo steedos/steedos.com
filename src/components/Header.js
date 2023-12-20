@@ -1,3 +1,5 @@
+"user client";
+
 import Link from 'next/link'
 import { SearchButton } from '@/components/Search'
 import clsx from 'clsx'
@@ -11,8 +13,37 @@ import { headerNav } from '@/navs/header';
 import useSWR from 'swr'
 
 
+const Login = async()=> {
+  (window).keycloak.login();
+}
+
+
+const Logout = async()=> {
+  (window).keycloak.logout();
+}
+
+const Register = async()=> {
+  (window).keycloak.register();
+}
+
+const isAuthenticated = async () => {
+  const keycloak = new (window).Keycloak({
+    url: "https://id.steedos.cn",
+    realm: "master",
+    clientId: "www.steedos.cn",
+  });
+  (window).keycloak = keycloak;
+
+  const authenticated = await keycloak.init({
+    onLoad: "check-sso",
+    silentCheckSsoRedirectUri:
+      window.location.origin + "/silent-check-sso.html",
+  });
+
+  return authenticated;
+};
+
 const navigation = headerNav;
-const registration_url = "https://id.steedos.cn/realms/master/protocol/openid-connect/registrations?client_id=steedos-oidc-public&redirect_uri=https://www.steedos.cn&response_type=code&ui_locales=zh_CN"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -167,7 +198,33 @@ export function NavPopover({ display = 'md:hidden', className, ...props }) {
 }
 
 export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section }) {
-  let [isOpaque, setIsOpaque] = useState(false)
+  const [isOpaque, setIsOpaque] = useState(false)
+
+  const [authenticated, setAuthenticated] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    isAuthenticated().then((result) => {
+      setAuthenticated(result);
+    });
+  }, []);
+  
+  useEffect(() => {
+    if (authenticated) {
+      (window).keycloak.loadUserInfo().then((result) => {
+        setUserInfo(result);
+      });
+    } else {
+      setUserInfo(null)
+    }
+  }, [authenticated]);
+
+
+  useEffect(() => {
+    console.log(authenticated);
+    console.log(userInfo);
+  }, [authenticated, userInfo]);
+
   // const { data: session } = useSession()
 
 
@@ -185,9 +242,6 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
   //   }
   // }, [session]);
   
-  const [open, setOpen] = useState(false)
-  const [userInfo, setUserInfo] = useState({})
-  const [cart, setCart] = useState({lines: []})
 
   useEffect(() => {
     let offset = 50
@@ -205,15 +259,6 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
     }
   }, [isOpaque])
 
-  useSWR('cart', async () => {
-    const cart = await getCart();
-    if (!cart.error) {
-      setCart(cart)
-    } else {
-      setCart({lines: []})
-    }
-  })
-  
   return (
     <>
       {/* <div className="py-2 bg-gradient-to-r from-sky-600 to-light-blue-500 overflow-hidden">
@@ -268,7 +313,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
              
               {/* Logo */}
               <div className="flex lg:ml-0">
-                <a href="/">
+                <a href="/">{authenticated}
                   <span className="sr-only">Steedos Platform</span>
                   <Logo className="w-auto h-9" />
                 </a>
@@ -379,14 +424,13 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
 
                 <div className="relative hidden lg:flex items-center ml-auto">
                   <div className="text-slate-700 dark:text-slate-200">
-
+                  {userInfo && (
                     <Menu as="div" className="relative inline-block text-left">
                       <div>
                         <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium rounded-md bg-opacity-20 hover:text-sky-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                        {/* {userInfo.name && (userInfo.name)} */}
-                        我的账户
+                        {(userInfo.name)}
                           <ChevronDownIcon
-                            className="w-5 h-5 ml-1 -mr-1 text-violet-300 hover:text-sky-500"
+                            className="ml-3 h-3 w-3 stroke-slate-400"
                             aria-hidden="true"
                           />
                         </Menu.Button>
@@ -400,37 +444,15 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute right-0 p-2 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <div className="px-1 py-1">
-                            {/* Cart */}
-                            {/* {userInfo.name && (
-                            <Menu.Item>
-                              <a href="/store/shopping-cart" className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <ShoppingBagIcon
-                                  className="w-5 h-5 mr-2 text-sky-400"
-                                  aria-hidden="true"
-                                />
-                                购物车 ({cart?.lines?.length})
-                              </a>
-                            </Menu.Item>)} */}
-                            {/* {!session && (
+                            {userInfo && (
                               <Menu.Item>
-                                <a href="#" onClick={() => signIn("keycloak")} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                  <ShoppingBagIcon
-                                    className="w-5 h-5 mr-2 text-sky-400"
-                                    aria-hidden="true"
-                                  />
-                                  登录
+                                <a href="#" className=" text-slate-500 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                  {userInfo.email}
                                 </a>
                               </Menu.Item>
                             )}
-                            {session && (
-                              <Menu.Item>
-                                <a href="#" className="font-bold text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-base">
-                                  {session.user.name}
-                                </a>
-                              </Menu.Item>
-                            )} */}
 
 
                             <Menu.Item>
@@ -451,6 +473,16 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                               管理控制台
                               </a>
                             </Menu.Item> */}
+{/* 
+                            <Menu.Item>
+                              <a href="https://demo.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                <CodeIcon
+                                  className="w-5 h-5 mr-2 text-sky-400"
+                                  aria-hidden="true"
+                                />
+                              演示环境
+                              </a>
+                            </Menu.Item> */}
 
                             <Menu.Item>
                               <a href="https://gitlab.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
@@ -458,13 +490,13 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                   className="w-5 h-5 mr-2 text-sky-400"
                                   aria-hidden="true"
                                 />
-                              Gitlab Devops 平台
+                              GitLab
                               </a>
                             </Menu.Item>
 
-                            {/* {session && (
+                            {userInfo && (
                               <Menu.Item>
-                                <a href="#" onClick={signOut} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
+                                <a href="#" onClick={Logout} className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                   <LogoutIcon
                                     className="w-5 h-5 mr-2 text-sky-400"
                                     aria-hidden="true"
@@ -472,17 +504,24 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                   注销
                                 </a>
                               </Menu.Item>
-                            )} */}
+                            )}
                           </div>
                         </Menu.Items>
                       </Transition>
                     </Menu>
-
-                    <a className="hover:text-sky-500 dark:hover:text-sky-400 text-sm font-medium " href={registration_url}>
-                      <span className="ml-2 font-medium text-sm leading-5 rounded-full text-sky-600 bg-sky-400/10 px-3 py-2  dark:text-sky-400">免费注册</span>
-                    </a>
+                  )}
+                  {!authenticated && (
+                    <>
+                      <a className="hover:text-sky-500 dark:hover:text-sky-400 text-sm font-medium " onClick={Login}>
+                        <span className="ml-2 font-medium text-sm leading-5 rounded-full text-sky-600 hover:bg-sky-400/10 px-3 py-2  dark:text-sky-400">登录</span>
+                      </a>
+                    </>
+                  )}
+                  <a className="hover:text-sky-500 dark:hover:text-sky-400 text-sm font-medium " href="https://demo.steedos.cn" target="_blank">
+                    <span className="ml-2 font-medium text-sm leading-5 rounded-full text-sky-600 bg-sky-400/10 px-3 py-2  dark:text-sky-400">在线试用</span>
+                  </a>
                   </div>
-                  <div className="flex items-center border-l border-slate-200 ml-3 pl-6 dark:border-slate-800">
+                  {/* <div className="flex items-center border-l border-slate-200 ml-3 pl-6 dark:border-slate-800">
                     <ThemeToggle panelClassName="mt-8" />
                     <a
                       href="https://github.com/steedos/steedos-platform"
@@ -499,7 +538,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                         <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
                       </svg>
                     </a>
-                  </div>
+                  </div> */}
                 </div>
                 <SearchButton className="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300">
                   <span className="sr-only">Search</span>
