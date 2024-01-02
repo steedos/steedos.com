@@ -17,7 +17,7 @@ export const Footer = (props) => {
             <ul role="list" className="mt-6 space-y-5">
               {section.items.map((item) => (
                 <li key={item.name} className="text-sm">
-                  <a href={item.href} className="hover:text-slate-900 dark:hover:text-slate-300">
+                  <a href={item.href} target={item.target} className="hover:text-slate-900 dark:hover:text-slate-300">
                     {item.name}
                   </a>
                 </li>

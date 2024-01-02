@@ -388,7 +388,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                                           >
                                             {section.items.map((item) => (
                                               <li key={item.name} className="flex">
-                                                <a href={item.href} className="hover:text-slate-900 dark:hover:text-slate-300">
+                                                <a href={item.href} target={item.target} className="hover:text-slate-900 dark:hover:text-slate-300">
                                                   {item.name}
                                                 </a>
                                               </li>

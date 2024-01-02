@@ -52,10 +52,9 @@ export const headerNav = {
           name: '解决方案',
           href: '/solutions',
           items: [
-            { name: '项目管理', href: '/solutions/project' },
+            { name: '费控王', href: 'https://feikongwang.com', target: "_blank"},
+            { name: '项目成本管理', href: '/solutions/project' },
             { name: '合同管理', href: '/solutions/contract' },
-            { name: '在线商城', href: '/solutions/ecommerce' },
-            { name: '行业PaaS平台', href: '/solutions/paas' },
             { name: 'PC-MES生产管理', href: '/solutions/pcmes' },
           ],
         },
