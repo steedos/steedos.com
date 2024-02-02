@@ -114,17 +114,6 @@ export default function PricingPage(props) {
 | 同步批准过程元数据 | Y | Y | Y |
 | 同步审批王元数据 | Y | Y | Y |
 
-### Moleculer微服务
-
-| 功能 | 社区版 | 专业版 | 企业版 |
-|----|----|----|----|
-| 自定义微服务 | Y | Y | Y |
-| 自定义API | Y | Y | Y |
-| 自定义触发器 | Y | Y | Y |
-| GraphQL API | Y | Y | Y |
-| VSCode 元数据同步插件 | Y | Y | Y |
-| Moleculer Sidecar | Y | Y | Y |
-
 ### Node-RED 微服务
 
 | 功能 | 社区版 | 专业版 | 企业版 |
@@ -143,16 +132,14 @@ export default function PricingPage(props) {
 
 | 功能 | 社区版 | 专业版 | 企业版 |
 |----|----|----|----|
-| 可视化设计审批单 |    | Y | Y |
-| 可视化设计审批流程 |    | Y | Y |
-| 流程效率统计插件 |    | Y | Y |
-| 图片签名 |    | Y | Y |
-| 电子签章 |    | Y | Y |
-| 移动审批 |    | Y | Y |
-| 流程代理 |    | Y | Y |
-| 自定义打印模板 |    | Y | Y |
-| 台账数据同步 |    | Y | Y |
-| 流程导入导出 |    | Y | Y |
+| 可视化设计审批单 | Y | Y | Y |
+| 可视化设计审批流程 | Y  | Y | Y |
+| 移动审批 | Y  | Y | Y |
+| 对象数据同步 |  Y | Y | Y |
+| 流程导入导出 |  Y | Y | Y |
+| 流程代理 |   | Y | Y |
+| 图片签名 |   | Y | Y |
+| 流程效率统计插件 |    |   | Y |
 
 ### 集团权限管理
 
@@ -187,6 +174,7 @@ export default function PricingPage(props) {
 |----|----|----|----|
 | MongoDB BI Connector插件 |    |    | Y |
 | MongoDB 字段级加密插件 |    |    | Y |
+| 病毒扫描插件 |    |    | Y |
 
 ### 解决方案模版库
 
