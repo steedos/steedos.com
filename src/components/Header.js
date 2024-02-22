@@ -517,8 +517,8 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                       </a>
                     </>
                   )}
-                  <a className="hover:text-sky-500 dark:hover:text-sky-400 text-sm font-medium " href="https://demo.steedos.cn" target="_blank">
-                    <span className="ml-2 font-medium text-sm leading-5 rounded-full text-sky-600 bg-sky-400/10 px-3 py-2  dark:text-sky-400">在线试用</span>
+                  <a className="hover:text-sky-500 dark:hover:text-sky-400 text-sm font-medium " href="https://feikongwang.com/login/" target="_blank">
+                    <span className="ml-2 font-medium text-sm leading-5 rounded-full text-sky-600 bg-sky-400/10 px-3 py-2  dark:text-sky-400">试用解决方案</span>
                   </a>
                   </div>
                   {/* <div className="flex items-center border-l border-slate-200 ml-3 pl-6 dark:border-slate-800">
