@@ -109,12 +109,12 @@ export function Pricing() {
             </span>{' '}
           </h2>
           <p className="mt-4 text-lg text-slate-400">
-          华炎魔方社区版完全免费，不限制用户数、不限制时间。
+          请选择适合您的版本，商业使用建议购买付费版。
           </p>
         </div>
         <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
           <Plan
-            name="完全免费"
+            name="社区共建，完全免费"
             price="社区版"
             href="/docs"
             hrefTitle="快速开始"
@@ -122,8 +122,8 @@ export function Pricing() {
               '可视化搭建业务应用',
               '自动化业务流程	',
               '管理数据访问权限	',
+              '审批王',
               '开放API接口',
-              '外部数据源集成',
               '数据导入导出',
               '支持移动端同步使用',
               '公有云/私有化本地部署',
@@ -132,15 +132,16 @@ export function Pricing() {
           />
           <Plan
             featured
-            name="¥9,800/不限用户/年"
+            name="适合中小企业"
             price="专业版"
-            hrefTitle="申请试用"
+            hrefTitle="预约演示"
             href="/company/contact-us"
             features={[
-              '运行华炎魔方软件包',
+              '社区版所有功能',
               '自定义品牌',
+              '外部数据源集成',
               '数据修改日志',
-              '审批王',
+              '安全日志',
               '钉钉集成',
               '企业微信集成',
               '华为WeLink集成',
@@ -148,17 +149,18 @@ export function Pricing() {
             ]}
           />
           <Plan
-            name="请联系我们获取报价"
+            name="适合集团和大中型企业"
             price="企业版"
             href="/company/contact-us"
             hrefTitle="预约演示"
             features={[
+              '专业版所有功能',
+              '解决方案模版库',
               '统一身份认证',
               '可视化分析业务数据',
               '安全审计日志',
               '字段级加密',
               '集团权限管理',
-              '解决方案模版库',
               '高级运维服务（可选）',
               '开发者支持服务（可选）'
             ]}
