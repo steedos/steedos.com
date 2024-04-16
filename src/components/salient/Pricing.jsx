@@ -46,7 +46,7 @@ function CheckIcon({ className }) {
   )
 }
 
-function Plan({ name, price, description, href, hrefTitle, features, featured = false }) {
+function Plan({ name, price, description, href, target, hrefTitle, features, featured = false }) {
   return (
     <section
       className={clsx(
@@ -82,6 +82,7 @@ function Plan({ name, price, description, href, hrefTitle, features, featured = 
       </ul>
       <Button
         href={href}
+        target={target}
         variant={featured ? 'solid' : 'outline'}
         color="white"
         className="mt-8"
@@ -135,7 +136,8 @@ export function Pricing() {
             name="适合中小企业"
             price="专业版"
             hrefTitle="预约演示"
-            href="/company/contact-us"
+            href="https://sp0dtpsxxk.jiandaoyun.com/f/660a2de0b0a76aafa09bde68"
+            target="_blank"
             features={[
               '社区版所有功能',
               '可视化统计分析',
@@ -151,8 +153,9 @@ export function Pricing() {
           <Plan
             name="适合集团和大中型企业"
             price="企业版"
-            href="/company/contact-us"
+            href="https://sp0dtpsxxk.jiandaoyun.com/f/660a2de0b0a76aafa09bde68"
             hrefTitle="预约演示"
+            target="_blank"
             features={[
               '专业版所有功能',
               '解决方案模版库',
