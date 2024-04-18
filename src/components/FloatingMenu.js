@@ -13,7 +13,7 @@ export const FloatingMenu = function () {
         在线咨询
       </a>
       <div class="group relative px-4 py-2 text-gray-800 text-sm hover:bg-blue-100 w-full rounded-lg">
-        <div class="flex flex-col items-center w-full">
+        <div class="cursor-pointer flex flex-col items-center w-full">
             <img src="/img/mobile_consultation.png" alt="电话咨询" class="mb-2 h-6 w-6"/>
             电话咨询
         </div>
@@ -23,7 +23,7 @@ export const FloatingMenu = function () {
         </div>
       </div>
       <div class="relative group px-4 py-2 text-gray-800 text-sm w-full rounded-lg hover:bg-blue-100">
-          <div class="flex flex-col items-center w-full">
+          <div class="cursor-pointer flex flex-col items-center w-full">
               <img src="/img/qywx.svg" alt="微信咨询" class="mb-2 h-6 w-6"/>
               微信咨询
           </div>
