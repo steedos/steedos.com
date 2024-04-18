@@ -3,7 +3,7 @@ import React from 'react';
 
 export const FloatingMenu = function () {
   return (
-    <div class="fixed top-1/2 right-4 transform -translate-y-1/2 bg-white p-4 rounded-full shadow-lg z-10 flex flex-col items-center space-y-2">
+    <div class="hidden md:flex md:fixed md:top-1/2 md:right-4 md:transform md:-translate-y-1/2 bg-white p-4 rounded-full shadow-lg z-10 flex-col items-center space-y-2">
       <a href="https://sp0dtpsxxk.jiandaoyun.com/f/660a2de0b0a76aafa09bde68" target='_blank' class="flex flex-col items-center px-4 py-2 text-gray-800 text-sm hover:bg-blue-100 w-full rounded-lg">
         <img src="/img/demo.png" alt="预约演示" class="mb-2 h-6 w-6"/>
         预约演示
@@ -13,7 +13,7 @@ export const FloatingMenu = function () {
         在线咨询
       </a>
       <div class="group relative px-4 py-2 text-gray-800 text-sm hover:bg-blue-100 w-full rounded-lg">
-        <div class="cursor-pointer flex flex-col items-center w-full">
+        <div class="flex flex-col items-center w-full">
             <img src="/img/mobile_consultation.png" alt="电话咨询" class="mb-2 h-6 w-6"/>
             电话咨询
         </div>
@@ -23,7 +23,7 @@ export const FloatingMenu = function () {
         </div>
       </div>
       <div class="relative group px-4 py-2 text-gray-800 text-sm w-full rounded-lg hover:bg-blue-100">
-          <div class="cursor-pointer flex flex-col items-center w-full">
+          <div class="flex flex-col items-center w-full">
               <img src="/img/qywx.svg" alt="微信咨询" class="mb-2 h-6 w-6"/>
               微信咨询
           </div>
