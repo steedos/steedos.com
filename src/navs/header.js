@@ -29,7 +29,7 @@ export const headerNav = {
             { name: '技术架构', href: '/platform/architecture' },
             { name: '十大引擎', href: '/platform/features' },
             { name: '报价', href: '/pricing/platform' },
-            { name: '文档', href: '/docs' },
+            { name: '文档', href: 'https://docs.steedos.cn/getting-started/', target: "_blank"},
             { name: '视频', href: '/videos' },
           ],
         },
