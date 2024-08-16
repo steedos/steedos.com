@@ -29,7 +29,7 @@ export const FloatingMenu = function () {
           </div>
           <div class="absolute right-28 top-[0.5rem] -translate-y-1/2 w-40 bg-white opacity-0 group-hover:opacity-100 flex flex-col items-center py-1 px-0.5 shadow-xl rounded-lg transition-all duration-300 ease-in-out pointer-events-none group-hover:pointer-events-auto">
               <div class="text-gray-700 text-sm mt-3 mb-2 px-0.5">扫码获取产品介绍资料</div>
-              <img src="https://console.steedos.cn/api/files/images/64631db2c106fe003e69cbac" alt="商务咨询 QR Code" class="h-32 w-32 m-0.5" />
+              <img src="https://console.steedos.cn/api/files/files/66bc4f0bbb7702003d2d7511" alt="商务咨询 QR Code" class="h-32 w-32 m-0.5" />
           </div>
       </div>
     </div>
