@@ -1,6 +1,6 @@
 [
-  { "source": "/docs", "destination": "https://docs.steedos.cn/zh-CN/", "permanent": true },
-  { "source": "/docs/:slug*", "destination": "https://docs.steedos.cn/zh-CN/", "permanent": true },
+  { "source": "/docs", "destination": "https://docs.steedos.com/zh-CN/", "permanent": true },
+  { "source": "/docs/:slug*", "destination": "https://docs.steedos.com/zh-CN/", "permanent": true },
   { "source": "/cn", "destination": "https://www.steedos.cn/", "permanent": true },
   { "source": "/cn/", "destination": "https://www.steedos.cn/", "permanent": true },
   { "source": "/platform", "destination": "/", "permanent": true },
