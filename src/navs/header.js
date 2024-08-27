@@ -29,7 +29,7 @@ export const headerNav = {
             { name: '技术架构', href: '/platform/architecture' },
             { name: '十大引擎', href: '/platform/features' },
             { name: '报价', href: '/pricing/platform' },
-            { name: '文档', href: 'https://docs.steedos.com/getting-started/', target: "_blank"},
+            { name: '文档', href: 'https://docs.steedos.com/zh-CN/getting-started/', target: "_blank"},
             { name: '视频', href: '/videos' },
           ],
         },
@@ -122,7 +122,7 @@ export const headerNav = {
 
   ],
   pages: [
-    { name: '文档', href: 'https://docs.steedos.com/', target: "steedos-docs" },
+    { name: '文档', href: 'https://docs.steedos.com/zh-CN/getting-started/', target: "steedos-docs" },
     { name: '视频', href: '/videos/' },
     { name: '联系我们', href: '/company/contact-us' },
   ],
