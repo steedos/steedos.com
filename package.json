@@ -18,6 +18,9 @@
   ],
   "dependencies": {
     "@badrap/bar-of-progress": "^0.1.1",
+    "@builder6/builder6.js": "^0.12.2",
+    "@builder6/react": "^3.2.12",
+    "@builder6/widgets": "^1.2.27",
     "@docsearch/react": "^3.0.0",
     "@headlessui/react": "^1.6.1",
     "@heroicons/react": "^1.0.4",
