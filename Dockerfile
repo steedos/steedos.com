@@ -23,9 +23,6 @@ COPY ./next-sitemap.js /app
 COPY ./package.json /app
 COPY ./postcss.config.js /app
 COPY ./prettier.config.js /app
-COPY ./sentry.client.config.js /app
-COPY ./sentry.properties /app
-COPY ./sentry.server.config.js /app
 COPY ./redirects.json /app
 COPY ./tailwind.config.js /app
 COPY ./tsconfig.json /app

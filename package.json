@@ -28,7 +28,6 @@
     "@next/mdx": "^10.0.1",
     "@pondorasti/remark-img-links": "^1.0.8",
     "@reach/rect": "^0.10.5",
-    "@sentry/nextjs": "^7.10.0",
     "@silvenon/remark-smartypants": "^1.0.0",
     "@sindresorhus/slugify": "^1.1.0",
     "@sls-next/cdk-construct": "3.7.0",
