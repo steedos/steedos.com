@@ -14,7 +14,6 @@ import 'intersection-observer'
 import {has, isArray} from 'lodash';
 import { SearchProvider } from '@/components/Search'
 // import { SessionProvider } from "next-auth/react"
-import { usePostHog } from 'next-use-posthog'
 // import { getSite } from '@/lib/site';
 
 if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
@@ -48,19 +47,6 @@ export default function App({
   router 
 }) {
 
-  usePostHog('phc_Hs5rJpeE5JK3GdR3NWOf75TvjEcnYShmBxNU2Y942HB', {
-    api_host: 'https://posthog.steedos.cn',
-    loaded: (posthog) => {
-      window.posthog = posthog;
-      window.posthog.group('space', 'steedos.com');
-      window.posthog.people.set({
-        spaceId: 'steedos.com',
-        spaceName: 'steedos.com',
-      });
-      posthog.opt_in_capturing()
-    },
-  })  
-  
   let [navIsOpen, setNavIsOpen] = useState(false)
 
   useEffect(() => {

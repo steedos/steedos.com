@@ -36,5 +36,3 @@ yarn-error.log*
 .serverless
 
 public/sitemap-0.xml
-# Sentry
-.sentryclirc

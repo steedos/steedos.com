@@ -26,7 +26,7 @@ spec:
       # imagePullSecrets:
       #   - name: steedos-account
       containers:
-        - image: ecr.aws.steedos.cn/ivscode/steedos/steedos.com:latest
+        - image: steedos/steedos.com:latest
           imagePullPolicy: Always
           name: steedos-com
           command: ["/bin/sh", "-c", " echo $(date +%T) && yarn start"]

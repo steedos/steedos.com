@@ -54,7 +54,7 @@ export function Hero() {
         <a target="_blank" href="/videos/" className="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-slate-900 text-white hover:bg-slate-700 hover:text-slate-100 active:bg-slate-800 active:text-slate-300 focus-visible:outline-slate-900">
           视频演示
         </a>
-        <a target="_blank" href="https://docs.steedos.cn/zh-CN/getting-started" className="group inline-flex ring-1 items-center justify-center rounded-full py-2 px-4 text-sm focus:outline-none ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300">
+        <a target="_blank" href="https://docs.steedos.com/zh-CN/getting-started" className="group inline-flex ring-1 items-center justify-center rounded-full py-2 px-4 text-sm focus:outline-none ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300">
           文档
         </a>
       </div>
@@ -63,7 +63,7 @@ export function Hero() {
           <Player
             // ref={playerRef}
             className=" rounded-lg"
-            hls_url='https://vod.steedos.cn/video/175146ea-1772962056e-0000-0000-009-c59e0.mp4'
+            hls_url='https://outin-ea8a479c6eca11e8a49300163e1a3b4a.oss-cn-shanghai.aliyuncs.com/video/3d5e3f1d-1921d525125-0000-0000-009-c59e0.mov'
             light={`${process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL}/api/files/images/uYfiSbnj7Ms7djamt`}
             width="100%"
             height="100%"

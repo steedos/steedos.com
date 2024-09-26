@@ -225,23 +225,8 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
     console.log(userInfo);
   }, [authenticated, userInfo]);
 
-  // const { data: session } = useSession()
 
 
-  // useEffect(() => {
-  //   if (session) {
-  //     const userId = session.user.email;
-  //     const people = {
-  //       id: userId,
-  //       name: 'steedos.com/' + session.user.name,
-  //       spaceId: 'steedos.com',
-  //       spaceName: 'steedos.com',
-  //     }
-  //     window.posthog.identify(userId);
-  //     window.posthog.people.set(people);
-  //   }
-  // }, [session]);
-  
 
   useEffect(() => {
     let offset = 50
