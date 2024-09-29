@@ -11,11 +11,9 @@ export async function getStaticProps({params, query}) {
   const projectId = "ced85241-276f-4d0f-8cfc-84c49d78adee"
 
   const project = await getProjectById(baseId, projectId);
-  console.log(baseId, projectId, pageUrl, project,)
   if (!project) return {};
 
   const page = await getProjectPageByUrl(baseId, projectId, pageUrl);
-  console.log(page)
 
   if (!page) {
     return {
