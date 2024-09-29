@@ -51,7 +51,6 @@ APISIX 通过插件的方式提供 Serverless，目前仅支持 Lua。但 APIGat
 
 由于对网关层进行了控制，APISIX 允许用户通过配置权重控制流量的转发行为，可以用来做灰度发布使用。
 
-\
 ## 技术架构
 
 1. 数据平⾯
@@ -64,7 +63,6 @@ APISIX 通过插件的方式提供 Serverless，目前仅支持 Lua。但 APIGat
 
    APISIX采⽤了数据平⾯与控制平⾯分离的架构⽅式，通过配置中⼼接收、下发配置，使 得数据平⾯不会受到控制平⾯影响。配置中⼼默认为 ETCD，但也⽀持 Consul、Nacos、Eureka 等， 可根据您的实际情况进⾏选择。此外，企业⽤⼾只需关注业务本⾝，与业务⽆关的⼤部分功能交给 APISIX 内置插件即可实现，如⾝份验证、性能分析等。
 
-\
 ## 云原生网关
 
 APISIX 是⼀个云原⽣⽹关，与平台⽆关，没有供应商锁定的⻛险。它⽀持裸⾦属、虚拟机、 Kubernetes、OpenShift、ARM64 等。此外，APISIX 也可轻松与其它组件对接，如 SkyWalking、 Prometheus、Kafka、Zipkin 等，共同为企业赋能；
@@ -141,4 +139,3 @@ APISIX 内置了50多种插件，涵盖安全防护、流量控制、⽇志记�
 
 对于个性化需求，提供可视化界面自定义插件。 \n  ![](https://console.steedos.cn/api/files/images/DmhvWDpD2qHGTYwPn)
 
-\

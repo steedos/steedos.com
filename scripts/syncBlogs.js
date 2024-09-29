@@ -91,13 +91,15 @@ async function sync(){
     }
     blog.posts.forEach(doc => {
       const filename = path.join(dirname, doc.slug + '.mdx')
+      const body = doc.body.replace(/\\\n/g, '');
+
       const content = 
 `---
 title: ${doc.name}
 description: ${doc.summary}
 ---
 
-${doc.body}`
+${body}`
       fs.writeFileSync(filename, content)
     })
   });
