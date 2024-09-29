@@ -63,7 +63,7 @@ export function Hero() {
           <Player
             // ref={playerRef}
             className=" rounded-lg"
-            hls_url='https://vod.steedos.cn/video/175146ea-1772962056e-0000-0000-009-c59e0.mp4'
+            hls_url='https://outin-ea8a479c6eca11e8a49300163e1a3b4a.oss-cn-shanghai.aliyuncs.com/video/3d5e3f1d-1921d525125-0000-0000-009-c59e0.mov'
             light={`${process.env.NEXT_PUBLIC_STEEDOS_ROOT_URL}/api/files/images/uYfiSbnj7Ms7djamt`}
             width="100%"
             height="100%"
