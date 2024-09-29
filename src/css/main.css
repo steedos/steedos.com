@@ -6,9 +6,10 @@
 @import 'bar-of-progress.css';
 /*! purgecss end ignore */
 
-@import 'tailwindcss/components';
+/* @import 'tailwindcss/components'; */
+
 @import 'utilities.css';
-@import 'typography.css';
+/* @import 'typography.css'; */
 
 @import 'rich-markdown-editor';
 @import 'slick';
@@ -18,3 +19,5 @@
 @import 'quantity';
 
 @import 'beams';
+
+@tailwind components;
