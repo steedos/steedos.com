@@ -58,6 +58,110 @@ export const getProjectPageByUrl = async (baseId: string, projectId:string, page
   return page
 }
   
+
+export const getDocumentById = async (baseId: string, documentId: string) => {
+
+  if (!documentId) return null;
+
+  const base = await adminBjs.base(baseId);
+
+  try {
+    const document = await base("b6_documents").find(documentId);  
+  
+    console.log('Retrieved page', document.fields._id, document.fields.name);
+    return document.fields
+
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+  
+export const getDocumentByUrl = async (baseId: string, blogId: string, documentUrl: string) => {
+
+  const base = await adminBjs.base(baseId);
+
+  try {
+    const documents = await base("b6_documents").select({
+      'filterByFormula': `AND(url === "${documentUrl}", blog_id === "${blogId}")`
+    }).firstPage();
+
+  
+    if (!documents || documents.length === 0) {
+      return null;
+    }
+    
+    console.log('Retrieved document', documents[0].fields._id, documents[0].fields.name);
+
+    return documents[0].fields
+
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+export const getBlogByUrl = async (baseId: string, blogUrl: string) => {
+
+  const base = await adminBjs.base(baseId);
+
+
+  try {
+    const blogs = await base("b6_blogs").select({
+      fields: ['_id', 'name', 'url', 'parent'],
+      'filterByFormula': `url === "${blogUrl}"`
+    }).firstPage();
+
+    if (!blogs || blogs.length === 0) {
+      return null;
+    }
+
+    const blog = blogs[0].fields;
+  
+    console.log('Retrieved blog', blog._id, blog.name);
+
+    // const documents = await base("b6_documents").select({
+    //   'filterByFormula': `blog_id === "${blog._id}"`
+    // }).firstPage(); 
+
+    // console.log('Retrieved blog documents', documents.length);
+
+    // const docs = documents.map(document => document.fields) as any;
+    // blog.documents = docs;
+    // blog.documentsTree = buildTree(docs);
+    console.log(blog)
+
+    return blog
+
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+export const getBlogDocuments = async (baseId: string, blogId: string) => {
+
+  const base = await adminBjs.base(baseId);
+
+
+  try {
+
+    const documents = await base("b6_documents").select({
+      'filterByFormula': `blog_id === "${blogId}"`
+    }).firstPage(); 
+
+    console.log('Retrieved blog documents', documents.length);
+
+    const docs = documents.map(document => document.fields) as any;
+   
+    return docs
+
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
 export const getComponentByApiName = async (baseId: string, api_name : string) => {
 
   const base = await adminBjs.base(baseId);

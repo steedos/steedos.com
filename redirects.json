@@ -17,6 +17,12 @@
   { "source": "/docs/low-code-academy", "destination": "/docs/low-code-academy/getting-started", "permanent": true},
   { "source": "/docs", "destination": "/docs/deploy/getting-started", "permanent": true},
   { "source": "/cn/steedos/privacy", "destination": "/company/privacy", "permanent": true },
+  { "source": "/customer-success-stories", "destination": "/resources/customer-success-stories", "permanent": true },
+  { "source": "/customer-success-stories/:documentSlug", "destination": "/resources/customer-success-stories/:documentSlug", "permanent": true },
+  { "source": "/cloud", "destination": "/resources/cloud", "permanent": true },
+  { "source": "/cloud/:documentSlug", "destination": "/resources/cloud/:documentSlug", "permanent": true },
+  { "source": "/solutions", "destination": "/resources/solutions", "permanent": true },
+  { "source": "/solutions/:documentSlug", "destination": "/resources/solutions/:documentSlug", "permanent": true },
   { "source": "/register", "destination": "https://id.steedos.cn/", "permanent": true }
 ]
 

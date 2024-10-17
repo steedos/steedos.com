@@ -40,7 +40,7 @@ export const getStaticPaths = (async () => {
 
 export default function PageDetail({page}){
 
-  console.log('PageDetail', page)
+  // console.log('PageDetail', page)
   if (page && page.builder) {
     const builderJson = JSON.parse(page.builder)
     builderJson.name = page.name;
