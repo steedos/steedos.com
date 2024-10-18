@@ -94,17 +94,17 @@ export const headerNav = {
             { name: '河北港口集团', href: '/customer-success-stories/porthebei' },
           ],
         },
-        {
-          id: 'other-cases',
-          name: '伙伴案例',
-          href: '/customer-success-stories/',
-          items: [
-            { name: '双汇集团智能工厂', href: '/customer-success-stories/yz' },
-            { name: '抗疫平台', href: '/customer-success-stories/COVID-19' },
-            { name: '梅斯医学SCRM销售管理', href: '/customer-success-stories/scrm' },
-            { name: '梅斯医学CTMS临床研究管理', href: '/customer-success-stories/ctms' },
-          ],
-        },
+        // {
+        //   id: 'other-cases',
+        //   name: '伙伴案例',
+        //   href: '/customer-success-stories/',
+        //   items: [
+        //     { name: '双汇集团智能工厂', href: '/customer-success-stories/yz' },
+        //     { name: '抗疫平台', href: '/customer-success-stories/COVID-19' },
+        //     { name: '梅斯医学SCRM销售管理', href: '/customer-success-stories/scrm' },
+        //     { name: '梅斯医学CTMS临床研究管理', href: '/customer-success-stories/ctms' },
+        //   ],
+        // },
         {
           id: 'about',
           name: '公司',
@@ -124,6 +124,6 @@ export const headerNav = {
   pages: [
     { name: '文档', href: 'https://docs.steedos.com/zh-CN/getting-started/', target: "steedos-docs" },
     { name: '视频', href: '/videos/' },
-    { name: '联系我们', href: '/company/contact-us' },
+    { name: '公司', href: '/company/about-us' },
   ],
 }
