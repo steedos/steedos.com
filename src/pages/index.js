@@ -109,7 +109,7 @@ export default function Home(props) {
             </div>
       </div> */}
 
-      <Pricing />
+      {/* <Pricing /> */}
       {/* <Footer /> */}
     </>
   )
