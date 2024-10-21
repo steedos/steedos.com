@@ -23,6 +23,7 @@
   { "source": "/cloud/:documentSlug", "destination": "/resources/cloud/:documentSlug", "permanent": true },
   { "source": "/solutions", "destination": "/resources/solutions", "permanent": true },
   { "source": "/solutions/:documentSlug", "destination": "/resources/solutions/:documentSlug", "permanent": true },
+  { "source": "/pricing/platform", "destination": "/platform/pricing", "permanent": true },
   { "source": "/register", "destination": "https://id.steedos.cn/", "permanent": true }
 ]
 
