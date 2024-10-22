@@ -6,7 +6,7 @@ module.exports = {
   experimental: {
     optimizeUniversalDefaults: true,
   },
-  content: ['./src/**/*.{js,jsx,tsx,mdx,html}', './remark/**/*.js'],
+  content: ['./src/**/*.{js,jsx,tsx,mdx,html,liquid}', './remark/**/*.js'],
   darkMode: 'class',
   theme: {
     // `demo-*` screens are used for the "mobile-first" responsive demo
@@ -289,7 +289,11 @@ module.exports = {
     },
   },
   daisyui: {
-    themes: ["light"]
+    base: true,
+    styled: true,
+    utils: true,
+    themes: ["light"],
+    themeRoot: `\:root`,
   },
   plugins: [
     require('daisyui'),

@@ -5442,6 +5442,11 @@ comma-separated-tokens@^2.0.0:
   resolved "https://registry.yarnpkg.com/comma-separated-tokens/-/comma-separated-tokens-2.0.2.tgz#d4c25abb679b7751c880be623c1179780fe1dd98"
   integrity sha512-G5yTt3KQN4Yn7Yk4ed73hlZ1evrFKXeUW3086p3PRFNp7m2vIjI6Pg+Kgb+oyzhd9F2qdcoj67+y3SdxL5XWsg==
 
+commander@^10.0.0:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-10.0.1.tgz#881ee46b4f77d1c1dccc5823433aa39b022cbe06"
+  integrity sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==
+
 commander@^2.18.0, commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
@@ -8895,6 +8900,13 @@ liquidjs@9.6.2:
   version "9.6.2"
   resolved "https://registry.yarnpkg.com/liquidjs/-/liquidjs-9.6.2.tgz#137f5b2d1c42a2b19a6ad7e54456ff8228f16dd8"
   integrity sha512-mcn6rL6nuwSYL1TTfjTcIxoSyp6Dw1crj+6+pCKm5qXpVBkJ1EMKIVIjuEGPrR6JMYZqoxINqU2ScHqSFUPqBw==
+
+liquidjs@^10.18.0:
+  version "10.18.0"
+  resolved "https://registry.yarnpkg.com/liquidjs/-/liquidjs-10.18.0.tgz#9b9b7df1d068f416f4656af94b11eeb138602296"
+  integrity sha512-gCJPmpmZ3oi2rMMHo/c+bW1LaRF+ZAKYTWQmKXPp0uK9EkWMFRmgbk3+Io4LSJGAOnpCZSgHJbNzcygx3kfAAQ==
+  dependencies:
+    commander "^10.0.0"
 
 list-item@^1.1.1:
   version "1.1.1"

@@ -40,8 +40,8 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content="#ffffff" />
         </Head>
         <body
-          className={clsx('antialiased text-slate-500 dark:text-slate-400', {
-            'bg-white dark:bg-slate-900': !this.props.dangerousAsPath.startsWith('/examples/'),
+          className={clsx('antialiased text-slate-800', {
+            'bg-white': !this.props.dangerousAsPath.startsWith('/examples/'),
             'login': this.props.dangerousAsPath.startsWith('/login')
           })}>
           <Main />

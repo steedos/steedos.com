@@ -1,0 +1,65 @@
+
+
+<div class="relative mx-auto w-full max-w-7xl pt-6 sm:pt-8 lg:flex lg:justify-between lg:px-0 lg:pt-10 mb-[10rem]">
+
+  <div class="mx-auto max-w-[40rem] lg:mx-0 lg:max-w-none lg:flex-none">
+    <div id="treeView" class="w-[288px]"></div>
+  </div>
+    <div class="mx-auto mt-20 min-w-0 max-w-[40rem] lg:ml-16 lg:mr-0 lg:mt-0 lg:max-w-[50rem] lg:flex-auto prose-sm prose prose-slate prose-a:font-semibold prose-a:text-sky-500 hover:prose-a:text-sky-600">
+        <header id="header" class="relative">
+          <div>
+            {% comment %} <div class="mb-2 text-sm leading-6 font-semibold text-sky-500 dark:text-sky-400">{{blog.name}}</div> {% endcomment %}
+            <div class="flex items-center">
+              <h1 class="inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight dark:text-slate-200">{{document.name}}</h1>
+            </div>
+          </div>
+          {% if document.description %}
+          <p class="mt-2 text-lg text-slate-700 dark:text-slate-400">
+            {{document.description}}
+          </p>
+        {% endif %}
+        </header>
+        {% if document.cover %}
+        <div class="relative not-prose my-6 first:mt-0 last:mb-0 rounded-2xl overflow-hidden [figure>&amp;]:my-0">
+          <img src="https://builder6.steedos.cn/api/files/images/{{document.cover}}" alt="{{document.name}}" />
+
+          <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-slate-900/10 dark:ring-white/10"></div>
+        </div>
+        {% endif %}
+        <div id="content-wrapper" class="relative prose prose-slate mt-8 dark:prose-dark">
+          {% comment %} {{ document.tocContent }}  {% endcomment %}
+          {{ document.htmlContent }}
+        </div>
+          
+      {% comment %} <div class="table-of-contents fixed top-[5rem] bottom-0 right-[max(0px,calc(50%-45rem))] w-[19.5rem] py-10 overflow-y-auto hidden xl:block">
+        <div class="prose prose-sm prose-slate dark:prose-dark">
+        {{ document.tocContent }} 
+        </div>
+      </div> {% endcomment %}
+    </div>
+  </div>
+{% comment %} <style>
+  .table-of-contents .prose :where(a):not(:where([class~="not-prose"],[class~="not-prose"] *)){
+    font-weight: 500;
+    text-decoration: none;
+    color: rgb(51, 65, 85);
+    font-weight: normal;
+  }
+</style> {% endcomment %}
+<script>
+  $(function(){
+    $("#treeView").dxTreeView({ 
+        dataSource: {{ blog.documents | json }},
+        dataStructure: "plain",
+        keyExpr: "_id",
+        displayExpr: "name",
+        parentIdExpr: "parent",
+        itemTemplate: function(item) {
+          const blogUrl = "{{ blog.url }}";
+          return `<a href="/docs/${blogUrl}/${item._id}" class="py-6">${item.name}</a>`;
+        },
+        expandNodesRecursive: true,
+        searchEnabled: true
+    }).dxTreeView("expandAll")
+  })
+</script>

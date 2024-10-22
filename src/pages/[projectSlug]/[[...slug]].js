@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 
 import {NextSeo} from 'next-seo'
-import { getProjectById, getProjectBySlug, getProjectPageByUrl } from '@/b6/interfaces';
+import { getProjectById, getProjectBySlug, getProjectPageByUrl, getComponent } from '@/b6/interfaces';
 import { RenderBuilderContent } from '@/b6/components/builder6';
+import RenderLiquidComponent from '@/b6/components/liquid-component';
 
 export async function getStaticProps({params, query}) {
   const projectSlug = params.projectSlug;
@@ -29,10 +30,17 @@ export async function getStaticProps({params, query}) {
     }
   }
 
+  let header = null; //await getComponent(baseId, "header");
+  let footer = null; //await getComponent(baseId, "footer");
+  let mainMenu = project.enable_tabs && await getComponent(baseId, "main-menu");
+
   return {
     props: {
       project,
-      page: page
+      page,
+      header,
+      mainMenu,
+      footer
     },
     revalidate: parseInt(process.env.NEXT_STATIC_PROPS_REVALIDATE), // In seconds
   }
@@ -47,17 +55,30 @@ export const getStaticPaths = (async () => {
   }
 })
 
-export default function PageDetail({page}){
+export default function PageDetail({project, page, header, footer, mainMenu}){
 
-  // console.log('PageDetail', page)
+  console.log('PageDetail', project)
   if (page && page.builder) {
     const builderJson = JSON.parse(page.builder)
     builderJson.name = page.name;
     return (
       <>
+        {header && (
+          <RenderLiquidComponent component={header} data={{project}} />
+        )}
+
+        {mainMenu && (
+          <div className='sticky z-30 top-0 left-0 w-full'>
+            <RenderLiquidComponent component={mainMenu} data={{...project, project}} />
+          </div>
+        )}
 
         {/* Render the Builder page */}
         <RenderBuilderContent content={builderJson}/>
+
+        {footer && (
+          <RenderLiquidComponent component={footer} data={{project}} />
+        )}
       </>
     );
   }
