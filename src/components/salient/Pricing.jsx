@@ -136,7 +136,7 @@ export function Pricing() {
             name="适合中小企业"
             price="专业版"
             hrefTitle="预约演示"
-            href="https://sp0dtpsxxk.jiandaoyun.com/f/660a2de0b0a76aafa09bde68"
+            href="/company/contact-us"
             target="_blank"
             features={[
               '社区版所有功能',
@@ -153,7 +153,7 @@ export function Pricing() {
           <Plan
             name="适合集团和大中型企业"
             price="企业版"
-            href="https://sp0dtpsxxk.jiandaoyun.com/f/660a2de0b0a76aafa09bde68"
+            href="/company/contact-us"
             hrefTitle="预约演示"
             target="_blank"
             features={[

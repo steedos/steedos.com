@@ -61,7 +61,7 @@ export default function Home(props) {
         <Testimonials2 />
         <Faqs /> */}
       <CallToAction />
-      <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
+      {/* <div className="max-w-screen-lg xl:max-w-screen-xl mx-auto space-y-20 sm:space-y-32 md:space-y-40 lg:space-y-44">
 
 
             <div className="relative max-w-7xl mx-auto px-4 focus:outline-none sm:px-3 md:px-5">
@@ -107,9 +107,9 @@ export default function Home(props) {
                 })}
               </div>
             </div>
-      </div>
+      </div> */}
 
-      <Pricing />
+      {/* <Pricing /> */}
       {/* <Footer /> */}
     </>
   )

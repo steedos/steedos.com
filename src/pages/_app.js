@@ -13,8 +13,6 @@ import { ResizeObserver } from '@juggle/resize-observer'
 import 'intersection-observer'
 import {has, isArray} from 'lodash';
 import { SearchProvider } from '@/components/Search'
-// import { SessionProvider } from "next-auth/react"
-// import { getSite } from '@/lib/site';
 
 if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
   window.ResizeObserver = ResizeObserver

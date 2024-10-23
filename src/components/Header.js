@@ -65,6 +65,7 @@ export function NavPopover({ display = 'md:hidden', className, ...props }) {
 
   return (
     <div className={clsx(className, display)} {...props}>
+      
       <button
         type="button"
         className="text-slate-500 w-8 h-8 flex items-center justify-center hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
@@ -290,7 +291,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
           </picture>
         </div>
       </div>
-      <header className="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white supports-backdrop-blur:bg-white/95 dark:bg-slate-900/75">
+      <header className="relative top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white supports-backdrop-blur:bg-white/95 dark:bg-slate-900/75">
        
         <nav aria-label="Top" className="max-w-8xl mx-auto font-semibold text-base leading-6 ">
           <div className="py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
@@ -300,7 +301,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
               <div className="flex lg:ml-0">
                 <a href="/">{authenticated}
                   <span className="sr-only">Steedos Platform</span>
-                  <Logo className="w-auto h-9" />
+                  <Logo className="w-8 h-8" />
                 </a>
               </div>
 
@@ -495,17 +496,28 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                       </Transition>
                     </Menu>
                   )}
-                  {!authenticated && (
+                  {/* {!authenticated && (
                     <>
                       <a className="hover:text-sky-500 dark:hover:text-sky-400 text-sm font-medium " onClick={Login}>
                         <span className="ml-2 font-medium text-sm leading-5 rounded-full text-sky-600 hover:bg-sky-400/10 px-3 py-2  dark:text-sky-400">登录</span>
                       </a>
                     </>
-                  )}
-                  <a className="hover:text-sky-500 dark:hover:text-sky-400 text-sm font-medium " href="https://feikongwang.com/login/" target="_blank">
-                    <span className="ml-2 font-medium text-sm leading-5 rounded-full text-sky-600 bg-sky-400/10 px-3 py-2  dark:text-sky-400">试用解决方案</span>
+                  )} */}
+                  <a className="hover:text-gray-500 dark:hover:text-gray-400 text-sm font-medium " href="/company/contact-us" target="_blank">
+                    <span className="ml-2 font-medium text-sm leading-5 rounded-full text-gray-600 px-3 py-2  dark:text-gray-400">联系我们</span>
                   </a>
+                    <div class="dropdown dropdown-hover">
+                      <div tabindex="0" role="button" class="ml-2 font-medium text-sm leading-5 rounded-full text-sky-600 bg-sky-400/10 px-3 py-2  dark:text-sky-400">在线试用</div>
+                      <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                        <li><a href="https://public-demo2.steedos.cn/" target="_blank" className="">低代码平台</a></li>
+                        <li><a href="https://demo.steedos.cn/" target="_blank">演示应用</a></li>
+                        <li><a href="https://feikongwang.steedos.cn/" target="_blank">费控王</a></li>
+                        <li><a href="https://chats6.cn/" target="_blank">华炎AI</a></li>
+                      </ul>
+                    </div>
                   </div>
+                  
+
                   {/* <div className="flex items-center border-l border-slate-200 ml-3 pl-6 dark:border-slate-800">
                     <ThemeToggle panelClassName="mt-8" />
                     <a

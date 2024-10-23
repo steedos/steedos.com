@@ -44,10 +44,10 @@ jobs:
           source: 'serverless-beta.yml'
           target: 'serverless.yml'
 
-      - name: Use Node.js '14'
+      - name: Use Node.js '16'
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
           cache: "yarn"
 
       - run: yarn --frozen-lockfile

@@ -45,6 +45,9 @@
       ],
       "@/pages/*": [
         "src/pages/*"
+      ],
+      "@/b6/*": [
+        "src/b6/*"
       ]
     },
     "incremental": true

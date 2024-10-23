@@ -62,7 +62,7 @@ const moduleExports =
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     STEEDOS_IDENTITY_JWT_SECRET:process.env.STEEDOS_IDENTITY_JWT_SECRET,
   },
-  target: "serverless",
+  // target: "serverless",
   webpack5: true,
   pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
   experimental: {
