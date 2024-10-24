@@ -15,6 +15,15 @@ export async function getStaticProps({params, query}) {
   const defaultProjectId = "ced85241-276f-4d0f-8cfc-84c49d78adee"
 
   let project = await getProjectBySlug(baseId, projectSlug);
+  if (project) {
+    // 循环 project.tabs，如果 tab.type === page, 则 tab.url = '/' + project.slug + tab.url
+    project.tabs = project.tabs.map(tab => {
+      if (tab.type === 'page') {
+        tab.url = '/' + project.slug + tab.url;
+      }
+      return tab;
+    });
+  }
 
   if (!project) {
     project = await getProjectById(baseId, defaultProjectId);

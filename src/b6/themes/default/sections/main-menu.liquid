@@ -22,7 +22,7 @@
     
                     {% for tab in tabs %}
                         <li>
-                            <a href="/{{ slug }}{{ tab.url }}"
+                            <a href="{{ tab.url }}"
                                 class="text-base font-medium ">{{
                                 tab.name }}</a>
                         </li>
@@ -33,7 +33,7 @@
             <ul class="menu menu-horizontal px-1 hidden lg:flex lg:pl-6">
                 {% for tab in tabs %}
                     <li>
-                        <a href="/{{ slug }}{{ tab.url }}"
+                        <a href="{{ tab.url }}"
                             class="text-base font-medium ">{{
                             tab.name }}</a>
                     </li>
