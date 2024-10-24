@@ -8,7 +8,7 @@ import RenderLiquidComponent from '@/b6/components/liquid-component';
 export async function getStaticProps({params, query}) {
   const projectSlug = params.projectSlug;
   let pageUrl = '/' + (params.slug?.join('/') || '');
-  console.log('pageUrl', pageUrl)
+  console.log('pageUrl', pageUrl, projectSlug)
 
   const baseId = "spc-66722b5a71056405ab198b56"
   const defaultProjectId = "ced85241-276f-4d0f-8cfc-84c49d78adee"
@@ -20,7 +20,11 @@ export async function getStaticProps({params, query}) {
     pageUrl = '/' + projectSlug + pageUrl;
   }
 
-  if (!project) return {};
+  if (!project) {
+    return {
+      notFound: true,
+    }
+  }
 
   const page = await getProjectPageByUrl(baseId, project._id, pageUrl);
 
