@@ -4,6 +4,7 @@ import {NextSeo} from 'next-seo'
 import { getProjectById, getProjectBySlug, getProjectPageByUrl, getComponent, getPageBlocks } from '@/b6/interfaces';
 import { RenderBuilderContent } from '@/b6/components/builder6';
 import RenderLiquidComponent from '@/b6/components/liquid-component';
+import _ from 'lodash';
 
 export async function getStaticProps({params, query}) {
   const projectSlug = params.projectSlug;
