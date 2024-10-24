@@ -35,6 +35,8 @@ export async function getStaticProps({params, query}) {
   }
 
   let blocks = await getPageBlocks(baseId, page._id);
+  blocks = _.orderBy(blocks, [(item) => item['sort']], ['asc']);
+
   let header = null; //await getComponent(baseId, "header");
   let footer = null; //await getComponent(baseId, "footer");
   let mainMenu = project.enable_tabs ? await getComponent(baseId, "main-menu") : null;
