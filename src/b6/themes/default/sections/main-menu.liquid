@@ -23,6 +23,7 @@
                     {% for tab in tabs %}
                         <li>
                             <a href="{{ tab.url }}"
+                                target={{"_blank" if tab.is_new_window else ""}}
                                 class="text-base font-medium ">{{
                                 tab.name }}</a>
                         </li>
@@ -34,6 +35,7 @@
                 {% for tab in tabs %}
                     <li>
                         <a href="{{ tab.url }}"
+                            target={{"_blank" if tab.is_new_window else ""}}
                             class="text-base font-medium ">{{
                             tab.name }}</a>
                     </li>
