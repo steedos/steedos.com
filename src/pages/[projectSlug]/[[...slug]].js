@@ -81,6 +81,11 @@ export default function PageDetail({project, page, header, footer, mainMenu, blo
     builderJson.name = page.name;
     return (
       <>
+
+        <NextSeo
+          title={page.name}
+          description={page.description}
+          />
         {header && (
           <RenderLiquidComponent component={header} data={{project}} />
         )}
