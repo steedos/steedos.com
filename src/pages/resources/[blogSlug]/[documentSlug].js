@@ -52,12 +52,18 @@ export default function PageDetail({blog, document}){
   // console.log('post', document)
   if (document && document.markdown) {
     return (
-      <div class="max-w-3xl mx-auto pt-16 pb-10 px-4">
-          <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-4xl ">{document.name}</h1>
-          <div class="prose prose-lg py-10">
-            <Markdown body={document.markdown} className=""></Markdown>
-          </div>
-      </div>
+      <>
+        <NextSeo
+        title={document.name}
+        description={document.description}
+        />
+        <div class="max-w-3xl mx-auto pt-16 pb-10 px-4">
+            <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 md:text-4xl ">{document.name}</h1>
+            <div class="prose prose-lg py-10">
+              <Markdown body={document.markdown} className=""></Markdown>
+            </div>
+        </div>
+      </>
 
     );
   }

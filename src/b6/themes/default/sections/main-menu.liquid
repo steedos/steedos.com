@@ -1,6 +1,6 @@
 <div class=" bg-white">
 
-    <div class="navbar bg-base-10 max-w-8xl mx-auto px-8 text-base">
+    <div class="navbar bg-base-10 max-w-8xl mx-auto sm:px-8 text-base">
         <div class="navbar-start">
             <div class="dropdown">
                 <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -22,18 +22,20 @@
     
                     {% for tab in tabs %}
                         <li>
-                            <a href="/{{ slug }}{{ tab.url }}"
+                            <a href="{{ tab.url }}"
+                                {% if tab.is_new_window %} target="_blank" {% endif %}
                                 class="text-base font-medium ">{{
                                 tab.name }}</a>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
-            <a href="/{{ slug }}" class="text-2xl font-semibold whitespace-nowrap lg:border-r lg:border-black/10 lg:pr-6">{{name}}</a>
+            <a href="/{{ slug }}" class="text-xl font-semibold whitespace-nowrap lg:border-r lg:border-black/10 lg:pr-6">{{name}}</a>
             <ul class="menu menu-horizontal px-1 hidden lg:flex lg:pl-6">
                 {% for tab in tabs %}
                     <li>
-                        <a href="/{{ slug }}{{ tab.url }}"
+                        <a href="{{ tab.url }}"
+                            {% if tab.is_new_window %} target="_blank" {% endif %}
                             class="text-base font-medium ">{{
                             tab.name }}</a>
                     </li>

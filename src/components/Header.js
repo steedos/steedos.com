@@ -201,30 +201,30 @@ export function NavPopover({ display = 'md:hidden', className, ...props }) {
 export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section }) {
   const [isOpaque, setIsOpaque] = useState(false)
 
-  const [authenticated, setAuthenticated] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+  // const [authenticated, setAuthenticated] = useState(false);
+  // const [userInfo, setUserInfo] = useState(null);
 
-  useEffect(() => {
-    isAuthenticated().then((result) => {
-      setAuthenticated(result);
-    });
-  }, []);
+  // useEffect(() => {
+  //   isAuthenticated().then((result) => {
+  //     setAuthenticated(result);
+  //   });
+  // }, []);
   
-  useEffect(() => {
-    if (authenticated) {
-      (window).keycloak.loadUserInfo().then((result) => {
-        setUserInfo(result);
-      });
-    } else {
-      setUserInfo(null)
-    }
-  }, [authenticated]);
+  // useEffect(() => {
+  //   if (authenticated) {
+  //     (window).keycloak.loadUserInfo().then((result) => {
+  //       setUserInfo(result);
+  //     });
+  //   } else {
+  //     setUserInfo(null)
+  //   }
+  // }, [authenticated]);
 
 
-  useEffect(() => {
-    console.log(authenticated);
-    console.log(userInfo);
-  }, [authenticated, userInfo]);
+  // useEffect(() => {
+  //   console.log(authenticated);
+  //   console.log(userInfo);
+  // }, [authenticated, userInfo]);
 
 
 
@@ -299,7 +299,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
              
               {/* Logo */}
               <div className="flex lg:ml-0">
-                <a href="/">{authenticated}
+                <a href="/">
                   <span className="sr-only">Steedos Platform</span>
                   <Logo className="w-8 h-8" />
                 </a>
@@ -410,7 +410,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
 
                 <div className="relative hidden lg:flex items-center ml-auto">
                   <div className="text-slate-700 dark:text-slate-200">
-                  {userInfo && (
+                  {/* {userInfo && (
                     <Menu as="div" className="relative inline-block text-left">
                       <div>
                         <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium rounded-md bg-opacity-20 hover:text-sky-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
@@ -450,26 +450,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                               我的账户
                               </a>
                             </Menu.Item>
-                            {/* <Menu.Item>
-                              <a href="https://console.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <CogIcon
-                                  className="w-5 h-5 mr-2 text-sky-400"
-                                  aria-hidden="true"
-                                />
-                              管理控制台
-                              </a>
-                            </Menu.Item> */}
-{/* 
-                            <Menu.Item>
-                              <a href="https://demo.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
-                                <CodeIcon
-                                  className="w-5 h-5 mr-2 text-sky-400"
-                                  aria-hidden="true"
-                                />
-                              演示环境
-                              </a>
-                            </Menu.Item> */}
-
+                        
                             <Menu.Item>
                               <a href="https://gitlab.steedos.cn" target="_blank" className="font-medium text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm">
                                 <CodeIcon
@@ -495,7 +476,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                         </Menu.Items>
                       </Transition>
                     </Menu>
-                  )}
+                  )} */}
                   {/* {!authenticated && (
                     <>
                       <a className="hover:text-sky-500 dark:hover:text-sky-400 text-sm font-medium " onClick={Login}>
@@ -509,10 +490,8 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                     <div class="dropdown dropdown-hover">
                       <div tabindex="0" role="button" class="ml-2 font-medium text-sm leading-5 rounded-full text-sky-600 bg-sky-400/10 px-3 py-2  dark:text-sky-400">在线试用</div>
                       <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                        <li><a href="https://public-demo2.steedos.cn/" target="_blank" className="">低代码平台</a></li>
-                        <li><a href="https://demo.steedos.cn/" target="_blank">演示应用</a></li>
-                        <li><a href="https://feikongwang.steedos.cn/" target="_blank">费控王</a></li>
-                        <li><a href="https://chats6.cn/" target="_blank">华炎AI</a></li>
+                        <li><a href="https://demo.steedos.cn/" target="_blank">低代码平台</a></li>
+                        <li><a href="https://feikongwang.steedos.cn/" target="_blank">费控解决方案</a></li>
                       </ul>
                     </div>
                   </div>
@@ -537,7 +516,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                     </a>
                   </div> */}
                 </div>
-                <SearchButton className="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300">
+                {/* <SearchButton className="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300">
                   <span className="sr-only">Search</span>
                   <svg
                     width="24"
@@ -552,7 +531,7 @@ export function Header({ hasNav = false, navIsOpen, onNavToggle, title, section 
                     <path d="m19 19-3.5-3.5" />
                     <circle cx="11" cy="11" r="6" />
                   </svg>
-                </SearchButton>
+                </SearchButton> */}
                 <NavPopover className="ml-2 -my-1" display="lg:hidden" />
               </div>
             </div>

@@ -1,11 +1,11 @@
 export const footerNav = [
   {
     id: 'platform',
-    name: '产品',
+    name: '低代码平台',
     href: '/platform/overview',
     items: [
+      { name: '华炎魔方概览', href: '/platform/' },
       { name: '什么是低代码？', href: '/platform/lowcode' },
-      { name: '平台介绍', href: '/platform/overview' },
       { name: '技术架构', href: '/platform/architecture' },
       { name: '十大引擎', href: '/platform/features' },
       { name: '报价', href: '/platform/pricing' },

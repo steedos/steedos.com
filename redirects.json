@@ -3,8 +3,6 @@
   { "source": "/docs/:slug*", "destination": "https://docs.steedos.com/zh-CN/getting-started/", "permanent": true },
   { "source": "/cn", "destination": "https://www.steedos.cn/", "permanent": true },
   { "source": "/cn/", "destination": "https://www.steedos.cn/", "permanent": true },
-  { "source": "/platform", "destination": "/", "permanent": true },
-  { "source": "/platform/", "destination": "/", "permanent": true },
   { "source": "/platform/cases", "destination": "/customer-success-stories/dzug", "permanent": true },
   { "source": "/platform/try", "destination": "/docs/deploy/deploy-cloud", "permanent": true },
   { "source": "/customers", "destination": "/customer-success-stories", "permanent": true },
