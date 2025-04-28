@@ -24,3 +24,11 @@
 
 @import 'beams';
 
+
+:root .prose{
+    --tw-prose-headings: rgb(3, 45, 96)
+}
+
+.prose-xl :where(h3):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+    font-size: 1.5rem;
+}
