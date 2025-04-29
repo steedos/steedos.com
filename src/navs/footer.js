@@ -1,18 +1,29 @@
 export const footerNav = [
   {
     id: 'platform',
-    name: '低代码平台',
+    name: '低代码',
     href: '/platform/overview',
     items: [
-      { name: '平台概览', href: '/platform/' },
+      { name: '华炎魔方', href: '/platform/' },
       { name: '模型驱动开发', href: '/resources/features/model-builder' },
       { name: '页面设计器', href: '/resources/features/page-builder' },
       { name: '仪表盘与报表分析', href: '/resources/features/analytics' },     
-      { name: '可视化流程设计', href: '/resources/features/workflow' },
-      { name: '流程自动化', href: '/resources/features/automation' },        
+      { name: '可视化流程设计', href: '/resources/features/workflow' },    
       { name: '安全与合规', href: '/resources/features/security' },        
+      { name: '自动化与集成', href: '/resources/features/automation' },    
       { name: '协同开发与版本管理', href: '/resources/features/developer-experience' },
       
+    ],
+  },
+  {
+    id: 'ai',
+    name: '人工智能',
+    href: '/resources/artificial-intelligence',
+    items: [
+      { name: 'AI 协同写作', href: '/resources/artificial-intelligence/ai-word' },
+      { name: 'AI 内容审核', href: '/resources/artificial-intelligence/ai-review' },
+      { name: 'AI 知识库', href: '/resources/artificial-intelligence/ai-kb' },
+      { name: 'AI 自动化', href: '/resources/artificial-intelligence/ai-automation' },
     ],
   },
   {
@@ -30,22 +41,11 @@ export const footerNav = [
     ],
   },
   {
-    id: 'ai',
-    name: '人工智能',
-    href: '/resources/artificial-intelligence',
-    items: [
-      { name: 'AI 协同写作', href: '/resources/artificial-intelligence/ai-word' },
-      { name: 'AI 内容审核', href: '/resources/artificial-intelligence/ai-review' },
-      { name: 'AI 知识库', href: '/resources/artificial-intelligence/ai-kb' },
-      { name: 'AI 自动化', href: '/resources/artificial-intelligence/ai-automation' },
-    ],
-  },
-  {
     id: 'customer-cases',
     name: '客户案例',
     href: '/reources/customer-success-stories/',
     items: [
-      { name: '百事视频', href: '/resources/customer-success-stories/pepsico' },
+      { name: '百事食品', href: '/resources/customer-success-stories/pepsico' },
       { name: '中国石油', href: '/resources/customer-success-stories/cnpc-media' },
       { name: '海泰地产', href: '/resources/customer-success-stories/hitime' },
       { name: '大众公用', href: '/resources/customer-success-stories/dzug' },

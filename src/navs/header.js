@@ -3,7 +3,7 @@ export const headerNav = {
   categories: [
     {
       id: 'platform',
-      name: '平台',
+      name: '产品',
       featured: [
         {
           name: '华炎魔方赋能企业，打造数字驱动型组织',
@@ -33,15 +33,15 @@ export const headerNav = {
         },
         {
           id: 'features',
-          name: '平台功能',
+          name: '核心功能',
           href: '/platform/features/',
           items: [
             { name: '模型驱动开发', href: '/resources/features/model-builder' },
             { name: '页面设计器', href: '/resources/features/page-builder' },
             { name: '仪表盘与报表分析', href: '/resources/features/analytics' },     
-            { name: '可视化流程设计', href: '/resources/features/workflow' },
-            { name: '自动化与集成', href: '/resources/features/automation' },        
+            { name: '可视化流程设计', href: '/resources/features/workflow' },  
             { name: '安全与合规', href: '/resources/features/security' },        
+            { name: '自动化与集成', href: '/resources/features/automation' },      
             { name: '协同开发与版本管理', href: '/resources/features/developer-experience' },
           ],
         },
@@ -111,7 +111,7 @@ export const headerNav = {
           name: '客户案例',
           href: '/resources/customer-success-stories/',
           items: [
-            { name: '百事视频', href: '/resources/customer-success-stories/pepsico' },
+            { name: '百事食品', href: '/resources/customer-success-stories/pepsico' },
             { name: '中国石油', href: '/resources/customer-success-stories/cnpc-media' },
             { name: '海泰地产', href: '/resources/customer-success-stories/hitime' },
             { name: '大众公用', href: '/resources/customer-success-stories/dzug' },
