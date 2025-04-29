@@ -50,7 +50,7 @@ export default function PageDetail({blog, documents}){
   // console.log('blog', blog, documents)
   if (blog && documents.length > 0) {
     return (
-      <div className="lg:py-24 py-12">
+      <div className="lg:py-24 py-12 bg-gradient-to-t from-gray-100 ">
         <div className="mx-auto max-w-2xl lg:max-w-7xl">
           <h1 className="mb-12 text-4xl font-medium tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-6xl">
             {blog.name}
@@ -59,7 +59,7 @@ export default function PageDetail({blog, documents}){
             <p className="max-w-3xl text-2xl font-medium text-gray-500">{blog.description}</p>
           </div>)}
         </div>
-        <div className="mt-16 bg-linear-to-t from-gray-100 pb-14">
+        <div className="mt-16 pb-14">
           <div className="mx-auto max-w-2xl lg:max-w-7xl">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
               {documents?.map((post) => {
