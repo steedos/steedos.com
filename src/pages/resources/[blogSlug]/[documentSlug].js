@@ -16,10 +16,16 @@ export async function getStaticProps({params, query}) {
   const projectId = "ced85241-276f-4d0f-8cfc-84c49d78adee"
 
   const project = await getProjectById(baseId, projectId);
-  if (!project) return {};
+  if (!project)  {
+    console.log('project not found', projectId)
+    return {
+      notFound: true,
+    }
+  }
 
   const blog = await getBlogByUrl(baseId, params.blogSlug);
   if (!blog) {
+    console.log('blog not found', params.blogSlug)
     return {
       notFound: true,
     }
@@ -29,6 +35,7 @@ export async function getStaticProps({params, query}) {
   const document = await getDocumentByUrl(baseId, blog._id, params.documentSlug);
 
   if (!document) {
+    console.log('document not found', params.documentSlug)
     return {
       notFound: true,
     }
@@ -54,7 +61,7 @@ export const getStaticPaths = (async () => {
 
 export default function PageDetail({blog, document}){
 
-  // console.log('post', document)
+  console.log('post', document)
   if (document && document.markdown) {
     return (
       <>
@@ -72,6 +79,9 @@ export default function PageDetail({blog, document}){
                 </div>
               </div>
               <div class="prose prose-lg max-w-3xl xl:mx-auto">
+                {/* {document.cover && (
+                  <img src={`https://builder6.steedos.cn/api/files/images/${document.cover}`} class="mb-10 aspect-3/2 w-full rounded-2xl object-cover"/>
+                )} */}
                 <Markdown body={document.markdown} className=""></Markdown>
               </div>
             </div>

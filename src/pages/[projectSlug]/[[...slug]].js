@@ -84,7 +84,7 @@ export default function PageDetail({project, page, header, footer, mainMenu, blo
           title={page.name}
           description={page.description}
           />
-        {header && (
+        {/* {header && (
           <RenderLiquidComponent component={header} data={{project}} />
         )}
 
@@ -93,7 +93,7 @@ export default function PageDetail({project, page, header, footer, mainMenu, blo
           <div className='sticky z-30 top-0 left-0 w-full'>
             <RenderLiquidComponent component={mainMenu} data={{...project, project}} />
           </div>
-        )}
+        )} */}
 
         {/* Render the Builder page */}
         <RenderBuilderContent content={builderJson}/>

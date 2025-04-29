@@ -3,7 +3,7 @@ export const headerNav = {
   categories: [
     {
       id: 'platform',
-      name: '产品',
+      name: '平台',
       featured: [
         {
           name: '华炎魔方赋能企业，打造数字驱动型组织',
@@ -34,7 +34,22 @@ export const headerNav = {
         {
           id: 'features',
           name: '平台功能',
-          href: '/videos',
+          href: '/platform/features/',
+          items: [
+            { name: '模型驱动开发', href: '/resources/features/model-builder' },
+            { name: '页面设计器', href: '/resources/features/page-builder' },
+            { name: '仪表盘与报表分析', href: '/resources/features/analytics' },     
+            { name: '可视化流程设计', href: '/resources/features/workflow' },
+            { name: '流程自动化', href: '/resources/features/automation' },        
+            { name: '安全与合规', href: '/resources/features/security' },        
+            { name: '协作开发与版本管理', href: '/resources/features/dx' },
+
+          ],
+        },
+        {
+          id: 'solutions',
+          name: '视频',
+          href: '/videos/',
           items: [
             { name: '数据建模', href: '/videos/lesson-object' },
             { name: '权限引擎', href: '/videos/authority_management' },
@@ -45,33 +60,22 @@ export const headerNav = {
             { name: 'DevOps', href: '/videos/live-course-devops' },
           ],
         },
-        {
-          id: 'solutions',
-          name: '解决方案',
-          href: '/solutions',
-          items: [
-            { name: '费控王', href: 'https://feikongwang.com', target: "_blank"},
-            { name: '项目成本管理', href: '/solutions/project' },
-            { name: '合同管理', href: '/solutions/contract' },
-            { name: 'PC-MES生产管理', href: '/solutions/pcmes' },
-          ],
-        },
       ],
     },
     {
-      id: 'customer-success-stories',
-      name: '客户',
+      id: 'solutions',
+      name: '解决方案',
       featured: [
         {
           name: '华炎魔方助力招商银行探索产品低代码化转型',
-          href: '/customer-success-stories/cmbchina-poc',
+          href: '/resources/customer-success-stories/cmbchina-poc',
           imageSrc: 'https://console.steedos.cn/api/files/images/6440ac94671028003e760f11',
           imageAlt:
             '薪福通3.0借助华炎魔方平台向低代码赛道转型。',
         },
         {
           name: '华炎魔方助力清华大学搭建图书馆资产管理系统',
-          href: '/customer-success-stories/tsinghua',
+          href: '/resources/customer-success-stories/tsinghua',
           imageSrc: 'https://console.steedos.cn/api/files/images/6440acbd671028003e760f13',
           imageAlt:
             '2022年9月清华大学图书馆联合上海华炎软件，使用华炎魔方低代码开发平台进行了应用系统生命周期管理软件的研发，通过1个月的时间，完成了整个系统的建设。',
@@ -79,17 +83,28 @@ export const headerNav = {
       ],
       sections: [
         {
+          id: 'solutions',
+          name: '解决方案',
+          href: '/resources/solutions',
+          items: [
+            { name: '费控管理', href: '/resources/solutions/cost', target: "_blank"},
+            { name: '项目管理', href: '/resources/solutions/project' },
+            { name: '合同管理', href: '/resources/solutions/contract' },
+            { name: 'PC-MES生产管理', href: '/resources/solutions/pcmes' },
+          ],
+        },
+        {
           id: 'customer-cases',
           name: '客户案例',
-          href: '/customer-success-stories/',
+          href: '/resources/customer-success-stories/',
           items: [
-            { name: '招商银行', href: '/customer-success-stories/cmbchina-poc' },
-            { name: '清华大学', href: '/customer-success-stories/tsinghua' },
-            { name: '建华建材', href: '/customer-success-stories/jianhuabm' },
-            { name: '大众公用', href: '/customer-success-stories/dzug' },
-            { name: '智器云', href: '/customer-success-stories/zqy' },
-            { name: '中意盛森', href: '/customer-success-stories/contract' },
-            { name: '河北港口集团', href: '/customer-success-stories/porthebei' },
+            { name: '招商银行', href: '/resources/customer-success-stories/cmbchina-poc' },
+            { name: '清华大学', href: '/resources/customer-success-stories/tsinghua' },
+            { name: '大众公用', href: '/resources/customer-success-stories/dzug' },
+            { name: '建华建材', href: '/resources/customer-success-stories/jianhuabm' },
+            { name: '智器云', href: '/resources/customer-success-stories/zqy' },
+            { name: '中意盛森', href: '/resources/customer-success-stories/contract' },
+            { name: '河北港口集团', href: '/resources/customer-success-stories/porthebei' },
           ],
         },
         // {
@@ -109,9 +124,8 @@ export const headerNav = {
           href: '/company/about-us',
           items: [
             { name: '关于我们', href: '/company/about-us' },
-            { name: '客户案例', href: '/customer-success-stories' },
-            { name: '解决方案', href: '/solutions' },
-            { name: '服务', href: '/collections/services' },
+            { name: '客户案例', href: '/resources/customer-success-stories' },
+            { name: '解决方案', href: '/resources/solutions' },
             { name: '联系我们', href: '/company/contact-us' },
           ],
         },
@@ -120,8 +134,8 @@ export const headerNav = {
 
   ],
   pages: [
+    { name: '报价', href: '/platform/pricing' },
     { name: '文档', href: 'https://docs.steedos.com/zh-CN/getting-started/', target: "steedos-docs" },
-    { name: '视频', href: '/videos/' },
     { name: '公司', href: '/company/about-us' },
   ],
 }
