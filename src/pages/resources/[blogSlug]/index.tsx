@@ -2,8 +2,11 @@ import { useRouter } from 'next/router'
 
 import {NextSeo} from 'next-seo'
 import { getProjectById, getBlogByUrl, getBlogDocuments } from '@/b6/interfaces';
-import { RenderBuilderContent } from '@/b6/components/builder6';
-import { Markdown } from '@/components/Markdown'
+import moment from 'moment'
+import 'moment/locale/zh-cn'   // 如果你要用中文环境
+
+moment.locale('zh-cn')        // 全局设置为中文
+
 
 export async function getStaticProps({params, query}) {
 
@@ -47,46 +50,43 @@ export default function PageDetail({blog, documents}){
   // console.log('blog', blog, documents)
   if (blog && documents.length > 0) {
     return (
-      <div className="mx-auto max-w-screen-lg lg:py-16 py-10">
-      <div className="pb-20">
-      <h1 className="md:text-4xl text-2xl text-center font-bold text-slate-700 dark:text-slate-200">
-        {blog.name}
-      </h1>
-      {blog.body && (<div className="pt-10">
-        <Markdown body={blog.body}></Markdown>
-      </div>)}
-      </div>
+      <div className="lg:py-24 py-12">
+        <div className="mx-auto max-w-2xl lg:max-w-7xl">
+          <h1 className="mb-12 text-4xl font-medium tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-6xl">
+            {blog.name}
+          </h1>
+          {blog.description && (<div className="mb-12">
+            <p className="max-w-3xl text-2xl font-medium text-gray-500">{blog.description}</p>
+          </div>)}
+        </div>
+        <div className="mt-16 bg-linear-to-t from-gray-100 pb-14">
+          <div className="mx-auto max-w-2xl lg:max-w-7xl">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+              {documents?.map((post) => {
 
-      <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-2 lg:gap-x-8">
-        {documents?.map((post) => {
-
-          const fullSlug = `/resources/${blog.url}/${post.url}`
-          const imageUrl = post.cover? `https://builder6.steedos.cn` + `/api/files/images/${post.cover}` : null
-          return (
-            <div
-              key={post.slug}
-              className="group relative flex flex-col overflow-hidden"
-            >
-              <div className="aspect-w-5 aspect-h-3 bg-gray-200 group-hover:opacity-75 rounded-lg ">
-                <img
-                  src={imageUrl}
-                  className="w-full h-full object-center object-cover sm:w-full sm:h-full"
-                />
-              </div>
-              <div className="flex-1 py-6 space-y-4 flex flex-col">
-                <h3 className="md:text-2xl text-xl font-medium">
-                  <a href={`${fullSlug}`}>
-                    <span aria-hidden="true" className="text-slate-700 dark:text-slate-200">
-                    {post.name}
-                    </span>
-                  </a>
-                </h3>
-                {/* <p className="text-sm text-gray-500">{post.owner__expand?.name}</p> */}
-                <p className="text-md">{post.summary}</p>
-              </div>
+                const fullSlug = `/resources/${blog.url}/${post.url}`
+                const imageUrl = post.cover? `https://builder6.steedos.cn` + `/api/files/images/${post.cover}` : 'https://cdn.sanity.io/images/ssqh4ksj/production/c734dd394de943820a25b4b96eace0855ab44749-2016x1344.png?w=1170&h=780&auto=format'
+                return (
+                  <div 
+                    key={post.slug}
+                    className="relative flex flex-col rounded-3xl bg-white p-2 shadow-md ring-1 shadow-black/5 ring-black/5">
+                    <img alt="A crossed out European emblem" src={imageUrl} className="aspect-3/2 w-full rounded-2xl object-cover"/>
+                    <div className="flex flex-1 flex-col p-8">
+                      <div className="text-sm/5 text-gray-700">{moment(post.modified).format('LL')}</div>
+                      <div className="mt-2 text-base/7 font-medium">
+                        <a data-headlessui-state="hover" href={fullSlug} data-hover=""><span className="absolute inset-0"></span>{post.name}</a>
+                      </div>
+                      <div className="mt-2 flex-1 text-sm/6 text-gray-500">{post.summary}</div>
+                      {/* <div className="mt-6 flex items-center gap-3">
+                        <img alt="" src="https://cdn.sanity.io/images/ssqh4ksj/production/cd1ee59e9e4c2ff30c303de6c7d1066c057419d5-7952x5304.jpg?rect=2370,0,5304,5304&amp;w=64&amp;h=64&amp;auto=format" className="aspect-square size-6 rounded-full object-cover"/>
+                        <div className="text-sm/5 text-gray-700">Marcus Eldridge</div>
+                      </div> */}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-          )
-        })}
+          </div>
       </div>
     </div>
     );
