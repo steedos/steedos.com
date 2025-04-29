@@ -167,7 +167,7 @@ export const getBlogDocuments = async (baseId: string, blogId: string) => {
   try {
 
     const documents = await base("b6_documents").select({
-      'filterByFormula': `blog_id === "${blogId}"`
+      'filterByFormula': `blog_id === "${blogId}" && status != "hidden"`
     }).firstPage(); 
 
     console.log('Retrieved blog documents', documents.length);
