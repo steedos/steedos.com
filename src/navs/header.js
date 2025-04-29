@@ -21,13 +21,14 @@ export const headerNav = {
       sections: [
         {
           id: 'platform',
-          name: '低代码平台',
+          name: '产品',
           href: '/platform/',
           items: [
             { name: '华炎魔方概览', href: '/platform/' },
-            { name: '什么是低代码？', href: '/platform/lowcode' },
-            { name: '技术架构', href: '/platform/architecture' },
-            { name: '十大引擎', href: '/platform/features' },
+            { name: '核心功能', href: '/platform/features' },
+            { name: '解决方案', href: '/platform/solutions' },
+            { name: '人工智能', href: '/resources/artificial-intelligence' },
+            { name: '低代码', href: '/platform/lowcode' },
             { name: '报价', href: '/platform/pricing' },
           ],
         },
