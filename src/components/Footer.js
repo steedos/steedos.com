@@ -9,7 +9,7 @@ export const Footer = (props) => {
     <h2 id="footer-heading" className="sr-only">
       Footer
     </h2>
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8  border-t">
       <div className="py-8 grid grid-cols-4 gap-8 xl:col-span-2">
         {footerNav.map((section) => (
         <div key={section.name} className="col-span-2 sm:col-span-1">
