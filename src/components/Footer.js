@@ -5,7 +5,7 @@ import { FloatingMenu } from './FloatingMenu';
 
 export const Footer = (props) => {
   return (
-  <footer aria-labelledby="footer-heading" className="pt-12 bg-gray-50">
+  <footer aria-labelledby="footer-heading" className="pt-12 bg-gray-50 px-6">
     <div className="mx-auto max-w-2xl lg:max-w-7xl">
       <div className="py-8 grid grid-cols-4 gap-8 xl:col-span-2">
         {footerNav.map((section) => (
