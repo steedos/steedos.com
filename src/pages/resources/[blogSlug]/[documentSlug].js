@@ -4,14 +4,16 @@ import {NextSeo} from 'next-seo'
 import { getProjectById, getBlogByUrl, getDocumentByUrl } from '@/b6/interfaces';
 
 import { useMemo } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import visit from 'unist-util-visit';
+import BananaSlug from 'github-slugger'
 
 import { Markdown } from '@/components/Markdown'
 import moment from 'moment'
 import 'moment/locale/zh-cn'   // 如果你要用中文环境
+
+const slugs = new BananaSlug()
 
 moment.locale('zh-cn')        // 全局设置为中文
 
@@ -140,16 +142,22 @@ export default function PageDetail({blog, document}){
             <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-4 py-1 font-medium text-gray-500" data-headlessui-state="" href={blog.href}>{blog.name}</a>
           </div>
           <h1 class="mt-4 text-4xl font-bold tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-5xl sm:leading-[1.3]">{document.name}</h1>
-          <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr]"> 
+          <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-[20rem_1fr]"> 
             {/* 左侧目录：sticky */} 
-            <aside className="self-start sticky top-16 h-max"> 
+            <aside className="self-start hidden lg:block lg:sticky top-16 h-max"> 
               <ul className="flex flex-col gap-6 border-l-2 border-gray-300 pl-4"> 
-                {headings.map((h, index) => ( 
-                  <li key={index}> 
-                    <a href={`#${h.replace(/\s+/g, '-')}`} className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors" > 
-                      {h} 
-                    </a> 
-                </li> ))} 
+                {
+                  headings.map((h, index) => {
+
+                    slugs.reset()
+                    const id = slugs.slug(h, true) 
+                    return ( 
+                    <li key={index}> 
+                      <a href={`#${id}`} className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors" > 
+                        {h} 
+                      </a> 
+                  </li> )})
+                } 
               </ul> 
             </aside>
             <main class="prose prose-lg max-w-4xl xl:mx-auto">
