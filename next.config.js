@@ -20,7 +20,7 @@ const withTM = require('next-transpile-modules')(
     'react-markdown',
     'remark-gfm',
     'markdown-toc',
-    'react-syntax-highlighter'
+    'react-syntax-highlighter',
   ], {resolveSymlinks: true, debug: true,}); // pass the modules you would like to see transpiled
 
 const {remarkPluginsWebpack} = require('./remark')
@@ -119,171 +119,171 @@ const moduleExports =
     //   ],
     // })
 
-    config.resolve.alias['defaultConfig$'] = require.resolve('tailwindcss/defaultConfig')
-    config.module.rules.push({
-      test: require.resolve('tailwindcss/defaultConfig'),
-      use: createLoader(function (_source) {
-        return `export default ${JSON.stringify(defaultConfig)}`
-      }),
-    })
+    // config.resolve.alias['defaultConfig$'] = require.resolve('tailwindcss/defaultConfig')
+    // config.module.rules.push({
+    //   test: require.resolve('tailwindcss/defaultConfig'),
+    //   use: createLoader(function (_source) {
+    //     return `export default ${JSON.stringify(defaultConfig)}`
+    //   }),
+    // })
 
-    let mdx = (plugins = []) => [
-      {
-        loader: '@mdx-js/loader',
-        options: {
-          remarkPlugins: [
-            // withPrevalInstructions,
-            // withExamples,
-            withTableOfContents,
-            withSyntaxHighlighting,
-            // withNextLinks,
-            withSmartQuotes,
-            ...plugins,
-          ],
-          rehypePlugins: [withLinkRoles],
-        },
-      },
-      createLoader(function (source) {
-        let pathSegments = this.resourcePath.split(path.sep)
-        let slug =
-          pathSegments[pathSegments.length - 1] === 'index.mdx'
-            ? pathSegments[pathSegments.length - 2]
-            : pathSegments[pathSegments.length - 1].replace(/\.mdx$/, '')
-        return source + `\n\nexport const slug = '${slug}'`
-      }),
-    ]
+    // let mdx = (plugins = []) => [
+    //   {
+    //     loader: '@mdx-js/loader',
+    //     options: {
+    //       remarkPlugins: [
+    //         // withPrevalInstructions,
+    //         // withExamples,
+    //         withTableOfContents,
+    //         withSyntaxHighlighting,
+    //         // withNextLinks,
+    //         withSmartQuotes,
+    //         ...plugins,
+    //       ],
+    //       rehypePlugins: [withLinkRoles],
+    //     },
+    //   },
+    //   createLoader(function (source) {
+    //     let pathSegments = this.resourcePath.split(path.sep)
+    //     let slug =
+    //       pathSegments[pathSegments.length - 1] === 'index.mdx'
+    //         ? pathSegments[pathSegments.length - 2]
+    //         : pathSegments[pathSegments.length - 1].replace(/\.mdx$/, '')
+    //     return source + `\n\nexport const slug = '${slug}'`
+    //   }),
+    // ]
 
-    config.module.rules.push({
-      test: { and: [/\.mdx$/, /snippets/] },
-      resourceQuery: { not: [/rss/, /preview/] },
-      use: [
-        options.defaultLoaders.babel,
-        {
-          loader: '@mdx-js/loader',
-          options: {
-            remarkPlugins: [withSyntaxHighlighting],
-          },
-        },
-      ],
-    })
+    // config.module.rules.push({
+    //   test: { and: [/\.mdx$/, /snippets/] },
+    //   resourceQuery: { not: [/rss/, /preview/] },
+    //   use: [
+    //     options.defaultLoaders.babel,
+    //     {
+    //       loader: '@mdx-js/loader',
+    //       options: {
+    //         remarkPlugins: [withSyntaxHighlighting],
+    //       },
+    //     },
+    //   ],
+    // })
 
-    config.module.rules.push({
-      test: /\.mdx$/,
-      resourceQuery: /rss/,
-      use: [options.defaultLoaders.babel, ...mdx()],
-    })
+    // config.module.rules.push({
+    //   test: /\.mdx$/,
+    //   resourceQuery: /rss/,
+    //   use: [options.defaultLoaders.babel, ...mdx()],
+    // })
 
-    config.module.rules.push({
-      test: /\.mdx$/,
-      resourceQuery: /preview/,
-      use: [
-        options.defaultLoaders.babel,
-        createLoader(function (src) {
-          const [preview] = src.split('<!--/excerpt-->')
-          return preview.replace('<!--excerpt-->', '')
-        }),
-        ...mdx([
-          () => (tree) => {
-            let firstParagraphIndex = tree.children.findIndex((child) => child.type === 'paragraph')
-            if (firstParagraphIndex > -1) {
-              tree.children = tree.children.filter((child, index) => {
-                if (child.type === 'import' || child.type === 'export') {
-                  return true
-                }
-                return index <= firstParagraphIndex
-              })
-            }
-          },
-        ]),
-      ],
-    })
+    // config.module.rules.push({
+    //   test: /\.mdx$/,
+    //   resourceQuery: /preview/,
+    //   use: [
+    //     options.defaultLoaders.babel,
+    //     createLoader(function (src) {
+    //       const [preview] = src.split('<!--/excerpt-->')
+    //       return preview.replace('<!--excerpt-->', '')
+    //     }),
+    //     ...mdx([
+    //       () => (tree) => {
+    //         let firstParagraphIndex = tree.children.findIndex((child) => child.type === 'paragraph')
+    //         if (firstParagraphIndex > -1) {
+    //           tree.children = tree.children.filter((child, index) => {
+    //             if (child.type === 'import' || child.type === 'export') {
+    //               return true
+    //             }
+    //             return index <= firstParagraphIndex
+    //           })
+    //         }
+    //       },
+    //     ]),
+    //   ],
+    // })
 
-    config.module.rules.push({
-      test: { and: [/\.mdx$/], not: [/snippets/] },
-      resourceQuery: { not: [/rss/, /preview/] },
-      use: [
-        options.defaultLoaders.babel,
-        createLoader(function (source) {
-          if (source.includes('/*START_META*/')) {
-            const [meta] = source.match(/\/\*START_META\*\/(.*?)\/\*END_META\*\//s)
-            return 'export default ' + meta
-          }
-          return (
-            source.replace(/export const/gs, 'const') + `\nMDXContent.layoutProps = layoutProps\n`
-          )
-        }),
-        ...mdx(),
-        createLoader(function (source) {
-          let fields = new URLSearchParams(this.resourceQuery.substr(1)).get('meta') ?? undefined
-          let { attributes: meta, body } = frontMatter(source)
-          if (fields) {
-            for (let field in meta) {
-              if (!fields.split(',').includes(field)) {
-                delete meta[field]
-              }
-            }
-          }
+    // config.module.rules.push({
+    //   test: { and: [/\.mdx$/], not: [/snippets/] },
+    //   resourceQuery: { not: [/rss/, /preview/] },
+    //   use: [
+    //     options.defaultLoaders.babel,
+    //     createLoader(function (source) {
+    //       if (source.includes('/*START_META*/')) {
+    //         const [meta] = source.match(/\/\*START_META\*\/(.*?)\/\*END_META\*\//s)
+    //         return 'export default ' + meta
+    //       }
+    //       return (
+    //         source.replace(/export const/gs, 'const') + `\nMDXContent.layoutProps = layoutProps\n`
+    //       )
+    //     }),
+    //     ...mdx(),
+    //     createLoader(function (source) {
+    //       let fields = new URLSearchParams(this.resourceQuery.substr(1)).get('meta') ?? undefined
+    //       let { attributes: meta, body } = frontMatter(source)
+    //       if (fields) {
+    //         for (let field in meta) {
+    //           if (!fields.split(',').includes(field)) {
+    //             delete meta[field]
+    //           }
+    //         }
+    //       }
 
-          let extra = []
-          let resourcePath = path.relative(__dirname, this.resourcePath)
+    //       let extra = []
+    //       let resourcePath = path.relative(__dirname, this.resourcePath)
 
-          if (!/^\s*export\s+(var|let|const)\s+Layout\s+=/m.test(source)) {
-            for (let glob in fallbackLayouts) {
-              if (minimatch(resourcePath, glob)) {
-                extra.push(
-                  `import { ${fallbackLayouts[glob][1]} as _Layout } from '${fallbackLayouts[glob][0]}'`,
-                  'export const Layout = _Layout'
-                )
-                break
-              }
-            }
-          }
+    //       if (!/^\s*export\s+(var|let|const)\s+Layout\s+=/m.test(source)) {
+    //         for (let glob in fallbackLayouts) {
+    //           if (minimatch(resourcePath, glob)) {
+    //             extra.push(
+    //               `import { ${fallbackLayouts[glob][1]} as _Layout } from '${fallbackLayouts[glob][0]}'`,
+    //               'export const Layout = _Layout'
+    //             )
+    //             break
+    //           }
+    //         }
+    //       }
 
-          if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ''))) {
-            for (let glob in fallbackDefaultExports) {
-              if (minimatch(resourcePath, glob)) {
-                extra.push(
-                  `import { ${fallbackDefaultExports[glob][1]} as _Default } from '${fallbackDefaultExports[glob][0]}'`,
-                  'export default _Default'
-                )
-                break
-              }
-            }
-          }
+    //       if (!/^\s*export\s+default\s+/m.test(source.replace(/```(.*?)```/gs, ''))) {
+    //         for (let glob in fallbackDefaultExports) {
+    //           if (minimatch(resourcePath, glob)) {
+    //             extra.push(
+    //               `import { ${fallbackDefaultExports[glob][1]} as _Default } from '${fallbackDefaultExports[glob][0]}'`,
+    //               'export default _Default'
+    //             )
+    //             break
+    //           }
+    //         }
+    //       }
 
-          if (
-            !/^\s*export\s+(async\s+)?function\s+getStaticProps\s+/m.test(
-              source.replace(/```(.*?)```/gs, '')
-            )
-          ) {
-            for (let glob in fallbackGetStaticProps) {
-              if (minimatch(resourcePath, glob)) {
-                extra.push(`export { getStaticProps } from '${fallbackGetStaticProps[glob]}'`)
-                break
-              }
-            }
-          }
+    //       if (
+    //         !/^\s*export\s+(async\s+)?function\s+getStaticProps\s+/m.test(
+    //           source.replace(/```(.*?)```/gs, '')
+    //         )
+    //       ) {
+    //         for (let glob in fallbackGetStaticProps) {
+    //           if (minimatch(resourcePath, glob)) {
+    //             extra.push(`export { getStaticProps } from '${fallbackGetStaticProps[glob]}'`)
+    //             break
+    //           }
+    //         }
+    //       }
 
-          let metaExport
-          if (!/export\s+(const|let|var)\s+meta\s*=/.test(source)) {
-            metaExport =
-              typeof fields === 'undefined'
-                ? `export const meta = ${JSON.stringify(meta)}`
-                : `export const meta = /*START_META*/${JSON.stringify(meta || {})}/*END_META*/`
-          }
+    //       let metaExport
+    //       if (!/export\s+(const|let|var)\s+meta\s*=/.test(source)) {
+    //         metaExport =
+    //           typeof fields === 'undefined'
+    //             ? `export const meta = ${JSON.stringify(meta)}`
+    //             : `export const meta = /*START_META*/${JSON.stringify(meta || {})}/*END_META*/`
+    //       }
 
-          return [
-            ...(typeof fields === 'undefined' ? extra : []),
-            typeof fields === 'undefined'
-              ? body.replace(/<!--excerpt-->.*<!--\/excerpt-->/s, '')
-              : '',
-            metaExport,
-          ]
-            .filter(Boolean)
-            .join('\n\n')
-        }),
-      ],
-    })
+    //       return [
+    //         ...(typeof fields === 'undefined' ? extra : []),
+    //         typeof fields === 'undefined'
+    //           ? body.replace(/<!--excerpt-->.*<!--\/excerpt-->/s, '')
+    //           : '',
+    //         metaExport,
+    //       ]
+    //         .filter(Boolean)
+    //         .join('\n\n')
+    //     }),
+    //   ],
+    // })
 
     return config
   },
