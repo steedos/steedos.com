@@ -3,17 +3,17 @@ export const headerNav = {
   categories: [
     {
       id: 'platform',
-      name: '产品',
+      name: '平台',
       featured: [
         {
-          name: '华炎魔方赋能企业，打造数字驱动型组织',
-          href: '/platform/overview',
+          name: '华炎魔方将人工智能技术融入真实的业务场景中',
+          href: '/resources/artificial-intelligence',
           imageSrc: 'https://console.steedos.cn/api/files/images/3TNS6p46atnntJE4y',
-          imageAlt:'华炎魔方赋能企业，打造数字驱动型组织',
+          imageAlt:'华炎魔方将人工智能技术融入真实的业务场景中，为企业提供更加智能、高效的解决方案，以提升企业的生产力和创造力。',
         },
         {
-          name: '华炎魔方十大引擎',
-          href: '/platform/features',
+          name: '探索华炎魔方如何助力你的企业实现成功',
+          href: '/resources/customer-success-stories',
           imageSrc: 'https://console.steedos.cn/api/files/images/ER8tP4Yvu8fDfvFkR',
           imageAlt: '华炎魔方十大引擎',
         },
@@ -21,7 +21,7 @@ export const headerNav = {
       sections: [
         {
           id: 'platform',
-          name: '产品',
+          name: '平台',
           href: '/platform/',
           items: [
             { name: '华炎魔方概览', href: '/platform/' },
@@ -37,13 +37,13 @@ export const headerNav = {
           name: '核心功能',
           href: '/platform/features/',
           items: [
-            { name: '模型驱动开发', href: '/resources/features/model-builder' },
-            { name: '页面设计器', href: '/resources/features/page-builder' },
-            { name: '仪表盘与报表分析', href: '/resources/features/analytics' },     
-            { name: '可视化流程设计', href: '/resources/features/workflow' },  
+            { name: '数据建模', href: '/resources/features/model-builder' },
+            { name: '页面设计', href: '/resources/features/page-builder' },
+            { name: '数据分析', href: '/resources/features/analytics' },     
+            { name: '流程设计', href: '/resources/features/workflow' },    
             { name: '安全与合规', href: '/resources/features/security' },        
-            { name: '自动化与集成', href: '/resources/features/automation' },      
-            { name: '协同开发与版本管理', href: '/resources/features/developer-experience' },
+            { name: '自动化', href: '/resources/features/automation' },    
+            { name: '协同开发', href: '/resources/features/developer-experience' },
           ],
         },
         {
@@ -67,18 +67,14 @@ export const headerNav = {
       name: '解决方案',
       featured: [
         {
-          name: '华炎魔方助力招商银行探索产品低代码化转型',
-          href: '/resources/customer-success-stories/cmbchina-poc',
-          imageSrc: 'https://console.steedos.cn/api/files/images/6440ac94671028003e760f11',
-          imageAlt:
-            '薪福通3.0借助华炎魔方平台向低代码赛道转型。',
+          name: '以 AI 驱动审核革新，百事食品构建安全合规的内容生态',
+          href: '/resources/customer-success-stories/pepsico',
+          imageSrc: 'https://builder6.steedos.cn/api/files/images/6810a39e5c7a28060df69595',
         },
         {
-          name: '华炎魔方助力清华大学搭建图书馆资产管理系统',
-          href: '/resources/customer-success-stories/tsinghua',
-          imageSrc: 'https://console.steedos.cn/api/files/images/6440acbd671028003e760f13',
-          imageAlt:
-            '2022年9月清华大学图书馆联合上海华炎软件，使用华炎魔方低代码开发平台进行了应用系统生命周期管理软件的研发，通过1个月的时间，完成了整个系统的建设。',
+          name: '低代码驱动地产创新：华炎魔方赋能海泰地产管理升级',
+          href: '/resources/customer-success-stories/hitime',
+          imageSrc: 'https://builder6.steedos.cn/api/files/images/68119f8f5c7a28060df695c7',
         },
       ],
       sections: [
@@ -92,8 +88,8 @@ export const headerNav = {
             { name: '合同管理', href: '/resources/solutions/contract' },
             { name: '费控管理', href: '/resources/solutions/cost'},
             { name: '人力资源管理', href: '/resources/solutions/hr'},
-            { name: '采购管理', href: '/resources/solutions/purchase'},
             { name: '生产管理', href: '/resources/solutions/pcmes' },
+            { name: '全部解决方案', href: '/resources/solutions' },
           ],
         },
         {
@@ -105,6 +101,7 @@ export const headerNav = {
             { name: 'AI 内容审核', href: '/resources/artificial-intelligence/ai-review' },
             { name: 'AI 知识库', href: '/resources/artificial-intelligence/ai-kb' },
             { name: 'AI 自动化', href: '/resources/artificial-intelligence/ai-automation' },
+            { name: '全部 AI 解决方案', href: '/resources/artificial-intelligence' },
           ],
         },
         {
@@ -116,9 +113,10 @@ export const headerNav = {
             { name: '中国石油', href: '/resources/customer-success-stories/cnpc-media' },
             { name: '海泰地产', href: '/resources/customer-success-stories/hitime' },
             { name: '大众公用', href: '/resources/customer-success-stories/dzug' },
-            { name: '招商银行', href: '/resources/customer-success-stories/cmbchina-poc' },
+            { name: '广东省二院', href: '/resources/customer-success-stories/gd2h' },
             { name: '清华大学', href: '/resources/customer-success-stories/tsinghua' },
             { name: '建华建材', href: '/resources/customer-success-stories/jianhuabm' },
+            { name: '全部案例', href: '/resources/artificial-intelligence' },
           ],
         },
       ],
