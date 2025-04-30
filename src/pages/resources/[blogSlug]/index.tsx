@@ -50,7 +50,7 @@ export default function PageDetail({blog, documents}){
   // console.log('blog', blog, documents)
   if (blog && documents.length > 0) {
     return (
-      <div className="lg:py-24 py-12 bg-gradient-to-t from-gray-100 ">
+      <div className="px-6 lg:px-8 lg:py-24 py-12 bg-gradient-to-t from-gray-100 ">
         <div className="mx-auto max-w-2xl lg:max-w-7xl">
           <h1 className="mb-12 text-4xl font-medium tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-6xl">
             {blog.name}
@@ -73,7 +73,7 @@ export default function PageDetail({blog, documents}){
                     <img alt="A crossed out European emblem" src={imageUrl} className="aspect-3/2 w-full rounded-2xl object-cover"/>
                     <div className="flex flex-1 flex-col p-8">
                       <div className="text-sm/5 text-gray-700">{moment(post.modified).format('LL')}</div>
-                      <div className="mt-2 text-base/7 font-medium">
+                      <div className="mt-2 text-lg font-medium">
                         <a data-headlessui-state="hover" href={fullSlug} data-hover=""><span className="absolute inset-0"></span>{post.name}</a>
                       </div>
                       <div className="mt-2 flex-1 text-sm/6 text-gray-500">{post.summary}</div>

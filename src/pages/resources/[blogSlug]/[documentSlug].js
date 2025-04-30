@@ -78,9 +78,9 @@ export default function PageDetail({blog, document}){
                 </div>
               </div>
               <div class="prose prose-lg max-w-4xl xl:mx-auto">
-                {/* {document.cover && (
+                {document.cover && (
                   <img src={`https://builder6.steedos.cn/api/files/images/${document.cover}`} class="mb-10 aspect-3/2 w-full rounded-2xl object-cover"/>
-                )} */}
+                )}
                 <Markdown body={document.markdown} className=""></Markdown>
               </div>
             </div>
