@@ -162,7 +162,7 @@ export default function PageDetail({blog, document}){
             </aside>
             <main class="prose prose-lg max-w-4xl xl:mx-auto">
               {document.cover && (
-                <img src={`https://builder6.steedos.cn/api/files/images/${document.cover}`} class="mb-10 aspect-3/2 w-full rounded-2xl object-cover"/>
+                <img src={`https://builder6.steedos.cn/api/files/images/${document.cover}`} class="mb-10 aspect-video w-full rounded-2xl object-cover"/>
               )}
               {/* <div class="order-first flex items-center text-base text-zinc-400 dark:text-zinc-500"><span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span><span class="ml-3">{moment(document.modified).format('LL')}</span></div> */}
 

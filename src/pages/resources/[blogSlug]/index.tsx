@@ -70,7 +70,7 @@ export default function PageDetail({blog, documents}){
                   <div 
                     key={post.slug}
                     className="relative flex flex-col rounded-3xl bg-white p-2 shadow-md ring-1 shadow-black/5 ring-black/5">
-                    <img alt="A crossed out European emblem" src={imageUrl} className="aspect-3/2 w-full rounded-2xl object-cover"/>
+                    <img alt="A crossed out European emblem" src={imageUrl} className="aspect-video w-full rounded-2xl object-cover"/>
                     <div className="flex flex-1 flex-col p-8">
                       <div className="text-sm/5 text-gray-700">{moment(post.modified).format('LL')}</div>
                       <div className="mt-2 text-lg font-medium">
