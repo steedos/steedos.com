@@ -9,9 +9,10 @@ export const footerNav = [
       { name: '页面设计', href: '/resources/features/page-builder' },
       { name: '数据分析', href: '/resources/features/analytics' },     
       { name: '流程设计', href: '/resources/features/workflow' },    
-      { name: '安全与合规', href: '/resources/features/security' },        
       { name: '自动化', href: '/resources/features/automation' },    
-      { name: '协同开发', href: '/resources/features/developer-experience' },
+      { name: '协同评论', href: '/resources/features/comments' },
+      { name: '团队协作开发', href: '/resources/features/developer-experience' },
+      { name: '全部 功能', href: '/resources/features' },
       
     ],
   },
@@ -20,6 +21,7 @@ export const footerNav = [
     name: '人工智能',
     href: '/resources/artificial-intelligence',
     items: [
+      { name: 'AI 智能文档', href: '/resources/artificial-intelligence/docs' },
       { name: 'AI 协同写作', href: '/resources/artificial-intelligence/ai-word' },
       { name: 'AI 内容审核', href: '/resources/artificial-intelligence/ai-review' },
       { name: 'AI 知识库', href: '/resources/artificial-intelligence/ai-kb' },
