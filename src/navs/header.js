@@ -25,11 +25,9 @@ export const headerNav = {
           href: '/platform/',
           items: [
             { name: '华炎魔方概览', href: '/platform/' },
-            { name: '核心功能', href: '/platform/features' },
             { name: '解决方案', href: '/platform/solutions' },
-            { name: '行业解决方案', href: '/resources/industries' },
-            { name: '人工智能', href: '/resources/artificial-intelligence' },
-            { name: '低代码', href: '/platform/lowcode' },
+            { name: '行业', href: '/resources/industries' },
+            { name: '低代码', href: '/resources/low-code' },
             { name: '视频', href: '/videos/' },
             { name: '报价', href: '/platform/pricing' },
           ],

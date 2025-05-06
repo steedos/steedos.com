@@ -144,7 +144,7 @@ export default function PageDetail({blog, document}){
           <h1 class="mt-4 text-4xl font-bold tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-5xl sm:leading-[1.3]">{document.name}</h1>
           <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-[20rem_1fr]"> 
             {/* 左侧目录：sticky */} 
-            <aside className="self-start hidden lg:block lg:sticky top-16 h-max"> 
+            <aside className="self-start hidden lg:block lg:sticky top-32 h-max"> 
               <ul className="flex flex-col gap-6 border-l-2 border-gray-300 pl-4"> 
                 {
                   headings.map((h, index) => {
