@@ -21,6 +21,7 @@ module.exports = {
     aspectRatio: {
       auto: 'auto',
       square: '1 / 1',
+      '3/2': '3 / 2',
       video: '16 / 9',
       1: '1',
       2: '2',
