@@ -43,7 +43,7 @@ export const headerNav = {
             { name: '流程自动化', href: '/resources/features/automation' },    
             { name: '页面设计', href: '/resources/features/page-builder' },
             { name: '协同评论', href: '/resources/features/comments' },
-            { name: '团队协作开发', href: '/resources/features/developer-experience' },
+            { name: '源码驱动开发', href: '/resources/features/developer-experience' },
             { name: '全部 功能', href: '/resources/features' },
           ],
         },
