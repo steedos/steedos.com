@@ -6,9 +6,9 @@ export const footerNav = [
     items: [
       { name: '平台概览', href: '/platform/' },
       { name: '数据建模', href: '/resources/features/model-builder' },
-      { name: '页面设计', href: '/resources/features/page-builder' },
+      { name: '流程审批', href: '/resources/features/workflow' },    
       { name: '数据分析', href: '/resources/features/analytics' },     
-      { name: '审批流程', href: '/resources/features/workflow' },    
+      { name: '页面设计', href: '/resources/features/page-builder' },
       { name: '流程自动化', href: '/resources/features/automation' },    
       { name: '协同评论', href: '/resources/features/comments' },
       { name: '团队协作开发', href: '/resources/features/developer-experience' },

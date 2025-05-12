@@ -25,7 +25,7 @@ export const headerNav = {
           href: '/platform/',
           items: [
             { name: '华炎魔方概览', href: '/platform/' },
-            { name: '解决方案', href: '/platform/solutions' },
+            { name: '解决方案', href: '/resources/solutions' },
             { name: '行业', href: '/resources/industries' },
             { name: '低代码', href: '/resources/low-code' },
             { name: '视频', href: '/videos/' },
@@ -35,13 +35,13 @@ export const headerNav = {
         {
           id: 'features',
           name: '功能',
-          href: '/platform/features/',
+          href: '/resources/features/',
           items: [
             { name: '数据建模', href: '/resources/features/model-builder' },
-            { name: '页面设计', href: '/resources/features/page-builder' },
+            { name: '流程审批', href: '/resources/features/workflow' },    
             { name: '数据分析', href: '/resources/features/analytics' },     
-            { name: '审批流程', href: '/resources/features/workflow' },    
             { name: '流程自动化', href: '/resources/features/automation' },    
+            { name: '页面设计', href: '/resources/features/page-builder' },
             { name: '协同评论', href: '/resources/features/comments' },
             { name: '团队协作开发', href: '/resources/features/developer-experience' },
             { name: '全部 功能', href: '/resources/features' },
