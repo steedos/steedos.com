@@ -46,6 +46,15 @@ export default function App({
 }) {
 
   let [navIsOpen, setNavIsOpen] = useState(false)
+  const [isInIframe, setIsInIframe] = useState(false);
+
+  useEffect(() => {
+    // 客户端判断 self 与 top 是否相等，不相等则处于 iframe 中
+    if (typeof window !== 'undefined' && window.self !== window.top) {
+      document.body.classList.add('iframe');
+      setIsInIframe(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!navIsOpen) return
@@ -63,8 +72,8 @@ export default function App({
   const layoutProps = Component.layoutProps?.Layout
     ? { layoutProps: Component.layoutProps, navIsOpen, setNavIsOpen }
     : { }
-  const showHeader = !router.pathname.startsWith('/embed') && !router.pathname.startsWith('/login')
-  const showFooter = !router.pathname.startsWith('/docs') && !router.pathname.startsWith('/embed') && !router.pathname.startsWith('/login')
+  const showHeader = !isInIframe && !router.pathname.startsWith('/embed') && !router.pathname.startsWith('/login')
+  const showFooter = !isInIframe && !router.pathname.startsWith('/docs') && !router.pathname.startsWith('/embed') && !router.pathname.startsWith('/login')
   const meta = Component.layoutProps?.meta || pageProps?.meta || {}
   const description =
     meta.metaDescription || meta.description || '开源低代码 DevOps 平台'
