@@ -73,10 +73,11 @@ export async function getStaticProps({params, query}) {
   }
   blog.href = '/resources/' + blog.url;
 
-  const document = await getDocumentByUrl(baseId, blog._id, params.documentSlug);
+  let documentSlug = params.documentSlug.join('/');
+  const document = await getDocumentByUrl(baseId, blog._id, documentSlug);
 
   if (!document) {
-    console.log('document not found', params.documentSlug)
+    console.log('document not found', documentSlug)
     return {
       notFound: true,
     }
