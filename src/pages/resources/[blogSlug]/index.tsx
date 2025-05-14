@@ -76,7 +76,7 @@ export default function PageDetail({blog, documents}){
                       <div className="mt-2 text-lg font-medium">
                         <a data-headlessui-state="hover" href={fullSlug} data-hover=""><span className="absolute inset-0"></span>{post.name}</a>
                       </div>
-                      <div className="mt-2 flex-1 text-sm/6 text-gray-500">{post.summary}</div>
+                      <div className="mt-2 flex-1 text-sm/6 text-gray-500 line-clamp-4">{post.summary}</div>
                       {/* <div className="mt-6 flex items-center gap-3">
                         <img alt="" src="https://cdn.sanity.io/images/ssqh4ksj/production/cd1ee59e9e4c2ff30c303de6c7d1066c057419d5-7952x5304.jpg?rect=2370,0,5304,5304&amp;w=64&amp;h=64&amp;auto=format" className="aspect-square size-6 rounded-full object-cover"/>
                         <div className="text-sm/5 text-gray-700">Marcus Eldridge</div>
