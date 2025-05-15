@@ -29,7 +29,7 @@ export const headerNav = {
             { name: '可扩展性', href: '/resources/features/extensibility' },
             { name: '应用集成', href: '/resources/features/integration' },
             { name: '智能设备', href: '/resources/features/iot' },
-            { name: 'API', href: '/resources/features/api' },
+            { name: '低代码', href: '/resources/low-code' },
             { name: '源码驱动开发', href: '/resources/features/developer-experience' },
           ],
         },
