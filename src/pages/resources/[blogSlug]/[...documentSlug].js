@@ -106,11 +106,25 @@ export default function PageDetail({blog, document}){
 
 
   if (document && document.markdown) {
+    const title = document.name + ' - ' + blog.name;
+    const cover = `https://builder6.steedos.cn/api/files/images/${document.cover}`
+    const url =  `https://www.steedos.com/resources/${blog.url}/${document.url}`;
     return (
       <>
         <NextSeo
-        title={document.name}
+        title={title}
         description={document.description}
+        openGraph={{
+          url,
+          title: document.name,
+          description: document.description,
+          images: [
+            {
+              url: cover,
+            },
+          ],
+          siteName: blog.name,
+        }}
         />
         {/* <div class="mx-auto max-w-2xl lg:max-w-7xl px-6 lg:px-8 py-16 lg:py-24">
 

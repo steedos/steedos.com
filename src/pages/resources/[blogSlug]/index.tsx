@@ -68,7 +68,7 @@ export default function PageDetail({blog, documents}){
                 const imageUrl = post.cover? `https://builder6.steedos.cn` + `/api/files/images/${post.cover}` : 'https://cdn.sanity.io/images/ssqh4ksj/production/c734dd394de943820a25b4b96eace0855ab44749-2016x1344.png?w=1170&h=780&auto=format'
                 return (
                   <div 
-                    key={post.slug}
+                    key={post.url}
                     className="relative flex flex-col rounded-3xl bg-white p-2 shadow-md ring-1 shadow-black/5 ring-black/5">
                     <img alt="A crossed out European emblem" src={imageUrl} className="aspect-video w-full rounded-2xl object-cover"/>
                     <div className="flex flex-1 flex-col p-8">
