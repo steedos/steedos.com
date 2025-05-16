@@ -106,7 +106,7 @@ export default function PageDetail({blog, document}){
 
 
   if (document && document.markdown) {
-    const title = document.name + ' - ' + blog.name;
+    const title = document.name + ' - ' + blog.name + ' - Steedos';
     const cover = `https://builder6.steedos.cn/api/files/images/${document.cover}`
     const url =  `https://www.steedos.com/resources/${blog.url}/${document.url}`;
     return (
