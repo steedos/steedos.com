@@ -121,7 +121,7 @@ export const headerNav = {
             { name: '广东省二院', href: '/resources/customer-success-stories/gd2h' },
             { name: '清华大学', href: '/resources/customer-success-stories/tsinghua' },
             { name: '建华建材', href: '/resources/customer-success-stories/jianhuabm' },
-            { name: '全部案例', href: '/resources/artificial-intelligence' },
+            { name: '全部案例', href: '/resources/customer-success-stories' },
           ],
         },
       ],
