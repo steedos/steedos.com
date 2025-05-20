@@ -26,10 +26,10 @@ export const headerNav = {
           items: [
             { name: '华炎魔方概览', href: '/platform/' },
             { name: '人工智能', href: '/resources/artificial-intelligence' },
-            { name: '模版应用', href: '/resources/marketplace' },
             { name: '应用集成', href: '/resources/integration' },
             { name: '低代码', href: '/resources/low-code' },
             { name: '源码驱动开发', href: '/resources/features/developer-experience' },
+            { name: '应用市场', href: '/resources/marketplace' },
             { name: '客户案例', href: '/platform/customer-success-stories' },
             { name: '报价', href: '/platform/pricing' },
           ],
