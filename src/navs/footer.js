@@ -2,18 +2,15 @@ export const footerNav = [
   {
     id: 'platform',
     name: '平台',
-    href: '/platform/overview',
+    href: '/platform/',
     items: [
-      { name: '平台概览', href: '/platform/' },
-      { name: '数据建模', href: '/resources/features/model-builder' },
-      { name: '流程审批', href: '/resources/features/workflow' },    
-      { name: '数据分析', href: '/resources/features/analytics' },     
-      { name: '页面设计', href: '/resources/features/page-builder' },
-      { name: '流程自动化', href: '/resources/features/automation' },    
-      { name: '协同评论', href: '/resources/features/comments' },
+      { name: '华炎魔方概览', href: '/platform/' },
+      { name: '核心功能', href: '/resources/features' },
+      { name: '模版应用', href: '/resources/marketplace' },
+      { name: '应用集成', href: '/resources/integration' },
+      { name: '低代码', href: '/resources/low-code' },
       { name: '源码驱动开发', href: '/resources/features/developer-experience' },
-      { name: '全部 功能', href: '/resources/features' },
-      
+      { name: '报价', href: '/platform/pricing' },
     ],
   },
   {
@@ -26,6 +23,7 @@ export const footerNav = [
       { name: 'AI 内容审核', href: '/resources/artificial-intelligence/ai-review' },
       { name: 'AI 知识库', href: '/resources/artificial-intelligence/ai-kb' },
       { name: 'AI 自动化', href: '/resources/artificial-intelligence/ai-automation' },
+      { name: '智能设备', href: '/resources/features/iot' },
     ],
   },
   {
