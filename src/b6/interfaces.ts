@@ -128,7 +128,7 @@ export const getBlogByUrl = async (baseId: string, blogUrl: string) => {
 
   try {
     const blogs = await base("b6_blogs").select({
-      fields: ['_id', 'name', 'url', 'parent'],
+      fields: ['_id', 'name', 'url', 'parent', 'summary'],
       'filterByFormula': `url === "${blogUrl}"`
     }).firstPage();
 
