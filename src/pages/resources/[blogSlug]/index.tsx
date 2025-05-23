@@ -73,7 +73,7 @@ export default function PageDetail({blog, documents}){
                     <img alt="A crossed out European emblem" src={imageUrl} className="aspect-video w-full rounded-2xl object-cover"/>
                     <div className="flex flex-1 flex-col p-8">
                       <div className="text-sm/5 text-gray-700">{moment(post.modified).format('LL')}</div>
-                      <div className="mt-2 text-lg font-medium">
+                      <div className="mt-2 text-xl font-medium">
                         <a data-headlessui-state="hover" href={fullSlug} data-hover=""><span className="absolute inset-0"></span>{post.name}</a>
                       </div>
                       <div className="mt-2 flex-1 text-sm/6 text-gray-500 line-clamp-4">{post.summary}</div>

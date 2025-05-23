@@ -75,7 +75,6 @@ export async function getStaticProps({params, query}) {
 
   let documentSlug = params.documentSlug.join('/');
   const document = await getDocumentByUrl(baseId, blog._id, documentSlug);
-  console.log('document', document)
 
   if (!document) {
     console.log('document not found', documentSlug)
@@ -182,12 +181,12 @@ export default function PageDetail({blog, document}){
               )}
               {/* <div class="order-first flex items-center text-base text-zinc-400 dark:text-zinc-500"><span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span><span class="ml-3">{moment(document.modified).format('LL')}</span></div> */}
 
-              {(blog.url === 'marketplace') && (<section>
+              {/* {(blog.url === 'marketplace') && (<section>
                 <h2 class="">{document.url}</h2>
                 <div class="mt-6 flex">
                   <a href="#" class="no-underline rounded-md bg-blue-600 px-3.5 py-2.5 font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">安装软件包</a>
                 </div>  
-              </section>)}
+              </section>)} */}
               <Markdown body={document.markdown} className=""></Markdown>
             </main>
           </div>
