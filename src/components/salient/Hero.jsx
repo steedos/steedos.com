@@ -28,7 +28,6 @@ export function Hero() {
           <span className="relative">无代码边界</span>
         </span>{' '}<br/>
         释放真正的低代码能力
-
       </h1>
       <p className="mt-6 text-lg text-slate-600 text-center max-w-3xl mx-auto dark:text-slate-400">
       华炎魔方提供了超越传统无代码平台的深度定制和开发能力，不仅允许没有编程背景的用户快速创建应用，还为有经验的开发人员提供了强大的工具和框架，使他们能够进行更复杂的自定义和集成。
@@ -51,11 +50,11 @@ export function Hero() {
         </Button>
       </div> */}
       <div className="mt-10 flex justify-center gap-x-6">
-        <a target="_blank" href="/videos/" className="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-slate-900 text-white hover:bg-slate-700 hover:text-slate-100 active:bg-slate-800 active:text-slate-300 focus-visible:outline-slate-900">
-          视频演示
+        <a target="_blank" href="/resources/features" className="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-slate-900 text-white hover:bg-slate-700 hover:text-slate-100 active:bg-slate-800 active:text-slate-300 focus-visible:outline-slate-900">
+          核心功能
         </a>
-        <a target="_blank" href="https://docs.steedos.com/zh-CN/getting-started" className="group inline-flex ring-1 items-center justify-center rounded-full py-2 px-4 text-sm focus:outline-none ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300">
-          文档
+        <a target="_blank" href="/resources/solutions" className="group inline-flex ring-1 items-center justify-center rounded-full py-2 px-4 text-sm focus:outline-none ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300">
+          场景案例
         </a>
       </div>
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 md:px-8 mt-10 ">
