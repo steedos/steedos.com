@@ -30,7 +30,7 @@ export const headerNav = {
             { name: '低代码', href: '/resources/low-code' },
             { name: '源码驱动开发', href: '/resources/features/developer-experience' },
             { name: '应用市场', href: '/resources/marketplace' },
-            { name: '客户案例', href: '/platform/customer-success-stories' },
+            { name: '客户案例', href: '/resources/customer-success-stories' },
             { name: '报价', href: '/platform/pricing' },
           ],
         },
