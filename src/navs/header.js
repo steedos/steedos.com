@@ -28,7 +28,7 @@ export const headerNav = {
             { name: '人工智能', href: '/resources/artificial-intelligence' },
             { name: '应用集成', href: '/resources/integration' },
             { name: '低代码', href: '/resources/low-code' },
-            { name: '源码驱动开发', href: '/resources/features/developer-experience' },
+            { name: '开发人员', href: '/resources/developer' },
             { name: '应用市场', href: '/resources/marketplace' },
             { name: '客户案例', href: '/resources/customer-success-stories' },
             { name: '报价', href: '/platform/pricing' },
