@@ -130,6 +130,7 @@ export const headerNav = {
   ],
   pages: [
     { name: '报价', href: '/platform/pricing' },
+    { name: '视频', href: '/videos' },
     { name: '文档', href: 'https://docs.steedos.com/zh-CN/getting-started/', target: "steedos-docs" },
     { name: '公司', href: '/company/about-us' },
   ],
