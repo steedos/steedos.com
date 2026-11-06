@@ -1,0 +1,400 @@
+
+                    <div class="max-w-3xl mx-auto pt-16 pb-10 px-4">
+                        <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 md:text-4xl ">云端数据库设计</h1>
+                        <div class="prose py-10">
+                            <h1>Airtable 设计</h1>
+<p>我在开发一个云端的 Airtable，使用 AWS Serverless + DynamoDB。</p>
+<h2>定义一个对象保存数据表结构</h2>
+<p>table.object.yml</p>
+<pre><code class="language-yaml"># 表名
+name: project
+# 字段
+fields: 
+  _id:  
+    label: ID
+  space:
+    label: 工作区
+    type: lookup
+  user:
+    label: 所有者
+    type: lookup
+# 索引
+indexes:
+  $space:
+    fields: space
+  $space$user:
+    fields: [&#39;space&#39;, &#39;user&#39;]
+  $user:
+    fields: user  
+</code></pre>
+<h2>保存记录</h2>
+<p>保存记录的 DynamoDB 表：</p>
+<pre><code class="language-yaml">RecordsDynamoDbTable:
+  Type: &#39;AWS::DynamoDB::Table&#39;
+  DeletionPolicy: Retain
+  Properties:
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      - AttributeName: tableId
+        AttributeType: S
+    KeySchema:
+      - AttributeName: tableId
+        KeyType: HASH
+      - AttributeName: id
+        KeyType: RANGE
+    BillingMode: PAY_PER_REQUEST
+    TableName: ${self:provider.environment.RECORDS_TABLE}
+</code></pre>
+<h2>保存索引</h2>
+<p>索引可以提高在 Airtable 中查询时的性能。</p>
+<p>设计一个索引表来存储各种索引记录。这个表的结构如下：</p>
+<ul>
+<li><strong>索引表</strong>：<code>IndexesDynamoDbTable</code></li>
+<li><strong>主键</strong>：<code>pk</code>（表名$索引字段名）</li>
+<li><strong>排序键</strong>：<code>sk</code>（记录中索引对应的字段值）</li>
+<li><strong>附加属性</strong>：<code>pk1</code>（表名）、<code>sk1</code>（记录 ID）</li>
+</ul>
+<pre><code class="language-yaml">IndexesDynamoDbTable:
+  Type: &#39;AWS::DynamoDB::Table&#39;
+  DeletionPolicy: Retain
+  Properties:
+    AttributeDefinitions:
+      - AttributeName: pk
+        AttributeType: S
+      - AttributeName: sk
+        AttributeType: S
+    KeySchema:
+      - AttributeName: pk
+        KeyType: HASH
+      - AttributeName: sk
+        KeyType: RANGE
+    BillingMode: PAY_PER_REQUEST
+    TableName: ${self:provider.environment.INDEXES_TABLE}
+</code></pre>
+<h2>数据案例</h2>
+<h3>表结构定义</h3>
+<pre><code class="language-yaml"># 表名
+name: project
+# 字段
+fields: 
+  _id:  
+    label: ID
+  space:
+    label: 工作区
+    type: lookup
+  user:
+    label: 所有者
+    type: lookup
+  status:
+    label: 状态
+    type: string
+# 索引
+indexes:
+  $space:
+    fields: space
+  $space$user:
+    fields: [&#39;space&#39;, &#39;user&#39;]
+  $user:
+    fields: user
+  $status:
+    fields: status
+</code></pre>
+<h3>数据关系</h3>
+<ul>
+<li><strong>User 表</strong>：保存用户信息。</li>
+<li><strong>Space 表</strong>：保存工作区信息。</li>
+<li><strong>Project 表</strong>：保存项目信息，并通过 <code>space</code> 和 <code>user</code> 字段关联到相应的工作区和用户。</li>
+</ul>
+<p>好的，以下是三个数据表（user、space、project）的具体化数据案例，以表格形式展示：</p>
+<h3>索引</h3>
+<p>以下是 project 表的索引定义：</p>
+<ul>
+<li><p><strong>$space</strong></p>
+<ul>
+<li>字段：space</li>
+<li>示例：索引所有 space 为 1 的项目，即 Project Alpha、Project Beta。</li>
+</ul>
+</li>
+<li><p><strong>$space$user</strong></p>
+<ul>
+<li>字段：[&#39;space&#39;, &#39;user&#39;]</li>
+<li>示例：索引所有 space 为 1 且 user 为 1 的项目，即 Project Alpha。</li>
+</ul>
+</li>
+<li><p><strong>$user</strong></p>
+<ul>
+<li>字段：user</li>
+<li>示例：索引所有 user 为 1 的项目，即 Project Alpha、Project Delta。</li>
+</ul>
+</li>
+<li><p><strong>$status</strong></p>
+<ul>
+<li>字段：status</li>
+<li>示例：索引所有 status 为 ongoing 的项目，即 Project Alpha、Project Gamma、Project Epsilon。</li>
+</ul>
+</li>
+</ul>
+<h2>自动生成索引记录</h2>
+<p>根据 project 表中的数据示例，我们需要为每个记录生成相应的索引记录。以下是具体的索引记录：
+好的，以下是根据 project 表中的数据示例，使用简短的 ID 前缀自动生成的索引记录：</p>
+<h3>user 表</h3>
+<table>
+<thead>
+<tr>
+<th>_id</th>
+<th>name</th>
+<th>email</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u-1</td>
+<td>Alice</td>
+<td><a href="mailto:alice@example.com">alice@example.com</a></td>
+</tr>
+<tr>
+<td>u-2</td>
+<td>Bob</td>
+<td><a href="mailto:bob@example.com">bob@example.com</a></td>
+</tr>
+<tr>
+<td>u-3</td>
+<td>Charlie</td>
+<td><a href="mailto:charlie@example.com">charlie@example.com</a></td>
+</tr>
+</tbody></table>
+<h3>space 表</h3>
+<table>
+<thead>
+<tr>
+<th>_id</th>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sp-1</td>
+<td>Dev Team</td>
+<td>Development projects</td>
+</tr>
+<tr>
+<td>sp-2</td>
+<td>Marketing</td>
+<td>Marketing campaigns</td>
+</tr>
+<tr>
+<td>sp-3</td>
+<td>Sales</td>
+<td>Sales initiatives</td>
+</tr>
+</tbody></table>
+<h3>project 表记录</h3>
+<table>
+<thead>
+<tr>
+<th>_id</th>
+<th>name</th>
+<th>space</th>
+<th>user</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>p-1</td>
+<td>Project Alpha</td>
+<td>sp-1</td>
+<td>u-1</td>
+<td>ongoing</td>
+</tr>
+<tr>
+<td>p-2</td>
+<td>Project Beta</td>
+<td>sp-1</td>
+<td>u-2</td>
+<td>completed</td>
+</tr>
+<tr>
+<td>p-3</td>
+<td>Project Gamma</td>
+<td>sp-2</td>
+<td>u-3</td>
+<td>ongoing</td>
+</tr>
+<tr>
+<td>p-4</td>
+<td>Project Delta</td>
+<td>sp-3</td>
+<td>u-1</td>
+<td>planned</td>
+</tr>
+<tr>
+<td>p-5</td>
+<td>Project Epsilon</td>
+<td>sp-2</td>
+<td>u-2</td>
+<td>ongoing</td>
+</tr>
+</tbody></table>
+<h3>根据 project 表记录自动生成的索引记录</h3>
+<table>
+<thead>
+<tr>
+<th>pk</th>
+<th>sk</th>
+<th>pk1</th>
+<th>sk1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>project$space</td>
+<td>sp-1</td>
+<td>project</td>
+<td>p-1</td>
+</tr>
+<tr>
+<td>project$space</td>
+<td>sp-1</td>
+<td>project</td>
+<td>p-2</td>
+</tr>
+<tr>
+<td>project$space</td>
+<td>sp-2</td>
+<td>project</td>
+<td>p-3</td>
+</tr>
+<tr>
+<td>project$space</td>
+<td>sp-3</td>
+<td>project</td>
+<td>p-4</td>
+</tr>
+<tr>
+<td>project$space</td>
+<td>sp-2</td>
+<td>project</td>
+<td>p-5</td>
+</tr>
+<tr>
+<td>project$space$user</td>
+<td>sp-1,u-1</td>
+<td>project</td>
+<td>p-1</td>
+</tr>
+<tr>
+<td>project$space$user</td>
+<td>sp-1,u-2</td>
+<td>project</td>
+<td>p-2</td>
+</tr>
+<tr>
+<td>project$space$user</td>
+<td>sp-2,u-3</td>
+<td>project</td>
+<td>p-3</td>
+</tr>
+<tr>
+<td>project$space$user</td>
+<td>sp-3,u-1</td>
+<td>project</td>
+<td>p-4</td>
+</tr>
+<tr>
+<td>project$space$user</td>
+<td>sp-2,u-2</td>
+<td>project</td>
+<td>p-5</td>
+</tr>
+<tr>
+<td>project$user</td>
+<td>u-1</td>
+<td>project</td>
+<td>p-1</td>
+</tr>
+<tr>
+<td>project$user</td>
+<td>u-2</td>
+<td>project</td>
+<td>p-2</td>
+</tr>
+<tr>
+<td>project$user</td>
+<td>u-3</td>
+<td>project</td>
+<td>p-3</td>
+</tr>
+<tr>
+<td>project$user</td>
+<td>u-1</td>
+<td>project</td>
+<td>p-4</td>
+</tr>
+<tr>
+<td>project$user</td>
+<td>u-2</td>
+<td>project</td>
+<td>p-5</td>
+</tr>
+<tr>
+<td>project$status</td>
+<td>ongoing</td>
+<td>project</td>
+<td>p-1</td>
+</tr>
+<tr>
+<td>project$status</td>
+<td>completed</td>
+<td>project</td>
+<td>p-2</td>
+</tr>
+<tr>
+<td>project$status</td>
+<td>ongoing</td>
+<td>project</td>
+<td>p-3</td>
+</tr>
+<tr>
+<td>project$status</td>
+<td>planned</td>
+<td>project</td>
+<td>p-4</td>
+</tr>
+<tr>
+<td>project$status</td>
+<td>ongoing</td>
+<td>project</td>
+<td>p-5</td>
+</tr>
+</tbody></table>
+<h3>详细解释</h3>
+<ul>
+<li><strong>pk</strong>：主键，由表名和索引字段名组合而成。例如，<code>project$space</code> 表示 project 表根据 space 字段创建的索引。</li>
+<li><strong>sk</strong>：排序键，对应记录中索引字段的值。例如，<code>1</code> 表示 space 字段值为 1 的记录。</li>
+<li><strong>pk1</strong>：表名，表示记录所属的表。</li>
+<li><strong>sk1</strong>：记录 ID，对应 project 表中的 _id 字段值。</li>
+</ul>
+<h3>生成索引记录的步骤</h3>
+<ol>
+<li><strong>遍历 project 表中的每条记录</strong>。</li>
+<li><strong>根据索引定义</strong>，为每个索引字段生成相应的索引记录。</li>
+<li><strong>组合主键和排序键</strong>，并保存原始记录的表名和 ID。</li>
+</ol>
+<p>通过这种方式，可以在查询时快速定位到符合条件的记录，提高查询性能。</p>
+<h3>查询操作</h3>
+<ul>
+<li><strong>查询表 <code>project</code> 的所有索引记录</strong>：<code>pk1 = project</code>，删除数据表时需要清空索引。</li>
+<li><strong>查询记录 <code>project.recordId</code> 的所有索引记录</strong>：<code>pk1 = project AND sk1 = pr1</code>，删除和修改记录时，先删除记录所有索引再重新创建。</li>
+<li><strong>查询表索引 <code>project$space</code> 的所有索引记录</strong>：<code>pk = project$space</code>，删除表索引时，需要清空。</li>
+<li><strong>查询表索引 <code>project$space</code> 的特定值 <code>sp1</code> 的所有记录</strong>：<code>pk = project$space AND sk = sp1</code>，查询记录，按索引字段精确匹配，查询记录列表。</li>
+</ul>
+<h3>日期和数值类型查询</h3>
+<p>对于日期和数值类型，<code>sk</code> 支持 <code>BETWEEN</code>、<code>&lt;</code>、<code>&lt;=</code>、<code>&gt;</code>、<code>&gt;=</code> 等操作符。</p>
+<ul>
+<li><strong>查询 <code>project.created</code> 属于日期范围的所有记录</strong>：<code>pk = project$created AND sk BETWEEN :start_date AND :end_date</code></li>
+</ul>
+<h3>文本类型搜索</h3>
+<p>对于文本类型的搜索，应该使用单独的函数，调用全文检索引擎来检索，并返回记录 ID。</p>
+
+                        </div>
+                    </div>
+                

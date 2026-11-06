@@ -36,3 +36,7 @@ yarn-error.log*
 .serverless
 
 public/sitemap-0.xml
+
+# CMS export: original images and the scripts/ toolchain
+/cms-export/.cache/
+/scripts/node_modules/

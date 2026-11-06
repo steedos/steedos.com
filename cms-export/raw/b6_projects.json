@@ -1,0 +1,169 @@
+[
+  {
+    "fields": {
+      "owner": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "company_ids": [
+        "66722b5a71056405ab198b56"
+      ],
+      "company_id": "66722b5a71056405ab198b56",
+      "created": "2024-10-21T09:37:01.823Z",
+      "tabs": [
+        {
+          "name": "概览",
+          "is_new_window": false,
+          "page": "900be6cc-887b-4516-8e7e-c8a8d17c1ff7",
+          "type": "page",
+          "url": "/"
+        },
+        {
+          "name": "Github 主页",
+          "is_new_window": true,
+          "type": "url",
+          "url": "https://github.com/steedos/feikongwang"
+        }
+      ],
+      "permission": "public",
+      "created_by": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "space": "66722b5a71056405ab198b56",
+      "url": "https://feikongwang-mapdut.builder6.app",
+      "enable_tabs": true,
+      "domain": "feikongwang-mapdut",
+      "name": "费控王",
+      "modified_by": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "modified": "2024-10-21T09:40:01.027Z",
+      "_id": "f06af737-cd1b-4b0f-8736-eae495c40ead",
+      "locked": false,
+      "slug": "feikongwang"
+    },
+    "tableId": "spc-66722b5a71056405ab198b56/b6_projects",
+    "updatedBy": "admin@steedos.com",
+    "updatedTime": "2024-10-21T09:40:03.538Z",
+    "id": "f06af737-cd1b-4b0f-8736-eae495c40ead"
+  },
+  {
+    "fields": {
+      "owner": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "company_ids": [
+        "66722b5a71056405ab198b56"
+      ],
+      "company_id": "66722b5a71056405ab198b56",
+      "created": "2024-09-11T02:23:14.293Z",
+      "tabs": [],
+      "permission": "public",
+      "created_by": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "space": "66722b5a71056405ab198b56",
+      "url": "https://steedos-ans1i6.builder6.app",
+      "enable_tabs": false,
+      "domain": "steedos-ans1i6",
+      "name": "Steedos官网",
+      "modified_by": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "modified": "2024-09-11T07:08:35.281Z",
+      "header": "acd3a6db-f6e1-4912-873a-de71907a2bfe",
+      "_id": "ced85241-276f-4d0f-8cfc-84c49d78adee",
+      "locked": false,
+      "slug": "steedos"
+    },
+    "tableId": "spc-66722b5a71056405ab198b56/b6_projects",
+    "updatedBy": "admin@steedos.com",
+    "updatedTime": "2024-09-11T07:08:37.725Z",
+    "id": "ced85241-276f-4d0f-8cfc-84c49d78adee"
+  },
+  {
+    "fields": {
+      "owner": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "company_ids": [
+        "66722b5a71056405ab198b56"
+      ],
+      "company_id": "66722b5a71056405ab198b56",
+      "created": "2024-10-23T09:19:30.658Z",
+      "tabs": [
+        {
+          "name": "首页",
+          "is_new_window": false,
+          "page": "96392adc-eb4b-448f-8429-f2c0e3720eea",
+          "type": "page",
+          "url": "/"
+        },
+        {
+          "name": "功能",
+          "is_new_window": false,
+          "page": "dfc63bd4-6b93-4693-9425-dfbd088c4638",
+          "type": "page",
+          "url": "/features"
+        },
+        {
+          "name": "报价",
+          "is_new_window": false,
+          "page": "2c62a4eb-df7c-4183-b795-d644c9f550b7",
+          "type": "page",
+          "url": "/pricing"
+        },
+        {
+          "name": "场景案例",
+          "is_new_window": false,
+          "page": "cf71167a-0ec9-4dcf-b8e5-02e1a97aa96a",
+          "type": "page",
+          "url": "/solutions"
+        },
+        {
+          "name": "开源",
+          "is_new_window": false,
+          "page": "42ad555a-3994-49f3-8233-7dcca7d62c8e",
+          "type": "page",
+          "url": "/open-source"
+        }
+      ],
+      "description": "华炎魔方提供了超越传统无代码平台的深度定制和开发能力，不仅允许没有编程背景的用户快速创建应用，还为有经验的开发人员提供了强大的工具和框架，使他们能够进行更复杂的自定义和集成。",
+      "permission": "public",
+      "created_by": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "space": "66722b5a71056405ab198b56",
+      "url": "https://platform2-e50xyn.builder6.app",
+      "enable_tabs": true,
+      "domain": "platform2-e50xyn",
+      "name": "华炎魔方(作废)",
+      "modified_by": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "modified": "2025-05-06T10:34:14.073Z",
+      "_id": "b10a77ab-8584-47c9-aaa4-f77a0136c756",
+      "locked": false,
+      "slug": "platform2"
+    },
+    "tableId": "spc-66722b5a71056405ab198b56/b6_projects",
+    "updatedBy": "admin@steedos.com",
+    "updatedTime": "2025-05-06T10:34:16.605Z",
+    "id": "b10a77ab-8584-47c9-aaa4-f77a0136c756"
+  },
+  {
+    "fields": {
+      "owner": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "company_ids": [
+        "66722b5a71056405ab198b56"
+      ],
+      "company_id": "66722b5a71056405ab198b56",
+      "created": "2024-06-19T00:51:16.137Z",
+      "tabs": [
+        {
+          "name": "云端数据库设计",
+          "page": "dfdd7d91-dc0a-4bc3-b891-20325af2e499",
+          "type": "page",
+          "url": "/"
+        }
+      ],
+      "permission": "public",
+      "created_by": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "space": "66722b5a71056405ab198b56",
+      "url": "https://build6-tables-dqrke4.builder6.app",
+      "enable_tabs": true,
+      "domain": "build6-tables-dqrke4",
+      "name": "Builder6 Tables 文档",
+      "modified_by": "222dcc20-1adf-49c0-83e6-8eb7b4df673e",
+      "modified": "2024-06-19T01:07:57.289Z",
+      "_id": "6ed49c9e-95d4-41b9-8473-a043565afb7a",
+      "locked": false,
+      "slug": "build6-tables"
+    },
+    "tableId": "spc-66722b5a71056405ab198b56/b6_projects",
+    "updatedBy": "admin@steedos.com",
+    "updatedTime": "2024-06-19T01:07:59.700Z",
+    "id": "6ed49c9e-95d4-41b9-8473-a043565afb7a"
+  }
+]
