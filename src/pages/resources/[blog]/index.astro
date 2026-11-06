@@ -1,0 +1,81 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import { pageTitle } from '../../../lib/site';
+import { BLOGS, docPath, formatDate, getBlogDocs, type Blog } from '../../../lib/resources';
+
+export function getStaticPaths() {
+  return BLOGS.map((blog) => ({ params: { blog: blog.url }, props: { blog } }));
+}
+
+const { blog } = Astro.props as { blog: Blog };
+const docs = await getBlogDocs(blog.url);
+---
+
+<Base title={pageTitle(blog.name)} description={blog.description ?? undefined}>
+  <header class="list-head">
+    <span class="eyebrow">资源中心</span>
+    <h1>{blog.name}</h1>
+    {blog.description && <p class="lead">{blog.description}</p>}
+  </header>
+  {
+    docs.length > 0 ? (
+      <div class="grid">
+        {docs.map((doc, i) => (
+          <ArticleCard
+            eager={i < 3}
+            href={docPath(doc)}
+            title={doc.data.title}
+            description={doc.data.description}
+            image={doc.data.cover}
+            meta={formatDate(doc.data.modified)}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="empty">这里暂时还没有文章。</p>
+    )
+  }
+</Base>
+
+<style>
+  .list-head {
+    margin-bottom: 2.5rem;
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 760;
+    letter-spacing: 0.07em;
+    color: var(--accent);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    line-height: 1.15;
+    margin: 0.4rem 0 0.75rem;
+  }
+  .lead {
+    max-width: 46rem;
+    margin: 0;
+    font-size: 1.12rem;
+    color: var(--ink-soft);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  .empty {
+    color: var(--ink-soft);
+  }
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { LEGACY_PAGES, type LegacyPage } from '../lib/legacy-pages';
+
+// "/" is src/pages/index.astro: the old homepage was hand-coded in Next.js,
+// not this Builder6 page. "/appexchange" has its own amis page.
+export function getStaticPaths() {
+  return LEGACY_PAGES.filter((p) => p.path !== '/' && p.type !== 'amis').map((page) => ({
+    params: { page: page.path.slice(1) },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props as { page: LegacyPage };
+---
+
+<Base title={page.title} description={page.description} bare forceLight>
+  <style slot="head" is:inline set:html={page.css}></style>
+  <div class:list={['legacy', ...page.scopes]} set:html={page.html} />
+</Base>
+
+<style is:global>
+  /* Undo the site's element-level defaults inside carried-over Builder6
+     markup so it renders with plain Tailwind preflight, as it did before. */
+  .legacy {
+    font-family:
+      ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+      'Noto Color Emoji';
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+  .legacy a {
+    color: inherit;
+  }
+</style>

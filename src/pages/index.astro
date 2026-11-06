@@ -1,0 +1,411 @@
+---
+// Homepage. Copy is carried over verbatim from the old Next.js homepage
+// (src/components/salient/{Hero,PrimaryFeatures,SecondaryFeatures,CallToAction}).
+import Base from '../layouts/Base.astro';
+import { SITE } from '../lib/site';
+
+const INTRO_VIDEO =
+  'https://outin-ea8a479c6eca11e8a49300163e1a3b4a.oss-cn-shanghai.aliyuncs.com/video/3d5e3f1d-1921d525125-0000-0000-009-c59e0.mov';
+
+const primaryFeatures = [
+  {
+    title: '可视化页面设计',
+    description: '全新引入 amis 渲染器，并提供可视化编辑工具，帮助开发人员快速使用 百度 amis 创建自定义页面',
+    image: '/images/home/page-designer.webp',
+  },
+  {
+    title: '可视化模型设计',
+    description: '基于模型驱动，内置功能强大的建模引擎，零代码也能快速创建智能化、移动化的企业应用程序。',
+    image: '/images/home/object-fields.webp',
+  },
+  {
+    title: '可视化仪表盘设计',
+    description: '轻松创建和共享交互式仪表板，帮助用户快速了解数据趋势、关键指标和业务运营状况。',
+    image: '/images/home/dashboard.webp',
+  },
+  {
+    title: '可视化流程设计',
+    description:
+      '内置流程设计、流程运行、管理维护、统计分析与流程优化等各类工具，帮助企业快速部署、有效监控并持续优化业务流程。',
+    image: '/images/home/flow-designer.webp',
+  },
+  {
+    title: '可视化开发',
+    description: '提供基于流程的编程工具，可以让用户轻松地将物联网设备、API和在线服务连接在一起。',
+    image: '/images/home/node-red.webp',
+  },
+];
+
+const scenarios = [
+  {
+    name: '项目管理',
+    summary: '以项目为主线，管理预算，并穿透管理合同、收付款、费用、任务、进度。',
+    image: '/images/home/project.webp',
+    href: '/resources/solutions/project',
+  },
+  {
+    name: '费控管理',
+    summary: '实现从费控管理的全程数字化，打通组织内的业财数据，实现业务财务一体化。',
+    image: '/images/home/cost.webp',
+    href: '/resources/solutions/cost',
+  },
+  {
+    name: '人事管理',
+    summary: '员工的入转调离与考勤、薪酬等环节自动打通，让企业人事充分感受一站式的便利。',
+    image: '/images/home/hr.webp',
+    href: '/resources/solutions/hr',
+  },
+];
+---
+
+<Base
+  title="华炎魔方低代码PaaS平台 - 赋能企业，打造数字驱动型组织"
+  description="华炎魔方提供了超越传统无代码平台的深度定制和开发能力，不仅允许没有编程背景的用户快速创建应用，还为有经验的开发人员提供了强大的工具和框架。"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.name,
+    url: Astro.site?.toString(),
+    inLanguage: 'zh-CN',
+  }}>
+  <section class="hero">
+    <h1>
+      突破<span class="mark">无代码边界</span><br />释放真正的低代码能力
+    </h1>
+    <p class="lead">
+      华炎魔方提供了超越传统无代码平台的深度定制和开发能力，不仅允许没有编程背景的用户快速创建应用，还为有经验的开发人员提供了强大的工具和框架，使他们能够进行更复杂的自定义和集成。
+    </p>
+    <div class="actions">
+      <a class="btn primary" href="/videos">视频演示</a>
+      <a class="btn" href={SITE.docsUrl} target="_blank" rel="noopener">文档</a>
+    </div>
+    <div class="intro-video">
+      <video controls playsinline preload="none" poster="/images/cms/uYfiSbnj7Ms7djamt.webp" src={INTRO_VIDEO} aria-label="华炎魔方介绍视频"></video>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="features-title">
+    <div class="section-head">
+      <h2 id="features-title">点亮创意，点燃变革，只需几个点击</h2>
+      <p>
+        通过直观的拖放界面、预构建的模板和各种自动化工具，用户可以加速应用开发过程，提高工作效率，从而更快地推动业务创新和转型。此外，华炎魔方的可视化界面也大大降低了应用开发的门槛，使得无论是
+        IT 专业人员还是业务人员都能参与到应用的构建过程中。
+      </p>
+    </div>
+    <div class="tabs" data-tabs>
+      <div class="tab-list" role="tablist" aria-label="可视化设计能力">
+        {
+          primaryFeatures.map((f, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`feature-tab-${i}`}
+              aria-controls={`feature-panel-${i}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}>
+              <span class="tab-title">{f.title}</span>
+              <span class="tab-desc">{f.description}</span>
+            </button>
+          ))
+        }
+      </div>
+      <div class="tab-panels">
+        {
+          primaryFeatures.map((f, i) => (
+            <div role="tabpanel" id={`feature-panel-${i}`} aria-labelledby={`feature-tab-${i}`} hidden={i !== 0}>
+              <img src={f.image} alt={f.title} width="1600" height="1000" loading={i === 0 ? 'eager' : 'lazy'} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="scenarios" aria-labelledby="scenarios-title">
+    <div class="section-head">
+      <h2 id="scenarios-title">无代码达到边界，华炎魔方推动您突破边界</h2>
+      <p>
+        华炎魔方允许企业以非常灵活的方式创建和定制应用。通过其高度可编程的环境，企业可以解决复杂的业务需求，实现全面的数字化转型和自动化，从而真正推动业务增长和创新。华炎魔方可以支持多种企业应用场景，包括但不限于OA、CRM、HR、ERP、BI、IoT、大数据等。
+      </p>
+    </div>
+    <div class="scenario-grid">
+      {
+        scenarios.map((s) => (
+          <a class="scenario" href={s.href}>
+            <img src={s.image} alt={s.name} width="1600" height="1000" loading="lazy" />
+            <span class="scenario-name">{s.name}</span>
+            <span class="scenario-summary">{s.summary}</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>引领低代码革命，重新定义开发者体验</h2>
+    <p>
+      与其他低代码或无代码平台不同，Steedos
+      DX优先考虑版本控制和持续集成/持续部署（CI/CD），使得开发人员能够在一个更加结构化和版本化的环境中协作。通过利用源码作为真理的单一来源，它确保了更高的代码质量、更好的团队协作和更快的发布周期。
+    </p>
+    <a class="btn light" href="https://docs.steedos.com/zh-CN/developer" target="_blank" rel="noopener">了解更多</a>
+  </section>
+</Base>
+
+<script>
+  // Tabs with arrow-key support (WAI-ARIA tabs pattern).
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const select = (i: number) => {
+      tabs.forEach((t, j) => {
+        const on = i === j;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')!)!.hidden = !on;
+      });
+      tabs[i].focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const d = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        select((i + d + tabs.length) % tabs.length);
+      });
+    });
+  });
+</script>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 1.5rem 0 4rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 0 auto;
+    max-width: 52rem;
+  }
+  .mark {
+    color: var(--accent);
+    background: linear-gradient(transparent 62%, color-mix(in srgb, var(--accent) 22%, transparent) 62%);
+  }
+  .lead {
+    max-width: 46rem;
+    margin: 1.5rem auto 0;
+    font-size: 1.12rem;
+    color: var(--ink-soft);
+  }
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.25rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 650;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.16s ease, border-color 0.16s ease;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  }
+  .btn.primary {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--surface);
+  }
+  .btn.light {
+    background: #fff;
+    border-color: #fff;
+    color: #0c4a6e;
+  }
+  .intro-video {
+    max-width: 48rem;
+    margin: 3rem auto 0;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #000;
+    box-shadow: 0 40px 90px -60px rgba(var(--shadow), 0.8);
+  }
+  .intro-video video {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .section-head {
+    max-width: 48rem;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.6rem);
+    line-height: 1.25;
+    letter-spacing: 0;
+    margin: 0;
+  }
+  .section-head p {
+    margin: 1rem 0 0;
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+  }
+
+  .band {
+    padding: 3.5rem 2rem;
+    border-radius: 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 80px -64px rgba(var(--shadow), 0.7);
+  }
+  .tabs {
+    display: grid;
+    grid-template-columns: 19rem minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .tab-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  [role='tab'] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-align: left;
+    padding: 0.9rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--ink-soft);
+    font: inherit;
+    cursor: pointer;
+  }
+  [role='tab']:hover {
+    background: var(--surface-sunk);
+  }
+  [role='tab'][aria-selected='true'] {
+    background: var(--accent-soft);
+    border-color: color-mix(in srgb, var(--accent) 25%, transparent);
+    color: var(--ink);
+  }
+  .tab-title {
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: var(--ink);
+  }
+  .tab-desc {
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+  .tab-panels img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 70px -50px rgba(var(--shadow), 0.7);
+  }
+
+  .scenarios {
+    padding: 5rem 0 1rem;
+  }
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  .scenario {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 0.75rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.16s ease, border-color 0.16s ease;
+  }
+  .scenario:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  }
+  .scenario img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    margin-bottom: 0.5rem;
+  }
+  .scenario-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0 0.25rem;
+  }
+  .scenario-summary {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    padding: 0 0.25rem;
+  }
+
+  .cta {
+    margin-top: 4.5rem;
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(135deg, #0369a1, #0284c7 55%, #0ea5e9);
+  }
+  .cta h2 {
+    color: #fff;
+  }
+  .cta p {
+    max-width: 46rem;
+    margin: 1rem auto 2rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  @media (max-width: 900px) {
+    .tabs {
+      grid-template-columns: 1fr;
+    }
+    .tab-list {
+      flex-direction: row;
+      overflow-x: auto;
+    }
+    [role='tab'] {
+      flex: none;
+    }
+    .tab-desc {
+      display: none;
+    }
+    .scenario-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .band {
+      padding: 2.5rem 1rem;
+    }
+    .cta {
+      padding: 3rem 1.25rem;
+    }
+  }
+</style>

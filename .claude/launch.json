@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "steedos-preview",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["astro", "preview", "--port", "4322"],
+      "port": 4322
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+---
+import { render } from 'astro:content';
+import Article from '../../../layouts/Article.astro';
+import { blogByUrl, getAllDocs, getBlogDocs, type Doc } from '../../../lib/resources';
+
+// Rest param: a few document urls contain "/" (e.g. "@steedos-labs/template-hr2").
+export async function getStaticPaths() {
+  return (await getAllDocs())
+    .filter((doc) => blogByUrl(doc.data.blog))
+    .map((doc) => ({ params: { blog: doc.data.blog, doc: doc.data.slug }, props: { doc } }));
+}
+
+const { doc } = Astro.props as { doc: Doc };
+const blog = blogByUrl(doc.data.blog)!;
+const { Content, headings } = await render(doc);
+const related = (await getBlogDocs(blog.url)).filter((d) => d.id !== doc.id).slice(0, 4);
+---
+
+<Article {doc} {blog} {headings} {related}>
+  <Content />
+</Article>

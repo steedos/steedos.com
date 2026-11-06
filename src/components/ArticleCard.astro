@@ -1,0 +1,101 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description?: string;
+  image?: string;
+  meta?: string;
+  /** Above-the-fold cards load their image eagerly. */
+  eager?: boolean;
+}
+
+const { href, title, description, image, meta, eager = false } = Astro.props;
+---
+
+<article class="card">
+  {
+    image ? (
+      <img class="thumb" src={image} alt="" width="600" height="400" loading={eager ? 'eager' : 'lazy'} decoding="async" />
+    ) : (
+      <div class="thumb placeholder" aria-hidden="true" />
+    )
+  }
+  <div class="body">
+    {meta && <span class="meta">{meta}</span>}
+    <h2>
+      <a href={href}>{title}</a>
+    </h2>
+    {description && <p>{description}</p>}
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: 0 18px 48px -40px rgba(var(--shadow), 0.55);
+    transition: transform 0.16s ease, border-color 0.16s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  }
+  .thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    display: block;
+    background: var(--surface-sunk);
+    border-bottom: 1px solid var(--line);
+  }
+  .placeholder {
+    background:
+      radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+      var(--surface-sunk);
+  }
+  .body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 1.1rem 1.2rem 1.3rem;
+  }
+  .meta {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.4;
+  }
+  h2 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  /* Whole card is the link target. */
+  h2 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  h2 a:hover {
+    color: var(--accent);
+  }
+  p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

@@ -1,0 +1,136 @@
+/* Long-form typography (from the ObjectOS BlogPost layout). Wrap rendered
+   Markdown in an element with class="prose". */
+.prose {
+  min-width: 0;
+  font-size: 1.06rem;
+  line-height: 1.82;
+  color: var(--ink);
+}
+.prose > :first-child {
+  margin-top: 0;
+}
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  letter-spacing: 0;
+  margin: 2.6rem 0 1rem;
+  line-height: 1.25;
+  scroll-margin-top: 104px;
+}
+.prose h3 {
+  font-size: 1.22rem;
+  margin: 2rem 0 0.75rem;
+  scroll-margin-top: 104px;
+}
+.prose p {
+  margin: 0 0 1.25rem;
+}
+.prose a {
+  color: var(--accent);
+  text-underline-offset: 2px;
+}
+.prose strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.4rem;
+  margin: 0 0 1.25rem;
+}
+.prose li {
+  margin: 0.4rem 0;
+}
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.2rem;
+  border-left: 4px solid color-mix(in srgb, var(--accent) 42%, var(--line));
+  border-radius: 0 8px 8px 0;
+  background: color-mix(in srgb, var(--surface) 64%, transparent);
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+.prose blockquote p {
+  margin: 0;
+}
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 2.5rem 0;
+}
+.prose img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: 0 18px 48px -42px rgba(var(--shadow), 0.55);
+  display: block;
+  margin: 1.5rem auto;
+}
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--surface-sunk);
+  padding: 0.12em 0.4em;
+  border-radius: 5px;
+  border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+  overflow-wrap: anywhere;
+}
+.prose pre {
+  max-width: 100%;
+  margin: 1.5rem 0;
+  padding: 1rem 1.15rem;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface-sunk) 72%, var(--surface));
+  box-shadow: 0 18px 42px -36px rgba(var(--shadow), 0.45);
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+.prose th,
+.prose td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.prose th {
+  background: var(--surface-sunk);
+}
+@media (max-width: 640px) {
+  .prose {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  .prose h2 {
+    margin-top: 2.25rem;
+    font-size: 1.35rem;
+    overflow-wrap: anywhere;
+  }
+  .prose h3 {
+    font-size: 1.12rem;
+    overflow-wrap: anywhere;
+  }
+  .prose pre {
+    margin-right: -0.25rem;
+    margin-left: -0.25rem;
+    padding: 0.85rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+  }
+  .prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+}

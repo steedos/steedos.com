@@ -1,0 +1,678 @@
+---
+import { NAV_GROUPS, NAV_LINKS, SITE } from '../lib/site';
+import Logo from './Logo.astro';
+
+const pathname = Astro.url.pathname;
+const isActive = (href: string) =>
+  !/^https?:/.test(href) && (pathname === href || (href !== '/' && pathname.startsWith(`${href}/`)));
+
+// Primary nav model — one source of truth for both the desktop dropdowns and
+// the mobile drawer, so they can never drift apart. A group with more than one
+// section renders as a multi-column mega panel on desktop and as labeled
+// subsections inside the drawer accordion.
+const groups = NAV_GROUPS.map((g) => {
+  const sections = g.sections.map((s) => ({
+    ...s,
+    items: s.items.map((it) => ({ ...it, active: pathname === it.href })),
+  }));
+  return {
+    ...g,
+    sections,
+    active: sections.some((s) => (s.href && isActive(s.href)) || s.items.some((it) => it.active)),
+  };
+});
+const links = NAV_LINKS.map((it) => ({ ...it, active: isActive(it.href) }));
+---
+
+<header class="site-header">
+  <div class="bar">
+    <a class="wordmark" href="/">
+      <Logo size={24} class="logo" />
+      <span class="name" translate="no">{SITE.name}</span>
+    </a>
+
+    <nav class="site-nav" aria-label="主导航">
+      {
+        groups.map((g) => (
+          <div class="menu" data-menu>
+            <button
+              type="button"
+              class:list={['menu-trigger', { active: g.active }]}
+              aria-expanded="false"
+              aria-haspopup="true"
+              data-menu-trigger>
+              {g.label}
+              <span class="caret" aria-hidden="true">▾</span>
+            </button>
+            <div class:list={['menu-panel', { mega: g.sections.length > 1 }]} role="menu">
+              {g.sections.map((s) => (
+                <div class="menu-col">
+                  {s.href ? (
+                    <a class="menu-col-label" href={s.href}>{s.label}</a>
+                  ) : (
+                    <span class="menu-col-label" role="presentation">{s.label}</span>
+                  )}
+                  {s.items.map((it) => (
+                    <a class:list={['menu-item', { active: it.active }]} href={it.href} role="menuitem">
+                      {it.label}
+                    </a>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+      {
+        links.map((it) => (
+          <a
+            class:list={['navlink', { active: it.active }]}
+            href={it.href}
+            target={it.external ? '_blank' : undefined}
+            rel={it.external ? 'noopener' : undefined}
+            aria-current={it.active ? 'page' : undefined}>
+            {it.label}
+            {it.external && <span class="ext" aria-hidden="true">↗</span>}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="bar-right">
+      <a class="iconbtn bar-desktop" href={SITE.githubUrl} target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+        </svg>
+      </a>
+      <button type="button" class="iconbtn bar-desktop" data-theme-toggle aria-label="切换深色模式" title="切换深色模式">
+        <span class="moon" aria-hidden="true">☾</span>
+        <span class="sun" aria-hidden="true">☀</span>
+      </button>
+      <a class="cta" href={SITE.demoUrl} target="_blank" rel="noopener">在线试用</a>
+      <button
+        type="button"
+        class="iconbtn hamburger"
+        aria-label="菜单"
+        aria-expanded="false"
+        aria-controls="site-drawer"
+        data-drawer-open>
+        <svg viewBox="0 0 20 20" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+          <line x1="3" y1="6" x2="17" y2="6" />
+          <line x1="3" y1="10" x2="17" y2="10" />
+          <line x1="3" y1="14" x2="17" y2="14" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer: every destination lives here, so nothing is unreachable on
+     small screens. -->
+<div class="drawer" id="site-drawer" data-drawer aria-hidden="true">
+  <div class="drawer-backdrop" data-drawer-close></div>
+  <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="菜单">
+    <div class="drawer-head">
+      <span class="drawer-title">菜单</span>
+      <button type="button" class="iconbtn" aria-label="关闭" data-drawer-close>
+        <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+          <line x1="5" y1="5" x2="15" y2="15" />
+          <line x1="15" y1="5" x2="5" y2="15" />
+        </svg>
+      </button>
+    </div>
+    <nav class="drawer-nav" aria-label="移动端导航">
+      {
+        groups.map((g) => (
+          <details class="drawer-group" open={g.active}>
+            <summary>
+              {g.label}
+              <span class="caret" aria-hidden="true">▾</span>
+            </summary>
+            <div class="drawer-links">
+              {g.sections.map((s) => (
+                <>
+                  <span class="drawer-sec-label">{s.label}</span>
+                  {s.items.map((it) => (
+                    <a class:list={['drawer-link', { active: it.active }]} href={it.href}>
+                      {it.label}
+                    </a>
+                  ))}
+                </>
+              ))}
+            </div>
+          </details>
+        ))
+      }
+      {
+        links.map((it) => (
+          <a
+            class:list={['drawer-flat', { active: it.active }]}
+            href={it.href}
+            target={it.external ? '_blank' : undefined}
+            rel={it.external ? 'noopener' : undefined}>
+            {it.label}
+          </a>
+        ))
+      }
+    </nav>
+    <a class="drawer-cta" href={SITE.demoUrl} target="_blank" rel="noopener">在线试用</a>
+    <div class="drawer-foot">
+      <div class="drawer-utils">
+        <a class="drawer-util" href={SITE.githubUrl} target="_blank" rel="noopener">GitHub</a>
+        <button type="button" class="drawer-util" data-theme-toggle>
+          <span class="moon" aria-hidden="true">☾</span>
+          <span class="sun" aria-hidden="true">☀</span>
+          <span class="theme-label">主题</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Dark-mode toggle (persisted; default comes from the inline head script).
+  // querySelectorAll: there is a toggle in the bar and one in the drawer.
+  document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        /* ignore */
+      }
+    });
+  });
+
+  // Dropdown menus: click to open, single-open,
+  // close on outside-click / Escape.
+  const menus = document.querySelectorAll<HTMLElement>('[data-menu]');
+  function closeAll(except?: HTMLElement) {
+    menus.forEach((m) => {
+      if (m === except) return;
+      m.classList.remove('open');
+      m.querySelector('[data-menu-trigger]')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+  menus.forEach((menu) => {
+    const trigger = menu.querySelector('[data-menu-trigger]');
+    trigger?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = menu.classList.toggle('open');
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      closeAll(menu);
+    });
+  });
+  document.addEventListener('click', () => closeAll());
+
+  // Mobile drawer.
+  const drawer = document.querySelector<HTMLElement>('[data-drawer]');
+  const openBtn = document.querySelector<HTMLElement>('[data-drawer-open]');
+  function setDrawer(open: boolean) {
+    if (!drawer) return;
+    drawer.classList.toggle('open', open);
+    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    openBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  }
+  openBtn?.addEventListener('click', () => setDrawer(true));
+  document.querySelectorAll('[data-drawer-close]').forEach((el) =>
+    el.addEventListener('click', () => setDrawer(false))
+  );
+  // Navigating away should close the sheet.
+  drawer?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => setDrawer(false))
+  );
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeAll();
+      setDrawer(false);
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--surface-glass);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+    box-shadow: 0 10px 28px -26px rgba(var(--shadow), 0.55);
+    backdrop-filter: saturate(1.35) blur(18px);
+  }
+  .bar {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    height: 64px;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.95rem;
+    transition: transform 0.16s ease;
+  }
+  .wordmark:hover {
+    transform: translateY(-1px);
+  }
+  .logo {
+    display: block;
+    flex-shrink: 0;
+    filter: drop-shadow(0 8px 13px rgba(63, 91, 246, 0.22));
+  }
+  .name {
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+
+  /* Primary desktop nav */
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    margin-right: auto;
+    margin-left: 2rem;
+  }
+  .navlink {
+    color: var(--ink-soft);
+    font-size: 0.84rem;
+    font-weight: 650;
+    text-decoration: none;
+    padding: 0.43rem 0.72rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition:
+      color 0.16s ease,
+      background 0.16s ease,
+      box-shadow 0.16s ease;
+  }
+  .navlink:hover,
+  .navlink.active {
+    color: var(--ink);
+    background: var(--surface-sunk);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--line) 70%, transparent);
+  }
+
+  .bar-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .iconbtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface) 70%, var(--surface-sunk));
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      color 0.15s,
+      background 0.15s,
+      transform 0.15s;
+  }
+  .iconbtn:hover {
+    color: var(--ink);
+    background: var(--surface);
+    transform: translateY(-1px);
+  }
+  .hamburger {
+    display: none;
+  }
+
+  /* Language dropdown */
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32rem;
+    font-size: 0.82rem;
+    font-weight: 680;
+    color: var(--surface);
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.46rem 0.95rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease,
+      opacity 0.15s ease;
+  }
+  .cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px -14px rgba(var(--shadow), 0.55);
+    opacity: 0.95;
+  }
+
+  /* Dropdown menus */
+  .menu {
+    position: relative;
+  }
+  .menu-trigger {
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 650;
+    color: var(--ink-soft);
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    padding: 0.43rem 0.72rem;
+    border-radius: 6px;
+    transition:
+      color 0.15s,
+      background 0.15s,
+      box-shadow 0.16s ease;
+  }
+  .menu-trigger:hover,
+  .menu-trigger.active {
+    color: var(--ink);
+    background: var(--surface-sunk);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--line) 70%, transparent);
+  }
+  .caret {
+    font-size: 0.6rem;
+    opacity: 0.55;
+    transition: transform 0.15s;
+  }
+  .menu.open .caret {
+    transform: rotate(180deg);
+  }
+  .menu-panel {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 190px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 18px 42px -22px rgba(var(--shadow), 0.45);
+    padding: 0.45rem;
+    display: none;
+    flex-direction: column;
+    gap: 1px;
+    z-index: 20;
+  }
+  .menu.open .menu-panel {
+    display: flex;
+  }
+  .menu-item {
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 0.48rem 0.68rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .menu-item:hover {
+    background: var(--surface-sunk);
+    color: var(--ink);
+  }
+  .menu-item.active {
+    color: var(--accent);
+    background: var(--accent-soft);
+    font-weight: 600;
+  }
+  .ext {
+    font-size: 0.72rem;
+    opacity: 0.5;
+  }
+
+  /* Multi-section groups become a two-column mega panel on desktop. */
+  .menu-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 185px;
+  }
+  .menu-panel.mega {
+    flex-direction: row;
+    gap: 1rem;
+    padding: 0.7rem;
+  }
+  .menu-panel.mega .menu-col + .menu-col {
+    border-left: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+    padding-left: 1rem;
+  }
+  .menu-col-label {
+    font-size: 0.66rem;
+    font-weight: 760;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.25rem 0.68rem 0.4rem;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  a.menu-col-label:hover {
+    color: var(--accent);
+  }
+
+  .drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: none;
+  }
+  .drawer.open {
+    display: block;
+  }
+  .drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.42);
+    backdrop-filter: blur(2px);
+  }
+  .drawer-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: min(86vw, 360px);
+    background: var(--surface);
+    border-left: 1px solid var(--line);
+    box-shadow: -24px 0 60px -30px rgba(var(--shadow), 0.6);
+    padding: 0.9rem 1rem 1.4rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+  }
+  .drawer-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .drawer-nav {
+    display: flex;
+    flex-direction: column;
+  }
+  .drawer-group {
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+  }
+  .drawer-group > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 0.25rem;
+    font-size: 0.98rem;
+    font-weight: 650;
+    color: var(--ink);
+    min-height: 44px;
+  }
+  .drawer-group > summary::-webkit-details-marker {
+    display: none;
+  }
+  .drawer-group[open] > summary .caret {
+    transform: rotate(180deg);
+  }
+  .drawer-links {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0.5rem 0.25rem;
+  }
+  .drawer-sec-label {
+    font-size: 0.68rem;
+    font-weight: 760;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.65rem 0.5rem 0.2rem;
+  }
+  .drawer-sec-label:first-child {
+    padding-top: 0.15rem;
+  }
+  .drawer-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.5rem;
+    min-height: 40px;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-radius: 8px;
+  }
+  .drawer-link:hover,
+  .drawer-link.active {
+    background: var(--surface-sunk);
+    color: var(--ink);
+  }
+  .drawer-link.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .drawer-flat {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 0.25rem;
+    min-height: 44px;
+    font-size: 0.98rem;
+    font-weight: 650;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+  }
+  .drawer-flat.active {
+    color: var(--accent);
+  }
+  .drawer-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.9rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.92rem;
+    font-weight: 680;
+    color: var(--surface);
+    background: var(--ink);
+    border-radius: 999px;
+    text-decoration: none;
+  }
+  .drawer-foot {
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .drawer-utils {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .drawer-util {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem;
+    font-family: inherit;
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .drawer-util:hover {
+    color: var(--ink);
+    background: var(--surface-sunk);
+  }
+
+  /* Theme glyphs: show the icon for the mode you'd switch TO. */
+  .sun {
+    display: none;
+  }
+  :global(html[data-theme='dark']) .moon {
+    display: none;
+  }
+  :global(html[data-theme='dark']) .sun {
+    display: inline;
+  }
+
+  /* Switch to the hamburger drawer before the desktop bar gets crowded. */
+  @media (max-width: 900px) {
+    .site-nav,
+    .bar-desktop {
+      display: none;
+    }
+    .hamburger {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .bar {
+      height: 58px;
+      padding-right: 1rem;
+      padding-left: 1rem;
+    }
+    .menu-trigger {
+      min-height: 40px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .cta {
+      padding: 0.46rem 0.8rem;
+    }
+    .wordmark .name {
+      font-size: 0.9rem;
+    }
+  }
+</style>

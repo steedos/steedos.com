@@ -1,0 +1,38 @@
+---
+// The in-product app store: the Steedos console embeds this page in an iframe
+// and talks to it with postMessage, so it stays an amis page rather than
+// static HTML. Schema and data come straight from the Builder6 record.
+import Base from '../layouts/Base.astro';
+import { legacyPage } from '../lib/legacy-pages';
+
+const AMIS = 'https://unpkg.steedos.cn/amis@6.5.0/sdk';
+
+const page = legacyPage('/appexchange')!;
+const builder = JSON.parse(page.record.builder!);
+const findAmis = (node: unknown): { schema: unknown; data?: unknown } | undefined => {
+  if (!node || typeof node !== 'object') return undefined;
+  const n = node as Record<string, any>;
+  if (n.component?.name === 'Builder6:Amis') return n.component.options;
+  for (const v of Object.values(n)) {
+    const hit = findAmis(v);
+    if (hit) return hit;
+  }
+};
+const amis = findAmis(builder.data.blocks)!;
+---
+
+<Base title={page.title} description={page.description} bare forceLight noindex>
+  <Fragment slot="head">
+    <link rel="stylesheet" href={`${AMIS}/antd.css`} />
+    <link rel="stylesheet" href={`${AMIS}/helper.css`} />
+    <link rel="stylesheet" href={`${AMIS}/iconfont.css`} />
+    <style is:inline set:html={page.css}></style>
+  </Fragment>
+  <div class={page.scopes.join(' ')}>
+    <div id="app-store"></div>
+  </div>
+  <script is:inline src={`${AMIS}/sdk.js`}></script>
+  <script is:inline define:vars={{ schema: amis.schema, data: amis.data ?? {} }}>
+    amisRequire('amis/embed').embed('#app-store', schema, { data: data }, { theme: 'antd' });
+  </script>
+</Base>

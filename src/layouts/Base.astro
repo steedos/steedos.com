@@ -1,0 +1,418 @@
+---
+import Header from '../components/Header.astro';
+import Logo from '../components/Logo.astro';
+import FloatingContact from '../components/FloatingContact.astro';
+import { FOOTER_LINKS, FOOTER_SECTIONS, SITE } from '../lib/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  type?: 'website' | 'article' | 'video.other';
+  noindex?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Render the slot full-width, without the centered <main> column. */
+  bare?: boolean;
+  /** Pages carried over from Builder6 were designed for a light background only. */
+  forceLight?: boolean;
+  /** Embeds (e.g. /embed/videos/*) render without header, footer or widgets. */
+  chrome?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  canonical,
+  image,
+  type = 'website',
+  noindex = false,
+  publishedTime,
+  modifiedTime,
+  jsonLd,
+  bare = false,
+  forceLight = false,
+  chrome = true,
+} = Astro.props;
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const absoluteUrl = (href: string): string =>
+  site ? new URL(href, `${site}/`).toString() : new URL(href, Astro.url).toString();
+const canonicalUrl = canonical ? absoluteUrl(canonical) : `${site}${Astro.url.pathname}`;
+const imageUrl = absoluteUrl(image ?? '/logo.png');
+const jsonLdItems = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE.name,
+    legalName: SITE.company,
+    url: absoluteUrl('/'),
+    logo: absoluteUrl('/logo.png'),
+  },
+  ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []),
+];
+const jsonLdHtml = (value: Record<string, unknown>) =>
+  JSON.stringify(value).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang="zh-CN" data-force-light={forceLight ? '' : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Set the theme before first paint (no flash). Manual choice wins,
+      // else follow the system preference.
+      (function () {
+        var root = document.documentElement;
+        if (root.hasAttribute('data-force-light')) {
+          root.dataset.theme = 'light';
+          return;
+        }
+        try {
+          var t = localStorage.getItem('theme');
+          if (t !== 'dark' && t !== 'light') {
+            t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          root.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:locale" content="zh_CN" />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    <meta name="application-name" content={SITE.name} />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00b4b6" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} 资源中心`} href={absoluteUrl('/rss.xml')} />
+    {jsonLdItems.map((item) => <script is:inline type="application/ld+json" set:html={jsonLdHtml(item)} />)}
+    <slot name="head" />
+    {
+      import.meta.env.PROD && (
+        <>
+          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${SITE.gaId}`} />
+          <script is:inline define:vars={{ gaId: SITE.gaId, baiduId: SITE.baiduTongjiId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', gaId);
+            window._hmt = window._hmt || [];
+            var hm = document.createElement('script');
+            hm.src = 'https://hm.baidu.com/hm.js?' + baiduId;
+            document.head.appendChild(hm);
+          </script>
+        </>
+      )
+    }
+  </head>
+  <body class:list={{ bare }}>
+    {
+      chrome ? (
+        <>
+          <a class="skip-link" href="#main-content">跳到正文</a>
+          <Header />
+          <main id="main-content" tabindex="-1" class:list={{ bare }}>
+            <slot />
+          </main>
+          <footer class="site-footer">
+            <div class="inner">
+              <div class="foot-cols">
+                {FOOTER_SECTIONS.map((s) => (
+                  <div class="foot-col">
+                    <a class="foot-col-label" href={s.href}>{s.label}</a>
+                    {s.items.map((it) => (
+                      <a href={it.href}>{it.label}</a>
+                    ))}
+                  </div>
+                ))}
+                <div class="foot-col foot-contact">
+                  <span class="foot-col-label">联系我们</span>
+                  <span>
+                    咨询热线 <a href={`tel:${SITE.phone}`}>{SITE.phone}</a>
+                  </span>
+                  <img src="/img/QR_contact1.png" alt="扫码添加商务微信" width="120" height="120" loading="lazy" />
+                </div>
+              </div>
+              <div class="foot-bottom">
+                <span class="foot-brand" translate="no">
+                  <Logo size={16} /> {SITE.shortCompany}
+                  <span class="muted">© {new Date().getFullYear()} 保留所有权利</span>
+                  <a class="muted" href="https://beian.miit.gov.cn" target="_blank" rel="noopener">
+                    {SITE.icp}
+                  </a>
+                </span>
+                <div class="foot-links">
+                  {FOOTER_LINKS.map((it) => (
+                    <a href={it.href} target={it.external ? '_blank' : undefined} rel={it.external ? 'noopener' : undefined}>
+                      {it.label}
+                    </a>
+                  ))}
+                  <a href="/rss.xml">RSS</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+          <FloatingContact />
+        </>
+      ) : (
+        <slot />
+      )
+    }
+
+    <style is:global>
+      :root {
+        color-scheme: light;
+        --bg: #f4f7fa;
+        --surface: #ffffff;
+        --surface-glass: rgba(255, 255, 255, 0.8);
+        --surface-sunk: #e9eef4;
+        --ink: #131a22;
+        --ink-soft: #4f5b68;
+        --muted: #8a95a1;
+        --line: #dde4ec;
+        --accent: #0284c7;
+        --accent-soft: #e6f4fb;
+        --ring: rgba(2, 132, 199, 0.28);
+        --shadow: 19, 26, 34;
+        --maxw: 1120px;
+        --font-display:
+          'Iowan Old Style', 'Palatino Linotype', Palatino, 'Songti SC', 'Noto Serif CJK SC', serif;
+        --font-sans:
+          'Avenir Next', Avenir, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+          'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+        --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      }
+
+      :root[data-theme='dark'] {
+        color-scheme: dark;
+        --bg: #0f151b;
+        --surface: #161e26;
+        --surface-glass: rgba(22, 30, 38, 0.8);
+        --surface-sunk: #1e2832;
+        --ink: #f1f5f9;
+        --ink-soft: #a7b3bf;
+        --muted: #73808c;
+        --line: #283542;
+        --accent: #7dd3fc;
+        --accent-soft: #15324a;
+        --ring: rgba(125, 211, 252, 0.3);
+        --shadow: 0, 0, 0;
+      }
+
+      /* Dark-mode toggle icon swap (button markup lives in the header). */
+      .iconbtn .sun {
+        display: none;
+      }
+      .iconbtn .moon {
+        display: inline;
+      }
+      :root[data-theme='dark'] .iconbtn .moon {
+        display: none;
+      }
+      :root[data-theme='dark'] .iconbtn .sun {
+        display: inline;
+      }
+      :root[data-force-light] [data-theme-toggle] {
+        display: none;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+        scroll-padding-top: 96px;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(226, 240, 248, 0.3) 42%, rgba(238, 242, 255, 0.2)),
+          repeating-linear-gradient(90deg, rgba(19, 26, 34, 0.025) 0 1px, transparent 1px 72px),
+          var(--bg);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      body.bare {
+        background: var(--surface);
+      }
+      :root[data-theme='dark'] body {
+        background:
+          linear-gradient(135deg, rgba(18, 28, 38, 0.76), rgba(21, 36, 50, 0.5) 46%, rgba(32, 40, 73, 0.22)),
+          repeating-linear-gradient(90deg, rgba(241, 245, 249, 0.026) 0 1px, transparent 1px 72px),
+          var(--bg);
+      }
+      main {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 4.25rem 1.5rem 4.5rem;
+      }
+      main.bare {
+        max-width: none;
+        padding: 0;
+      }
+      main:focus {
+        outline: none;
+      }
+      a {
+        color: var(--accent);
+      }
+      a,
+      button {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+      :focus-visible {
+        outline: 3px solid var(--ring);
+        outline-offset: 3px;
+      }
+      img,
+      svg,
+      video {
+        max-width: 100%;
+      }
+      .skip-link {
+        position: fixed;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 100;
+        transform: translateY(calc(-100% - 1rem));
+        color: var(--surface);
+        background: var(--ink);
+        border: 1px solid var(--ink);
+        border-radius: 8px;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.86rem;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 18px 42px -24px rgba(var(--shadow), 0.6);
+        transition: transform 0.16s ease;
+      }
+      .skip-link:focus-visible {
+        transform: translateY(0);
+      }
+      ::selection {
+        color: var(--ink);
+        background: color-mix(in srgb, var(--accent) 20%, transparent);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+
+      .site-footer {
+        border-top: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+        margin-top: 4rem;
+        background: color-mix(in srgb, var(--surface) 60%, transparent);
+      }
+      body.bare .site-footer {
+        margin-top: 0;
+      }
+      .site-footer .inner {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 1.5rem;
+        font-size: 0.82rem;
+        color: var(--ink-soft);
+      }
+      .site-footer .foot-cols {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 1.5rem;
+        padding-bottom: 2rem;
+      }
+      .site-footer .foot-col {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .site-footer .foot-col-label {
+        color: var(--ink);
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+      .site-footer .foot-contact img {
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+      .site-footer .foot-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+      }
+      .site-footer .foot-brand {
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.4rem 0.6rem;
+      }
+      .site-footer .foot-links {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+      }
+      .site-footer a {
+        color: var(--ink-soft);
+        text-decoration: none;
+      }
+      .site-footer a:hover {
+        color: var(--ink);
+      }
+      .site-footer .muted {
+        color: var(--muted);
+      }
+      @media (max-width: 900px) {
+        .site-footer .foot-cols {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 640px) {
+        main {
+          padding: 2.25rem 1rem 3.5rem;
+        }
+        .site-footer {
+          margin-top: 2.5rem;
+        }
+        .site-footer .inner {
+          padding: 1.75rem 1rem 1.25rem;
+        }
+        .site-footer .foot-bottom {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </body>
+</html>

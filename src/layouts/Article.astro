@@ -1,0 +1,282 @@
+---
+import type { MarkdownHeading } from 'astro';
+import Base from './Base.astro';
+import { pageTitle } from '../lib/site';
+import { blogPath, docPath, formatDate, type Blog, type Doc } from '../lib/resources';
+import '../styles/prose.css';
+
+interface Props {
+  doc: Doc;
+  blog: Blog;
+  headings: MarkdownHeading[];
+  related: Doc[];
+}
+
+const { doc, blog, headings, related } = Astro.props;
+const { data } = doc;
+const toc = headings.filter((h) => h.depth === 2);
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const url = `${site}${docPath(doc)}`;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: data.title,
+    description: data.description,
+    datePublished: data.created.toISOString(),
+    dateModified: data.modified.toISOString(),
+    mainEntityOfPage: url,
+    url,
+    image: data.cover ? `${site}${data.cover}` : undefined,
+    articleSection: blog.name,
+    inLanguage: 'zh-CN',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: blog.name, item: `${site}${blogPath(blog.url)}` },
+      { '@type': 'ListItem', position: 2, name: data.title, item: url },
+    ],
+  },
+];
+---
+
+<Base
+  title={pageTitle(data.title, blog.name)}
+  description={data.description}
+  image={data.cover}
+  type="article"
+  publishedTime={data.created.toISOString()}
+  modifiedTime={data.modified.toISOString()}
+  {jsonLd}>
+  <div class:list={['doc', { 'has-toc': toc.length > 1 }]}>
+    {
+      toc.length > 1 && (
+        <aside class="toc" aria-label="目录">
+          <span class="toc-label">目录</span>
+          <ul>
+            {toc.map((h) => (
+              <li>
+                <a href={`#${h.slug}`}>{h.text}</a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )
+    }
+    <article>
+      <header class="doc-head">
+        <div class="meta">
+          <a class="cat" href={blogPath(blog.url)}>{blog.name}</a>
+          <span class="dot">·</span>
+          <time datetime={data.modified.toISOString().slice(0, 10)}>{formatDate(data.modified)}</time>
+        </div>
+        <h1>{data.title}</h1>
+        {data.description && <p class="lead">{data.description}</p>}
+        {
+          data.cover && (
+            <img
+              class="cover"
+              src={data.cover}
+              alt={data.title}
+              width="1200"
+              height="800"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+            />
+          )
+        }
+      </header>
+
+      <div class="prose">
+        <slot />
+      </div>
+
+      {
+        related.length > 0 && (
+          <aside class="related" aria-labelledby="related-title">
+            <h2 id="related-title">{blog.name}</h2>
+            <ul>
+              {related.map((d) => (
+                <li>
+                  <a href={docPath(d)}>{d.data.title}</a>
+                  {d.data.description && <p>{d.data.description}</p>}
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )
+      }
+    </article>
+  </div>
+</Base>
+
+<style>
+  .doc {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .doc.has-toc {
+    max-width: none;
+    display: grid;
+    grid-template-columns: 14rem minmax(0, 860px);
+    justify-content: center;
+    gap: 3rem;
+  }
+  article {
+    min-width: 0;
+  }
+  .toc {
+    position: sticky;
+    top: 96px;
+    align-self: start;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    font-size: 0.88rem;
+  }
+  .toc-label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 760;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+  }
+  .toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 0.9rem;
+    border-left: 2px solid var(--line);
+    display: grid;
+    gap: 0.6rem;
+  }
+  .toc a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    line-height: 1.45;
+  }
+  .toc a:hover {
+    color: var(--ink);
+  }
+  .doc-head {
+    padding-bottom: 2.25rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-bottom: 1.1rem;
+  }
+  .cat {
+    font-size: 0.78rem;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 0.15rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 16%, transparent);
+    border-radius: 999px;
+    text-decoration: none;
+  }
+  .cat:hover {
+    background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+  }
+  .dot {
+    color: var(--muted);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: 0;
+    margin: 0 0 1rem;
+  }
+  .lead {
+    font-size: 1.12rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .cover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    display: block;
+    margin-top: 1.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--surface-sunk);
+    box-shadow: 0 28px 70px -48px rgba(var(--shadow), 0.68);
+  }
+  .related {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .related h2 {
+    font-size: 1.1rem;
+    margin: 0 0 1rem;
+  }
+  .related ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .related li {
+    padding: 0.95rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 14px 38px -34px rgba(var(--shadow), 0.45);
+    transition: transform 0.16s ease, border-color 0.16s ease;
+  }
+  .related li:hover {
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+    transform: translateY(-2px);
+  }
+  .related a {
+    color: var(--ink);
+    font-weight: 700;
+    line-height: 1.35;
+    text-decoration: none;
+  }
+  .related a:hover {
+    color: var(--accent);
+  }
+  .related p {
+    margin: 0.35rem 0 0;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  @media (max-width: 1080px) {
+    .doc.has-toc {
+      display: block;
+      max-width: 860px;
+    }
+    .toc {
+      display: none;
+    }
+  }
+  @media (max-width: 640px) {
+    .doc-head {
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 1.85rem;
+      overflow-wrap: anywhere;
+    }
+    .lead {
+      font-size: 1rem;
+    }
+  }
+</style>

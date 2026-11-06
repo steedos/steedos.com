@@ -1,0 +1,132 @@
+---
+import Base from '../../layouts/Base.astro';
+import VideoPlayer from '../../components/VideoPlayer.astro';
+import { ALL_VIDEOS, videoPath, videoTitle, type Video, type VideoCollection } from '../../lib/videos';
+import { formatDate } from '../../lib/resources';
+
+export function getStaticPaths() {
+  return ALL_VIDEOS.map(({ video, collection }) => ({ params: { slug: video.slug }, props: { video, collection } }));
+}
+
+const { video, collection } = Astro.props as { video: Video; collection: VideoCollection };
+const siblings = collection.videos;
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: videoTitle(video),
+  description: video.summary || video.name,
+  thumbnailUrl: video.thumb_image ? `${site}${video.thumb_image}` : undefined,
+  uploadDate: video.published_at ?? undefined,
+  contentUrl: video.download_url ?? undefined,
+  embedUrl: `${site}/embed/videos/${video.slug}`,
+};
+---
+
+<Base
+  title={videoTitle(video)}
+  description={video.summary ?? undefined}
+  image={video.thumb_image ?? undefined}
+  type="video.other"
+  {jsonLd}>
+  <div class="layout">
+    <div class="main">
+      <VideoPlayer {video} />
+      <h1>{video.name}</h1>
+      <div class="meta">
+        <a href={`/videos#${collection.slug}`}>{collection.name}</a>
+        {video.duration && <span>· {video.duration} 分钟</span>}
+        {video.published_at && <span>· {formatDate(new Date(video.published_at))}</span>}
+      </div>
+      {video.body && <p class="body">{video.body}</p>}
+    </div>
+    <aside class="playlist" aria-label={collection.name}>
+      <span class="playlist-label">{collection.name}</span>
+      <ol>
+        {
+          siblings.map((v) => (
+            <li>
+              <a href={videoPath(v)} class:list={{ active: v.slug === video.slug }} aria-current={v.slug === video.slug ? 'page' : undefined}>
+                {v.name}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    gap: 2rem;
+  }
+  .main :global(.player) {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 28px 70px -48px rgba(var(--shadow), 0.68);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+    line-height: 1.2;
+    margin: 1.5rem 0 0.5rem;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .meta a {
+    text-decoration: none;
+  }
+  .body {
+    margin: 1.25rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.8;
+  }
+  .playlist {
+    align-self: start;
+    position: sticky;
+    top: 96px;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+  .playlist-label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  ol a {
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  ol a:hover,
+  ol a.active {
+    color: var(--accent);
+  }
+  ol a.active {
+    font-weight: 700;
+  }
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .playlist {
+      position: static;
+    }
+  }
+</style>

@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { pageTitle } from '../../lib/site';
+import { VIDEO_COLLECTIONS, videoPath } from '../../lib/videos';
+---
+
+<Base title={pageTitle('视频教程')} description="华炎魔方可视化开发、低代码训练营与 DevOps 视频教程。">
+  <header class="list-head">
+    <span class="eyebrow">资源中心</span>
+    <h1>视频教程</h1>
+  </header>
+  {
+    VIDEO_COLLECTIONS.map((c) => (
+      <section class="collection" id={c.slug}>
+        <h2>{c.name}</h2>
+        {c.description && <p class="lead">{c.description}</p>}
+        <div class="grid">
+          {c.videos.map((v) => (
+            <ArticleCard
+              href={videoPath(v)}
+              title={v.name}
+              description={v.summary ?? undefined}
+              image={v.thumb_image ?? undefined}
+              meta={v.duration ? `${v.duration} 分钟` : undefined}
+            />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</Base>
+
+<style>
+  .list-head {
+    margin-bottom: 1rem;
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 760;
+    letter-spacing: 0.07em;
+    color: var(--accent);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    line-height: 1.15;
+    margin: 0.4rem 0 0;
+  }
+  .collection {
+    margin-top: 2.75rem;
+  }
+  h2 {
+    font-size: 1.35rem;
+    margin: 0 0 0.5rem;
+  }
+  .lead {
+    margin: 0 0 1.25rem;
+    color: var(--ink-soft);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+  @media (max-width: 1000px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

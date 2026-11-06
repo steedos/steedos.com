@@ -1,0 +1,23 @@
+---
+// Bare player for iframes (docs and partner sites embed these URLs).
+import Base from '../../../layouts/Base.astro';
+import VideoPlayer from '../../../components/VideoPlayer.astro';
+import { ALL_VIDEOS, videoPath, videoTitle, type Video } from '../../../lib/videos';
+
+export function getStaticPaths() {
+  return ALL_VIDEOS.map(({ video }) => ({ params: { slug: video.slug }, props: { video } }));
+}
+
+const { video } = Astro.props as { video: Video };
+---
+
+<Base title={videoTitle(video)} description={video.summary ?? undefined} image={video.thumb_image ?? undefined} canonical={videoPath(video)} chrome={false} forceLight>
+  <VideoPlayer {video} />
+</Base>
+
+<style is:global>
+  body {
+    background: #000 !important;
+    min-height: 0;
+  }
+</style>

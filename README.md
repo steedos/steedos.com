@@ -1,58 +1,59 @@
 # 华炎魔方官网
 
-- cn：<https://www.steedos.cn/>，缓存1小时。
-- com：<https://www.steedos.com/>，缓存1小时。
-- beta：<https://beta.steedos.cn/>，缓存1分钟。
+- cn：<https://www.steedos.cn/>
+- com：<https://www.steedos.com/>
+- beta：<https://beta.steedos.cn/>
 
-## 开发流程
+静态站点，基于 [Astro](https://astro.build)，框架与 [www.objectos.ai](https://www.objectos.ai) 一致。
+所有内容都在仓库里，构建和运行时不再依赖云端 CMS。
 
-在master分支开发。
+## 目录
 
-### 安装依赖包
+| 路径 | 内容 |
+|---|---|
+| `content/resources/<知识库>/<文档>.md` | 资源中心文档，URL 为 `/resources/<知识库>/<slug>` |
+| `content/resources/_blogs.json` | 知识库列表 |
+| `content/videos.json` | 视频合集与视频，URL 为 `/videos/<slug>`、`/embed/videos/<slug>` |
+| `cms-export/pages/` | 从 Builder6 原样迁移的页面（HTML + 编译好的 Tailwind CSS），由 `src/pages/[...page].astro` 渲染 |
+| `cms-export/urls.csv` | 旧站全部 URL 清单（含线上状态码、标题、描述），用于验收 |
+| `src/pages/` | 路由：首页、资源中心、视频、应用商店（amis）、迁移页面 |
+| `src/lib/site.ts` | 导航、页脚、站点常量 |
+| `redirects.json` | 旧 URL 的 301 跳转规则，构建时生成 nginx 配置 |
 
-请命令行执行以下指令安装依赖项：
-
-```sh
-yarn
-```
-
-### 开发调式
-
-请命令行执行以下指令，跑起服务后可以改代码在浏览器中输入 [http://localhost:3000/](http://localhost:3000/) 地址看效果：
-
-```sh
-yarn dev
-```
-
-## 发布到官网流程
-
-### 打包确认
-
-请先在命令行执行以下指令确保能正常打包而不会报错，如遇有错误信息则需要修正，有未修正的错误时不可以进行下一步：
+## 开发
 
 ```sh
-yarn build
+pnpm install
+pnpm dev
 ```
 
-### 发布到Beta
+## 构建与验收
 
-请把master分支代码合并到beta分支，合并代码后 [Git Actions](https://github.com/steedos/steedos.com/actions) 会自动开始打包并发布到beta官网。
+```sh
+pnpm check
+pnpm build
+pnpm verify:urls
+```
 
-待 [Git Actions](https://github.com/steedos/steedos.com/actions) 执行成功后请到 <https://beta.steedos.cn/> 确认下，功能正常才可以进行下一步。
+`pnpm verify:urls` 会对照 `cms-export/urls.csv` 检查：旧站返回 200 的 URL 新站都有页面，旧站的跳转新站跳到同一个地方，并列出标题/描述的变化。
+部署后也可以对线上环境做同样的检查：`node scripts/verify-urls.mjs --base https://beta.steedos.cn`。
 
-### 发布到官网
+## 从 CMS 重新导出内容
 
-手动创建releases，创建后才会开始自动发布到.com和.cn官网。
+内容迁移期间如果 Builder6 里有修改，可以重新导出（只读，不会改动 CMS）：
 
-#### 如何创建releases？
+```sh
+npm i --prefix scripts   # 首次：安装图片压缩用的 sharp
+pnpm export:cms
+```
 
-访问项目的Github仓库： <https://github.com/steedos/steedos.com>
-右侧有一个名为“Releases”的链接，点击它进入Releases列表，然后依次执行以下操作步骤即可：
+需要 `.env` 里的 `B6_CLOUD_PROJECT_SECRET`。原图缓存在 `cms-export/.cache/`（不提交），压缩后的 WebP 在 `public/images/cms/`。
 
-- 点击右上角的“Draft a new release”按钮
-- 在跳转后的页面上点击名为“Choose a Tag”的下拉框
-- 在下拉显示的文本输入框中输入要发布的下一个tag版本号，比如当前最后一个版本为v1.0.1的话，相应的输入v1.0.2。
-- 按下回车键就可以创建一个新Tag了
-- 最后点击表单底下的Publish release即可。
+## 部署
 
-创建releases后 [Git Actions](https://github.com/steedos/steedos.com/actions) 会再次自动开始打包并发布到.com和.cn官网，相关Actions执行完成后官网应该就上线了。
+`Dockerfile` 先构建静态站点，再用 nginx 在 3000 端口提供服务（`docker/nginx.conf`），k8s 配置见 `deployment-k8s.yaml`。
+页面以 `/a/b.html` 输出、以 `/a/b` 访问，URL 与旧站完全一致（无结尾斜杠）。
+
+```sh
+docker build -t steedos/steedos.com:latest .
+```

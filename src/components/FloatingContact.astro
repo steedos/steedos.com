@@ -1,0 +1,109 @@
+---
+// The contact rail from the old site's FloatingMenu: hover (or focus) a
+// button to reveal the QR code / hotline. Desktop only, like before.
+import { SITE } from '../lib/site';
+
+const QR_BUSINESS = '/img/qr-business.png';
+const QR_SUPPORT = '/img/qr-support.png';
+
+const items = [
+  { icon: '/img/demo.png', label: '预约演示', hint: '扫码预约产品演示', qr: QR_BUSINESS },
+  { icon: '/img/online_consultation.png', label: '商务咨询', hint: '扫码添加商务微信', qr: QR_BUSINESS },
+  { icon: '/img/qywx.svg', label: '技术咨询', hint: '扫码添加技术服务群', qr: QR_SUPPORT },
+  { icon: '/img/mobile_consultation.png', label: '电话咨询', hint: '官方免费咨询热线', phone: SITE.phone },
+];
+---
+
+<aside class="contact-rail" aria-label="联系我们">
+  {
+    items.map((it) => (
+      <div class="contact-item" tabindex="0">
+        <img src={it.icon} alt="" width="24" height="24" />
+        <span>{it.label}</span>
+        <div class="contact-pop" role="tooltip">
+          <span class="hint">{it.hint}</span>
+          {it.qr && <img src={it.qr} alt={`${it.label}二维码`} width="128" height="128" loading="lazy" />}
+          {it.phone && <a class="phone" href={`tel:${it.phone}`}>{it.phone}</a>}
+        </div>
+      </div>
+    ))
+  }
+</aside>
+
+<style>
+  .contact-rail {
+    position: fixed;
+    top: 50%;
+    right: 1rem;
+    z-index: 40;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 42px -24px rgba(var(--shadow), 0.55);
+  }
+  .contact-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    cursor: default;
+    outline: none;
+  }
+  .contact-item:hover,
+  .contact-item:focus-visible {
+    background: var(--accent-soft);
+    color: var(--ink);
+  }
+  .contact-pop {
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 0.75rem);
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 10rem;
+    padding: 0.85rem 0.75rem;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 42px -20px rgba(var(--shadow), 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .contact-item:hover .contact-pop,
+  .contact-item:focus-within .contact-pop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .contact-pop .hint {
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+  }
+  .contact-pop img {
+    background: #fff;
+    border-radius: 6px;
+  }
+  .contact-pop .phone {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  @media (max-width: 900px) {
+    .contact-rail {
+      display: none;
+    }
+  }
+</style>
